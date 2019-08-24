@@ -1,0 +1,243 @@
+/*
+Default accent color
+
+*/
+a:hover {
+	color:#1393c5;
+}
+#inner-headline ul.breadcrumb li a {
+	color:#1393c5;
+}
+
+/* heading */
+h1 span.colored, h2 span.colored,h3 span.colored,h4 span.colored,h5 span.colored,h6 span.colored {
+	color:#1393c5;
+}
+
+/* menu */
+.navbar nav ul.nav li.dropdown ul.dropdown-menu li a:active,.navbar nav ul.nav li.dropdown ul.dropdown-menu li a:focus {
+  background: #1393c5;
+}
+ul.topmenu li a:hover {
+	color:#1393c5;
+}
+
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+  background: #1393c5;
+}
+
+header ul.nav .dropdown-menu li > a:hover,
+.dropdown-menu li > a:focus,
+.dropdown-submenu:hover > a, 
+.dropdown-menu .active > a,
+.dropdown-menu .active > a:hover {
+  background: #1393c5;
+}
+
+/* slider */
+.camera_prev > span:before {
+  background: #1393c5;
+}
+.camera_next > span:before {
+  background: #1393c5;
+}
+
+/* parallax c slider */
+.da-arrows span.da-arrows-prev:before {
+  background: #1393c5;
+}
+.da-arrows span.da-arrows-next:before {
+  background: #1393c5;
+}
+.da-slide .da-link:hover{
+	background: #1393c5;
+	border: 4px solid #1393c5;
+}
+
+.da-dots span{
+	background: #1393c5;
+}
+
+
+/* form */
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: #1393c5;
+}
+
+form#contactform .validation {
+	color:#1393c5;
+}
+#sendmessage {
+	border:1px solid #1393c5;
+
+}
+
+/* tabs */
+div.tabs  ul.nav-tabs li.active a {
+	border-top: 2px solid #1393c5;
+	color:#1393c5;
+}
+div.tabbable.tabs-left  ul.nav-tabs li.active a {
+	border-left: 2px solid #1393c5;
+		color:#1393c5;
+}
+div.tabbable.tabs-right  ul.nav-tabs li.active a {
+	border-right: 2px solid #1393c5;
+		color:#1393c5;
+}
+
+.accordion-heading a.active,.accordion-heading a.active i {
+	color:#1393c5;
+}
+
+/* icon */
+[class^="icon-"].active {
+	color:#1393c5;
+}
+
+a i.icon-bglight:hover,
+a i.icon-bgdark:hover {
+  background: #1393c5;
+}
+i.icon-bglight.active {
+  background: #1393c5;
+}
+
+i.icon-bgdark.active {
+  background: #1393c5;
+}
+ul.styledlist li:before {
+	color:#1393c5;
+}
+
+/* logo icon */
+.logo h1 [class^="icon-"] {
+	color:#1393c5;
+}
+
+.footer_logo h3 [class^="icon-"] {
+	color:#1393c5;
+}
+
+/* CTA */
+.cta-text h2 span {
+	color:#1393c5;
+}
+
+/*-- button -- */
+.btn-theme {
+  border:1px solid #1393c5;
+  background: #1393c5;
+}
+
+/* content */
+.box:hover .text h4 {
+	color:#1393c5;
+}
+#inner-headline ul.breadcrumb li a:hover {
+	color:#1393c5;
+}
+
+a.thumbnail:hover,
+a.thumbnail:focus {
+  border-color: #1393c5;
+}
+
+/* blog */
+article .post-heading h3 a {
+	text-decoration:none;
+	color:#1393c5;
+}
+
+.post-entry a.readmore:hover {
+	color:#1393c5;
+}
+
+ul.cat li a:hover, ul.folio-detail li a:hover {
+	color:#1393c5;
+}
+
+.meta-post a,.meta-post ul li i {
+  color: #1393c5;
+}
+
+
+.meta-bottom li a:hover {
+	color:#1393c5;
+}
+
+#pagination a:hover {
+  background: #1393c5;
+}
+
+
+/* widgets */
+ul.popular li a {
+	color:#1393c5;
+}
+
+/* component */
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+  background: #1393c5;
+  border:1px solid #1393c5;
+}
+.pagination ul > .active > a:hover,
+.pagination ul > .active > span:hover {
+  background: #1393c5;
+  border:1px solid #1393c5;
+}
+.pagination ul > li > a:hover{
+  color:#1393c5;
+}
+
+.pullquote-left {
+	border-left:5px solid #1393c5;
+}
+
+.pullquote-right {
+	border-right:5px solid #1393c5;
+}
+
+.pricing-box-wrap.special .pricing-heading {
+	background: #1393c5;
+}
+
+/* portfolio */
+ul.portfolio-categ.filter li.active a {
+  color:#1393c5;
+}
+
+/* portfolio */
+ul.team-categ.filter li.active a {
+  color:#1393c5;
+}
+
+.grid figcaption {
+	background: #1393c5;
+}
+
+/* footer */
+footer a:hover {
+	color:#1393c5;
+}
+footer ul.link-list li a:hover {
+	color:#1393c5;
+}
