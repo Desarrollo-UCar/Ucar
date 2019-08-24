@@ -36,6 +36,22 @@ class TallerServicioController extends Controller
     public function store(Request $request)
     {
         //
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+        if($request->validate([
+            'nombreservicio' => 'required',
+            //'descripcion' =>'required',
+        ])){
+            //return $request;
+            Tallerservicios::insert([
+                'nombreservicio'=>$request['nombreservicio'],
+                'descripcion'=>$request['descripcion'],
+                'created_at'=>$date,
+                'updated_at'=>$date
+            ]);
+            return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
+        }
+        return $request;
     }
 
     /**
@@ -58,6 +74,10 @@ class TallerServicioController extends Controller
     public function edit($id)
     {
         //
+        $datos = Tallerservicios::where('idservicioTaller',$id)->first();
+        $taller=Tallerservicios::all();
+        return view('gerente.serviciotaller.edit_taller_servicio',compact('datos','taller'));
+        return $datos;
     }
 
     /**
@@ -67,9 +87,27 @@ class TallerServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
         //
+        //return $id;
+        $taller= Tallerservicios::where('idserviciotaller',$id)->first();
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+        if($request->validate([
+            'nombreservicio' => 'required',
+            //'descripcion' =>'required',
+        ])){
+            //return $request;
+            $taller->update([
+                'nombreservicio'=>$request['nombreservicio'],
+                'descripcion'=>$request['descripcion'],
+                //'created_at'=>$date,
+                'updated_at'=>$date
+            ]);
+            return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
+        }
+        return $request;
     }
 
     /**

@@ -31,7 +31,6 @@
 
     <!-- Main content -->
     <section class="content">
-      <h1>esto es una prueba</h1>
         @if (count($sucursals)==0)
         <div style="display: none;">
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning" id="<?php 

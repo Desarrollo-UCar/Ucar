@@ -53,10 +53,11 @@
               <!-- /.box-header -->
               <div class="box-body">
 
-                  <form action="{{ route('tallerservicio.store') }}" method="POST">
+                  <form action="{{ route('tallerservicio.update',$datos->idserviciotaller)}}" method="POST">
                       {{-- FORMULARIO DE NOMBRES --}}
                       
                        @csrf
+                       @method('PUT')
                          {{-- FORMULARIO DIRECCION--}}
                          <div class="row">
                             <div class="col-md-12">
@@ -67,21 +68,21 @@
                           </div>
                          <div class="form-group col-md-4">
                           <label>Nombre del servicio</label>
-                          <input type="text" class="form-control" placeholder="Nombre del servicio" name="nombreservicio"  onkeyup="javascript:this.value=this.value.toUpperCase();" autofocus required>
+                          <input type="text" class="form-control" placeholder="Nombre del servicio" name="nombreservicio" id="nombreservicio";  onkeyup="javascript:this.value=this.value.toUpperCase();" autofocus value="{{$datos->nombreservicio}}" required>
                       </div>
                               
     
                         <div class="form-group col-md-4">
                           <label>Descripcion</label>
-                          <input type="text" class="form-control" placeholder="País" name="descripcion"  onkeyup="javascript:this.value=this.value.toUpperCase();">
+                          <input type="text" class="form-control" placeholder="Descripción" name="descripcion"  onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$datos->descripcion}}">
                       </div>
                       <div class="row">
                           <div class="col-md-8">
                               <div class="form-group col-md-2" style="float: right">
-                                  <button type="submit" class="btn btn-primary">Agregar</button>
+                                  <button type="submit" class="btn btn-primary">Modificar</button>
                                 </div>
                               <div class="form-group col-md-2" style="float: right">
-                                  <button type="submit" class="btn btn-danger">Cancelar</button>
+                                    <a href="{{ URL::previous() }}" class="btn btn-danger pull-left">Regresar</a>
                                 </div>                       
                             </div>                    
                         </div>
@@ -172,14 +173,15 @@
 
          <script>
          $(document).ready(function() {
-              var $table=$('#example').DataTable( {               
-                "scrollX": true,                
+               $table=$('#example').DataTable( {               
+                "scrollX": true,   
+              //  "search": document.getElementById("nombreservicio").value,            
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 }
                 
               } );
-              new $.fn.dataTable.FixedHeader( table );
+              
           } );
          </script>
          <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
