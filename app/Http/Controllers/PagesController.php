@@ -7,7 +7,7 @@ use App;
 use DateTime;
 class PagesController extends Controller
 {
-    public function inicio(){
+    public function inicio(){//PRUEBA
         return view('index');
     }
 
