@@ -16,7 +16,7 @@
   <section class="content">
     @if($reservacion->estatus=='cancelada')
       <div class="alert alert-warning alert-dismissible">
-          <h4>¡Reservacion cancelada!</h4>
+          <h4>Reservacion cancelada!</h4>
         </div>
         @endif
     <div class="row">
