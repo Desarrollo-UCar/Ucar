@@ -12,31 +12,33 @@ class PagesController extends Controller
     }
 
     public function postFormularioindex(Request $request){   
-        // Creamos el objeto
-        $reserva_temp = new App\reserva_temp;
-        // Seteamos las propiedades
-        $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
-        $reserva_temp->lugar_recogida = $request->lugarrecogida;
-        $reserva_temp->fecha_recogida = $request->fechaRecogida;
-        $reserva_temp->hora_recogida = $request->horaRecogida;
-
-        $reserva_temp->lugar_devolucion = $request->lugarrecogida;
-        $reserva_temp->fecha_devolucion = $request->fechaDevolucion;
-        $reserva_temp->hora_devolucion = $request->horaDevolucion;
-
-        $reserva_temp->codigo_descuento =  $request->codigoPromocion;
-        $reserva_temp->tipo_vehiculo= $request->tipoVehiculo;
-        $reserva_temp->id_vehiculo = 0;
-        $reserva_temp->total = 0;
-        $reserva_temp->servicios_extra = 'ee';
-        // Guardamos en la base de datos (equivalente al flush de Doctrine)
-        $reserva_temp->save();
-
-        
-        $vehiculos_disponibles = App\Vehiculo::all();
-        $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
-        //return $datos_reserva;
-        return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
+         // Creamos el objeto
+         $reserva_temp = new App\reserva_temp;
+         // Seteamos las propiedades
+         $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
+         $reserva_temp->lugar_recogida = $request->lugarrecogida;
+         $newDate = date("Y\-m\-d", strtotime($request->fechaRecogida));
+         $reserva_temp->fecha_recogida = $newDate;
+         $reserva_temp->hora_recogida = $request->horaRecogida;
+ 
+         $reserva_temp->lugar_devolucion = $request->lugarrecogida;
+         $newDate = date("Y\-m\-d", strtotime($request->fechaDevolucion));
+         $reserva_temp->fecha_devolucion = $newDate;
+         $reserva_temp->hora_devolucion = $request->horaDevolucion;
+ 
+         $reserva_temp->codigo_descuento =  $request->codigoPromocion;
+         $reserva_temp->tipo_vehiculo= $request->tipoVehiculo;
+         $reserva_temp->id_vehiculo = 0;
+         $reserva_temp->total = 0;
+         $reserva_temp->servicios_extra = 'ee';
+         // Guardamos en la base de datos (equivalente al flush de Doctrine)
+         $reserva_temp->save();
+ 
+         
+         $vehiculos_disponibles = App\Vehiculo::all();
+         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
+         //return $datos_reserva;
+         return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
     }
 
     public function pflota(){
@@ -324,7 +326,13 @@ public function pago_paypal(Request $reserva){
 
         }
 
-
+        public function validar_logeo(Request $reserva){
+            return $reserva;
+            //return $reserva;
+                // Creamos el objeto para Cliente
+            
+    
+            }
 
 
 
