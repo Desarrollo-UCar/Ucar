@@ -15,6 +15,8 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->bigIncrements('idCliente');
+            $table->string ('credencial')->nullable();
+            $table->string ('pasaporte') -> nullable();
             $table->string('nombre');
             $table->string('primer_apellido');
             $table->string('segundo_apellido')->nullable();
@@ -28,8 +30,7 @@ class CreateClientesTable extends Migration
             $table->string('ciudad');
             $table->string('estado');
             $table->string('pais');
-            $table->string('foto');  
-
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

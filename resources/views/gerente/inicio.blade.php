@@ -48,14 +48,17 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>0</h3>
+
+                <?php $content = DB::table('clientes')->get(); ?>
+
+            <h3>{{count($content)}}</h3>
 
               <p>Clientes Registrados</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('cliente')}}" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

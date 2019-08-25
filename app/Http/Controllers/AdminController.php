@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Cliente;
 class AdminController extends Controller
 {
     //
@@ -15,8 +16,9 @@ class AdminController extends Controller
     	return view ('gerente.inicio');
     }
 
-    public function altaAdmin(){
-    	return view ('gerente.usuarios.empleados.administradores.alta_admin');
+    public function verclientes(){
+        $clientes  = Cliente::orderBy('idcliente','DESC')->get();
+    	return view ('gerente.clientes.ver_clientes',compact('clientes'));
     }
 
     public function nuevoChofer(){

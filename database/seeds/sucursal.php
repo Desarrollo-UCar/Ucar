@@ -24,7 +24,7 @@ class sucursal extends Seeder
             'telefono' => '(954) 582-3224',
             'created_at' => $date
         ]);
-
+            
         DB::table('sucursals')-> insert([
             'nombre' => 'U-CAR ISTMO',
             'pais' => 'MEXICO',
