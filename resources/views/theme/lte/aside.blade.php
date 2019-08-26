@@ -42,20 +42,18 @@
               </ul>
             </li>
 
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-calendar-check-o"></i>
-              <span>Reservaciones</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-            <li><a href="{{ route('products.create')}}"><i class="fa fa-circle-o"></i>Nuevas Reservaciones</a></li>
-              <li><a href="boxed.html"><i class="fa fa-circle-o"></i>Ver todas las reservaciones</a></li>
-              <li><a href="fixed.html"><i class="fa fa-circle-o"></i>Cancelar reservacion</a></li>
-            </ul>
-          </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-calendar-check-o"></i>
+                <span>Reservaciones</span>
+                <span class="pull-right-container">
+                  <span class="label label-primary pull-right">4</span>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{ route('reservacion.index')}}"><i class="fa fa-circle-o"></i>Ver reservaciones</a></li>
+              </ul>
+            </li>
 
             <li class="treeview">
               <a href="#">

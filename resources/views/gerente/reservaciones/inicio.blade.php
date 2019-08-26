@@ -34,7 +34,7 @@
                       <th>Fecha</th>
                       <th>Motivo</th>
                       <th>Total</th>
-                      <th>Estatus</th>
+                      <th>Accion</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,11 +42,11 @@
                       @foreach($reservaciones as $reservacion)  
                       <tr>
                         <td>{{$reservacion->id}}</td>
-                        <td>{{$reservacion->idCliente}}</td>
-                        <td>{{$reservacion->fechaReservacion}}</td>
-                        <td>{{$reservacion->motivoVisita}}</td>
-                        <td>{{$reservacion->precioTotal}}</td>
-                        <td>{{$reservacion->estatus}}</td>
+                        <td>{{$reservacion->id_cliente}}</td>
+                        <td>{{$reservacion->fecha_reservacion}}</td>
+                        <td>{{$reservacion->motivo_visita}}</td>
+                        <td>{{$reservacion->total}}</td>
+                       <!-- <td>{{$reservacion->estatus}}</td> -->
                         <td>  
                           <form action ="{{route('reservacion.show',$reservacion)}}" method ="GET" enctype="multipart/form-data">
                                 {{csrf_field()}}
