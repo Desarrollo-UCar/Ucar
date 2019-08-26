@@ -30,7 +30,7 @@
                 <thead>
                     <tr>
                       <th>Numero</th>
-                      <th>Id Cliente</th>
+                      <th>Credencial/Pasaporte Cliente</th>
                       <th>Fecha</th>
                       <th>Motivo</th>
                       <th>Total</th>
@@ -42,7 +42,12 @@
                       @foreach($reservaciones as $reservacion)  
                       <tr>
                         <td>{{$reservacion->id}}</td>
-                        <td>{{$reservacion->id_cliente}}</td>
+                       <td> @if($reservacion->credencial==null)
+                        {{$reservacion->pasaporte}}
+                        @else
+                        {{$reservacion->credencial}}
+                        @endif </td>
+                       <!-- <td>{{$reservacion->id_cliente}}</td> -->
                         <td>{{$reservacion->fecha_reservacion}}</td>
                         <td>{{$reservacion->motivo_visita}}</td>
                         <td>{{$reservacion->total}}</td>

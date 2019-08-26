@@ -14,7 +14,7 @@
   </section>
 
   <section class="content">
-    @if($reservacion->estatus=='cancelada')
+    @if($alquiler->estatus=='cancelado')
       <div class="alert alert-warning alert-dismissible">
           <h4>Reservacion cancelada!</h4>
         </div>
@@ -24,18 +24,35 @@
           <div class="box box-primary">
               <div class="box-header">
                   <h3 class="box-title">{{'Detalle Reservacion'}} <b>{{$reservacion->id}}</b></h3>
-              </div>
 
               <div class="box-body">
-                  {{$alquiler->id  }}
+                </div>
+                <h4 >Datos del <a href="">cliente </a></h4>
+                  <!-- {{$alquiler->id  }} -->
                   <div class="col-md-6 form-group">
-                  <label>Cliente {{$cliente->idCliente}}</label>
-                      <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->nombre}} {{$cliente->primer_apellido}} {{$cliente->segundo_apellido}}">
+                  <label>
+
+                     @if($cliente->credencial==null)
+                     Pasaporte
+                     @else
+                     Credencial
+                     @endif cliente</label>
+                      <input type="text" name="cliente" id="" class="form-control" disabled value="@if($cliente->credencial==null)
+                      {{$cliente->pasaporte}}
+                      @else
+                      {{$cliente->credencial}}
+                      @endif">
+
+                  </div>
+
+                  <div class="col-md-6 form-group">
+                      <label>Nombre cliente <!--{{$cliente->idCliente}}--></label>
+                      <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->nombre}} {{$cliente->primer_apellido}} {{$cliente->segundo_apellido}}">  
                   </div>
 
                   <div class="row">
                       <div class="col-xs-12">
-                
+                          <h4 ><br>Datos de la reservacion</h4>
                   <div class="col-md-6 form-group">
                       <label>Fecha Reservacion</label>
                       <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
@@ -51,9 +68,25 @@
                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->estatus}}">
                   </div>
                 -->
+
+                @if($reservacion->saldo==0)
+                <h3>Se pago el total de la reservacion en linea</h3>
+                @else
+                <div class="col-md-6 form-group">
+                    <label>Saldo</label>
+                    <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->saldo}}">
+                  </div>
+                  <div class="row">
+                  
+                  
+                <div class="col-md-6 form-group">
+                  <a href="" class="btn btn-success"><b>Cobrar</b></a>
+                </div>
+              </div>
+              @endif
               <div class="row">
                 <div class="col-xs-12">
-
+                    <h4 ><br>Datos del <a href="">vehiculo </a></h4>
 
                   <div class="col-md-6 form-group">
                     <label>Vin</label>
@@ -81,26 +114,18 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div class="box-footer" style="float: right">
-                            @if($reservacion->estatus=='cancelada'||$reservacion->estatus=='rentado')
+                            @if($alquiler->estatus=='cancelado'||$reservacion->estatus=='rentado')
                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#" disabled>
-                                <b>Reservacion Cancelada</b>
+                                <b>Cancelada</b>
                               </button>
-                              <button type="button" class="btn btn-successs"data-target="#modal-warning" disabled>
-                                  <b>Contrato</b>
-                                </button>
+                              <a  disabled class="btn btn-success" disabled><b>Contrato</b></a>
                               </div>
                               @else
 
                               <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning">
-                                  <b>Cancelar Reservacion</b>
+                                  <b>Cancelar</b>
                                 </button>
                                 <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Contrato</b></a>
-
-                                <form method="GET" action="{{ route('contrato',$reservacion) }}"  role="form">
-                                    {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-info-sign"></span>{{'  Contrato'}}</button>
-                                </form>
-                                
                                 @endif
                         </div>                       
                     </div>                    

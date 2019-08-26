@@ -315,9 +315,14 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
         }
 
     public function validar_logeo(Request $reserva){
+<<<<<<< HEAD
         //return $reserva;
         $r = $reserva->id_reserva;
         return view('seleccionar_forma_de_pago',compact('r'));
+=======
+
+        return view('seleccionar_forma_de_pago',compact('reserva'));
+>>>>>>> 9d3674f9791ee9a81d9b0e5ec6cf333b5703ff17
     }
 
 

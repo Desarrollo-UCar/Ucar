@@ -21,7 +21,11 @@ class ReservacionController extends Controller
     public function index()
     {
         //
-        $reservaciones=Reservacion::orderBy('id','DESC')->paginate(300);
+        $reservaciones = Reservacion::join('clientes','idCliente','=','id_cliente')->get();
+        //->select('reservaciones.*','reservaciones.*','reservacion.id')
+
+        //return $reser
+       // $reservaciones=Reservacion::orderBy('id','DESC')->paginate(300);
         return view('gerente.reservaciones.inicio', compact ('reservaciones'));
     }
 
@@ -55,11 +59,13 @@ class ReservacionController extends Controller
     public function show(Reservacion $reservacion)
     {
 
+
+
         //    
         $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
         $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
         $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
-        $reservacion = $reservacion;
+
         //$reservacion = Reservacion::where('id','=',$id)->first();
         //return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
         return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo'));
@@ -108,19 +114,17 @@ class ReservacionController extends Controller
     public function cancela($idReservacion){
         $reservacion = Reservacion::where('id','=',$idReservacion)->first();
 
-        $reservacion->estatus = 'cancelada';
-        $reservacion->save();
+        //$reservacion->estatus = 'cancelada';
+        //$reservacion->save();
 
-        $alquileres = alquilere::where('idReservacion','=',$idReservacion)->paginate(300);
+        //$alquileres = alquiler::where('idReservacion','=',$idReservacion)->paginate(300);
 
-        $cliente = Cliente::where('idCliente','=',$reservacion->idCliente)->first();
-        $alquiler = alquilere::where('idReservacion','=',$reservacion->id)->first();
-        $vehiculo = Vehiculo::where('id','=',$alquiler->idVehiculo)->first();
+        $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
+        $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+        $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
 
-        foreach($alquileres as $alquiler){
         $alquiler->estatus = 'cancelado';
         $alquiler->save();
-        }
 
 
         return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo'));
@@ -137,6 +141,7 @@ class ReservacionController extends Controller
      */
     public function printPDF(Reservacion $reservacion)
     {
+        return response()->json(date('Y\-m\-d H\:i\:s'));
         //$pdf = PDF::loadView('index', $reservacion);  
         //return $pdf->stream(' contrato.pdf');
 

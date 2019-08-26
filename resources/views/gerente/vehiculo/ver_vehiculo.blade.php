@@ -148,7 +148,7 @@
         var table = $(document).ready(function() {
               $('#example').DataTable( {
                 "scrollX": "300px",
-                responsive: true,               
+                "responsive": true,               
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },

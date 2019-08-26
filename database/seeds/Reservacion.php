@@ -20,7 +20,8 @@ class Reservacion extends Seeder
                'fecha_reservacion' => $faker->dateTime,
                 'motivo_visita' => $faker->randomElement(['Turismo','Negocios','Vacaciones']),
                 'comentarios' => 'por comentar',
-                'total' => $faker->numberBetween(1000,20000)
+                'total' => $faker->numberBetween(1000,20000),
+                'saldo' => $faker->numberBetween(0,20000)
                //'estatus' => 'pagada',
                 //'calificacion' => $faker->numberBetween(1,5)
             ));
