@@ -33,18 +33,18 @@
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="row nomargin">
 @foreach($flota as $vehiculo)
-    <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->id}} data-type= {{$vehiculo->tipo}}>
+    <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->idvehiculo}} data-type= {{$vehiculo->tipo}}>
     <div class="pricing-box-wrap special animated-fast flyIn">
             <div class="pricing-heading">
                 <h3><strong>{{$vehiculo->marca}}</strong></h3>
                 <h5><strong>{{$vehiculo->modelo}}</strong></h5>
             </div>
                     <figure>
-                            <div><img src={{$vehiculo->imagen}} /></div>
+                            <div><img src={{$vehiculo->foto}} /></div>
                     </figure>
             <div class="pricing-action">
                 <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-medium btn-theme" data-toggle="modal" data-target="#vehiculo{{$vehiculo->id}}"><i class="icon-chevron-down"></i>
+                    <button type="button" class="btn btn-medium btn-theme" data-toggle="modal" data-target="#vehiculo{{$vehiculo->idvehiculo}}"><i class="icon-chevron-down"></i>
                     Detalles
                     </button>
                 <!-- Button trigger modal -->

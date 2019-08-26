@@ -11,7 +11,8 @@ $(function () {
 
 $(function () {
     $('#datetimepicker_fechaDevolucion').datetimepicker({
-        format: 'DD-MM-YYYY'
+        format: 'DD-MM-YYYY',
+        useCurrent: false
     });
 });
 

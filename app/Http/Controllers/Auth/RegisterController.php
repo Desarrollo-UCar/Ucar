@@ -55,6 +55,19 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'primer_apellido' => ['required', 'string', 'max:255'],
+            'segundo_apellido' => ['required', 'string', 'max:255'],
+            'nacionalidad' => ['required', 'string', 'max:255'],
+            'telefono' => ['required', 'string', 'max:255'],
+            'INE' => ['required', 'string', 'max:255'],
+            'pasaporte' => ['required', 'string', 'max:255'],
+            'calle' => ['required', 'string', 'max:255'],
+            'numero' => ['required', 'string', 'max:255'],
+            'colonia' => ['required', 'string', 'max:255'],
+            'ciudad' => ['required', 'string', 'max:255'],
+            'estado' => ['required', 'string', 'max:255'],
+            'pais' => ['required', 'string', 'max:255'],
+            'foto' => ['required', 'string', 'max:255']
         ]);
     }
 
@@ -67,7 +80,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-
+//crear usuario
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -77,7 +90,34 @@ class RegisterController extends Controller
        $user->roles()->attach(Role::where('name', 'user')->first());
        return $user;
 
-        }
+//crear cliente
+// Creamos el objeto para Cliente
+$cliente = new App\Cliente;
+$cliente->nombre = $data['name'];
+$cliente->primer_apellido = $data['primer_apellido'];
+$cliente->segundo_apellido = $data['segundo_apellido'];
+$cliente->fecha_nacimiento = new DateTime('2000-01-01');
+$cliente->nacionalidad = $data['nacionalidad'];
+$cliente->credencial = $data['INE'];
+$cliente->pasaporte = $data['pasaporte'];
+$cliente->correo = $data['email'];
+$cliente->telefono = $data['telefono'];
+$cliente->calle = $data['calle'];
+$cliente->numero = 0;
+$cliente->colonia = $data['colonia'];
+$cliente->ciudad = $data['ciudad'];
+$cliente->estado = $data['estado'];
+$cliente->pais = $data['pais'];
+$cliente->foto = $data['foto'];
+
+$cliente->save();
+///////
+
+
+
+
+
+    }
        
        
        /**
@@ -87,5 +127,5 @@ class RegisterController extends Controller
           *  'password' => Hash::make($data['password']),
         *]);
         */
-    }
+}
 
