@@ -92,8 +92,12 @@
           </ul>
           <div class="tab-content no-padding">
             <!-- Morris chart - Sales -->
-            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;   ">
+              Hola 
+            </div>
+            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                hola mundo
+            </div>
           </div>
         </div>
         <!-- /.nav-tabs-custom -->
