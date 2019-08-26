@@ -94,7 +94,7 @@
                               @else
                               <td style="text-align: center">{{$cliente->segundo_apellido}}</td>
                               @endif 
-                              <td style="text-align: center">{{$cliente->fecha_nacimiento}}</td>
+                              <td style="text-align: center">{{date("d\-m\-Y", strtotime($cliente->fecha_nacimiento))}}</td>
                               <td style="text-align: center">{{$cliente->nacionalidad}}</td>
                               <td style="text-align: center">{{$cliente->correo}}</td>
                               <td style="text-align: center">{{$cliente->telefono}}</td>
@@ -168,7 +168,7 @@
                               @else
                               <td style="text-align: center">{{$fre->segundo_apellido}}</td>
                               @endif 
-                              <td style="text-align: center">{{$fre->fecha_nacimiento}}</td>
+                              <td style="text-align: center">{{date("d\-m\-Y", strtotime($fre->fecha_nacimiento))}}</td>
                               <td style="text-align: center">{{$fre->nacionalidad}}</td>
                               <td style="text-align: center">{{$fre->correo}}</td>
                               <td style="text-align: center">{{$fre->telefono}}</td>
