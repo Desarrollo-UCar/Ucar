@@ -23,9 +23,9 @@
                             <dt>Lugar de Recogida y Devolución</dt>
                             <dd>{{$datos_reserva->lugar_recogida}}</dd>
                             <dt>Fecha / Hora de recolección:</dt>
-                            <dd>{{$datos_reserva->fecha_recogida}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
+                            <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
                             <dt>Fecha / Hora de devolución:</dt>
-                            <dd>{{$datos_reserva->fecha_devolucion}} a las {{$datos_reserva->hora_devolucion}} hrs</dd>
+                            <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_devolucion))}} a las {{$datos_reserva->hora_devolucion}} hrs</dd>
                             <dt>Vehiculo de Preferencia:</dt>
                             <dd>{{$datos_reserva->tipo_vehiculo}}</dd>
                             <dt>Descuentos y Tarifas</dt>

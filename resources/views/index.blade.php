@@ -29,6 +29,9 @@
      <div class="bg-white">
       </div>
 
+
+
+
     <div class="container">
         <div class="row nomargin">
         <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -178,6 +181,7 @@
               <!--Card content-->
               <div class="card-body">
                   <!-- inicio Formulario reserva-->
+                  
                   <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
                       @csrf
                       <div class="form-row">
@@ -234,6 +238,7 @@
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
                                   <select name = 'horaRecogida' class="form-control">
+                                      <option>00:02</option>
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>
@@ -287,7 +292,12 @@
                           <div class="form-row">  
                               <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                   <button class="btn btn-primary" type="submit">Consulta Vehiculos Disponibles</button>
-                              </div>    
+                              </div> 
+                              @if(session('mensaje'))
+                              <div class="alert aler-danger">
+                                  <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
+                              </div>
+                              @endif   
                           </div>
                   </form>
                   <!-- fin formulario reserva -->
