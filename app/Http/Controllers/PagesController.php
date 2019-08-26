@@ -340,9 +340,7 @@ public function pago_paypal(Request $reserva){
         }
 
     public function validar_logeo(Request $reserva){
-        if(!(Auth::user()))
-        return view('login',compact('reserva'));
-        else
+
         return view('seleccionar_forma_de_pago',compact('reserva'));
     }
 

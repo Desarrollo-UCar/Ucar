@@ -20,6 +20,7 @@ class CreateReservacionsTable extends Migration
             $table->string('motivo_visita');
             $table->string('comentarios');
             $table->decimal('total');
+            $table->decimal('saldo')->nullable();
             $table->timestamps();
         });
     }

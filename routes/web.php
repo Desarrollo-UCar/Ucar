@@ -47,7 +47,7 @@ Route::get('renta_traslado_datos', 'PagesController@renta_traslado_datos')->name
 Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacion_traslado')->name('solicita_informacion_traslado') ;
 Route::post('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');
 
-Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion') ;
+Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion')->middleware('auth');;
 
 Route::get('en_construccion2', 'PagesController@en_construccion2')->name('en_construccion2') ;
 
