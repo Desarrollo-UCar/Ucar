@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(vehiculosucursal::class);
         $this->call(servicios_extra::class);
         $this->call(cliente::class);
-       //$this->call(Alquiler::class);
+        $this->call(Alquiler::class);
         $this->call(Reservacion::class);
     }
 }

@@ -59,7 +59,7 @@ class ReservacionController extends Controller
         $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
         $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
         $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
-        $reservacion = $reservacion;
+
         //$reservacion = Reservacion::where('id','=',$id)->first();
         //return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
         return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo'));
@@ -137,6 +137,7 @@ class ReservacionController extends Controller
      */
     public function printPDF(Reservacion $reservacion)
     {
+        return response()->json(date('Y\-m\-d H\:i\:s'));
         //$pdf = PDF::loadView('index', $reservacion);  
         //return $pdf->stream(' contrato.pdf');
 
