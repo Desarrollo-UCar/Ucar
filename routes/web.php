@@ -47,8 +47,7 @@ Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacio
 Route::post('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');
 Route::post('pago_paypal', 'PagesController@pago_paypal')->name('pago_paypal')->middleware('auth');
 
-
-Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion')->middleware('auth');;
+Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion') ;
 Route::get('en_construccion2', 'PagesController@en_construccion2')->name('en_construccion2') ;
 
 //______________________________________
