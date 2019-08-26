@@ -11,10 +11,6 @@ class PagesController extends Controller
         return view('index');
     }
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function postFormularioindex(Request $request){  
             $hora_actual = strtotime(date('H\:i'));
