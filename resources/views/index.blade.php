@@ -118,9 +118,9 @@
           <div class="container">
               <div class="row">
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                  <h2 class="animated fadeInDown text-white text-center"><strong>   UN NUEVO VEHICULO <span class="colored"> HA LLEGADO!!!</span></strong></h2>
-                  <p class="animated fadeInUp text-white text-center">    Reserva ahora mismo.</p>
-                  <a href="#" class="btn btn-large btn-theme"><i class="icon-link"></i> Ver Vehículo</a>
+                  <h2 class="animated fadeInDown text-white text-center"><strong>   VE LOS VEHICULOS <br> <span class="colored"> QUE TENEMOS PARA TI!!!</span></strong></h2>
+                  <p class="animated fadeInUp text-white text-center">Reserva ahora mismo.</p>
+                  <a href="{{ route('flota') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Ver Flota</a>
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                   <img src="img/inicio/aveo.png" alt="" class="animated bounceInDown delay1" />
@@ -166,135 +166,135 @@
     </section>
     <!-- /section featured -->
     <!-- /inicio formulario para iniciar reservación -->
-<section id="formulario">
-        <div class="bg-white" id='formulario_reserva_vehiculo'>
-            <h5 class="text-center"><strong>1. Reservar    </strong>Renta tu auto en 4 sencillos pasos</h5>
-        </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <!-- inicio card reserva -->
-                <div class="card bg-light text-white">
-                <!--Card content-->
-                <div class="card-body">
-                    <!-- inicio Formulario reserva-->
-                    <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-row">
-                            <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <label for="inputLugar">LUGAR DE RENTA</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-flag"aria-hidden="true"></i></span>
-                                    </div>
-                                    <select name = 'lugarrecogida' id="inputLugar" class="form-control">
-                                    <option selected>Aeropuerto Cd. Ixtepec</option>
-                                    <option>Istmo</option>
-                                    <option>Puerto Escondido</option>
-                                </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <label for="tipoVehiculo">TIPO DE VEHÍCULO</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-car"aria-hidden="true"></i></span>
-                                    </div>
-                                    <select name = 'tipoVehiculo' id="tipo" class="form-control">
-                                        <option selected>Automovil</option>
-                                        <option>Camioneta</option>
-                                        <option>Motoneta</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <label for="codigoPromocion">CÓDIGO DE PROMOCIÓN</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
-                                    </div>
-                                    <input name = 'codigoPromocion' type="text" class="form-control form-control-lg"  placeholder="Ingresa tu código de promocion" id='codigoPromocion'>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                <label for="fechaRecogida">FECHA DE RECOGIDA</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
-                                    </div>
-                                    <input name = 'fechaRecogida' type="text" class="form-control form-control-lg" placeholder="{{date('Y\-m\-d ') }}" id='datetimepicker_fechaRecogida' required>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                <label for="horaRecogida">HORA DE RECOGIDA</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
-                                    </div>
-                                    <select name = 'horaRecogida' class="form-control">
-                                        <option>08:00</option><option>08:30</option>
-                                        <option>09:00</option><option>09:30</option>
-                                        <option>10:00</option><option>10:30</option>
-                                        <option selected>11:00</option><option>11:30</option>
-                                        <option>12:00</option><option>12:30</option>
-                                        <option>13:00</option><option>13:30</option>
-                                        <option>14:00</option><option>14:30</option>
-                                        <option>15:00</option><option>15:30</option>
-                                        <option>16:00</option><option>16:30</option>
-                                        <option>17:00</option><option>17:30</option>
-                                        <option>18:00</option><option>19:30</option>
-                                        <option>20:00</option><option>20:30</option>
-                                        <option>21:00</option>
-                                    </select>
-                                </div>
-                                
-                            </div>
-                            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                <label for="fechaDevolucion">FECHA DE DEVOLUCIÓN</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
-                                    </div>
-                                    <input name = 'fechaDevolucion' type="text" class="form-control form-control-lg" placeholder="{{date('Y\-m\-d')}}" selected = "{{date('Y\-m\-d')}}" id='datetimepicker_fechaDevolucion' required>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                <label for="horaDevolucion">HORA DE DEVOLUCIÓN</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
-                                    </div>
-                                    <select name = 'horaDevolucion'  class="form-control">
-                                        <option>08:00</option><option>08:30</option>
-                                        <option>09:00</option><option>09:30</option>
-                                        <option>10:00</option><option>10:30</option>
-                                        <option selected>11:00</option><option>11:30</option>
-                                        <option>12:00</option><option>12:30</option>
-                                        <option>13:00</option><option>13:30</option>
-                                        <option>14:00</option><option>14:30</option>
-                                        <option>15:00</option><option>15:30</option>
-                                        <option>16:00</option><option>16:30</option>
-                                        <option>17:00</option><option>17:30</option>
-                                        <option>18:00</option><option>19:30</option>
-                                        <option>20:00</option><option>20:30</option>
-                                        <option>21:00</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="form-row">  
-                                <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                    <button class="btn btn-primary" type="submit">Reservar Ahora</button>
-                                </div>    
-                            </div>
-                    </form>
-                    <!-- fin formulario reserva -->
-                </div>
-            </div>       
-        </div>
-    </div>
+    <section id="formulario">
+      <div class="bg-white" id='formulario_reserva_vehiculo'>
+          <h5 class="text-center"><strong>1. Reservar    </strong>Renta tu auto en 4 sencillos pasos</h5>
+      </div>
+  <div class="container">
+      <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <!-- inicio card reserva -->
+              <div class="card bg-light text-white">
+              <!--Card content-->
+              <div class="card-body">
+                  <!-- inicio Formulario reserva-->
+                  <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
+                      @csrf
+                      <div class="form-row">
+                          <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                              <label for="inputLugar">LUGAR DE RENTA</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-flag"aria-hidden="true"></i></span>
+                                  </div>
+                                  <select name = 'lugarrecogida' id="inputLugar" class="form-control">
+                                  <option selected>Aeropuerto Cd. Ixtepec</option>
+                                  <option>Istmo</option>
+                                  <option>Puerto Escondido</option>
+                              </select>
+                              </div>
+                          </div>
+                          <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                              <label for="tipoVehiculo">TIPO DE VEHÍCULO</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-car"aria-hidden="true"></i></span>
+                                  </div>
+                                  <select name = 'tipoVehiculo' id="tipo" class="form-control">
+                                      <option selected>Automovil</option>
+                                      <option>Camioneta</option>
+                                      <option>Motoneta</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                              <label for="codigoPromocion">CÓDIGO DE PROMOCIÓN</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
+                                  </div>
+                                  <input name = 'codigoPromocion' type="text" class="form-control form-control-lg"  placeholder="Ingresa tu código de promocion" id='codigoPromocion'>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-row">
+                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                              <label for="fechaRecogida">FECHA DE RECOGIDA</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
+                                  </div>
+                                  <input name = 'fechaRecogida' type="text" class="form-control form-control-lg" placeholder="{{date('d\-m\-Y') }}" id='datetimepicker_fechaRecogida'  autocomplete="off" required>
+                              </div>
+                          </div>
+                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                              <label for="horaRecogida">HORA DE RECOGIDA</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
+                                  </div>
+                                  <select name = 'horaRecogida' class="form-control">
+                                      <option>08:00</option><option>08:30</option>
+                                      <option>09:00</option><option>09:30</option>
+                                      <option>10:00</option><option>10:30</option>
+                                      <option selected>11:00</option><option>11:30</option>
+                                      <option>12:00</option><option>12:30</option>
+                                      <option>13:00</option><option>13:30</option>
+                                      <option>14:00</option><option>14:30</option>
+                                      <option>15:00</option><option>15:30</option>
+                                      <option>16:00</option><option>16:30</option>
+                                      <option>17:00</option><option>17:30</option>
+                                      <option>18:00</option><option>19:30</option>
+                                      <option>20:00</option><option>20:30</option>
+                                      <option>21:00</option>
+                                  </select>
+                              </div>
+                              
+                          </div>
+                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                              <label for="fechaDevolucion">FECHA DE DEVOLUCIÓN</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
+                                  </div>
+                                  <input name = 'fechaDevolucion' type="text" class="form-control form-control-lg" placeholder="{{date('d\-m\-Y')}}" selected = "{{date('d\-m\-Y')}}" id='datetimepicker_fechaDevolucion'  autocomplete="off" required>
+                              </div>
+                          </div>
+                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                              <label for="horaDevolucion">HORA DE DEVOLUCIÓN</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
+                                  </div>
+                                  <select name = 'horaDevolucion'  class="form-control">
+                                      <option>08:00</option><option>08:30</option>
+                                      <option>09:00</option><option>09:30</option>
+                                      <option>10:00</option><option>10:30</option>
+                                      <option selected>11:00</option><option>11:30</option>
+                                      <option>12:00</option><option>12:30</option>
+                                      <option>13:00</option><option>13:30</option>
+                                      <option>14:00</option><option>14:30</option>
+                                      <option>15:00</option><option>15:30</option>
+                                      <option>16:00</option><option>16:30</option>
+                                      <option>17:00</option><option>17:30</option>
+                                      <option>18:00</option><option>19:30</option>
+                                      <option>20:00</option><option>20:30</option>
+                                      <option>21:00</option>
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
+                          <div class="form-row">  
+                              <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                  <button class="btn btn-primary" type="submit">Consulta Vehiculos Disponibles</button>
+                              </div>    
+                          </div>
+                  </form>
+                  <!-- fin formulario reserva -->
+              </div>
+          </div>       
+      </div>
+  </div>
 </div>
 <!-- fin del card reserva --> 
 </section>
