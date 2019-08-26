@@ -11,7 +11,6 @@ class PagesController extends Controller
         return view('index');
     }
 
-
     public function postFormularioindex(Request $request){  
             $hora_actual = strtotime(date('H\:i'));
             $hora_de_recogida = strtotime(date(" H\:i", strtotime($request->horaRecogida)));
@@ -41,6 +40,7 @@ class PagesController extends Controller
                 $reserva_temp->id_vehiculo = 0;
                 $reserva_temp->total = 0;
                 $reserva_temp->servicios_extra = 'ee';
+                $reserva_temp->id_cliente = 0;
                 // Guardamos en la base de datos (equivalente al flush de Doctrine)
                 $reserva_temp->save();
         
@@ -179,8 +179,6 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $datos_reserva->id_cliente = $cliente->idCliente;//guardo el cliente en la temporal por si acaso
     $datos_reserva->save();
 
-
-    
     // Creamos el objeto para Reservacion
     $reservacion = new App\Reservacion;
 
@@ -225,11 +223,15 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     if($reserva->btnAccion == 'pago_total'){
         $monto = $pago_reserva->total;
     }else{//volvemos a calcular los dias para SACAR EL ANTICIPO
-    $devolucion = new DateTime($laquiler->fecha_devolucion);
+    $devolucion = new DateTime($alquiler->fecha_devolucion);
     $salida     = new DateTime($alquiler->fecha_recogida);
     $diferencia = $salida->diff($devolucion);
     $dias = $diferencia->format('%a');
     $total = $pago_reserva->total;
+
+    if($dias == 0)
+        $dias = 1;
+    
     $monto = $total / $dias;
     }
 
@@ -315,14 +317,9 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
         }
 
     public function validar_logeo(Request $reserva){
-<<<<<<< HEAD
         //return $reserva;
         $r = $reserva->id_reserva;
         return view('seleccionar_forma_de_pago',compact('r'));
-=======
-
-        return view('seleccionar_forma_de_pago',compact('reserva'));
->>>>>>> 9d3674f9791ee9a81d9b0e5ec6cf333b5703ff17
     }
 
 

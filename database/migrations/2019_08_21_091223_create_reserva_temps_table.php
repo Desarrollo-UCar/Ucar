@@ -25,7 +25,7 @@ class CreateReservaTempsTable extends Migration
             $table->string('codigo_descuento')->nullable();
             $table->string('tipo_vehiculo');
             $table->integer('id_vehiculo');
-            $table->integer('id_cliente');
+            $table->integer('id_cliente');//se agrego
             $table->string('servicios_extra');// agregar campo a la tabla reservacion
             $table->decimal('total');
             $table->timestamps();

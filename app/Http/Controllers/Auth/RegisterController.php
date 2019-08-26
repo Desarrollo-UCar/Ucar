@@ -79,9 +79,29 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data){
+        //crear cliente
+// Creamos el objeto para Cliente
+        $cliente = new App\Cliente;
+        $cliente->nombre = $data['name'];
+        $cliente->primer_apellido = $data['primer_apellido'];
+        $cliente->segundo_apellido = $data['segundo_apellido'];
+        $cliente->fecha_nacimiento = new DateTime('2000-01-01');
+        $cliente->nacionalidad = $data['nacionalidad'];
+        $cliente->credencial = $data['INE'];
+        $cliente->pasaporte = $data['pasaporte'];
+        $cliente->correo = $data['email'];
+        $cliente->telefono = $data['telefono'];
+        $cliente->calle = $data['calle'];
+        $cliente->numero = 0;
+        $cliente->colonia = $data['colonia'];
+        $cliente->ciudad = $data['ciudad'];
+        $cliente->estado = $data['estado'];
+        $cliente->pais = $data['pais'];
+        $cliente->foto = $data['foto'];
 
+        $cliente->save();
+        ///////
 //crear usuario
         $user = User::create([
             'name' => $data['name'],
@@ -91,35 +111,6 @@ class RegisterController extends Controller
  
        $user->roles()->attach(Role::where('name', 'user')->first());
        return $user;
-
-//crear cliente
-// Creamos el objeto para Cliente
-$cliente = new App\Cliente;
-
-if(!(empty($cliente))){
-$cliente->nombre = $data['name'];
-$cliente->primer_apellido = $data['primer_apellido'];
-$cliente->segundo_apellido = $data['segundo_apellido'];
-$cliente->fecha_nacimiento = new DateTime('2000-01-01');
-$cliente->nacionalidad = $data['nacionalidad'];
-$cliente->credencial = $data['INE'];
-$cliente->pasaporte = $data['pasaporte'];
-$cliente->correo = $data['email'];
-$cliente->telefono = $data['telefono'];
-$cliente->calle = $data['calle'];
-$cliente->numero = 0;
-$cliente->colonia = $data['colonia'];
-$cliente->ciudad = $data['ciudad'];
-$cliente->estado = $data['estado'];
-$cliente->pais = $data['pais'];
-$cliente->foto = $data['foto'];
-
-$cliente->save();
-}
-
-///////
-
-
 
 
 

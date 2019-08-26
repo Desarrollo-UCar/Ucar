@@ -4,7 +4,7 @@
     <h1 class="display-4">! Paso Final ¡</h1>
     <hr class="my-4">
     <p class="lead">Estás a punto de pagar con PayPal la cantidad de: 
-        <h4>${{number_format($pago_reserva->total,2)}}</h4>
+        <h4>${{number_format($monto,2)}}</h4>
         <!-- Set up a container element for the button -->
             <div id="paypal-button-container"></div>
     </p>
@@ -24,7 +24,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '{{$pago_reserva->total}}'
+                            value: '{{$monto}}'
                         }
                     }]
                 });
