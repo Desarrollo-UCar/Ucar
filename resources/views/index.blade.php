@@ -238,7 +238,6 @@
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
                                   <select name = 'horaRecogida' class="form-control">
-                                      <option>00:02</option>
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>

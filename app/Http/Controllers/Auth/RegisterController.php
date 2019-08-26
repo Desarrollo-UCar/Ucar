@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App;
+use DateTime;
+use Illuminate\Http\Request;
 use App\Role;
 use App\User;
 use App\Cliente;
@@ -93,6 +95,8 @@ class RegisterController extends Controller
 //crear cliente
 // Creamos el objeto para Cliente
 $cliente = new App\Cliente;
+
+if(!(empty($cliente))){
 $cliente->nombre = $data['name'];
 $cliente->primer_apellido = $data['primer_apellido'];
 $cliente->segundo_apellido = $data['segundo_apellido'];
@@ -111,6 +115,8 @@ $cliente->pais = $data['pais'];
 $cliente->foto = $data['foto'];
 
 $cliente->save();
+}
+
 ///////
 
 

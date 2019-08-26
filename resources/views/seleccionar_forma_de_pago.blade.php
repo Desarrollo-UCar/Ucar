@@ -14,10 +14,8 @@
 <section id = "forma-pago">
 <!-- FINALIZA BARRA LATERAL DE INFORMACIÓN -->
 <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
-        <h5 >Datos Requeridos Para el Pago</h5>
         <form action="{{ route('pago_paypal')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <h5 >Método de Pago</h5>
             <div class="row">
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <div class="pricing-box-wrap special animated-fast flyIn">
@@ -46,9 +44,10 @@
                         </div>
                     </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <input type="hidden" name="id_reserva" value="{{$r}}">
                     <input class="form-check-input" type="checkbox" value="" id="terminos_condiciones" name = 'terminos_condiciones' required>
                     <label for="terminos_condiciones">Debes estar de acuerdo con los terminos y condiciones.</label>
-                    <p>El total se basa en la información disponible al momento de la reserva para los arrendatarios mayores de 25 años. Los servicios opcionales que puedes elegir al momento del alquiler, tales como recarga de combustible, protección LDW para el vehículo, etc., no están incluidos.</p>
+                    <p>El total se basa en la información disponible al momento de la reserva para los arrendatarios. Los servicios opcionales que puedes elegir al momento del alquiler, tales como recarga de combustible, protección LDW para el vehículo, etc., no están incluidos.</p>
                 </div>
             </div>
         </form>
