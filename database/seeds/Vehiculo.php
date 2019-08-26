@@ -15,7 +15,7 @@ class Vehiculo extends Seeder
         $faker = Faker::create();
         for ($i=0; $i <10; $i++) {
             \DB::table('vehiculos')->insert(array(
-                'vin' => '00000000000000000',
+                'vin' => '00000000000000000'.$i,
                'matricula' => 'xxxxxxx',
                 'marca' => $faker->randomElement(['Audi', 'Mercedez Benz', 'BMW', 'Honda', 'Chevrolet', 'Nissan']),
                 'modelo' => $faker->randomElement(['March 2018', 'Aveo 2016', 'Durango 2013', 'Suburban 2008', 'Duster 2018', 'Hilux 2014','XV 2018','Dio 2019']),
