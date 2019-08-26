@@ -38,19 +38,19 @@
                 
                   <div class="col-md-6 form-group">
                       <label>Fecha Reservacion</label>
-                      <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fechaReservacion}}">
+                      <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
                   </div>
                     
                   <div class="col-md-6 form-group">
                       <label>Precio Total</label>
-                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->precioTotal}}">
+                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->total}}">
                   </div>
 
-                  <div class="col-md-6 form-group">
+                <!--  <div class="col-md-6 form-group">
                       <label>Estatus</label>
                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->estatus}}">
                   </div>
-              
+                -->
               <div class="row">
                 <div class="col-xs-12">
 
@@ -62,18 +62,18 @@
 
                    <div class="col-md-6 form-group">
                      <label>Vehiculo</label>
-                     <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}  {{$vehiculo->anio}}">
+                     <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}">
                    </div>
 
 
                     <div class="col-md-6 form-group">
                       <label>Fecha Entrega</label>
-                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fechaEntrega}}">
+                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_recogida}}">
                     </div>
 
                      <div class="col-md-6 form-group">
                        <label>Fecha Devolucion</label>
-                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fechaDevolucion}}">
+                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
                     </div>
                   </div>
                 </div>
