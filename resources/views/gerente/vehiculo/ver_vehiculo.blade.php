@@ -40,25 +40,25 @@
                   <table id="example" class="display nowrap">
                       <thead>
                           <tr>
-                              <th style="text-align: center">Vin</th>
-                              <th style="text-align: center">Matricula</th>
-                              <th style="text-align: center">fecha Alta</th>
-                              <th style="text-align: center">Marca</th>
-                              <th style="text-align: center">Modelo</th>
-                              <th style="text-align: center">Año</th>
-                              <th style="text-align: center">Precio</th>
-                              <th style="text-align: center">Costo</th>
-                              <th style="text-align: center">No. Pasajeros</th>
-                              <th style="text-align: center">Color</th>
-                              <th style="text-align: center">Cilindros</th>
-                              <th style="text-align: center">Kilometraje</th>
-                              <th style="text-align: center">Tipo</th>
-                              <th style="text-align: center">Sucursal</th>
-                              <th style="text-align: center">Estatus</th>
-                              <th style="text-align: center">Descripción</th>
-                              <th style="text-align: center">Modificar</th>
-                              <th style="text-align: center">Mantenimiento</th>
-                              <th style="text-align: center">Eliminar</th>
+                              <th style="text-align: center;background: lightblue">Vin</th>
+                              <th style="text-align: center;background: lightblue">Matricula</th>
+                              <th style="text-align: center;background: lightblue">fecha Alta</th>
+                              <th style="text-align: center;background: lightblue">Marca</th>
+                              <th style="text-align: center;background: lightblue">Modelo</th>
+                              <th style="text-align: center;background: lightblue">Año</th>
+                              <th style="text-align: center;background: lightblue">Precio</th>
+                              <th style="text-align: center;background: lightblue">Costo</th>
+                              <th style="text-align: center;background: lightblue">No. Pasajeros</th>
+                              <th style="text-align: center;background: lightblue">Color</th>
+                              <th style="text-align: center;background: lightblue">Cilindros</th>
+                              <th style="text-align: center;background: lightblue">Kilometraje</th>
+                              <th style="text-align: center;background: lightblue">Tipo</th>
+                              <th style="text-align: center;background: lightblue">Sucursal</th>
+                              <th style="text-align: center;background: lightblue">Estatus</th>
+                              <th style="text-align: center;background: lightblue">Descripción</th>
+                              <th style="text-align: center;background: lightblue">Modificar</th>
+                              <th style="text-align: center;background: lightblue">Mantenimiento</th>
+                              <th style="text-align: center;background: lightblue">Eliminar</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -147,9 +147,13 @@
          <script>           
         var table = $(document).ready(function() {
               $('#example').DataTable( {
-                "scrollX": true,               
+                "scrollX": "300px",
+                responsive: true,               
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                fixedColumns:   {
+                 leftColumns: 1
                 }                
                 
               } );
@@ -158,7 +162,7 @@
          </script>
          <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
          <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
+         <script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
          <script>
            </script>
      @endsection

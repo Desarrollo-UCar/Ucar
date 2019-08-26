@@ -117,6 +117,7 @@ class VehiculoController extends Controller
         $sucursal=Sucursal::all();
         $vehiculosucursal = VehiculoSucursales::where('sucursal',$foranea['idsucursal'])->first();
         
+        //return $vehi;
         return view('gerente.vehiculo.editar_vehiculo',compact('foranea','vehi','sucursal','vehiculosucursal'));
     }
 
@@ -132,7 +133,8 @@ class VehiculoController extends Controller
        
         $vehiculo = vehiculo::where('vin',$datos['vin'])->first();
         if ($request->hasFile('foto')) {
-            $datos['foto']=$request->file('foto')->store('upload','public');
+            $datos['foto']=$request->file('foto')->store('upload','public','app');
+            //return $datos['foto'];
             $vehiculo ->update([
                 'vin'        =>$datos['vin'],
                 'matricula'  =>$datos['matricula'],

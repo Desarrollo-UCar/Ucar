@@ -162,10 +162,10 @@
 
                     <div class="col-md-6 ">
                         <div id="preview" style="margin-top: 5%;">
-                          :@if ($vehi->foto == null)
+                          @if ($vehi->foto == null)
                           <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 100%; height: 100%;">
                           @else
-                          <img src="{{ asset('storage').'/'.$vehi->foto}}" style="width: 100%; height: 100%;" >   
+                          <img src="{{asset('storage').'/'.$vehi->foto}}" style="width: 100%; height: 100%;" >   
                           @endif
                         
                         </div>
