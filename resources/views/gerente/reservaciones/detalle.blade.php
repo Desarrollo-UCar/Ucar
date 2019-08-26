@@ -27,7 +27,7 @@
               </div>
 
               <div class="box-body">
-                  {{$alquiler->id}}
+                  {{$alquiler->id  }}
                   <div class="col-md-6 form-group">
                   <label>Cliente {{$cliente->idCliente}}</label>
                       <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->nombre}} {{$cliente->primer_apellido}} {{$cliente->segundo_apellido}}">
