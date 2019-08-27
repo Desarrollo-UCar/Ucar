@@ -7,6 +7,7 @@ Route::get('register', function () {
 })->name('register');
 
 Route::get('login', function () {
+    
     return view('/auth/login');
 })->name('login')->middleware('guest');
 
@@ -104,7 +105,7 @@ Route::get('modificarsucursal','SucursalController@modificar')->name('modificars
 //Route::post('login','UsuariosController@login');
 
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 

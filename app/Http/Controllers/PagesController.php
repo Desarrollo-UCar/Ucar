@@ -188,7 +188,6 @@ class PagesController extends Controller
         }
         $alquiler = intval($vehiculo->precio) * intval($dias);
         $totalf = $alquiler + $total_serv_extra;
-        $prepago = number_format($totalf*95/100,2);
         $total = number_format($totalf,2);
         //actualizar tabla temporal de la reserva
     $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
@@ -196,7 +195,7 @@ class PagesController extends Controller
     $datos_reserva->save();
 
         return view('reservar_realizar_pago',
-            compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total','prepago'));
+            compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total'));
     }
 
 public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta logeado
@@ -338,14 +337,9 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     }
 
     public function solicita_informacion_traslado(Request $reserva){
-        //return $reserva;
-            // Creamos el objeto para Cliente
-        
-
         }
 
     public function validar_logeo(Request $reserva){
-        //return $reserva;
         $r = $reserva->id_reserva;
         return view('seleccionar_forma_de_pago',compact('r'));
     }

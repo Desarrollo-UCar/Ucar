@@ -29,11 +29,7 @@
                             <tr><td><small><strong>Subtotal MXN {{$dias}} Dia(s)</strong></small></td> <td><small><strong>${{number_format($total_vehiculo,2)}}</strong></small></td></tr>
                            
                             <tr><td><small>Servicios_extra</small></td>                   <td><small>{{$servicios_extra}}</small></td></tr>
-                            
-                            <tr><td><small><strong>Cargos Adicionales</strong></small></td>     <td><small></small></td></tr>
-                            <tr><td><small>Cuota Aeropuerto</small></td>                        <td><small>$130.00</small></td></tr>
-                            <tr><td><small>Cargo Por Servicio</small></td>                      <td><small>$10.00</small></td></tr>
-                            <tr><td><small>IVA / TAX</small></td>                               <td><small>${{$iva}}</small></td></tr>
+                        
                             <tr><td><small><strong>Total</strong></small></td>                  <td><small><strong>${{$pago_reserva->total}}</strong></small></td></tr>
                         </tbody>
                         </table>

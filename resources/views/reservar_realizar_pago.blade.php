@@ -26,7 +26,6 @@
                             <tr><td><small>{{$servicio->nombre}}</small></td>                   <td><small>${{$servicio->precioRenta}}.00</small></td></tr>
                             @endforeach
                             <tr><td><small><strong>Total</strong></small></td>                  <td><small><strong>${{$total}}</strong></small></td></tr>
-                            <tr><td><small><strong>Pagando con Prepago</strong></small></td>    <td><small><strong>${{$prepago}}</strong></small></td></tr>
                         </tbody>
                         </table>
                     </div>
