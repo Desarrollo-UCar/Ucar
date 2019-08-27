@@ -21,16 +21,22 @@
            
               <!-- Tasks: style can be found in dropdown.less -->
             
-              <!-- User Account: style can be found in dropdown.less -->
+              <!-- User Account: style can be found in dropdown.less 
+              <?php
+              $role = DB::table('users')
+                ->join('empleados','correo','=','users.email') 
+                ->select('users.*','empleados.*')
+                ->first();
+            ?>-->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="user-image" alt="User Image">
-                  <span class="hidden-xs">ADMINISTRADOR</span>
+                    <img src="{{ asset('storage').'/'.$role->foto }}" class="user-image" alt="User Image">
+                  <span class="hidden-xs"><?php echo $role->tipo;?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image">
+                      <img src="{{ asset('storage').'/'.$role->foto }}" class="img-circle" alt="User Image">
     
                     <p>
                       ADMINISTRADOR

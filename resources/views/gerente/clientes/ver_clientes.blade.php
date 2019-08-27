@@ -52,10 +52,9 @@
                 <div class="tab-content no-padding">
                   <!-- Morris chart - Sales -->
                   <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height:auto;">
-
+                      <form action="{{ route('cli')}}" method="POST" enctype="multipart/form-data" >
                     <div class="col-md-6 col-xs-offset-6" id="clifre" style="display: none;">
-                      <form action="">
-                          <div class="col-md-6 form-group">
+                                                <div class="col-md-6 form-group">
                               <label>Fecha inicial</label>
                                   <input type="date" name="fecha_inicio" id="" class="form-control" autofocus>
                           </div>
@@ -69,15 +68,15 @@
                             <div class="box-footer" style="float: right">
                                 <a href="#" class="btn btn-danger" onclick="deshabilitar()">Cancelar</a>
                               
-                              </div>
-
-                      </form>
+                              </div>                   
 
                     </div>
+                  </form>
 
-
+                  <form action="{{ route('mantenimiento.store')}}" method="POST" enctype="multipart/form-data">
+                      @csrf
                     <div class="col-md-6 col-xs-offset-6" id="ingresos1" style="display: none;">
-                        <form action="">
+                       
                             <div class="col-md-6 form-group">
                                 <label>Cantidad inicial</label>
                                 <input type="number" step="0.00" name="cant_inicial" id="" min="0.00" class="form-control" value="0.00"  required>
@@ -94,10 +93,10 @@
                                 
                                 </div>
                                                               
-                        </form>
+                        
   
                       </div>
-
+                    </form>
                     
                       @if (count($clientes)==0)
                       <div style="display: none;">
@@ -162,78 +161,7 @@
                   </div>
 
 
-                  {{-- SECCION DE CLIENTES FRECUENTES--}}
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height:auto;">
-
-                      <?php $frecuentes = DB::table('reservacions')                                    
-                                    ->join('clientes','idCliente','=','reservacions.id_cliente')
-                                    ->select(DB::raw('count(*) as cantidad, reservacions.id_cliente,clientes.*'))
-                                      ->groupBy('reservacions.id_cliente')
-                                      ->orderBy('cantidad','desc')
-                                      //->limit(10)
-                                      ->get()
-                                      ; 
-                                    //  $frecuentes=array_reverse($frecuentes,true)
-                      ?>
-                        <table id="example2" class="display nowrap " style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="text-align: center;background: lightblue">Frecuencia</th>
-                                    <th style="text-align: center;background: lightblue">Credencial</th>
-                                    <th style="text-align: center;background: lightblue">Pasaporte</th>
-                                    <th style="text-align: center;background: lightblue">Nombre</th>
-                                    <th style="text-align: center;background: lightblue">Apellido Paterno</th>                              
-                                    <th style="text-align: center;background: lightblue">Apellido Materno</th>   
-                                    <th style="text-align: center;background: lightblue">Fecha Nacimiento</th>
-                                    <th style="text-align: center;background: lightblue">Nacionalidad</th>
-                                    <th style="text-align: center;background: lightblue">Correo</th>
-                                    <th style="text-align: center;background: lightblue">Teléfono</th>
-                                    <th style="text-align: center;background: lightblue">País</th>
-                                    <th style="text-align: center;background: lightblue">Estado</th>
-                                    <th style="text-align: center;background: lightblue">Ciudad</th>
-                                    <th style="text-align: center;background: lightblue">Colonia</th>
-                                    <th style="text-align: center;background: lightblue">Calle</th>
-                                    <th style="text-align: center;background: lightblue">Fecha Alta</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                 @foreach ($frecuentes as $fre)                      
-                            <tr>
-                                <td style="text-align: center">{{$fre->cantidad}}</td>
-                                  @if ($fre->credencial==null)
-                                  <td style="text-align: center">---------</td>
-                                  @else
-                                  <td style="text-align: center">{{$fre->credencial}}</td>
-                                  @endif 
-                                  @if ($fre->pasaporte==null)
-                                  <td style="text-align: center">---------</td>
-                                  @else
-                                  <td style="text-align: center">{{$fre->pasaporte}}</td>
-                                  @endif 
-                              <td style="text-align: center">{{$fre->nombre}}</td>
-                              <td style="text-align: center">{{$fre->primer_apellido}}</td>
-                              @if ($fre->segundo_apellido==null)
-                              <td style="text-align: center">---------</td>
-                              @else
-                              <td style="text-align: center">{{$fre->segundo_apellido}}</td>
-                              @endif 
-                              <td style="text-align: center">{{date("d\-m\-Y", strtotime($fre->fecha_nacimiento))}}</td>
-                              <td style="text-align: center">{{$fre->nacionalidad}}</td>
-                              <td style="text-align: center">{{$fre->correo}}</td>
-                              <td style="text-align: center">{{$fre->telefono}}</td>
-                              <td style="text-align: center">{{$fre->pais}}</td>
-                              <td style="text-align: center">{{$fre->estado}}</td>
-                              <td style="text-align: center">{{$fre->ciudad}}</td>
-                              <td style="text-align: center">{{$fre->colonia}}</td>
-                              <td style="text-align: center">{{$fre->calle}}</td>
-                              <td style="text-align: center">{{$fre->created_at}}</td>
-                            </tr> 
-                      @endforeach
-                            
-                            </tbody>
-                        </table>
-                  </div>
+                
                 </div>
               </div>
             </div>          
@@ -307,18 +235,6 @@ document.getElementById('ingresos1').style.display = 'none';
               } );
           } );
          </script>
-         <script>
-            $(document).ready(function() {
-                 $('#example2').DataTable( {
-                  "scrollY": "200px",
-                   "scrollX": true,
-                   "order": [ 0, "desc" ],
-                   "language": {
-                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                   }                
-                 } );
-             } );
-            </script>
          <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
          <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
      @endsection

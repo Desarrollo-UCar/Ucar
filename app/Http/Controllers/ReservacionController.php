@@ -9,6 +9,7 @@ use App\Cliente;
 use App\Vehiculo;
 use PDF;
 use mpdf;
+use App;
 
 
 class ReservacionController extends Controller
@@ -59,16 +60,18 @@ class ReservacionController extends Controller
     public function show(Reservacion $reservacion)
     {
 
-
+        $carbon = new \Carbon\Carbon();
 
         //    
         $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
         $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
         $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
-
+        $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
+        $edad = $carbon->parse( $newDate)->age; // 1990-10-25
+        //dump($edad);
         //$reservacion = Reservacion::where('id','=',$id)->first();
         //return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
-        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo'));
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad'));
     }
 
     /**
@@ -112,6 +115,9 @@ class ReservacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function cancela($idReservacion){
+
+        $carbon = new \Carbon\Carbon();
+        
         $reservacion = Reservacion::where('id','=',$idReservacion)->first();
 
         //$reservacion->estatus = 'cancelada';
@@ -123,11 +129,14 @@ class ReservacionController extends Controller
         $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
         $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
 
+        $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
+        $edad = $carbon->parse( $newDate)->age; // 1990-10-25
+        dump($newDate);
         $alquiler->estatus = 'cancelado';
         $alquiler->save();
 
 
-        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo'));
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo', 'cliente','edad'));
     
         //return response()->json($alquileres);
 
@@ -141,7 +150,7 @@ class ReservacionController extends Controller
      */
     public function printPDF(Reservacion $reservacion)
     {
-        return response()->json(date('Y\-m\-d H\:i\:s'));
+        //return response()->json(date('Y\-m\-d H\:i\:s'));
         //$pdf = PDF::loadView('index', $reservacion);  
         //return $pdf->stream(' contrato.pdf');
 
@@ -166,5 +175,50 @@ class ReservacionController extends Controller
           
         $pdf = PDF::loadView('pdf_view', $data);  
         return $pdf->stream(' contrato.pdf');
+    }
+
+            /**
+     * Display the specified resource.
+     *
+     * @param  \App\reservacion  $reservacion
+     * @return \Illuminate\Http\Response
+     */
+    public function pago_Reservacion(Reservacion $reservacion)
+    {   //return response()->json(date('Y\-m\-d H\:i\:s'));
+        $carbon = new \Carbon\Carbon();
+        
+        $pago = new App\Pago_reservacion;
+        $pago->total = $reservacion->saldo;
+        $pago->fecha =date('Y\-m\-d H\:i\:s');
+        //return response()->json($pago);
+        $pago->paypal_Datos = '---';
+        $pago->paypal_Datos = '---';
+        $pago->save();
+        $reservacion->estatus = 'pagado';
+        $reservacion->saldo = '0';
+        $reservacion->save();
+
+
+        
+        $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
+        $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+        $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
+
+        $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
+        $edad = $carbon->parse( $newDate)->age; // 1990-10-25
+
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo', 'cliente','edad'));
+    }
+
+    public function garantia(Reservacion $reservacion)
+    {  
+        $carbon = new \Carbon\Carbon();
+    
+        $pago = new app\Pago_reservacion;
+        $pago->total = '10000';
+        $pago->fecha =  $carbon->now();
+        $pago->save();
+        $reservacion->estatus = 'pagado';
+        $reservacion->save();
     }
 }
