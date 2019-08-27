@@ -83,6 +83,7 @@ Route::resource('user','UsuariosController');
 //Route::get('gerente', 'AdminController@inicio')->name('home');
 Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG');
 
+
 //Route::get('gerente/usuarios/vehiculo/alta_vehiculo','AdminController@Vehiculo')->name('vehiculo');
 Route::resource('vehiculo','VehiculoController');
 Route::resource('products','ProductController');
@@ -91,13 +92,13 @@ Route::resource('empleado','EmpleadoController');
 Route::resource('servicioe', 'ServiciosExtraController');
 Route::resource('mantenimiento', 'MantenimientoController');
 Route::resource('tallerservicio', 'TallerServicioController');
+Route::resource('cliente', 'ClienteController');
 Route::get('mostrarmantenimiento', 'MantenimientoController@mostrar')->name('mostrarmantenimiento');
 Route::get('editarmantenimieto', 'MantenimientoController@modificar')->name('modificarmantenimiento');
 Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado');
 Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehiculo');
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
 Route::get('modificarsucursal','SucursalController@modificar')->name('modificarsucursal');
-Route::get('clientes', 'AdminController@verclientes')->name('cliente');
 //});
 
 //Route::post('login','UsuariosController@login');

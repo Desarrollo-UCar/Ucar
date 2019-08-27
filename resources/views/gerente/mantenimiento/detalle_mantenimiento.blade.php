@@ -137,9 +137,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 @foreach ($servicios as $ser)                      
+                              <?php 
+                                   $i = 0;
+                                ?>
+                                 @foreach ($servicios as $ser)
+                                 
                       <tr>
-                              <td style="text-align: center">{{$ser->idserviciotaller}}</td>
+                              <td style="text-align: center"><?php 
+                                echo $i=$i+1;
+                              ?></td>
                               <td >{{$ser->nombreservicio}}</td>
                               @if ($ser->descripcion==null)
                               <td style="text-align: center;" >----------------</td>

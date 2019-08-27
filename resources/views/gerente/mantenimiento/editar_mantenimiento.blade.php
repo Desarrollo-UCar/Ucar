@@ -26,7 +26,9 @@
         </div>
     @endif
     @if (session()->has('msj'))
-    <div class="alert alert-info" role="alert">{{session('msj')}}</div>                                    
+    <div class="alert alert-info" role="alert">{{session('msj')}}</div> 
+    <a href="{{route('mantenimiento.index')}}" style="color:darkgreen"><b> ver todos los mantenimientos </b></a>
+                                   
     @endif 
     @if (session()->has('mensaje'))
     <div class="alert alert-danger" role="alert">{{session('mensaje')}}</div>                                    

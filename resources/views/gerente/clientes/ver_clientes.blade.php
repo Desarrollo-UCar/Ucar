@@ -15,7 +15,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Clientes</small>
         </h1>
         
@@ -30,20 +30,75 @@
     <section class="content">
 
         <div class="row">
+           
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
               <!-- Custom tabs (Charts with tabs)-->
               <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
                 <ul class="nav nav-tabs pull-right">
-                 
-                  <li><a href="#sales-chart" data-toggle="tab">Frecuentes</a></li>
-                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Todos</a></li>
+                    <div class="btn-group pull-right" >
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" >
+                          Mas opciónes
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a href="#" id="frecuentes" onclick="mostrar()"><b>clientes frecuentes</b></a></li>
+                          <li><a href="#" onclick="ingresos()"><b>Por ingresos</b></a></li>
+                        </ul>
+                      </div>
                   <li class="pull-left header"><i class="fa fa-inbox"></i>Clientes </li>
                 </ul>
                 <div class="tab-content no-padding">
                   <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height:auto;   ">
+                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height:auto;">
+
+                    <div class="col-md-6 col-xs-offset-6" id="clifre" style="display: none;">
+                      <form action="">
+                          <div class="col-md-6 form-group">
+                              <label>Fecha inicial</label>
+                                  <input type="date" name="fecha_inicio" id="" class="form-control" autofocus>
+                          </div>
+                          <div class="col-md-6 form-group">
+                              <label>Fecha final</label>
+                                  <input type="date" name="fecha_final" id="" class="form-control" autofocus>
+                          </div>
+                          <div class="box-footer" style="float: right">
+                              <button type="submit" class="btn btn-primary">Consultar</button>
+                            </div>
+                            <div class="box-footer" style="float: right">
+                                <a href="#" class="btn btn-danger" onclick="deshabilitar()">Cancelar</a>
+                              
+                              </div>
+
+                      </form>
+
+                    </div>
+
+
+                    <div class="col-md-6 col-xs-offset-6" id="ingresos1" style="display: none;">
+                        <form action="">
+                            <div class="col-md-6 form-group">
+                                <label>Cantidad inicial</label>
+                                <input type="number" step="0.00" name="cant_inicial" id="" min="0.00" class="form-control" value="0.00"  required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Cantidad final</label>
+                                <input type="number" step="0.00" name="costo_final" id="" min="0.00" class="form-control" value="0.00" required>
+                            </div>
+                            <div class="box-footer" style="float: right">
+                                <button type="submit" class="btn btn-primary">Consultar</button>
+                              </div>
+                              <div class="box-footer" style="float: right">
+                                  <a href="#" class="btn btn-danger" onclick="deshabilitaringresos()">Cancelar</a>
+                                
+                                </div>
+                                                              
+                        </form>
+  
+                      </div>
+
+                    
                       @if (count($clientes)==0)
                       <div style="display: none;">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning" id="<?php 
@@ -56,8 +111,7 @@
                         <table id="example" class="display nowrap " style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center;background: lightblue">Credencial</th>
-                                    <th style="text-align: center;background: lightblue">Pasaporte</th>
+                                    <th style="text-align: center;background: lightblue">Credencial/Pasaporte</th>
                                     <th style="text-align: center;background: lightblue">Nombre</th>
                                     <th style="text-align: center;background: lightblue">Apellido Paterno</th>                              
                                     <th style="text-align: center;background: lightblue">Apellido Materno</th>   
@@ -78,15 +132,11 @@
                                  @foreach ($clientes as $cliente)                      
                             <tr>
                                   @if ($cliente->credencial==null)
-                                  <td style="text-align: center">---------</td>
+                                  <td style="text-align: center">{{$cliente->pasaporte}}</td>
                                   @else
                                   <td style="text-align: center">{{$cliente->credencial}}</td>
                                   @endif 
-                                  @if ($cliente->pasaporte==null)
-                                  <td style="text-align: center">---------</td>
-                                  @else
-                                  <td style="text-align: center">{{$cliente->pasaporte}}</td>
-                                  @endif 
+                                 
                               <td style="text-align: center">{{$cliente->nombre}}</td>
                               <td style="text-align: center">{{$cliente->primer_apellido}}</td>
                               @if ($cliente->segundo_apellido==null)
@@ -114,7 +164,7 @@
 
                   {{-- SECCION DE CLIENTES FRECUENTES--}}
                   <div class="chart tab-pane" id="sales-chart" style="position: relative; height:auto;">
-                      CLIENTES FRECUENTES
+
                       <?php $frecuentes = DB::table('reservacions')                                    
                                     ->join('clientes','idCliente','=','reservacions.id_cliente')
                                     ->select(DB::raw('count(*) as cantidad, reservacions.id_cliente,clientes.*'))
@@ -210,6 +260,9 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
+
+
+
    
 @endsection    
      @section('scripts')
@@ -220,6 +273,26 @@
          var obj= document.getElementById("boton");
          obj.click();
          } );
+        </script>
+
+        <script>
+        function mostrar(){
+document.getElementById('clifre').style.display = 'block';
+document.getElementById('ingresos1').style.display = 'none';
+}
+
+function deshabilitar(){
+document.getElementById('clifre').style.display = 'none';
+}
+
+function ingresos(){
+document.getElementById('clifre').style.display = 'none';
+document.getElementById('ingresos1').style.display = 'block';
+}
+
+function deshabilitaringresos(){
+document.getElementById('ingresos1').style.display = 'none';
+}
         </script>
 
          <script>
@@ -237,10 +310,10 @@
             $(document).ready(function() {
                  $('#example2').DataTable( {
                    "scrollX": true,
-                   "order": [[ 3, "desc" ]],
+                   "order": [ 0, "desc" ],
                    "language": {
                      "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                   },                   
+                   }                
                  } );
              } );
             </script>

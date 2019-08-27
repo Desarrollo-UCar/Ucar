@@ -92,9 +92,10 @@
 
                         <div class="col-md-6 form-group">
                           <label>Fecha salida</label>
-                          <input type="date" name="fecha_ingresa" class="form-control" required>
+                          <input type="date" name="fecha_ingresa" class="form-control" value="<?php echo date("Y-m-d");?>" required>
                         </div>
 
+                        
                         <div class="col-md-6 form-group">
                                 <label>Fecha Regreso</label>
                                 <input type="date" name="fecha_salida" class="form-control">
