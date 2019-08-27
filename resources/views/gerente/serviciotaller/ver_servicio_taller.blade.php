@@ -73,7 +73,7 @@
     
                         <div class="form-group col-md-4">
                           <label>Descripción</label>
-                          <input type="text" class="form-control" placeholder="País" name="descripcion"  onkeyup="javascript:this.value=this.value.toUpperCase();">
+                          <input type="text" class="form-control" placeholder="Descripción" name="descripcion"  onkeyup="javascript:this.value=this.value.toUpperCase();">
                       </div>
                       <div class="row">
                           <div class="col-md-8">

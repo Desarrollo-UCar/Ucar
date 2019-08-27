@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Cliente;
 Use App\Reservacion;
+
+use DB; 
 class ClienteController extends Controller
 {
     /**
@@ -54,6 +56,61 @@ class ClienteController extends Controller
         */
     }
 
+
+    public function mostrar(Request $request)
+    {
+
+        return $request;
+        if($request['fecha_inicio']==null && $request['fecha_final']== null){
+        $clientes = DB::table('reservacions')                                    
+        ->join('clientes','idCliente','=','reservacions.id_cliente')
+        ->select(DB::raw('count(*) as cantidad, reservacions.id_cliente,clientes.*'))
+          ->groupBy('reservacions.id_cliente')
+          ->orderBy('cantidad','desc')
+          //->limit(10)
+          ->get()
+          ;          
+        }
+          
+          if($request['fecha_inicio']!= null && $request['fecha_final']== null){
+            $clientes = DB::table('reservacions')                                    
+            ->join('clientes','idCliente','=','reservacions.id_cliente')
+            ->where('reservacions.fecha_reservacion','>=',$request['fecha_inicio'])
+            ->select(DB::raw('count(*) as cantidad, reservacions.id_cliente,clientes.*'))
+              ->groupBy('reservacions.id_cliente')
+              ->orderBy('cantidad','desc')
+              //->limit(10)
+              ->get()
+              ;
+          }
+
+          if($request['fecha_final']!= null && $request['fecha_inicial']== null){
+            $clientes = DB::table('reservacions')                                    
+            ->join('clientes','idCliente','=','reservacions.id_cliente')
+            ->where('reservacions.fecha_reservacion','>=',$request['fecha_final'])
+            ->select(DB::raw('count(*) as cantidad, reservacions.id_cliente,clientes.*'))
+              ->groupBy('reservacions.id_cliente')
+              ->orderBy('cantidad','desc')
+              //->limit(10)
+              ->get()
+              ;
+          }
+          if($request['fecha_final']!= null && $request['fecha_inicial'] != null){
+            $clientes = DB::table('reservacions')                                    
+            ->join('clientes','idCliente','=','reservacions.id_cliente')
+            ->where(['reservacions.fecha_reservacion','>=',$request['fecha_inicio']],'reservacions.fecha_reservacion','<=',$request['fecha_final'])
+            ->select(DB::raw('count(*) as cantidad, reservacions.id_cliente,clientes.*'))
+              ->groupBy('reservacions.id_cliente')
+              ->orderBy('cantidad','desc')
+              //->limit(10)
+              ->get()
+              ;
+          }
+
+        //  return $request;
+        return view ('gerente.clientes.clientes_frecuentes',compact('clientes'));
+        //
+    }
     /**
      * Display the specified resource.
      *
@@ -62,6 +119,7 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
+       
         //
     }
 
