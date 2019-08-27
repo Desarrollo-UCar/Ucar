@@ -58,7 +58,7 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="{{ route('cliente')}}" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('cliente.index')}}" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
