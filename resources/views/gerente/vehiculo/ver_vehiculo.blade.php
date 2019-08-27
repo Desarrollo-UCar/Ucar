@@ -41,7 +41,7 @@
                       <thead>
                           <tr>
                               <th style="text-align: center;background: lightblue">Vin</th>
-                              <th style="text-align: center;background: lightblue">Matricula</th>
+                              <th style="text-align: center;background: lightblue">Placas</th>
                               <th style="text-align: center;background: lightblue">fecha Alta</th>
                               <th style="text-align: center;background: lightblue">Marca</th>
                               <th style="text-align: center;background: lightblue">Modelo</th>

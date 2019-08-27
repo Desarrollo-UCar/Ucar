@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Empleados</title>
+  <title>Reservas</title>
  
   <link rel="stylesheet" type="text/css" href="{{URL::asset('/css/tabla.css')}}">
   <link rel="stylesheet" type="text/css" href="{{URL::asset('https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')}}">
@@ -15,8 +15,8 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
-          <small>Empleados</small>
+          Panel de administración |
+          <small>Reservaciones</small>
         </h1>
         
     </section>
@@ -29,12 +29,12 @@
             <table id="example" class="display nowrap " style="width:100%">
                 <thead>
                     <tr>
-                      <th>Numero</th>
-                      <th>Credencial/Pasaporte Cliente</th>
+                      <th>Número</th>
+                      <th>identificación/Pasaporte Cliente</th>
                       <th>Fecha</th>
                       <th>Motivo</th>
                       <th>Total</th>
-                      <th>Accion</th>
+                      <th>Acción</th>
                     </tr>
                     </thead>
                     <tbody>

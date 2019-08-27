@@ -111,7 +111,7 @@
                         <table id="example" class="display nowrap " style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center;background: lightblue">Credencial/Pasaporte</th>
+                                    <th style="text-align: center;background: lightblue">Identificación/Pasaporte</th>
                                     <th style="text-align: center;background: lightblue">Nombre</th>
                                     <th style="text-align: center;background: lightblue">Apellido Paterno</th>                              
                                     <th style="text-align: center;background: lightblue">Apellido Materno</th>   

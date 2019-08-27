@@ -15,7 +15,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Servicios de mantenimiento</small>
         </h1>
         
@@ -72,7 +72,7 @@
                               
     
                         <div class="form-group col-md-4">
-                          <label>Descripcion</label>
+                          <label>Descripción</label>
                           <input type="text" class="form-control" placeholder="País" name="descripcion"  onkeyup="javascript:this.value=this.value.toUpperCase();">
                       </div>
                       <div class="row">

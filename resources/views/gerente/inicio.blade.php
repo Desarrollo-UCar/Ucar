@@ -68,7 +68,7 @@
             <div class="inner">
               <h3>0</h3>
 
-              <p>Visitas a la pagina</p>
+              <p>Visitas a la página</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
