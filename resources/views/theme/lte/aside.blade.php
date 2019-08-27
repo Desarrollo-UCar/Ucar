@@ -115,7 +115,7 @@
                   </ul>
                 </li> 
                 <li class="treeview">
-                        <li><a href="{{ route('cliente.index')}}"><i class="fa fa-users"></i>clientes</a></li> 
+                        <li><a href="{{ route('showcliente')}}"><i class="fa fa-users"></i>clientes</a></li> 
                 </li> 
           </ul>
         </section>

@@ -99,6 +99,7 @@ Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado'
 Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehiculo');
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
 Route::get('modificarsucursal','SucursalController@modificar')->name('modificarsucursal');
+Route::post('clientemostrar', 'ClienteController@mostrar')->name('showcliente');
 //});
 
 //Route::post('login','UsuariosController@login');
