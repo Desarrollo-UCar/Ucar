@@ -2,7 +2,7 @@
  <aside class="main-sidebar" style="position: fixed;">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-          <!-- Sidebar user panel -->
+          <!-- Sidebar user panel 
           <div class="user-panel">
               <?php
               $role = DB::table('users')
@@ -10,7 +10,7 @@
                 ->select('users.*','empleados.*')
                 ->first();
             ?>
-
+ -->
             <div class="pull-left image">
               <img src="{{ asset('storage').'/'.$role->foto }}" class="img-circle" alt="User Image">
             </div>
