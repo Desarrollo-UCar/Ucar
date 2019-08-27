@@ -173,7 +173,8 @@
 
          <script>
          $(document).ready(function() {
-               $table=$('#example').DataTable( {               
+               $table=$('#example').DataTable( { 
+                "scrollY":"400px",              
                 "scrollX": true,   
               //  "search": document.getElementById("nombreservicio").value,            
                 "language": {

@@ -298,6 +298,7 @@ document.getElementById('ingresos1').style.display = 'none';
          <script>
          $(document).ready(function() {
               $('#example').DataTable( {
+                "scrollY": "400px",
                 "scrollX": true,
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
@@ -309,6 +310,7 @@ document.getElementById('ingresos1').style.display = 'none';
          <script>
             $(document).ready(function() {
                  $('#example2').DataTable( {
+                  "scrollY": "200px",
                    "scrollX": true,
                    "order": [ 0, "desc" ],
                    "language": {

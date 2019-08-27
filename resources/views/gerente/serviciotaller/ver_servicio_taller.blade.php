@@ -172,7 +172,8 @@
 
          <script>
          $(document).ready(function() {
-              var $table=$('#example').DataTable( {               
+              var $table=$('#example').DataTable( {   
+                "scrollY":"400px",            
                 "scrollX": true,                
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

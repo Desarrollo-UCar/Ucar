@@ -147,7 +147,7 @@
          <script>           
         var table = $(document).ready(function() {
               $('#example').DataTable( {
-                "scrollX": "300px",
+                "scrollX": "400px",
                 "responsive": true,               
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

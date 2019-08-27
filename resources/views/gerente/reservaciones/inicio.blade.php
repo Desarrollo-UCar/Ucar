@@ -79,6 +79,7 @@
      <script>
      $(document).ready(function() {
           $('#example').DataTable( {
+            "scrollY":"400px",
             "scrollX": true,
             "language": {
               "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
