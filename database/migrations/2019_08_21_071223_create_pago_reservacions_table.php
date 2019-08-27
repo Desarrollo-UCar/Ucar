@@ -16,10 +16,12 @@ class CreatePagoReservacionsTable extends Migration
         Schema::create('pago_reservacions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('id_reserva');
-            $table->string('paypal_Datos');
+            $table->string('paypal_Datos')->nullable();
+            $table->string('pago_Datos')->nullable();
             $table->datetime('fecha');
             $table->decimal('total');
-            $table->string('status');
+            $table->string('estatus');
+
             $table->timestamps();
         });
     }

@@ -35,6 +35,7 @@ class CreateAlquilersTable extends Migration
             $table->string('expiracion_licencia');
 
             $table->string('estatus');
+            $table->string('garantia')->nullable();
             $table->timestamps();
         });
     }

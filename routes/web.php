@@ -81,7 +81,7 @@ Route::resource('user','UsuariosController');
 //Route::get('/usuario','UsuariosController@Login');
 
 //Route::get('gerente', 'AdminController@inicio')->name('home');
-Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG');
+Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG')->middleware('auth');
 
 //Route::get('gerente/usuarios/vehiculo/alta_vehiculo','AdminController@Vehiculo')->name('vehiculo');
 Route::resource('vehiculo','VehiculoController');
@@ -110,6 +110,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //---------------------------------------------------------------------------mis rutas K
 //rutas reservacion
+Route::get('pago/{reservacion}', 'ReservacionController@pago_Reservacion')->name('pagoReservacion');
 Route::get('cancel/{id}', 'ReservacionController@cancela')->name('cancelaReservacion');
 Route::resource('reservacion', 'ReservacionController');
 Route::get('/customer/print-pdf/{reservacion}', 'ReservacionController@printPDF')->name('contrato');
