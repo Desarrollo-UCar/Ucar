@@ -62,6 +62,7 @@
                             <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
                             </dl>   
                         </div>
+
                         <form action="{{ route('validar_logeo')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id_reserva" value="{{$datos_reserva->id}}">

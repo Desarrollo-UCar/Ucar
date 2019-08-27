@@ -200,8 +200,9 @@ class PagesController extends Controller
     }
 
 public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta logeado
-    
+
     $correo   = auth()->user()->email;
+    
 //el cliente no se esta creando al momento del registro
     $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
     $datos_reserva  = App\reserva_temp::findOrFail($reserva->id_reserva);
@@ -260,10 +261,8 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
 
     if($dias == 0)
         $dias = 1;
-    
     $monto = $total / $dias;
     }
-
     return view('pago',compact('monto','alquiler'));
 }
     
