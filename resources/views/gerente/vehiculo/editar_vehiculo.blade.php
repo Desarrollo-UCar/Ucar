@@ -45,7 +45,7 @@
                           <input type="text" name="vin" id="" class="form-control" autofocus value="{{$vehi->vin}}" required>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Matricula</label>
+                            <label>Placas</label>
                         <input type="text" name="matricula" id="" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehi->matricula}}" required>
                         </div>
                         <div class="col-md-6 form-group">
@@ -147,7 +147,7 @@
                                                   </select>
                                               </div>    
                                             <div class="form-group col-md-6">
-                                                <label>Status</label>
+                                                <label>Estatus</label>
                                                 <select class="form-control" id="tipo" name="status">
                                                   <option>{{$vehi->estatus}}</option>
                                                   @if ($vehi->estatus=='ACTIVO')

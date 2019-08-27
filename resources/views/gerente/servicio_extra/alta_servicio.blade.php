@@ -14,8 +14,8 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
-          <small>Gerente</small>
+          Panel de administración |
+          <small>Servicios</small>
         </h1>        
     </section>
    
@@ -77,7 +77,7 @@
                         </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Descripcion</label>
+                        <label>Descripción</label>
                       <textarea name="descripcion" id="" cols="30" rows="1" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();"  ></textarea>
                     </div>
                     </div>

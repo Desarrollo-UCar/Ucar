@@ -15,7 +15,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Detalle Mantenimiento</small>
         </h1>        
     </section>
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="col-md-6 form-group">
-                            <label>Marca vehiculo</label>
+                            <label>Marca vehículo</label>
                                 <input type="text" name="marca" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->marca}}" readonly>
                         </div>
 
@@ -66,7 +66,7 @@
 
                         
                         <div class="col-md-6 form-group">
-                            <label>No. Economico</label>
+                            <label>Placas</label>
                                 <input type="text" name="matricula" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->matricula}}" readonly>
                             </div>
                             <hr width="90%"/>
@@ -137,9 +137,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 @foreach ($servicios as $ser)                      
+                              <?php 
+                                   $i = 0;
+                                ?>
+                                 @foreach ($servicios as $ser)
+                                 
                       <tr>
-                              <td style="text-align: center">{{$ser->idserviciotaller}}</td>
+                              <td style="text-align: center"><?php 
+                                echo $i=$i+1;
+                              ?></td>
                               <td >{{$ser->nombreservicio}}</td>
                               @if ($ser->descripcion==null)
                               <td style="text-align: center;" >----------------</td>
@@ -174,6 +180,7 @@
 <script>
         $(document).ready(function() {
              $('#example').DataTable( {
+              "scrollY":"400px",
                "scrollX": true,
                "language": {
                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

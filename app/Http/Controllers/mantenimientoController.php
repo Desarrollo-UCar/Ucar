@@ -51,19 +51,23 @@ class mantenimientoController extends Controller
     public function store(Request $request)
     {
         //
+
+        //return $request;
         $servicios =$request['servicios'];
        
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
         $hoy =$date->format('Y-m-d');
-        if($request['fecha_ingresa']>$hoy){
+        //return $request['fecha_ingresa'];
+        //return $hoy;
+        if($request['fecha_ingresa']<$hoy){
             return back()->with('mensaje','INTRODUZCA LA FECHA DE SALIDA CORRECTAMENTE :)');
         }
-        if($request['fecha_salida']>$hoy){
+        if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
             return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
         }
 
-        if($request['fecha_salida']<$request['fecha_ingresa'] && $request['fecha_salida']!=null){
+        if($request['fecha_ingresa']==null){
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
         }
        
@@ -80,7 +84,7 @@ class mantenimientoController extends Controller
 
             $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])
                 ->first();
-           if($request['fecha_salida']==null){
+           if($request['fecha_salida']==null||$request['fecha_salida']>$hoy){
             $vehiculosucursal->update(
                    [
                     'status'=> 'MANTENIMIENTO',
@@ -96,10 +100,10 @@ class mantenimientoController extends Controller
             );
            }
 
-           if($request['fecha_salida']!=null){
-                $status = 'INACTIVO';
-            }else{
+           if($request['fecha_salida']==null){
                 $status = 'ACTIVO';
+            }else{
+                $status = 'INACTIVO';
             }
            //return $vehiculo;
             mantenimientos::insert([
@@ -218,18 +222,20 @@ class mantenimientoController extends Controller
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
         $hoy =$date->format('Y-m-d');
-        if($request['fecha_ingresa']>$hoy){
+        //return $request['fecha_ingresa'];
+        //return $hoy;
+        if($request['fecha_ingresa']<$hoy){
             return back()->with('mensaje','INTRODUZCA LA FECHA DE SALIDA CORRECTAMENTE :)');
         }
-        if($request['fecha_salida']>$hoy){
+        if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
             return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
         }
 
-        if($request['fecha_salida']<$request['fecha_ingresa'] && $request['fecha_salida']!=null){
+        if($request['fecha_ingresa']==null){
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
         }
         
-        if(!(is_array($servicios)) && empty($taller)){
+        if(!(is_array($servicios)) && !(empty($taller))){
             //return "hola";
             return back()->with('mensaje','SELECCIONA UNO O MÁS SERVICIOS REALIZADOS EN LA SECCION AGREGAR DESCRIPCIÓN:)');
         }

@@ -15,7 +15,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Servicios de mantenimiento</small>
         </h1>
         
@@ -37,7 +37,7 @@
         @endif
         @if (session()->has('msj'))
         <div class="alert alert-info" role="alert">{{session('msj')}} 
-        <a href="{{route('sucursal.index')}}" style="color:darkgreen"><b> ver todos los sucursales </b></a>
+        <a href="{{route('servicioe.index')}}" style="color:darkgreen"><b> ver todos los servicios extra </b></a>
         </div>  
         @endif  
         @if (count($taller )==0)
@@ -73,7 +73,7 @@
                               
     
                         <div class="form-group col-md-4">
-                          <label>Descripcion</label>
+                          <label>Descripción</label>
                           <input type="text" class="form-control" placeholder="Descripción" name="descripcion"  onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$datos->descripcion}}">
                       </div>
                       <div class="row">
@@ -173,7 +173,8 @@
 
          <script>
          $(document).ready(function() {
-               $table=$('#example').DataTable( {               
+               $table=$('#example').DataTable( { 
+                "scrollY":"400px",              
                 "scrollX": true,   
               //  "search": document.getElementById("nombreservicio").value,            
                 "language": {

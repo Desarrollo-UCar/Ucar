@@ -15,7 +15,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Mantenimiento</small>
         </h1>
         
@@ -44,7 +44,7 @@
                       <thead>
                           <tr>
                               <th style="text-align: center">Vin</th>
-                              <th style="text-align: center">Matricula</th>
+                              <th style="text-align: center">Placas</th>
                               <th style="text-align: center">Marca</th>
                               <th style="text-align: center">Modelo</th>                              
                               <th style="text-align: center">Tipo Mantenimiento</th>   
@@ -122,6 +122,7 @@
          <script>
          $(document).ready(function() {
               $('#example').DataTable( {
+                "scrollY":"400px",
                 "scrollX": true,
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

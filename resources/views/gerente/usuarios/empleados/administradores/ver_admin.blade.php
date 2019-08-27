@@ -15,7 +15,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Empleados</small>
         </h1>
         
@@ -138,6 +138,7 @@
          <script>
          $(document).ready(function() {
               $('#example').DataTable( {
+                "scrollY":"400px",
                 "scrollX": true,
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

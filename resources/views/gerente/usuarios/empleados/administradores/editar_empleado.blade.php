@@ -13,8 +13,8 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
-          <small>Editar Empleado</small>
+          Panel de administración |
+          <small>Modificar Empleado</small>
         </h1>
         
     </section>
@@ -119,7 +119,7 @@
                           </div>
 
                           <div class="form-group col-md-4">
-                            <label>Pais</label>
+                            <label>País</label>
                             <input type="text" class="form-control" placeholder="pais" name="pais" onkeyup="javascript:this.value=this.value.toUpperCase();"
                             value="{{$emp->pais}}" required>
                         </div>

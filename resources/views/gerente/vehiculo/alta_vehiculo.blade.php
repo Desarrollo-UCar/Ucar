@@ -14,8 +14,8 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
-          <small>Gerente</small>
+          Panel de administración |
+          <small>Alta vehículo</small>
         </h1>
         
     </section>
@@ -25,7 +25,7 @@
        
             <div class="box box-primary">             
                 <div class="box-header with-border">
-                  <h3 class="box-title">Nuevo Vehiculo</h3>
+                  <h3 class="box-title">Nuevo Vehículo</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -45,7 +45,7 @@
                          pattern="[0-9|A-Z]{17}" required maxlength="17">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Matricula</label>
+                            <label>Placas</label>
                           <input type="text" name="matricula" id="" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" pattern="[A-Z]{3}-[0-9]{2}-[0-9]{2}" required>
                         </div>
                         <div class="col-md-6 form-group">
@@ -138,7 +138,7 @@
                                                 </select>
                                             </div>    
                                             <div class="form-group col-md-6">
-                                              <label>Status</label>
+                                              <label>Estatus</label>
                                               <select class="form-control" name="status">
                                                 <option>ACTIVO</option> 
                                                 <option>INACTIVO</option>

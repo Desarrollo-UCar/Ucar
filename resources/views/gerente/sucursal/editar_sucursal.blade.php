@@ -13,8 +13,8 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
-          <small>Gerente</small>
+          Panel de administración |
+          <small>Modificar Sucursal</small>
         </h1>
         
     </section>
@@ -53,7 +53,7 @@
                     
 
                     <div class="form-group col-md-4">
-                      <label>Pais</label>
+                      <label>País</label>
                     <input type="text" class="form-control" placeholder="País" name="pais" value="{{$sucursal->pais}}" required>
                   </div>
                   

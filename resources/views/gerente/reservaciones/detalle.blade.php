@@ -9,14 +9,14 @@
 @section('contenido')
   <section class="content-header">
     <h1>
-      Panel de administracion | <small>Gerente</small>
+      Panel de administración | <small>Reservaciones</small>
     </h1>
   </section>
 
   <section class="content">
     @if($alquiler->estatus=='cancelado')
       <div class="alert alert-warning alert-dismissible">
-          <h4>Reservacion cancelada!</h4>
+          <h4>Reservación cancelada!</h4>
         </div>
         @endif
     <div class="row">
@@ -35,7 +35,7 @@
                      @if($cliente->credencial==null)
                      Pasaporte
                      @else
-                     Credencial
+                     Identificación
                      @endif cliente</label>
                       <input type="text" name="cliente" id="" class="form-control" disabled value="@if($cliente->credencial==null)
                       {{$cliente->pasaporte}}
@@ -52,9 +52,9 @@
 
                   <div class="row">
                       <div class="col-xs-12">
-                          <h4 ><br>Datos de la reservacion</h4>
+                          <h4 ><br>Datos de la reservación</h4>
                   <div class="col-md-6 form-group">
-                      <label>Fecha Reservacion</label>
+                      <label>Fecha Reservación</label>
                       <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
                   </div>
                     
@@ -70,7 +70,7 @@
                 -->
 
                 @if($reservacion->saldo==0)
-                <h3>Se pago el total de la reservacion en linea</h3>
+                <h3>Se pagó el total de la reservación en línea</h3>
                 @else
                 <div class="col-md-6 form-group">
                     <label>Saldo</label>
@@ -86,7 +86,7 @@
               @endif
               <div class="row">
                 <div class="col-xs-12">
-                    <h4 ><br>Datos del <a href="">vehiculo </a></h4>
+                    <h4 ><br>Datos del <a href="">vehículo </a></h4>
 
                   <div class="col-md-6 form-group">
                     <label>Vin</label>
@@ -94,7 +94,7 @@
                   </div>
 
                    <div class="col-md-6 form-group">
-                     <label>Vehiculo</label>
+                     <label>Vehículo</label>
                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}">
                    </div>
 
@@ -105,7 +105,7 @@
                     </div>
 
                      <div class="col-md-6 form-group">
-                       <label>Fecha Devolucion</label>
+                       <label>Fecha Devolución</label>
                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
                     </div>
                   </div>
