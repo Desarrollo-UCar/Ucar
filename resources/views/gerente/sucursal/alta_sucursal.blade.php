@@ -13,8 +13,8 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
-          <small>Gerente</small>
+          Panel de administración |
+          <small>Alta sucursal</small>
         </h1>
         
     </section>
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                      <label>Pais</label>
+                      <label>País</label>
                       <input type="text" class="form-control" placeholder="País" name="pais"  onkeyup="javascript:this.value=this.value.toUpperCase();" required>
                   </div>
                   

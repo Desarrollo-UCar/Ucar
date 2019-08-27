@@ -14,8 +14,8 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
-          <small>Gerente</small>
+          Panel de administración |
+          <small>Alta Personal</small>
         </h1>
         
     </section>
@@ -94,7 +94,7 @@
                           </div>
 
                           <div class="form-group col-md-4">
-                              <label>nacionalidad</label>
+                              <label>Nacionalidad</label>
                               <input type="text" class="form-control" placeholder="nacionalidad" name="nacionalidad" onkeyup="javascript:this.value=this.value.toUpperCase();"value="{{ old('nacionalidad') }}" required>
                           </div>
                           {{-- FORMULARIO DIRECCION--}}
@@ -108,7 +108,7 @@
                           </div>
 
                           <div class="form-group col-md-4">
-                            <label>Pais</label>
+                            <label>País</label>
                             <input type="text" class="form-control" placeholder="pais" name="pais" onkeyup="javascript:this.value=this.value.toUpperCase();"value="{{ old('pais') }}" required>
                         </div>
 
@@ -167,7 +167,7 @@
                           </select>
                       </div>    
                       <div class="form-group col-md-4">
-                        <label>Status</label>
+                        <label>Estatus</label>
                         <select class="form-control" name="status">
                           <option>ACTIVO</option> 
                           <option>INACTIVO</option>

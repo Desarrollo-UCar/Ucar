@@ -9,14 +9,14 @@
 @section('contenido')
   <section class="content-header">
     <h1>
-      Panel de administracion | <small>Gerente</small>
+      Panel de administración | <small>Reservaciones</small>
     </h1>
   </section>
 
   <section class="content">
     @if($alquiler->estatus=='cancelado')
       <div class="alert alert-warning alert-dismissible">
-          <h4>Reservacion cancelada!</h4>
+          <h4>Reservación cancelada!</h4>
         </div>
         @endif
         

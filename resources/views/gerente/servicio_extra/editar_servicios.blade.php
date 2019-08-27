@@ -84,7 +84,7 @@
                         </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Descripcion</label>
+                        <label>Descripción</label>
                     <textarea name="descripcion" id="" cols="30" rows="1" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">{{$servicio->descripcion}}</textarea>
                     </div>
                     </div>
@@ -133,7 +133,7 @@
                   <h4 class="modal-title">Esta seguro de cancelar el proceso? </b> </h4>
                 </div>
                 <div class="modal-body">
-                  <p>La transaccion de los datos serán cancelados&hellip;</p>
+                  <p>La transacción de los datos serán cancelados&hellip;</p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Cerrar</button>

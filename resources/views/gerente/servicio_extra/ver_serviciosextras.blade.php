@@ -15,7 +15,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Servicio Extra</small>
         </h1>
         
@@ -47,7 +47,7 @@
                               <th style="text-align: center">Nombre</th>
                               <th style="text-align: center">Precio</th>
                               <th style="text-align: center">Estatus</th>
-                              <th style="text-align: center">Descripcion</th>
+                              <th style="text-align: center">Descripción</th>
                               <th style="text-align: center">Sucursal</th>
                               <th style="text-align: center">Cantidad</th>
                               <th style="text-align: center">Fecha Alta</th>
@@ -118,6 +118,7 @@
          <script>
          $(document).ready(function() {
               $('#example').DataTable( {
+                "scrollY":"400px",
                 "scrollX": true,
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

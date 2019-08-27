@@ -14,7 +14,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-          Panel de administracion |
+          Panel de administración |
           <small>Mantenimiento</small>
         </h1>        
     </section>
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="col-md-6 form-group">
-                            <label>Marca vehiculo</label>
+                            <label>Marca vehículo</label>
                                 <input type="text" name="marca" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->marca}}" readonly>
                         </div>
 
@@ -76,7 +76,7 @@
 
                         
                         <div class="col-md-6 form-group">
-                            <label>No. Economico</label>
+                            <label>Placas</label>
                                 <input type="text" name="matricula" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->matricula}}" readonly>
                             </div>
                             <hr width="90%"/>
@@ -92,9 +92,10 @@
 
                         <div class="col-md-6 form-group">
                           <label>Fecha salida</label>
-                          <input type="date" name="fecha_ingresa" class="form-control" required>
+                          <input type="date" name="fecha_ingresa" class="form-control" value="<?php echo date("Y-m-d");?>" required>
                         </div>
 
+                        
                         <div class="col-md-6 form-group">
                                 <label>Fecha Regreso</label>
                                 <input type="date" name="fecha_salida" class="form-control">

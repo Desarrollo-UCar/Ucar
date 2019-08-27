@@ -40,7 +40,7 @@ class TallerServicioController extends Controller
         $date = $carbon->now();
         if($request->validate([
             'nombreservicio' => 'required',
-            //'descripcion' =>'required',
+            'descripcion' =>'required',
         ])){
             //return $request;
             Tallerservicios::insert([

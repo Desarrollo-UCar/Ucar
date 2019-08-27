@@ -58,7 +58,7 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="{{ route('cliente')}}" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('cliente.index')}}" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -68,7 +68,7 @@
             <div class="inner">
               <h3>0</h3>
 
-              <p>Visitas a la pagina</p>
+              <p>Visitas a la página</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
@@ -93,10 +93,9 @@
           <div class="tab-content no-padding">
             <!-- Morris chart - Sales -->
             <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;   ">
-              Hola 
             </div>
             <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                hola mundo
+                
             </div>
           </div>
         </div>

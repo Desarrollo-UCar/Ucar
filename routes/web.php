@@ -47,7 +47,7 @@ Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacio
 Route::post('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');
 Route::post('pago_paypal', 'PagesController@pago_paypal')->name('pago_paypal')->middleware('auth');
 
-Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion') ;
+Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion')->middleware('auth');
 Route::get('en_construccion2', 'PagesController@en_construccion2')->name('en_construccion2') ;
 
 //______________________________________
@@ -83,6 +83,7 @@ Route::resource('user','UsuariosController');
 //Route::get('gerente', 'AdminController@inicio')->name('home');
 Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG')->middleware('auth');
 
+
 //Route::get('gerente/usuarios/vehiculo/alta_vehiculo','AdminController@Vehiculo')->name('vehiculo');
 Route::resource('vehiculo','VehiculoController');
 Route::resource('products','ProductController');
@@ -91,13 +92,13 @@ Route::resource('empleado','EmpleadoController');
 Route::resource('servicioe', 'ServiciosExtraController');
 Route::resource('mantenimiento', 'MantenimientoController');
 Route::resource('tallerservicio', 'TallerServicioController');
+Route::resource('cliente', 'ClienteController');
 Route::get('mostrarmantenimiento', 'MantenimientoController@mostrar')->name('mostrarmantenimiento');
 Route::get('editarmantenimieto', 'MantenimientoController@modificar')->name('modificarmantenimiento');
 Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado');
 Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehiculo');
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
 Route::get('modificarsucursal','SucursalController@modificar')->name('modificarsucursal');
-Route::get('clientes', 'AdminController@verclientes')->name('cliente');
 //});
 
 //Route::post('login','UsuariosController@login');

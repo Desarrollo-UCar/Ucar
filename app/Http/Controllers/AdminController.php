@@ -16,10 +16,6 @@ class AdminController extends Controller
     	return view ('gerente.inicio');
     }
 
-    public function verclientes(){
-        $clientes  = Cliente::orderBy('idcliente','DESC')->get();
-    	return view ('gerente.clientes.ver_clientes',compact('clientes'));
-    }
 
     public function nuevoChofer(){
     	return view ('gerente.usuarios.empleados.chofer.alta_chofer');

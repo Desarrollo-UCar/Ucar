@@ -26,7 +26,9 @@
         </div>
     @endif
     @if (session()->has('msj'))
-    <div class="alert alert-info" role="alert">{{session('msj')}}</div>                                    
+    <div class="alert alert-info" role="alert">{{session('msj')}}</div> 
+    <a href="{{route('mantenimiento.index')}}" style="color:darkgreen"><b> ver todos los mantenimientos </b></a>
+                                   
     @endif 
     @if (session()->has('mensaje'))
     <div class="alert alert-danger" role="alert">{{session('mensaje')}}</div>                                    
@@ -59,7 +61,7 @@
                         </div>
 
                         <div class="col-md-6 form-group">
-                            <label>Marca vehiculo</label>
+                            <label>Marca vehículo</label>
                                 <input type="text" name="marca" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->marca}}" readonly>
                         </div>
 
@@ -75,7 +77,7 @@
 
                         
                         <div class="col-md-6 form-group">
-                            <label>No. Economico</label>
+                            <label>Placas</label>
                                 <input type="text" name="matricula" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->matricula}}" readonly>
                             </div>
                             <hr width="90%"/>

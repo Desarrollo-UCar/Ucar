@@ -41,7 +41,7 @@
                       <thead>
                           <tr>
                               <th style="text-align: center;background: lightblue">Vin</th>
-                              <th style="text-align: center;background: lightblue">Matricula</th>
+                              <th style="text-align: center;background: lightblue">Placas</th>
                               <th style="text-align: center;background: lightblue">fecha Alta</th>
                               <th style="text-align: center;background: lightblue">Marca</th>
                               <th style="text-align: center;background: lightblue">Modelo</th>
@@ -147,7 +147,7 @@
          <script>           
         var table = $(document).ready(function() {
               $('#example').DataTable( {
-                "scrollX": "300px",
+                "scrollX": "400px",
                 "responsive": true,               
                 "language": {
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
