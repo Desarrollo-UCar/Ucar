@@ -190,11 +190,24 @@ class ReservacionController extends Controller
         $pago = new App\Pago_reservacion;
         $pago->total = $reservacion->saldo;
         $pago->fecha =date('Y\-m\-d H\:i\:s');
-        return response()->json($pago);
+        //return response()->json($pago);
+        $pago->paypal_Datos = '---';
+        $pago->paypal_Datos = '---';
         $pago->save();
         $reservacion->estatus = 'pagado';
         $reservacion->saldo = '0';
         $reservacion->save();
+
+
+        
+        $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
+        $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+        $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
+
+        $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
+        $edad = $carbon->parse( $newDate)->age; // 1990-10-25
+
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo', 'cliente','edad'));
     }
 
     public function garantia(Reservacion $reservacion)

@@ -26,7 +26,6 @@
                             <tr><td><small>{{$servicio->nombre}}</small></td>                   <td><small>${{$servicio->precioRenta}}.00</small></td></tr>
                             @endforeach
                             <tr><td><small><strong>Total</strong></small></td>                  <td><small><strong>${{$total}}</strong></small></td></tr>
-                            <tr><td><small><strong>Pagando con Prepago</strong></small></td>    <td><small><strong>${{$prepago}}</strong></small></td></tr>
                         </tbody>
                         </table>
                     </div>
@@ -63,11 +62,20 @@
                             </dl>   
                         </div>
 
-                        <form action="{{ route('validar_logeo')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="id_reserva" value="{{$datos_reserva->id}}">
-                            <button class="btn btn-primary" type="submit">Continuar</button>
-                        </form>
+
+                    @if(!(Auth::user()))
+                        <a class="btn btn-warning btn-sm" href="{{ route('validar_logeo',['id_reserva'=>$datos_reserva->id]) }}" >Iniciar Sesión.</a> 
+                        <a class="nav-link" href="{{ route('register',['id_reserva'=>$datos_reserva->id]) }}" >No tengo una cuenta.</a> 
+                    @else
+                    <a class="btn btn-warning btn-sm" href="{{ route('validar_logeo',['id_reserva'=>$datos_reserva->id]) }}" >Continuar.</a> 
+                    @endif
+
+
+
+
+
+
+
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <img src="{{$vehiculo->foto}}" />
