@@ -81,7 +81,7 @@ Route::resource('user','UsuariosController');
 //Route::get('/usuario','UsuariosController@Login');
 
 //Route::get('gerente', 'AdminController@inicio')->name('home');
-Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG')->middleware('auth');
+Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG');//->middleware('auth');
 
 
 //Route::get('gerente/usuarios/vehiculo/alta_vehiculo','AdminController@Vehiculo')->name('vehiculo');
