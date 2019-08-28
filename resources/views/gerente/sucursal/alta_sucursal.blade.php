@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Alta Sucursal</title>
   <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.9.0/d3.min.js"></script>
+  
  </head>
 <body>
   
@@ -22,11 +23,15 @@
 
     <section class="content">
         <section class="content">
-            @if ($errors->any())
+            {{--@if ($errors->any())
             <div class="alert alert-danger">            
-                   Por favor de rellenar los campos correctamente
+              <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
             </div>
-        @endif
+        @endif--}}
         @if (session()->has('msj'))
         <div class="alert alert-info" role="alert">{{session('msj')}} 
         <a href="{{route('sucursal.index')}}" style="color:darkgreen"><b> ver todos los sucursales </b></a>
@@ -49,8 +54,18 @@
                      {{-- FORMULARIO DIRECCION--}}
 
                      <div class="form-group col-md-4">
+                        @error('nombre')
+                                    <span class="invalid-feedback" role="alert" >
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                       <label>Nombre</label>
-                      <input type="text" class="form-control" placeholder="Nombre de la sucursal" name="nombre"  onkeyup="javascript:this.value=this.value.toUpperCase();" autofocus required>
+                     
+                      <input type="text" class="form-control"  placeholder="Nombre de la sucursal"
+                     name="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{old('nombre')}}" autofocus  required>
+                      
+
+                      
                   </div>
                           
                      <div class="row">
@@ -60,22 +75,48 @@
                         </div>
                       </div>  
                     </div>
+                    <div id="locationField">
+                       
+                      </div>
+                      <div class="form-group col-md-4">
+                          <label>Dirección</label>
+                          <input id="autocomplete"  class="form-control"
+                          placeholder="Introduzca su direccion"
+                          onFocus="geolocate()"
+                          type="text" name="colonia"/>
+                      </div>
 
-                    <div class="form-group col-md-4">
-                      <label>País</label>
-                      <input type="text" class="form-control" placeholder="País" name="pais"  onkeyup="javascript:this.value=this.value.toUpperCase();" required>
-                  </div>
-                  
+                    <table id="address">
+                        <tr>   
+                                              
+                            <div class="form-group col-md-4">
+                                <label>País</label>
+                                <input type="text" class="form-control" placeholder="País" name="pais"  onkeyup="javascript:this.value=this.value.toUpperCase();" id="country" disabled="true">
+                            </div>
+                         
+                        </tr>
 
-                    <div class="form-group col-md-4">
-                        <label>Estado</label>
-                        <input type="text" class="form-control" placeholder="Estado" name="estado" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
-                    </div>
+                        <tr>
+                            
+                        <div class="form-group col-md-4">
+                            <label>Estado</label>
+                            <input type="text" class="form-control" placeholder="Estado" name="estado" onkeyup="javascript:this.value=this.value.toUpperCase();" id="administrative_area_level_1" disabled="true">
+                        </div>
+                           
+                          </tr>
 
-                    <div class="form-group col-md-4">
-                      <label>Ciudad</label>
-                      <input type="text" class="form-control" placeholder="Ciudad" name="ciudad" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
-                  </div>
+                      <tr>
+                          <div class="form-group col-md-4">
+                              <label>Ciudad</label>
+                              <input type="text" class="form-control" placeholder="Ciudad" name="ciudad" onkeyup="javascript:this.value=this.value.toUpperCase();" id="locality" disabled="true">
+                          </div>
+                      </tr>
+                     
+                      
+                    </table>
+
+
+                   
 
                     <div class="form-group col-md-4">
                         <label>Colonia</label>
@@ -89,12 +130,13 @@
 
                     <div class="form-group col-md-4">
                         <label>Número</label>
-                        <input type="number" class="form-control" placeholder="Número de casa" name="numero" min="0" required>
+                        <input type="text" class="form-control" placeholder="Número de casa" name="numero" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Teléfono</label>
-                        <input type="text" class="form-control" placeholder="Teléfono" name="telefono" data-inputmask='"mask": "(999) 999-9999"' data-mask required>
+                        <input type="text" class="form-control" placeholder="Teléfono" name="telefono" 
+                         pattern="[1-9][0-9]{9}" required>
                     </div>                             
                                   
 
@@ -125,15 +167,15 @@
    
         <!-- Select2 -->
         <script src= "{{asset("assets/$theme/bower_components/select2/dist/js/select2.full.min.js")}}"></script>
-
-      
+        <script src="{{URL::asset('/js/apigoogle.js')}}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGDfu_8YDhR8k6LHqpGfQjCwC5YlxJ9Tk&libraries=places&callback=initAutocomplete"
+        async defer></script>
        <script>
          $(function () {
            //Initialize Select2 Elements
-           $('.select2').select2()
-       
-         
+           $('.select2').select2()           
            $('[data-mask]').inputmask()
+           $("#example2").inputmask("Regex");
          })
        </script>
        @endsection   
