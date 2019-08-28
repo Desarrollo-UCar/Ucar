@@ -340,10 +340,13 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
         }
 
     public function validar_logeo(Request $reserva){
-        $r = $reserva->id_reserva;
+        $r     = $reserva['id_reserva'];
         return view('seleccionar_forma_de_pago',compact('r'));
     }
 
-
+    public function validar_logeo2(Request $reserva){
+        $r     = $reserva['id_reserva'];
+        return view('seleccionar_forma_de_pago',compact('r'));
+    }
 
 }

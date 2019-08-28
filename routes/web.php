@@ -4,10 +4,9 @@ Auth::routes();
 
 Route::get('register', function () {
     return view('/auth/register');
-})->name('register');
+})->name('register')->middleware('guest');
 
 Route::get('login', function () {
-    
     return view('/auth/login');
 })->name('login')->middleware('guest');
 
@@ -45,7 +44,10 @@ Route::get('renta_traslado', 'PagesController@renta_traslado')->name('renta_tras
 Route::post('renta_traslado_vehiculo', 'PagesController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
 Route::get('renta_traslado_datos', 'PagesController@renta_traslado_datos')->name('renta_traslado_datos') ;
 Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacion_traslado')->name('solicita_informacion_traslado') ;
-Route::post('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');
+
+Route::get('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');
+Route::post('validar_logeo2', 'PagesController@validar_logeo2')->name('validar_logeo2');
+
 Route::post('pago_paypal', 'PagesController@pago_paypal')->name('pago_paypal')->middleware('auth');
 
 Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion')->middleware('auth');

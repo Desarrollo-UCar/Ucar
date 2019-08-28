@@ -62,11 +62,20 @@
                             </dl>   
                         </div>
 
-                        <form action="{{ route('validar_logeo')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="id_reserva" value="{{$datos_reserva->id}}">
-                            <button class="btn btn-primary" type="submit">Continuar</button>
-                        </form>
+
+                    @if(!(Auth::user()))
+                        <a class="btn btn-warning btn-sm" href="{{ route('validar_logeo',['id_reserva'=>$datos_reserva->id]) }}" >Iniciar Sesión.</a> 
+                        <a class="nav-link" href="{{ route('register',['id_reserva'=>$datos_reserva->id]) }}" >No tengo una cuenta.</a> 
+                    @else
+                    <a class="btn btn-warning btn-sm" href="{{ route('validar_logeo',['id_reserva'=>$datos_reserva->id]) }}" >Continuar.</a> 
+                    @endif
+
+
+
+
+
+
+
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <img src="{{$vehiculo->foto}}" />
