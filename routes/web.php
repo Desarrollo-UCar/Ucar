@@ -45,14 +45,13 @@ Route::post('renta_traslado_vehiculo', 'PagesController@renta_traslado_vehiculo'
 Route::get('renta_traslado_datos', 'PagesController@renta_traslado_datos')->name('renta_traslado_datos') ;
 Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacion_traslado')->name('solicita_informacion_traslado') ;
 
-Route::get('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');
-Route::post('validar_logeo2', 'PagesController@validar_logeo2')->name('validar_logeo2');
-
+Route::get('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');//estamos en esta probando el envio por get desde el formulario
 Route::post('pago_paypal', 'PagesController@pago_paypal')->name('pago_paypal')->middleware('auth');
 
 Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion')->middleware('auth');
 Route::get('en_construccion2', 'PagesController@en_construccion2')->name('en_construccion2') ;
 
+Route::get('terminos_y_condiciones', 'PagesController@terminos_y_condiciones')->name('terminos_y_condiciones') ;
 //______________________________________
 
 Route::get('prueba', function () {

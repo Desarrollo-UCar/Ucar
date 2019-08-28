@@ -11,7 +11,9 @@ class PagesController extends Controller
         return view('index');
     }
 
-    public function postFormularioindex(Request $request){  
+    public function postFormularioindex(Request $request){ 
+        
+       
             $hora_actual = strtotime(date('H\:i'));
             $hora_de_recogida = strtotime(date(" H\:i", strtotime($request->horaRecogida)));
             $hora_de_devolucion = strtotime(date(" H\:i", strtotime($request->horaDevolucion)));
@@ -341,12 +343,16 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
 
     public function validar_logeo(Request $reserva){
         $r     = $reserva['id_reserva'];
-        return view('seleccionar_forma_de_pago',compact('r'));
-    }
+        $datos_reserva  = App\reserva_temp::findOrFail($r);
 
-    public function validar_logeo2(Request $reserva){
-        $r     = $reserva['id_reserva'];
-        return view('seleccionar_forma_de_pago',compact('r'));
+        $devolucion = new DateTime($datos_reserva->fecha_devolucion);
+        $salida     = new DateTime($datos_reserva->fecha_recogida);
+        $diferencia = $salida->diff($devolucion);
+        $dias = $diferencia->format('%a');
+        if($dias == 0)
+            $dias = 1;
+        $anticipo = $datos_reserva->total / $dias;
+        return view('seleccionar_forma_de_pago',compact('datos_reserva','anticipo'));
     }
 
 }
