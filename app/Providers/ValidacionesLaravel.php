@@ -24,13 +24,22 @@ class ValidacionesLaravel extends ServiceProvider
     public function boot()
     {
         //
-
-        {
-            Validator::extend('alpha_spaces', function($attribute, $value)
+            {
+                Validator::extend('con_espacios', function($attribute, $value)
             {
                 return preg_match('/^[\pL\s]+$/u', $value);
             });
+           
+            
+                Validator::extend('tele_fono', function($attribute, $value)
+                {
+                    return preg_match('/[1-9][0-9]{9}/m', $value);
+                });
+            
         }
+        
+
+       
     }
 
 

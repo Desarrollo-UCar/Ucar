@@ -54,18 +54,14 @@
                      {{-- FORMULARIO DIRECCION--}}
 
                      <div class="form-group col-md-4">
-                        @error('nombre')
-                                    <span class="invalid-feedback" role="alert" >
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                      <label>Nombre</label>
-                     
+                       
+                       
+                      <label>Nombre</label>                      
                       <input type="text" class="form-control"  placeholder="Nombre de la sucursal"
                      name="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{old('nombre')}}" autofocus  required>
-                      
-
-                      
+                     @error('nombre') 
+                     <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                     @enderror                      
                   </div>
                           
                      <div class="row">
@@ -82,8 +78,8 @@
                           <label>Dirección</label>
                           <input id="autocomplete"  class="form-control"
                           placeholder="Introduzca su direccion"
-                          onFocus="geolocate()"
-                          type="text" name="colonia"/>
+                          onFocus="geolocate()" 
+                          type="text" name="dire" value="{{old('dire')}}"/>
                       </div>
 
                     <table id="address">
@@ -91,7 +87,11 @@
                                               
                             <div class="form-group col-md-4">
                                 <label>País</label>
-                                <input type="text" class="form-control" placeholder="País" name="pais"  onkeyup="javascript:this.value=this.value.toUpperCase();" id="country" disabled="true">
+                                <input type="text" class="form-control" placeholder="País" name="pais"  onkeyup="javascript:this.value=this.value.toUpperCase();" id="country" value="{{old('pais')}}" disabled="true" >
+
+                                @error('pais') 
+                                <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                                @enderror 
                             </div>
                          
                         </tr>
@@ -100,7 +100,10 @@
                             
                         <div class="form-group col-md-4">
                             <label>Estado</label>
-                            <input type="text" class="form-control" placeholder="Estado" name="estado" onkeyup="javascript:this.value=this.value.toUpperCase();" id="administrative_area_level_1" disabled="true">
+                            <input type="text" class="form-control" placeholder="Estado" name="estado" onkeyup="javascript:this.value=this.value.toUpperCase();" id="administrative_area_level_1" value="{{old('estado')}}" disabled="true">
+                            @error('estado') 
+                            <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                            @enderror 
                         </div>
                            
                           </tr>
@@ -108,35 +111,50 @@
                       <tr>
                           <div class="form-group col-md-4">
                               <label>Ciudad</label>
-                              <input type="text" class="form-control" placeholder="Ciudad" name="ciudad" onkeyup="javascript:this.value=this.value.toUpperCase();" id="locality" disabled="true">
+                              <input type="text" class="form-control" placeholder="Ciudad" name="ciudad" onkeyup="javascript:this.value=this.value.toUpperCase();" id="locality" value="{{old('ciudad')}}" disabled="true">
+
+                              @error('ciudad') 
+                              <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                              @enderror 
                           </div>
                       </tr>
                      
                       
                     </table>
-
-
                    
 
                     <div class="form-group col-md-4">
                         <label>Colonia</label>
-                        <input type="text" class="form-control" placeholder="Colonia" name="colonia" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                        <input type="text" class="form-control" placeholder="Colonia" name="colonia" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{old('colonia')}}" required>
+                        @error('colonia') 
+                        <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                        @enderror 
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Calle</label>
-                        <input type="text" class="form-control" placeholder="Calle" name="calle" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                        <input type="text" class="form-control" placeholder="Calle" name="calle" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{old('calle')}}">
+                        @error('calle') 
+                        <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                        @enderror 
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Número</label>
-                        <input type="text" class="form-control" placeholder="Número de casa" name="numero" required>
+                        <input type="text" class="form-control" placeholder="Número de casa" name="numero" value="{{old('numero')}}" required>
+                        @error('numero') 
+                        <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                        @enderror 
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Teléfono</label>
                         <input type="text" class="form-control" placeholder="Teléfono" name="telefono" 
-                         pattern="[1-9][0-9]{9}" required>
+                        data-inputmask='"mask": "9999999999"' data-mask value="{{old('telefono')}}" required>
+
+                        @error('telefono') 
+                     <strong class="col-md-12" style="color:red;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ $message }}</strong>
+                     @enderror
                     </div>                             
                                   
 

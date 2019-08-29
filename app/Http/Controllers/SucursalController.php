@@ -46,14 +46,14 @@ class SucursalController extends Controller
         //return $dato;
       
        if($request->validate([
-            'nombre'=>'required|alpha_spaces',
+            'nombre'=>'required|con_espacios',
             'pais'=>'required',
             'estado'=>'required',
             'ciudad'=>'required',
             'colonia'=>'required',
-            'calle'=>'required|alpha_spaces',
+            'calle'=>'required',
             'numero'=>'required',
-            'telefono'=>'required',
+            'telefono'=>'required|tele_fono',
         ])){
         Sucursal::create($request->all());
    

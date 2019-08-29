@@ -22,7 +22,7 @@ class CrearSucursal extends Migration
             $table->string('ciudad')->require;
             $table->string('colonia')->require;
             $table->string('calle')->requiere;
-            $table->integer('numero')->requiere;
+            $table->string('numero')->requiere;
             $table->string('telefono')->require;
 
             $table->timestamps();
