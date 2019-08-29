@@ -21,13 +21,6 @@ class servicios_extra extends Seeder
                'precio' => '180',
                'foto' => 'img/servicios_extra/BABY.PNG'
            ));
-           \DB::table('serviciosextras')->insert(array(
-            'nombre' => 'GPS',
-           'descripcion' => 'Herramienta de gran importancia a la hora de salir de aventuras.',
-            'disponibilidad' => 'disponible',
-            'precio' => '200',
-            'foto' => 'img/servicios_extra/GPS.PNG'
-        ));
         \DB::table('serviciosextras')->insert(array(
             'nombre' => 'CONDUCTOR',
            'descripcion' => 'Contamos con el personal mejor capacitado, para llevarte a donde gustes de manera rápida y segura',

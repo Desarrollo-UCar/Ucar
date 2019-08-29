@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sucursal;
 use Illuminate\Http\Request;
+use Sabberworm\CSS\Value\Size;
 
 class SucursalController extends Controller
 {
@@ -40,13 +41,17 @@ class SucursalController extends Controller
     public function store(Request $request)
     {
         //
-        $bandera = 0;
+     //$dato=$this->validarLetra($request['nombre']);
+     
+        //return $dato;
+      
        if($request->validate([
+            'nombre'=>'required|alpha_spaces',
             'pais'=>'required',
             'estado'=>'required',
             'ciudad'=>'required',
             'colonia'=>'required',
-            'calle'=>'required',
+            'calle'=>'required|alpha_spaces',
             'numero'=>'required',
             'telefono'=>'required',
         ])){
@@ -91,8 +96,7 @@ class SucursalController extends Controller
      */
     public function update(Request $request)
     {
-        //
-
+        //       
         
         $request->validate([
             'nombre'=>'required',
@@ -121,4 +125,21 @@ class SucursalController extends Controller
     {
         //
     }
+
+   /* public function validarLetra($cadena){
+
+        $min=['a','b','c','d','e','f','g','h','i','j','k','l','k','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z'];
+        $may = ['A','B','C','D','E','F','G','H','I','J','K','L','K','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        $aux=0;
+        //for($i=0;$i<count($cadena);$i++){
+            for($j=0;$j<sizeof($min);$j++){
+                if($cadena[$j]==$min[$j] ||$cadena[$j]==$may[$j]){
+                    $aux=$aux+1;
+                    break;
+                }                
+          //  }
+        }
+        return "hola";
+    }*/
+
 }

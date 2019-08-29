@@ -44,12 +44,14 @@ Route::get('renta_traslado', 'PagesController@renta_traslado')->name('renta_tras
 Route::post('renta_traslado_vehiculo', 'PagesController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
 Route::get('renta_traslado_datos', 'PagesController@renta_traslado_datos')->name('renta_traslado_datos') ;
 Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacion_traslado')->name('solicita_informacion_traslado') ;
-Route::post('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');
+
+Route::get('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');//estamos en esta probando el envio por get desde el formulario
 Route::post('pago_paypal', 'PagesController@pago_paypal')->name('pago_paypal')->middleware('auth');
 
 Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion')->middleware('auth');
 Route::get('en_construccion2', 'PagesController@en_construccion2')->name('en_construccion2') ;
 
+Route::get('terminos_y_condiciones', 'PagesController@terminos_y_condiciones')->name('terminos_y_condiciones') ;
 //______________________________________
 
 Route::get('prueba', function () {
@@ -81,7 +83,7 @@ Route::resource('user','UsuariosController');
 //Route::get('/usuario','UsuariosController@Login');
 
 //Route::get('gerente', 'AdminController@inicio')->name('home');
-Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG')->middleware('auth');
+Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG');//->middleware('auth');
 
 
 //Route::get('gerente/usuarios/vehiculo/alta_vehiculo','AdminController@Vehiculo')->name('vehiculo');
@@ -105,7 +107,7 @@ Route::post('clientemostrar', 'ClienteController@mostrar')->name('showcliente');
 //Route::post('login','UsuariosController@login');
 
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -20,8 +20,8 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <div class="pricing-box-wrap special animated-fast flyIn">
                         <div class="pricing-heading">
-                        <h3>Prepaga en <strong>Linea</strong></h3>
-                        <h6>El total del alquiler y llévate 5% de descuento</h6>
+                        <h3>Paga el <strong>Total de la reserva</strong></h3>
+                        <h3> <strong>MXN {{$datos_reserva->total}} </strong></h3>
                         </div>
                         <div class="pricing-action">
                         </div>
@@ -33,8 +33,8 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <div class="pricing-box-wrap special animated-fast flyIn">
                             <div class="pricing-heading">
-                            <h3>Prepaga en <strong>Linea</strong></h3>
-                            <h6>El anticipo del alquiler</h6>
+                            <h3>Paga solo <strong>El anticipo</strong></h3>
+                            <h3> <strong>MXN {{number_format($anticipo,2)}}</strong></h3>
                             </div>
                             <div class="pricing-action">
                             </div>
@@ -43,16 +43,8 @@
                             </div>
                         </div>
                     </div>
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <input type="hidden" name="id_reserva" value="{{$r}}">
-                    <input class="form-check-input" type="checkbox" value="" id="terminos_condiciones" name = 'terminos_condiciones' required>
-                    <label for="terminos_condiciones">Debes estar de acuerdo con los terminos y condiciones.</label>
-                    <p>El total se basa en la información disponible al momento de la reserva para los arrendatarios. Los servicios opcionales que puedes elegir al momento del alquiler, tales como recarga de combustible, protección LDW para el vehículo, etc., no están incluidos.</p>
-                </div>
             </div>
         </form>
-
-
     </div>
 </section>
 @endsection

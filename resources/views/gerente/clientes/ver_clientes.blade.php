@@ -52,7 +52,7 @@
                 <div class="tab-content no-padding">
                   <!-- Morris chart - Sales -->
                   <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height:auto;">
-                      <form action="{{ route('cli')}}" method="POST" enctype="multipart/form-data" >
+                      <form action="{{ route('showcliente')}}" method="POST" enctype="multipart/form-data" >
                     <div class="col-md-6 col-xs-offset-6" id="clifre" style="display: none;">
                                                 <div class="col-md-6 form-group">
                               <label>Fecha inicial</label>

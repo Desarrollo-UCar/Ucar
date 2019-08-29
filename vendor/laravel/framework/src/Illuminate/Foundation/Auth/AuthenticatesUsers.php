@@ -18,6 +18,7 @@ trait AuthenticatesUsers
     public function showLoginForm()
     {
         return view('auth.login');
+        
     }
 
     /**
@@ -119,7 +120,7 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+       // return back();
     }
 
     /**

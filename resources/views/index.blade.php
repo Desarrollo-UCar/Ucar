@@ -232,6 +232,11 @@
                               </div>
                           </div>
                           <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                              @error('horaRecogida')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                               <label for="horaRecogida">HORA DE RECOGIDA</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
@@ -241,7 +246,7 @@
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>
-                                      <option selected>11:00</option><option>11:30</option>
+                                      <option>11:00</option><option>11:30</option>
                                       <option>12:00</option><option>12:30</option>
                                       <option>13:00</option><option>13:30</option>
                                       <option>14:00</option><option>14:30</option>
@@ -252,8 +257,7 @@
                                       <option>20:00</option><option>20:30</option>
                                       <option>21:00</option>
                                   </select>
-                              </div>
-                              
+                              </div> 
                           </div>
                           <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                               <label for="fechaDevolucion">FECHA DE DEVOLUCIÓN</label>
@@ -274,7 +278,7 @@
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>
-                                      <option selected>11:00</option><option>11:30</option>
+                                      <option>11:00</option><option>11:30</option>
                                       <option>12:00</option><option>12:30</option>
                                       <option>13:00</option><option>13:30</option>
                                       <option>14:00</option><option>14:30</option>
