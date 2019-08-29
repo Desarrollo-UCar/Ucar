@@ -94,7 +94,8 @@
                     <label>Saldo</label>
                     <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->saldo}}">
                   </div>
-        
+                  <div class="row">
+                    <div class="col-md-8">
    
                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning2">
                           <b>Cobrar Saldo pendiente </b>
@@ -107,10 +108,14 @@
 
             </div>
           </div>
+          
+        </div>
+      </div>
 
               <div class="row">
                 <div class="col-md-8">
-                    <h4 ><br>Datos del <a href="">vehiculo </a></h4>
+                    <h4 ><br>Datos del <a href="">vehiculo </a></h4> 
+
 
                   <div class="col-md-6 form-group">
                     <label>Vin</label>
@@ -151,9 +156,66 @@
                         <label>Hora</label>
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
                       </div>
-  
+                      <div class="col-md-2 form-group">
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
+                              <b>Cambiar VEHICULO</b>
+                            </button>
+                            </div>
                   </div>
                 </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                        <h4 ><br>Datos del conductor</h4>
+
+                        
+                  <div class="col-md-6 form-group">
+                      <label>Numero Licencia</label>
+                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->num_licencia}}">
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label>Nombre conductor</label>
+                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->nombreConductor}}">
+                      </div>
+
+                      
+                    <div class="col-md-6 form-group">
+                        <label>Fecha expedicion</label>
+                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->expedicion_licencia}}">
+                      </div>
+
+                      
+                    <div class="col-md-6 form-group">
+                        <label>Fecha expiracion</label>
+                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->expiracion_licencia}}">
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div clas="col-md-8">
+                        <h4 ><br>Servicios Extras </h4>.
+
+                        <div class="col-md-6 form-group">
+                            <table border="1">
+                                     <body>
+                                      <th>Identificacion</th>
+                                       <th>Nombre</th>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>Silla bebe</td>
+                                        </tr>
+                                     </body>
+
+                                      </table>
+                        </div>
+                    </div>
+
+                  </div>
+
                
                 <div class="row">
                   <div class="col-md-12">
@@ -218,13 +280,35 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span><b>{{'  Cerrar'}}</b></button>
-                    <a href="{{route('pagoReservacion', $reservacion)}}"class="btn btn-success"><b>Cobrar</b></a>
+                    <a href="{{route('direccion')}}"class="btn btn-success"><b>Cobrar</b></a>
                   </div>
                 </div>
                 <!-- /.modal-content -->
               </div>
               <!-- /.modal-dialog -->
             </div>
+
+            <div class="modal modal-warning fade" id="modal-warning3">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Cobro de saldo pendiente por reservacion'}}  {{$reservacion->id}}</b> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <p><b>{{'Se registrara un pago por '}} {{$reservacion->saldo}} {{' de saldo pendeiente, de la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span><b>{{'  Cerrar'}}</b></button>
+                      <a href="{{route('pagoReservacion', $reservacion)}}"class="btn btn-success"><b>Cobrar</b></a>
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
 
     @endsection
 

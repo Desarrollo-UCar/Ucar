@@ -118,3 +118,4 @@ Route::get('pago/{reservacion}', 'ReservacionController@pago_Reservacion')->name
 Route::get('cancel/{id}', 'ReservacionController@cancela')->name('cancelaReservacion');
 Route::resource('reservacion', 'ReservacionController');
 Route::get('/customer/print-pdf/{reservacion}', 'ReservacionController@printPDF')->name('contrato');
+Route::get('/customeeer', 'ReservacionController@cambia_vehiculo')->name('direccion');
