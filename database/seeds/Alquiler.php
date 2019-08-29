@@ -21,10 +21,10 @@ class Alquiler extends Seeder
                 'id_reservacion' => $faker->unique()->numberBetween(1,300),
                 
                 'lugar_recogida' => $lugar,
-                'fecha_recogida' => $faker->date,
+                'fecha_recogida' =>  $faker->dateTimeBetween('this week', '+14 days'),
                'hora_recogida' => $hora,
                'lugar_devolucion' => $lugar,
-               'fecha_devolucion' => $faker->date,
+               'fecha_devolucion' =>  $faker->dateTimeBetween('+14 days', '+18 days'),
                'hora_devolucion' => $hora,
                'id_vehiculo' => $faker->numberBetween(1,10),
                 'km_salida' => $faker->numberBetween(10000, 10100),

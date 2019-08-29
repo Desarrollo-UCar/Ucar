@@ -2,7 +2,7 @@
  <aside class="main-sidebar" style="position: fixed;">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-          <!-- Sidebar user panel 
+          <!-- Sidebar user panel -->
           <div class="user-panel">
               <?php
               $role = DB::table('users')

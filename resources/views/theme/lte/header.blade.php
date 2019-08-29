@@ -21,13 +21,13 @@
            
               <!-- Tasks: style can be found in dropdown.less -->
             
-              <!-- User Account: style can be found in dropdown.less 
+              <!-- User Account: style can be found in dropdown.less -->
               <?php
               $role = DB::table('users')
                 ->join('empleados','correo','=','users.email') 
                 ->select('users.*','empleados.*')
                 ->first();
-            ?>-->
+            ?>
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="{{ asset('storage').'/'.$role->foto }}" class="user-image" alt="User Image">

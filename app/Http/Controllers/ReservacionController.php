@@ -71,6 +71,8 @@ class ReservacionController extends Controller
         //dump($edad);
         //$reservacion = Reservacion::where('id','=',$id)->first();
         //return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
+
+        $vehiculosDispo =  Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
         return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad'));
     }
 
@@ -221,4 +223,21 @@ class ReservacionController extends Controller
         $reservacion->estatus = 'pagado';
         $reservacion->save();
     }
+
+    public function cambia_vehiculo(){
+
+
+        $client = new \GuzzleHttp\Client();
+
+       
+       $response = $client->get("https://api-codigos-postales.herokuapp.com/v2/codigo_postal/");
+       $request = $response->getBody();
+        dd($request);
+  
+
+
+
+    }
+
+
 }
