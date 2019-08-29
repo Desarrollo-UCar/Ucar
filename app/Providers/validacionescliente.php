@@ -26,10 +26,12 @@ class ValidacionesLaravel extends ServiceProvider
         //
 
         {
-            Validator::extend('alpha_spaces', function($attribute, $value)
-            {
-                return preg_match('/^[\pL\s]+$/u', $value);
+            Validator::extend('fecha_menor_a_la_actual', function($attribute, $horaRecogida){
+                $hora_actual = strtotime(date('H\:i'));
+                $hora_de_recogida = strtotime(date(" H\:i", strtotime($horaRecogida)));
+                return $hora_de_recogida <= $hora_actual;
             });
+
         }
     }
 

@@ -5,7 +5,7 @@
     <div class="row nomargin">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="inner-heading">
-            <h2>Selecciona tu forma de pago (Paso 4 de 4)</h2>
+            <h2>Selecciona tu forma de pago (Paso 4</h2>
         </div>
         </div>
     </div>

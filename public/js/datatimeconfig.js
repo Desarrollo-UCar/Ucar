@@ -17,6 +17,10 @@ $(function () {
 });
 
 
+$("#datetimepicker_fechaDevolucion").on("dp.change", function (e) {
+    $('#datetimepicker_fechaDevolucion').data("DateTimePicker").minDate('now');
+    $('#datetimepicker_fechaRecogida').data("DateTimePicker").maxDate(e.date);  
+});
 
 $("#datetimepicker_fechaRecogida").on("dp.change", function (e) {
     $('#datetimepicker_fechaRecogida').data("DateTimePicker").minDate('now');
@@ -24,10 +28,7 @@ $("#datetimepicker_fechaRecogida").on("dp.change", function (e) {
 });
 
 
-$("#datetimepicker_fechaDevolucion").on("dp.change", function (e) {
-    $('#datetimepicker_fechaDevolucion').data("DateTimePicker").minDate('now');
-    $('#datetimepicker_fechaRecogida').data("DateTimePicker").maxDate(e.date);  
-});
+
 
     $(function () {
       $('#fecha_traslado_salida').datetimepicker({   

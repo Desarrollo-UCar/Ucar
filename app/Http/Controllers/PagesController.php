@@ -12,77 +12,50 @@ class PagesController extends Controller
     }
 
     public function postFormularioindex(Request $request){ 
+        $hora_actual = strtotime(date('H\:i'));
+        $hora_de_recogida = strtotime(date(" H\:i", strtotime($request->horaRecogida)));
+        $hora_de_devolucion = strtotime(date(" H\:i", strtotime($request->horaDevolucion)));
+        $fecha_de_recogida = date("Y\-m\-d", strtotime($request->fechaRecogida));
+        $fecha_de_devolucion = date("Y\-m\-d", strtotime($request->fechaDevolucion));
+
+        if(($fecha_de_recogida < $fecha_de_devolucion) & ($hora_de_recogida < $hora_de_devolucion))
+            return back()->with('mensaje', 'Por dos horas extra se cobrará un dia mas!');
+
+        if(($fecha_de_recogida == $fecha_de_devolucion) & $hora_de_recogida > $hora_de_devolucion)
+            return back()->with('mensaje', 'No puede tener una hora de devolucion menor la de recogida!');
         
-       
-            $hora_actual = strtotime(date('H\:i'));
-            $hora_de_recogida = strtotime(date(" H\:i", strtotime($request->horaRecogida)));
-            $hora_de_devolucion = strtotime(date(" H\:i", strtotime($request->horaDevolucion)));
+        if($fecha_de_recogida == date('Y\-m\-d') & $hora_de_recogida <= $hora_actual)
+            return back()->with('mensaje', 'Hora de recogida menor a la actual!');
 
-            if($hora_de_recogida < $hora_de_devolucion)
-            return back()->with('mensaje', 'A PARTIR DE DOS HORAS EXTRA EN EL DIA, SSE COBRARÁ UN DIA MAS!!');
 
-            $newDate = date("Y\-m\-d", strtotime($request->fechaRecogida));
-        if($newDate == date('Y\-m\-d')){
-            if($hora_de_recogida <= $hora_actual){
-                return back()->with('mensaje', 'NO PUEDES ESCOGER UNA HORA DE RECOGIDA MENOR A LA HORA ACTUAL!!');
-            }else{
-                        // Creamos el objeto
-                    $reserva_temp = new App\reserva_temp;
-                    // Seteamos las propiedades
-                    $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
-                    $reserva_temp->lugar_recogida = $request->lugarrecogida;
-                    
-                    $reserva_temp->fecha_recogida = $newDate;
-                    $reserva_temp->hora_recogida = $request->horaRecogida;
-            
-                    $reserva_temp->lugar_devolucion = $request->lugarrecogida;
-                    $newDatee = date("Y\-m\-d", strtotime($request->fechaDevolucion));
-                    $reserva_temp->fecha_devolucion = $newDatee;
-                    $reserva_temp->hora_devolucion = $request->horaDevolucion;
-            
-                    $reserva_temp->codigo_descuento =  $request->codigoPromocion;
-                    $reserva_temp->tipo_vehiculo= $request->tipoVehiculo;
-                    $reserva_temp->id_vehiculo = 0;
-                    $reserva_temp->total = 0;
-                    $reserva_temp->servicios_extra = 'ee';
-                    $reserva_temp->id_cliente = 0;
-                    // Guardamos en la base de datos (equivalente al flush de Doctrine)
-                    $reserva_temp->save();
-                    
-                    $vehiculos_disponibles = App\Vehiculo::all();
-                    $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
-                    //return $datos_reserva;
-                    return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
-                }
-        }else{
-            // Creamos el objeto
-            $reserva_temp = new App\reserva_temp;
-            // Seteamos las propiedades
-            $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
-            $reserva_temp->lugar_recogida = $request->lugarrecogida;
-            
-            $reserva_temp->fecha_recogida = $newDate;
-            $reserva_temp->hora_recogida = $request->horaRecogida;
-    
-            $reserva_temp->lugar_devolucion = $request->lugarrecogida;
-            $newDatee = date("Y\-m\-d", strtotime($request->fechaDevolucion));
-            $reserva_temp->fecha_devolucion = $newDatee;
-            $reserva_temp->hora_devolucion = $request->horaDevolucion;
-    
-            $reserva_temp->codigo_descuento =  $request->codigoPromocion;
-            $reserva_temp->tipo_vehiculo= $request->tipoVehiculo;
-            $reserva_temp->id_vehiculo = 0;
-            $reserva_temp->total = 0;
-            $reserva_temp->servicios_extra = 'ee';
-            $reserva_temp->id_cliente = 0;
-            // Guardamos en la base de datos (equivalente al flush de Doctrine)
-            $reserva_temp->save();
-            
-            $vehiculos_disponibles = App\Vehiculo::all();
-            $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
-            //return $datos_reserva;
-            return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
-        }
+        // Creamos el objeto
+        $reserva_temp = new App\reserva_temp;
+        // Seteamos las propiedades
+        $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
+        $reserva_temp->lugar_recogida = $request->lugarrecogida;
+        
+        $reserva_temp->fecha_recogida = $fecha_de_recogida;
+        $reserva_temp->hora_recogida = $request->horaRecogida;
+
+        $reserva_temp->lugar_devolucion = $request->lugarrecogida;
+        $newDatee = date("Y\-m\-d", strtotime($request->fechaDevolucion));
+        $reserva_temp->fecha_devolucion = $newDatee;
+        $reserva_temp->hora_devolucion = $request->horaDevolucion;
+
+        $reserva_temp->codigo_descuento =  $request->codigoPromocion;
+        $reserva_temp->tipo_vehiculo= $request->tipoVehiculo;
+        $reserva_temp->id_vehiculo = 0;
+        $reserva_temp->total = 0;
+        $reserva_temp->servicios_extra = 'ee';
+        $reserva_temp->id_cliente = 0;
+        // Guardamos en la base de datos (equivalente al flush de Doctrine)
+        $reserva_temp->save();
+        
+        $vehiculos_disponibles = App\Vehiculo::all();
+        $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
+        //return $datos_reserva;
+        return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
+        
     }
 
     public function pflota(){
