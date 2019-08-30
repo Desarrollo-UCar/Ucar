@@ -176,12 +176,12 @@
                 <h4 class="modal-title">No se encuentra ningún registro. :( </b> </h4>
               </div>
               <div class="modal-body">
-                <p>Para dar de alta un servicio extra dale click en continuar :).&hellip;</p>
+                <p>Espera que un cliente se de Alta en el sistema.&hellip;</p>
               </div>
               <div class="modal-footer">
                 {{--<button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Cerrar</button>--}}
                 <a href="{{ URL::previous()}}" class="btn btn-success pull-left">Regresar</a>
-              <a href="{{route('vehiculo.index')}}" class="btn btn-primary">Continuar</a>
+              <a href="{{ URL::previous()}}"  class="btn btn-primary">Continuar</a>
               </div>
             </div>
             <!-- /.modal-content -->

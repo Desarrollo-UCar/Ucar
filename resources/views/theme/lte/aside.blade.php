@@ -114,6 +114,10 @@
                 <li><a href="{{ route('tallerservicio.index') }}"><i class="fa fa-circle-o"></i>Ver servicios</a></li>
               </ul>
             </li> 
+            <li class="treeview">
+                <li><a href="{{ route('cliente.index') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
+              </ul>
+              </li> 
       </ul>
     </section>
     <!-- /.sidebar -->

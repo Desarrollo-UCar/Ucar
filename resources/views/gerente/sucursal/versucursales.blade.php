@@ -53,9 +53,9 @@
                   <thead>
                       <tr>
                           <th style="text-align: center">Nombre</th>
-                          <th style="text-align: center">País</th>
+                          <th style="text-align: center">Código Postal</th>
                           <th style="text-align: center">Estado</th>
-                          <th style="text-align: center">Ciudad</th>
+                          <th style="text-align: center">Municipio</th>
                           <th style="text-align: center">Colonia</th>
                           <th style="text-align: center">Calle</th>
                           <th style="text-align: center">Num. Calle</th>
@@ -67,9 +67,9 @@
                       @foreach ($sucursals as $sucursal)                      
                       <tr>
                       <td style="text-align: center">{{$sucursal->nombre}}</td>
-                        <td style="text-align: center">{{$sucursal->pais}}</td>
+                        <td style="text-align: center">{{$sucursal->codigopostal}}</td>
                         <td style="text-align: center">{{$sucursal->estado}}</td>
-                        <td style="text-align: center">{{$sucursal->ciudad}}</td>
+                        <td style="text-align: center">{{$sucursal->municipio}}</td>
                         <td style="text-align: center">{{$sucursal->colonia}}</td>
                         <td style="text-align: center">{{$sucursal->calle}}</td>
                         <td style="text-align: center">{{$sucursal->numero}}</td>
