@@ -41,8 +41,6 @@
                         <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
                         <dt>Fecha / Hora de devolución:</dt>
                         <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_devolucion))}} a las {{$datos_reserva->hora_devolucion}} hrs</dd>
-                        <dt>Descuentos y Tarifas</dt>
-                        <dd>{{$datos_reserva->codigo_descuento}}</dd>
                         </dl> 
                     </div>
                 </div>

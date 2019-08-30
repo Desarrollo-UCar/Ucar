@@ -17,7 +17,8 @@
     
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
+    
     <!-- Theme skin -->
     <link href="color/blue.css" rel="stylesheet" />
     <!-- iconos de materialice -->
@@ -28,10 +29,6 @@
      <header>
      <div class="bg-white">
       </div>
-
-
-
-
     <div class="container">
         <div class="row nomargin">
         <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -188,58 +185,36 @@
                       @csrf
                       <div class="form-row">
                           <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                              <label for="inputLugar">LUGAR DE RENTA</label>
+                              <label for="inputLugar">SUCURSAL DE RENTA</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-flag"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'lugarrecogida' id="inputLugar" class="form-control" required>
-                                  <option>Aeropuerto Cd. Ixtepec</option>
-                                  <option>Istmo</option>
-                                  <option>Puerto Escondido</option>
+                                  <select id="lugarrecogida" name='lugarrecogida' class="form-control" value = "{{ old('lugarrecogida') }}" required>
+                                  @foreach($sucursales as $sucursal)
+                                      <option>{{$sucursal->nombre}}</option>
+                                  @endforeach
                               </select>
                               </div>
                           </div>
                           <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                              <label for="tipoVehiculo">TIPO DE VEHÍCULO</label>
-                              <div class="input-group">
-                                  <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-car"aria-hidden="true"></i></span>
-                                  </div>
-                                  <select name = 'tipoVehiculo' id="tipo" class="form-control" required>
-                                      <option>Automovil</option>
-                                      <option>Camioneta</option>
-                                      <option>Motoneta</option>
-                                  </select>
-                              </div>
-                          </div>
-                          <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                              <label for="codigoPromocion">CÓDIGO DE PROMOCIÓN</label>
-                              <div class="input-group">
-                                  <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
-                                  </div>
-                                  <input name = 'codigoPromocion' type="text" class="form-control form-control-lg"  placeholder="Ingresa tu código de promoción" id='codigoPromocion'>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="form-row">
-                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                              <label for="fechaRecogida">FECHA DE RECOGIDA</label>
+                              <label for="fecha">SELECCIONA TUS FECHAS</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                                   </div>
-                                  <input name = 'fechaRecogida' type="text" class="form-control form-control-lg" placeholder="{{date('d\-m\-Y') }}" id='datetimepicker_fechaRecogida'  autocomplete="off" required>
+                                  <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" required>
+                                  <input type="hidden" id='fechaRecogida' name="fechaRecogida" value="0">
+                                  <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
                               </div>
                           </div>
-                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                          <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
                               <label for="horaRecogida">HORA DE RECOGIDA</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'horaRecogida' class="form-control" required>
+                                  <select name = 'horaRecogida' class="form-control" value = "{{ old('horaRecogida') }}" required>
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>
@@ -257,22 +232,13 @@
                                   </select>
                               </div> 
                           </div>
-                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                              <label for="fechaDevolucion">FECHA DE DEVOLUCIÓN</label>
-                              <div class="input-group">
-                                  <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
-                                  </div>
-                                  <input name = 'fechaDevolucion' type="text" class="form-control form-control-lg" placeholder="{{date('d\-m\-Y')}}" selected = "{{date('d\-m\-Y')}}" id='datetimepicker_fechaDevolucion'  autocomplete="off" required>
-                              </div>
-                          </div>
-                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                          <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
                               <label for="horaDevolucion">HORA DE DEVOLUCIÓN</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'horaDevolucion'  class="form-control" required>
+                                  <select name = 'horaDevolucion'  class="form-control" value = "{{ old('horaDevolucion') }}" required>
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>
@@ -291,16 +257,16 @@
                               </div>
                           </div>
                       </div>
-                          <div class="form-row">  
-                              <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                  <button class="btn btn-primary" type="submit">Consulta Vehiculos Disponibles</button>
-                              </div> 
-                              @if(session('mensaje'))
-                              <div class="alert aler-danger">
-                                  <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
-                              </div>
-                              @endif   
+                      <div class="form-row">
+                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                              <button class="btn btn-primary" type="submit" style="margin-top: 12%;">Consulta Vehiculos Disponibles</button>
+                          </div> 
+                          @if(session('mensaje'))
+                          <div class="alert aler-danger">
+                              <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
                           </div>
+                          @endif 
+                      </div>
                   </form>
                   <!-- fin formulario reserva -->
               </div>
@@ -616,7 +582,10 @@
 <!-- Footer -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- javascript
@@ -641,12 +610,26 @@
   <script src="js/animate.js"></script>
   <script src="js/datatimeconfig.js"></script>
   <script src="js/inview.js"></script>
-
+  <script src="js/daterangepicker.js"></script>
+  <script src="js/moment.min.js"><script>
+  <script src="js/custom.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-<script src="js/bootstrap-datetimepicker.min.js"></script>
-    <!-- Template Custom JavaScript File -->
-    <script src="js/custom.js"></script>
-  </body>
+<script>
+    $('#fechas').daterangepicker({
+    "autoApply": true,
+    "linkedCalendars": false,
+    "autoUpdateInput": false,
+    "showCustomRangeLabel": false,
+    "startDate": new Date(),
+    "minDate": new Date()
+}, function(start, end, label) {
+  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+  document.getElementById('fechas').value = 'Rec: ' + start.format('DD-MM-YYYY') + '  Dev: ' + end.format('DD-MM-YYYY');
+  document.getElementById('fechaRecogida').value = start.format('YYYY-MM-DD');
+  document.getElementById('fechaDevolucion').value = end.format('YYYY-MM-DD');
+});
+</script> 
+</body>
 </html>
+

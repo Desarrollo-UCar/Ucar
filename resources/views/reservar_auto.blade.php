@@ -26,13 +26,8 @@
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
                             <dt>Fecha / Hora de devolución:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_devolucion))}} a las {{$datos_reserva->hora_devolucion}} hrs</dd>
-                            <dt>Vehiculo de Preferencia:</dt>
-                            <dd>{{$datos_reserva->tipo_vehiculo}}</dd>
-                            <dt>Descuentos y Tarifas</dt>
-                            <dd>{{$datos_reserva->codigo_descuento}}</dd>
                         </dl> 
-                    </div>
-                    <a a href="{{ route('index') }}" class="btn btn-warning btn-sm">Modificar</a>    
+                    </div>   
               </div>
             </aside>
           </div>
@@ -51,8 +46,9 @@
                 </div>
             </div>
             <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    >>> {{$vehiculo->tipo}}
                 <ul>
-                <li>{{$vehiculo->tipo}}</li>
+                
                 <li><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</li>
                 <li><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</li>
                 <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->puertas}} Puertas</li>
@@ -66,14 +62,15 @@
             <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <dl>
                     <dd>Total a pagar:</dd>
-                    <dd><h4><strong><span class="colored"> $ {{$vehiculo->precio}} MXN</span></strong></h4></dd>
-                    <dd>Kilometraje ilimitado</dd>
-                    <dd>incluye cuotas e IVA</dd>
+                    <dd><h4><strong><span class="colored"> $ {{number_format($vehiculo->precio,2)}} MXN</span></strong></h4></dd>
+                    <dd>Kilometraje Ilimitado</dd>
+                    <dd>Incluye IVA</dd>
+                    <dd><a a href="{{ route('reservar_servicios_extra',[
+                                            'id_reserva'=>$datos_reserva->id,
+                                            'id_vehiculo'=>$vehiculo->idvehiculo
+                                            ]) }}" class="btn btn-warning btn-sm">reservar Ahora</a></dd> 
                 </dl> 
-                <a a href="{{ route('reservar_servicios_extra',[
-                'id_reserva'=>$datos_reserva->id,
-                'id_vehiculo'=>$vehiculo->idvehiculo
-                ]) }}" class="btn btn-warning btn-sm">reservar Ahora</a> 
+                
             </div>
         </div>
 @endforeach

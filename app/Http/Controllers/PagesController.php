@@ -4,46 +4,51 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App;
+use DB;
 use DateTime;
 class PagesController extends Controller
 {
     public function inicio(){//PRUEBA
-        return view('index');
+        $sucursales = App\Sucursal::all();
+        return view('index',compact('sucursales'));
     }
 
     public function postFormularioindex(Request $request){ 
         $hora_actual = strtotime(date('H\:i'));
         $hora_de_recogida = strtotime(date(" H\:i", strtotime($request->horaRecogida)));
         $hora_de_devolucion = strtotime(date(" H\:i", strtotime($request->horaDevolucion)));
-        $fecha_de_recogida = date("Y\-m\-d", strtotime($request->fechaRecogida));
-        $fecha_de_devolucion = date("Y\-m\-d", strtotime($request->fechaDevolucion));
-
-        if(($fecha_de_recogida < $fecha_de_devolucion) & ($hora_de_recogida < $hora_de_devolucion))
-            return back()->with('mensaje', 'Por dos horas extra se cobrará un dia mas!');
-
-        if(($fecha_de_recogida == $fecha_de_devolucion) & $hora_de_recogida > $hora_de_devolucion)
-            return back()->with('mensaje', 'No puede tener una hora de devolucion menor la de recogida!');
+        $R = $request->fechaRecogida;
+        $D = $request->fechaDevolucion;
+        if($R=='0' || $D =='0')
+            return back()->with('mensaje', 'Seleccione fechas!');
+        if(($R == $D) & $hora_de_recogida > $hora_de_devolucion)
+            return back()->with('mensaje', 'No puede tener una hora de devolución menor la de recogida!');
+        if($R == date('Y\-m\-d') & $hora_de_recogida <= $hora_actual)
+            return redirect()->back()->with('mensaje', 'Hora de recogida expiradal!');
+        // buscamos el id de sucursal que hace referencia el lugar de recogida
+        $sucursales = App\Sucursal::all();
+        $sucursal = 1;
+        foreach ($sucursales as $su) {
+            if($su->nombre == $request->lugarrecogida)
+                $sucursal = $su->idsucursal; 
+        }
         
-        if($fecha_de_recogida == date('Y\-m\-d') & $hora_de_recogida <= $hora_actual)
-            return back()->with('mensaje', 'Hora de recogida menor a la actual!');
-
-
         // Creamos el objeto
         $reserva_temp = new App\reserva_temp;
         // Seteamos las propiedades
         $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
-        $reserva_temp->lugar_recogida = $request->lugarrecogida;
+        $reserva_temp->lugar_recogida = $sucursal;
         
-        $reserva_temp->fecha_recogida = $fecha_de_recogida;
+        $reserva_temp->fecha_recogida = $request->fechaRecogida;
         $reserva_temp->hora_recogida = $request->horaRecogida;
 
-        $reserva_temp->lugar_devolucion = $request->lugarrecogida;
-        $newDatee = date("Y\-m\-d", strtotime($request->fechaDevolucion));
-        $reserva_temp->fecha_devolucion = $newDatee;
+        $reserva_temp->lugar_devolucion = $sucursal;
+
+        $reserva_temp->fecha_devolucion = $request->fechaDevolucion;
         $reserva_temp->hora_devolucion = $request->horaDevolucion;
 
-        $reserva_temp->codigo_descuento =  $request->codigoPromocion;
-        $reserva_temp->tipo_vehiculo= $request->tipoVehiculo;
+        $reserva_temp->codigo_descuento =  'en_construccion';
+        $reserva_temp->tipo_vehiculo= 'en construccion';
         $reserva_temp->id_vehiculo = 0;
         $reserva_temp->total = 0;
         $reserva_temp->servicios_extra = 'ee';
@@ -51,7 +56,35 @@ class PagesController extends Controller
         // Guardamos en la base de datos (equivalente al flush de Doctrine)
         $reserva_temp->save();
         
-        $vehiculos_disponibles = App\Vehiculo::all();
+//EJECUTAR PROCESO DE BUSQUEDA DE DISPONIBLES
+// consulta a los vehiculos disponibles
+$fecha_i = $request->fechaRecogida;
+$fecha_f = $request->fechaDevolucion;
+$vehiculos_disponibles = DB::select('SELECT * FROM vehiculos 
+INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+WHERE vehiculosucursales.sucursal=?
+AND vehiculos.idvehiculo NOT IN (
+SELECT vehiculos.idvehiculo FROM vehiculos  
+INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+WHERE vehiculosucursales.sucursal=?
+AND vehiculos.estatus ="disponible"
+AND vehiculosucursales.status ="ACTIVO"
+AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+UNION
+SELECT vehiculos.idvehiculo FROM vehiculos  
+INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+WHERE vehiculosucursales.sucursal=2
+AND vehiculos.estatus ="disponible"
+AND vehiculosucursales.status ="ACTIVO"
+AND  alquilers.fecha_recogida <= ?
+AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
+
+
+
+        //
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //return $datos_reserva;
         return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
