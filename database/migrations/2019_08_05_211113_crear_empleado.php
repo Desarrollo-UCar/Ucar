@@ -16,15 +16,14 @@ class CrearEmpleado extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('idempleado');
-            $table->string('curp');
+            $table->string('identificación');
             $table->string('nombres')->require;
             $table->string('primerApellido')->require;
             $table->string('segundoApellido');
             $table->date('fechaNacimiento')->require;
-            $table->string('nacionalidad')->require;
-            $table->string('pais')->require;
+            $table->string('codigo_postal')->require;
             $table->string('estado')->require;
-            $table->string('ciudad')->require;
+            $table->string('municipio')->require;
             $table->string('colonia')->require;
             $table->string('calle')->requiere;
             $table->integer('numero')->requiere;
@@ -32,6 +31,7 @@ class CrearEmpleado extends Migration
             $table->string('correo')->require;
             $table->string('telefono')->require;
             $table->string('tipo')->require;
+            $table->string('status');
             $table->date('licenciaFechaExpiracion')->nullable();
             $table->date('licenciaFechaExpedicion')->nullable();
             $table->integer('numLicencia')->nullable();           

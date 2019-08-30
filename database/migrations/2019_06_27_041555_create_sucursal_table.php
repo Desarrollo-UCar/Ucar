@@ -15,12 +15,13 @@ class CreateSucursalTable extends Migration
     {
         Schema::create('Sucursales', function (Blueprint $table) {
             $table->increments('idSucursal');
-            $table->string('pais')->require;
+            $table->integer('codigo_postal')->require;
             $table->string('estado')->require;
-            $table->string('ciudad')->require;
+            $table->string('Municipio')->require;
             $table->string('colonia')->require;
             $table->string('calle')->requiere;
             $table->string('numero')->requiere;
+            $table->string('status');
             $table->string('telefono')->require;
         });
     }

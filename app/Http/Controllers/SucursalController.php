@@ -43,23 +43,36 @@ class SucursalController extends Controller
         //
      //$dato=$this->validarLetra($request['nombre']);
      
-        //return $dato;
-      
-       if($request->validate([
+        //return $request;
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+       $request->validate([
             'nombre'=>'required|con_espacios',
-            'pais'=>'required',
+            'codigopostal'=>'required|postal',
             'estado'=>'required',
-            'ciudad'=>'required',
+            'municipio'=>'required',
             'colonia'=>'required',
             'calle'=>'required',
             'numero'=>'required',
             'telefono'=>'required|tele_fono',
-        ])){
-        Sucursal::create($request->all());
+        ]);
+        Sucursal::create([
+            'nombre'=> $request['nombre'],
+            'codigopostal'=>$request['codigopostal'],
+            'estado'=>$request['estado'],
+            'municipio' =>$request['municipio'],
+            'colonia'=>$request['colonia'],
+            'calle' =>$request['calle'],
+            'numero'=>$request['numero'],
+            'telefono'=>$request['telefono'],
+            'status'=> 'ACTIVO',
+            'created_at' => $date,
+            'updated_at'=> $date
+        ]);
    
         return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-    }
-    return "error";
+    
+   
     }
 
     /**
@@ -97,21 +110,34 @@ class SucursalController extends Controller
     public function update(Request $request)
     {
         //       
-        
-        $request->validate([
-            'nombre'=>'required',
-            'pais'=>'required',
-            'estado'=>'required',
-            'ciudad'=>'required',
-            'colonia'=>'required',
-            'calle'=>'required',
-            'numero'=>'required',
-            'telefono'=>'required',
+       // return $request;
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+       $request->validate([
+        'nombre'=>'required|con_espacios',
+        'codigopostal'=>'required|postal',
+        'estado'=>'required',
+        'municipio'=>'required',
+        'colonia'=>'required',
+        'calle'=>'required',
+        'numero'=>'required',
+        'telefono'=>'required|tele_fono',
         ]);
             $sucursal=Sucursal::where('nombre',$request['nombre'])->first();
           
-        $sucursal->update($request->all());
-        return redirect()->route('sucursal.index');
+        $sucursal->update([
+            'nombre'=> $request['nombre'],
+            'codigopostal'=>$request['codigopostal'],
+            'estado'=>$request['estado'],
+            'municipio' =>$request['municipio'],
+            'colonia'=>$request['colonia'],
+            'calle' =>$request['calle'],
+            'numero'=>$request['numero'],
+            'telefono'=>$request['telefono'],
+            'status'=> 'ACTIVO',
+            'updated_at'=> $date
+        ]);
+        return back()->with('msj','DATOS MODIFICADOS EXITOSAMENTE :)');
 
     }
 
@@ -126,20 +152,11 @@ class SucursalController extends Controller
         //
     }
 
-   /* public function validarLetra($cadena){
+   public function Autocomplete($cadena){
+    
+    echo $cadena;
+    return response()->json($cadena);
 
-        $min=['a','b','c','d','e','f','g','h','i','j','k','l','k','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z'];
-        $may = ['A','B','C','D','E','F','G','H','I','J','K','L','K','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        $aux=0;
-        //for($i=0;$i<count($cadena);$i++){
-            for($j=0;$j<sizeof($min);$j++){
-                if($cadena[$j]==$min[$j] ||$cadena[$j]==$may[$j]){
-                    $aux=$aux+1;
-                    break;
-                }                
-          //  }
-        }
-        return "hola";
-    }*/
+    }
 
 }

@@ -36,6 +36,10 @@ class ValidacionesLaravel extends ServiceProvider
                     return preg_match('/[1-9][0-9]{9}/m', $value);
                 });
             
+                Validator::extend('postal', function($attribute, $value)
+                {
+                    return preg_match('/[0-9]{5}/m', $value);
+                });
         }
         
 

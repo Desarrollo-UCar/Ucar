@@ -8,6 +8,6 @@ class Sucursal extends Model
 {
     public $primaryKey ='idsucursal';
     protected $fillable = [
-        'nombre','pais', 'estado','ciudad','colonia','calle','numero','telefono'
+        'nombre','codigopostal','estado','municipio','colonia','calle','numero','telefono','status'
     ];
 }

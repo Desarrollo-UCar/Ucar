@@ -14,15 +14,15 @@ class CrearSucursal extends Migration
     public function up()
     {
         Schema::create('sucursals', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
             $table->bigIncrements('idsucursal');
             $table->string('nombre')->require;
-            $table->string('pais')->require;
+            $table->integer('codigopostal')->require;
             $table->string('estado')->require;
-            $table->string('ciudad')->require;
+            $table->string('municipio')->require;
             $table->string('colonia')->require;
             $table->string('calle')->requiere;
             $table->string('numero')->requiere;
+            $table->string('status')->requiere;
             $table->string('telefono')->require;
 
             $table->timestamps();
