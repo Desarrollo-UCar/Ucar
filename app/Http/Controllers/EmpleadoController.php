@@ -37,7 +37,6 @@ class EmpleadoController extends Controller
         if(!empty($empleado)){
             return back()->with('msj','EL EMPLEADO '.$request['nombres'].' '.$request['primerApellido'].' YA SE ENCUENTRA REGISTRADO');
         }
-        //return "no";
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
         $diff = $date->diffInYears($request['fechaNacimiento']); 

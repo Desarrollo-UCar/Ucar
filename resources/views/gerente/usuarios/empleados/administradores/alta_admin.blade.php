@@ -21,13 +21,7 @@
     </section>
 
 
-    <section class="content">
-        @if ($errors->any())
-        <div class="alert alert-danger">            
-               Por favor de rellenar los campos correctamente
-        </div>
-    @endif
-
+  
     @if (session()->has('mensaje'))
     <div class="alert alert-danger" role="alert">{{session('mensaje')}}</div>                                    
     @endif 

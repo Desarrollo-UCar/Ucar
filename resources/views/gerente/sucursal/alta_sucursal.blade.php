@@ -128,7 +128,7 @@
                 {{--DATOS PARA EL TELEFONO--}}
                 <div class="form-group col-md-4">
                     <label>Teléfono
-                        @error('numero')                        
+                        @error('telefono')                        
                         <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i>
                         @enderror
                     </label>

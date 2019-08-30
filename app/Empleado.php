@@ -8,6 +8,6 @@ class Empleado extends Model
 {
     protected $primaryKey ='idempleado';
     protected $fillable = [
-        'curp','nombres','primerApellido','segundoApellido','fechaNacimiento','nacionalidad','pais', 'estado','ciudad','colonia','calle','numero','foto','telefono','tipo','licenciaFechaExpedicion','licenciaFechaExpiracion','numLicencia'
+        'ine','nombres','primerApellido','segundoApellido','fechaNacimiento','nacionalidad','codigopostal', 'estado','municipio','colonia','calle','numero','foto','telefono','tipo','licenciaFechaExpedicion','licenciaFechaExpiracion','numLicencia'
     ];
 }

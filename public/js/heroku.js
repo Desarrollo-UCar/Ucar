@@ -1,9 +1,12 @@
 $(document).ready(function () {
-    $("#codigo_postal").keyup(function () {
+  var value = document.getElementById("codigo_postal").val();
+  obtenerDatos(value);
+    
+  $("#codigo_postal").keyup(function () {
        var value = $(this).val();
        document.getElementById("municipio").readOnly = true;
        document.getElementById("estado").readOnly = true;
-        obtenerDatos(value);
+      obtenerDatos(value);
       
     });
     
