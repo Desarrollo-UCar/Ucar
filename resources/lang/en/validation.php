@@ -119,6 +119,8 @@ return [
     'con_espacios' => ' Error',
     'tele_fono'  => ' Error',
     'postal' => ' Error',
+    'alpha_spaces'         => 'Rellene con datos correctos',
+    'fecha_menor_a_la_actual'=>'NO PUEDES ESCOGER UNA HORA DE RECOGIDA MENOR A LA HORA ACTUAL!!',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

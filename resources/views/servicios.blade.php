@@ -77,19 +77,19 @@
                         <ul>
                         <h5>Autos:</h5>
                         <li>Identificacion/pasaporte</li>
-                        <li>licencia vigente</li>
-                        <li>aceptamos todas las tarjeta de credito</li>
+                        <li>Licencia de conducir vigente</li>
+                        <li>Aceptamos todas las tarjeta de crédito</li>
                         </ul>
-                        <p>Detalles del servicio</p>
+                        <p>Se requiere de un depósito de garantia por la cantidad de MXN 20,000.00</p>
                     </div>
                     <div class="align-self-center col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <ul>
                         <h5>Motonetas:</h5>
-                        <li>identificacion/pasaporte</li>
-                        <li>licencia vigente</li>
-                        <li>Tarjeta</li>
+                        <li>Identificacion/pasaporte</li>
+                        <li>Licencia de conducir vigente</li>
+                        <li>Aceptamos todas las tarjeta de crédito</li>
                         </ul>
-                        <p>Detalles del servicio</p>
+                        <p>Se requiere de un depósito de garantia por la cantidad de MXN 20,000.00</p>
                     </div>
 
                 </div>
@@ -121,10 +121,10 @@
                         <ul>
                         <h5>Automovil + Chofer:</h5>
                         <li>Identificacion/pasaporte</li>
-                        <li>licencia vigente</li>
-                        <li>aceptamos todas las tarjeta de credito</li>
+                        <li>Aceptamos todas las tarjeta de credito</li>
                         </ul>
-                        <p>Detalles del servicio</p>
+                        <p>Se requiere de un depósito de garantia por la cantidad de MXN 20,000.00</p>
+                        <p>El servicio de chofer es de 8 hrs. por dia.</p>
                     </div>
                 </div>
             </article>
@@ -153,12 +153,11 @@
                   </div>
                   <div class="align-self-center col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <ul>
-                        <h5>Autos:</h5>
+                        <h5>Traslados:</h5>
                         <li>Identificacion/pasaporte</li>
-                        <li>licencia vigente</li>
-                        <li>aceptamos todas las tarjeta de credito</li>
+                        <li>Aceptamos todas las tarjeta de credito</li>
                         </ul>
-                        <p>Detalles del servicio</p>
+                        <p>Comunícate con tu sucursal de preferencia y obten la cotización de tu viaje</p>
                     </div>
 
                 </div>
@@ -187,23 +186,13 @@
                   </div>
                   <div class="align-self-center col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <ul>
-                        <h5>Autos:</h5>
+                        <h5>Flotilla:</h5>
                         <li>Identificacion/pasaporte</li>
-                        <li>licencia vigente</li>
-                        <li>aceptamos todas las tarjeta de credito</li>
+                        <li>Licencia de conducir vigente</li>
+                        <li>Aceptamos todas las tarjeta de credito</li>
                         </ul>
-                        <p>Detalles del servicio</p>
+                        <p>Comunícate con tu sucursal de preferencia y obten la cotización de tu flotilla</p>
                     </div>
-                    <div class="align-self-center col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                        <ul>
-                        <h5>Motonetas:</h5>
-                        <li>identificacion/pasaporte</li>
-                        <li>licencia vigente</li>
-                        <li>Tarjeta</li>
-                        </ul>
-                        <p>Detalles del servicio</p>
-                    </div>
-
                 </div>
             </article>
           </div>

@@ -226,14 +226,15 @@ class ReservacionController extends Controller
 
     public function cambia_vehiculo(){
 
-
+        $codigo_p = '68247';
         $client = new \GuzzleHttp\Client();
+        $url = "https://api-codigos-postales.herokuapp.com/v2/codigo_postal/$codigo_p";
 
-       
-       $response = $client->get("https://api-codigos-postales.herokuapp.com/v2/codigo_postal/");
-       $request = $response->getBody();
-        dd($request);
-  
+        $request = $client->get($url);
+        $response = $request->getBody()->getContents();
+      
+        dd($response);
+
 
 
 

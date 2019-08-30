@@ -13,7 +13,7 @@ class ValidacionesLaravel extends ServiceProvider
      */
     public function register()
     {
-        //
+        ///
     }
 
     /**

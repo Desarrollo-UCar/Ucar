@@ -141,8 +141,9 @@
                   <img src="img/inicio/Honda_Dio_2019_sf.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                  <h2 class="animated fadeInDown"><strong>ESTAMOS PARA ATENDERTE</strong></h2>
-                  <h2 class="animated fadeInDown"><strong><span class="colored">LOS 365 DIAS AL AÑO</span></strong></h2>
+                    <h2 class="animated fadeInDown text-white"><strong>CREA<span class="colored"> UNA CUENTA </span></strong></h2>
+                    <p class="animated fadeInUp text-white">Se requiere tener una cuenta de cliente con nosotros para poder realizar una reservación .</p>
+                    <a href="{{ route('register') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Registrarme</a>
                 </div>
               </div>
             </div>
@@ -154,8 +155,9 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                  <h2 class="animated fadeInDown text-white"><strong>SEGURIDAD <span class="colored"> Y CONFIANZA</span></strong></h2>
-                  <p class="animated fadeInUp text-white">Somos una empresa dedicada al servicio de renta de autos, especializados en flotillas.</p>
+                    <h2 class="animated fadeInDown"><strong>ESTAMOS PARA ATENDERTE</strong></h2>
+                    <h2 class="animated fadeInDown"><strong><span class="colored">LOS 365 DIAS AL AÑO</span></strong></h2>
+                    <p class="animated fadeInUp text-white">Somos una empresa dedicada al servicio de renta de autos, especializados en flotillas.</p>
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                   <img src="img/inicio/toyota-hilux.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
@@ -171,7 +173,7 @@
     <!-- /inicio formulario para iniciar reservación -->
     <section id="formulario">
       <div class="bg-white" id='formulario_reserva_vehiculo'>
-          <h5 class="text-center"><strong>1. Reservar    </strong>Renta tu auto en 4 sencillos pasos</h5>
+          <h5 class="text-center"><strong>Reserva </strong>tu auto en sencillos pasos</h5>
       </div>
   <div class="container">
       <div class="row">
@@ -191,8 +193,8 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-flag"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'lugarrecogida' id="inputLugar" class="form-control">
-                                  <option selected>Aeropuerto Cd. Ixtepec</option>
+                                  <select name = 'lugarrecogida' id="inputLugar" class="form-control" required>
+                                  <option>Aeropuerto Cd. Ixtepec</option>
                                   <option>Istmo</option>
                                   <option>Puerto Escondido</option>
                               </select>
@@ -204,8 +206,8 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-car"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'tipoVehiculo' id="tipo" class="form-control">
-                                      <option selected>Automovil</option>
+                                  <select name = 'tipoVehiculo' id="tipo" class="form-control" required>
+                                      <option>Automovil</option>
                                       <option>Camioneta</option>
                                       <option>Motoneta</option>
                                   </select>
@@ -217,7 +219,7 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
                                   </div>
-                                  <input name = 'codigoPromocion' type="text" class="form-control form-control-lg"  placeholder="Ingresa tu código de promocion" id='codigoPromocion'>
+                                  <input name = 'codigoPromocion' type="text" class="form-control form-control-lg"  placeholder="Ingresa tu código de promoción" id='codigoPromocion'>
                               </div>
                           </div>
                       </div>
@@ -232,17 +234,12 @@
                               </div>
                           </div>
                           <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                              @error('horaRecogida')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                               <label for="horaRecogida">HORA DE RECOGIDA</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'horaRecogida' class="form-control">
+                                  <select name = 'horaRecogida' class="form-control" required>
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>
@@ -253,7 +250,8 @@
                                       <option>15:00</option><option>15:30</option>
                                       <option>16:00</option><option>16:30</option>
                                       <option>17:00</option><option>17:30</option>
-                                      <option>18:00</option><option>19:30</option>
+                                      <option>18:00</option><option>18:30</option>
+                                      <option>19:00</option><option>19:30</option>
                                       <option>20:00</option><option>20:30</option>
                                       <option>21:00</option>
                                   </select>
@@ -274,7 +272,7 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'horaDevolucion'  class="form-control">
+                                  <select name = 'horaDevolucion'  class="form-control" required>
                                       <option>08:00</option><option>08:30</option>
                                       <option>09:00</option><option>09:30</option>
                                       <option>10:00</option><option>10:30</option>
@@ -285,7 +283,8 @@
                                       <option>15:00</option><option>15:30</option>
                                       <option>16:00</option><option>16:30</option>
                                       <option>17:00</option><option>17:30</option>
-                                      <option>18:00</option><option>19:30</option>
+                                      <option>18:00</option><option>18:30</option>
+                                      <option>19:00</option><option>19:30</option>
                                       <option>20:00</option><option>20:30</option>
                                       <option>21:00</option>
                                   </select>
@@ -393,7 +392,7 @@
                     <h6>Muévete libremente cuando viajas, sin problemas por transporte</h6>
                   </div>
                   <div class="pricing-action">
-                    <a href="#" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
+                    <a href="{{ route('index') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
                   </div>
                 </div>
               </div>
@@ -407,7 +406,7 @@
                     <h6>Viaja comodamente con un chofer con amabilidad y experiencia</h6>
                   </div>
                   <div class="pricing-action">
-                    <a href="#" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
+                    <a href="{{ route('index') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
                   </div>
                 </div>
               </div>
@@ -421,7 +420,7 @@
                     <h6>Solicita un traslado a cualquier parte del país a los mejores precios</h6>
                   </div>
                   <div class="pricing-action">
-                    <a href="#" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
+                    <a href="{{ route('renta_traslado') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
                   </div>
                 </div>
               </div>
@@ -435,7 +434,7 @@
                     <h6>Servicio especial para empresas, renta de flotilla para asuntos de negocios </h6>
                   </div>
                   <div class="pricing-action">
-                    <a href="#" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
+                    <a href="{{ route('en_construccion') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
                   </div>
                 </div>
               </div>

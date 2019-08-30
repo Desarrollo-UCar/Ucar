@@ -71,7 +71,17 @@
                 <div class="text-center col-sm-8 col-md-8 col-lg-8 col-xl-8">
                         <h4><strong> {{$vehiculo->marca}}</strong></h4>
                         <h5><strong> {{$vehiculo->modelo}}</strong></h5>
-                        <img src={{$vehiculo->foto}} style="width:100%"/> 
+                        <!-- <img src=//$vehiculo->foto}} style="width:100%"/>    recuerda poner las llaves -->
+                        <div class="flexslider">
+                          <ul class="slides">
+                            <li>
+                              <img src="img/servicios/renta-normal.jpg." alt="" />
+                            </li>
+                            <li>
+                              <img src="img/servicios/renta-motoneta.jpg" alt="" />
+                            </li>
+                          </ul>
+                        </div>
                 </div>
                 <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <ul>
