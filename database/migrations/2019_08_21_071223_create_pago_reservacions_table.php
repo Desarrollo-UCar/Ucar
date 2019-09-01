@@ -17,10 +17,12 @@ class CreatePagoReservacionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('id_reserva');
             $table->string('paypal_Datos')->nullable();
-            $table->string('pago_Datos')->nullable();
+            $table->string('mostrador_Datos')->nullable();
+            $table->string('garantia_Datos')->nullable();
             $table->datetime('fecha');
             $table->decimal('total');
             $table->string('estatus');
+            $table->integer('reservacion');
 
             $table->timestamps();
         });
