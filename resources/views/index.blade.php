@@ -18,7 +18,6 @@
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
-    
     <!-- Theme skin -->
     <link href="color/blue.css" rel="stylesheet" />
     <!-- iconos de materialice -->
@@ -55,7 +54,7 @@
                             <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
                           </ul>
                         </li>
-                        <li><a href="{{ route('en_construccion') }}">Ver tu Reservación</a></li>   
+                        <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
                       </ul>
                     </li>
 
@@ -79,6 +78,9 @@
                     <li class="dropdown">
                       <a href="{{ route('login')}}">Iniciar Sesión </a>
                     </li>
+                    <li class="dropdown">
+                        <a href="{{ route('register')}}">Registrarse </a>
+                      </li>
                     @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -170,7 +172,7 @@
     <!-- /inicio formulario para iniciar reservación -->
     <section id="formulario">
       <div class="bg-white" id='formulario_reserva_vehiculo'>
-          <h5 class="text-center"><strong>Reserva </strong>tu auto en sencillos pasos</h5>
+          <h5 class="text-center"><strong>Reserva </strong>tu vehículo en sencillos pasos</h5>
       </div>
   <div class="container">
       <div class="row">
@@ -582,14 +584,16 @@
 <!-- Footer -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
 
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- javascript
-    ================================================== -->
+    <!-- javascript================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/jquery.js"></script>
   <script src="js/jquery.easing.1.3.js"></script>
@@ -608,13 +612,12 @@
 
   <script src="js/jquery.flexslider.js"></script>
   <script src="js/animate.js"></script>
-  <script src="js/datatimeconfig.js"></script>
   <script src="js/inview.js"></script>
   <script src="js/daterangepicker.js"></script>
-  <script src="js/moment.min.js"><script>
   <script src="js/custom.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
 <script>
     $('#fechas').daterangepicker({
     "autoApply": true,
