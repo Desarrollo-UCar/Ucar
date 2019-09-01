@@ -157,7 +157,7 @@
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
                       </div>
                       <div class="col-md-2 form-group">
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning3">
                               <b>Cambiar VEHICULO</b>
                             </button>
                             </div>
@@ -267,7 +267,7 @@
             <!-- /.modal-dialog -->
           </div>
 
-          <div class="modal modal-warning fade" id="modal-warning2">
+          <div class="modal modal-warning fade" id="modal-warning4">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -280,7 +280,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span><b>{{'  Cerrar'}}</b></button>
-                    <a href="{{route('direccion')}}"class="btn btn-success"><b>Cobrar</b></a>
+                    <a href=""class="btn btn-success"><b>Cobrar</b></a>
                   </div>
                 </div>
                 <!-- /.modal-content -->
@@ -292,24 +292,59 @@
 
                 <div class="modal-dialog">
                   <div class="modal-content">
+
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Cobro de saldo pendiente por reservacion'}}  {{$reservacion->id}}</b> </h4>
+                      <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Cambio de vehiculo para la reservacion '}}  {{$reservacion->id}}</b> </h4>
                     </div>
                     <div class="modal-body">
-                      <p><b>{{'Se registrara un pago por '}} {{$reservacion->saldo}} {{' de saldo pendeiente, de la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
+
+                        <div class="box-body">
+                            <div class="row">
+                              <div class="col-md-12 ">
+                                <div class="form-group">
+                                  <label> Atencion un vehiculo no debe de cambiarse de una reservacion a menos que sea por motivo de siniestro o fallo para llevar a mantenimiento<br> <br><br>A continuacion se enlistan los vehiculos disponibles en la sucursal para el periodo de renta </label>
+                                  <form action="{{ route('cambia_Vehiculo')}}" method="" enctype="multipart/form-data">
+                                    <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
+                                  <select name= "vehiculo" id="vehiculo" class="form-control select2" style="width: 100%;">
+                                    @if(count($disponibles)>0)
+                                        @for($i = 0;$i<count($disponibles); $i++)
+
+                                        <option value = {{$disponibles[$i]->idvehiculo}}>{{$disponibles[$i]->marca}} {{$disponibles[$i]->modelo}} Placas: {{$disponibles[$i]->matricula}}</option>
+                                        @endfor
+                                      @else
+                                      <option value=""> No hay vehiculos disponibles</option>
+
+                                       @endif
+                                  </select>
+                            
+                                
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                            
+                      <p><b>{{'Se cambiara el vehiculo de la reservacion '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-outline pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span><b>{{'  Cerrar'}}</b></button>
-                      <a href="{{route('pagoReservacion', $reservacion)}}"class="btn btn-success"><b>Cobrar</b></a>
+                        @if(count($disponibles)>0)
+                        <button class="btn btn-primary" type="submit">Cambiar vehiculo</button>
+                        @else
+                        <button class="btn btn-primary" type="" disabled>Cambiar vehiculo</button>
+                        @endif
                     </div>
+                    </form>
                   </div>
                   <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
               </div>
 
+            </div>
+          </div>
+        </div>
+      </div>
     @endsection
 
   @section('scripts')
