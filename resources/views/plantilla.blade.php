@@ -271,7 +271,6 @@
 
   <script src="js/jquery.flexslider.js"></script>
   <script src="js/animate.js"></script>
-  <script src="js/datatimeconfig.js"></script>
   <script src="js/inview.js"></script>
   <!-- Template Custom JavaScript File -->
   <script src="js/custom.js"></script>

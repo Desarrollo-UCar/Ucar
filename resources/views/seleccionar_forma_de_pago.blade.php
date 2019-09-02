@@ -16,6 +16,7 @@
 <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
         <form action="{{ route('pago_paypal')}}" method="POST" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="id_reserva" value="{{$datos_reserva->id}}">
             <div class="row">
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <div class="pricing-box-wrap special animated-fast flyIn">

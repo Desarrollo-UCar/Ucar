@@ -16,6 +16,7 @@ class CreateAlquilerserviciosextrasTable extends Migration
         Schema::create('alquilerserviciosextras', function (Blueprint $table) {
             $table->integer('alquiler');
             $table->integer('servicioExtra');
+            $table->timestamps();
         });
     }
 
