@@ -45,15 +45,16 @@
                   <table id="example" class="display nowrap " style="width:100%">
                       <thead>
                           <tr>
-                              <th style="text-align: center">Curp</th>
+                              <th style="text-align: center">Identificación</th>
                               <th style="text-align: center">Nombres</th>
                               <th style="text-align: center">Apellido Paterno</th>
                               <th style="text-align: center">Apellido Materno</th>
                               <th style="text-align: center">Fecha Nacimiento</th>
                               <th style="text-align: center">Nacionalidad</th>
-                              <th style="text-align: center">País</th>
+                              <th style="text-align: center">Genero</th>
+                              <th style="text-align: center">Código Postal</th>
                               <th style="text-align: center">Estado</th>
-                              <th style="text-align: center">Ciudad</th>
+                              <th style="text-align: center">Municipio</th>
                               <th style="text-align: center">Colonia</th>
                               <th style="text-align: center">Calle</th>
                               <th style="text-align: center">Número</th>
@@ -69,15 +70,16 @@
                       <tbody>
                            @foreach ($empleado as $emp)                      
                 <tr>
-                        <td style="text-align: center">{{$emp->curp}}</td>
+                        <td style="text-align: center">{{$emp->ine}}</td>
                         <td style="text-align: center">{{$emp->nombres}}</td>
                         <td style="text-align: center">{{$emp->primerApellido}}</td>
                         <td style="text-align: center">{{$emp->segundoApellido}}</td>
-                        <td style="text-align: center">{{$emp->fechaNacimiento}}</td>
-                        <td style="text-align: center">{{$emp->nacionalidad}}</td>
-                        <td style="text-align: center">{{$emp->pais}}</td>
+                        <td style="text-align: center">{{date("d\-m\-Y", strtotime($emp->fechaNacimiento))}}</td>
+                        <td style="text-align: center">{{$emp->Nacionalidad}}</td>
+                        <td style="text-align: center">{{$emp->genero}}</td>
+                        <td style="text-align: center">{{$emp->codigopostal}}</td>
                         <td style="text-align: center">{{$emp->estado}}</td>                       
-                        <td style="text-align: center">{{$emp->ciudad}}</td>
+                        <td style="text-align: center">{{$emp->municipio}}</td>
                         <td style="text-align: center">{{$emp->colonia}}</td>
                         <td style="text-align: center">{{$emp->calle}}</td>
                         <td style="text-align: center">{{$emp->numero}}</td>

@@ -20,18 +20,7 @@
         
     </section>
 
-    <section class="content">
-
-
-      {{--CODIGO PHP PARA LA VALIDACION DE ESTADOS POR CODIGO POSTAL--}}
-
-
-
-    @if (session()->has('msj'))
-    <div class="alert alert-info" role="alert">{{session('msj')}} 
-    <a href="{{route('sucursal.index')}}" style="color:darkgreen"><b> ver todos los sucursales </b></a>
-    </div>  
-    @endif    
+    <section class="content"> 
     <div class="col-md-12" style="margin-top: 2%;">
         <div class="box box-primary">             
             <div class="box-header with-border">
@@ -42,7 +31,8 @@
 
 
                    
-            <form action="{{ route('sucursal.store') }}" method="POST">
+            <form {{-- action="{{ route('sucursal.store') }}" --}}
+            id="datos">
             
               
                @csrf
@@ -52,11 +42,12 @@
                  <div class="form-group col-md-4">
                                        
                   <label>Nombre de la sucursal
-                      @error('nombre')                           
-                        <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i>
-                        @enderror </label>                      
-                  <input type="text" class="form-control"  placeholder="Nombre de la sucursal"
-                 name="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{old('nombre')}}" autofocus >
+                      </label>                      
+                      <input type="text" class="form-control"  placeholder="Nombre de la sucursal"
+                 name="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" id="nombre" autofocus >
+                 <span id="errornombre" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                 <span id="validonombre" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+
               </div>
                     {{--DATO DE DIRECCION--}}
                  <div class="row">
@@ -69,71 +60,68 @@
 
                 {{--CODIGO POSTAL--}}
                 <div class="form-group col-md-4">
-                    <label>Código Postal
-                        @error('codigopostal')                       
-                        <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i>                      
-                      @enderror 
-                    </label>
-                    <input type="text" class="form-control" placeholder="Codigo postal" name="codigopostal"  data-inputmask='"mask": "99999"' data-mask value="{{old('codigopostal')}}" id="codigo_postal">
-                    
+                    <label>Código Postal</label>
+                    <input type="text" class="form-control" placeholder="Codigo postal" name="codigopostal"  data-inputmask='"mask": "99999"' data-mask  id="codigo_postal">
+
+                      <span id="errorcodigopostal" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                      <span id="validocodigopostal" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                     
                 </div>
                         {{--DATOS PARA EL ESTADO--}}
                     <div class="form-group col-md-4">
-                        <label>Estado
-                            @error('estado')                         
-                            <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i>
-                          @enderror
-                        </label>
-                        <input type="text" class="form-control" placeholder="Estado" name="estado" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{old('estado')}}" id="estado">
+                        <label>Estado</label>
+                        <input type="text" class="form-control" placeholder="Estado" name="estado" onkeyup="javascript:this.value=this.value.toUpperCase();" id="estado">
+                            <span id="errorestado" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                            <span id="validoestado" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                     </div>
                        
                       {{--DATOS PARA EL MUNICIPIO--}}
                       <div class="form-group col-md-4">
-                          <label>Municipio
-                              @error('municipio')                      
-                              <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i>                      
-                            @enderror
-                          </label>
-                          <input type="text" class="form-control" placeholder="Municipio" name="municipio" onkeyup="javascript:this.value=this.value.toUpperCase();"  value="{{old('municipio')}}"id="municipio" >
+                          <label>Municipio</label>
+                          <input type="text" class="form-control" placeholder="Municipio" name="municipio" onkeyup="javascript:this.value=this.value.toUpperCase();" id="municipio" >
+
+                            <span id="errormunicipio" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                            <span id="validomunicipio" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                       </div>
 
                       {{--DATOS DE LA COLONIA--}}
                 <div class="form-group col-md-4">
-                    <label>Colonia
-                        @error('colonia')                           
-                        <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i> 
-                       @enderror
-                    </label>
+                    <label>Colonia</label>
                     <select class="form-control" id="colonia" name="colonia" id="colonia">
                       <option value="">Ninguno</option>
                     </select>
+
+                    <span id="errorcolonia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                    <span id="validocolonia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                 </div>   
 
                   {{--DATOS PARA EL DOMICILIO--}}
                 <div class="form-group col-md-4">
                     <label>Calle</label>
-                    <input type="text" class="form-control" placeholder="Calle" name="calle" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{old('calle')}}">
+                    <input type="text" class="form-control" placeholder="Calle" name="calle" onkeyup="javascript:this.value=this.value.toUpperCase();" id="calle">
+
+                    <span id="errorcalle" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                    <span id="validocalle" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                 </div>
 
+                {{-- DATOS DE NUMERO DE CALLE --}}
+                
                 <div class="form-group col-md-4">
-                    <label>Número
-                        @error('numero') 
-                        <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i>  
-                      @enderror
-                    </label>
-                    <input type="text" class="form-control" placeholder="Número de casa" name="numero" value="{{old('numero')}}" maxlength="5"> 
+                    <label>Número</label>
+                    <input type="text" class="form-control" placeholder="Número de casa" name="numero"  maxlength="5" id="numero"> 
+
+                    <span id="errornumero" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                    <span id="validonumero" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                 </div>
                 
                 {{--DATOS PARA EL TELEFONO--}}
                 <div class="form-group col-md-4">
-                    <label>Teléfono
-                        @error('telefono')                        
-                        <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true">{{ $message }}</i>
-                        @enderror
-                    </label>
+                    <label>Teléfono</label>
                     <input type="text" class="form-control" placeholder="Teléfono" name="telefono" 
-                    data-inputmask='"mask": "9999999999"' data-mask value="{{old('telefono')}}">
+                    data-inputmask='"mask": "9999999999"' data-mask id="telefono">
+
+                    <span id="errortelefono" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                    <span id="validotelefono" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                 </div>                             
                               
 
@@ -141,7 +129,7 @@
               <div class="row">
                 <div class="col-md-12">
                     <div class="box-footer" style="float: right">
-                        <button type="submit" class="btn btn-primary">Agregar</button>
+                        <button type="submit" id="enviar" class="btn btn-primary">Agregar</button>
                       </div>
                     <div class="box-footer" style="float: right">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">Cancelar</button>
@@ -177,30 +165,187 @@
     <!-- /.modal-dialog -->
   </div>
 
-@endsection    
-       @section('scripts')
-       <!-- InputMask -->
-       <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.js")}}"></script>
-       <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.date.extensions.js")}}"></script>
-       <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.extensions.js")}}"></script>
-   
-        <!-- Select2 -->
-        <script src= "{{asset("assets/$theme/bower_components/select2/dist/js/select2.full.min.js")}}"></script>
-     
-  {{--script para municpios--}}
-  <script src="{{URL::asset('/js/heroku.js')}}"></script>
-       <script>
-         $(function () {
-           //Initialize Select2 Elements
-           $('.select2').select2()           
-           $('[data-mask]').inputmask()
-           $("#example2").inputmask("Regex");
-         })
-       </script>
+@endsection   
 
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info" style="display: none" >
 
-       @endsection   
+</button>
+<div class="modal modal-info fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Alta sucursal</h4>
+      </div>
+      <div class="modal-body">
+        <p>LOS DATOS FUERON AGREGADOS CORRECTAMENTE&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="recargar()">Continuar</button>
+        
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal ---->
+
 </body>
 </html>
+
+@section('scripts')
+<!-- InputMask -->
+<script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.js")}}"></script>
+<script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.date.extensions.js")}}"></script>
+<script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.extensions.js")}}"></script>
+
+ <!-- Select2 -->
+ <script src= "{{asset("assets/$theme/bower_components/select2/dist/js/select2.full.min.js")}}"></script>
+
+{{--script para municpios--}}
+<script src="{{URL::asset('/js/heroku.js')}}"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()           
+    $('[data-mask]').inputmask()
+    $("#example2").inputmask("Regex");
+  })
+</script>
+<script>
+  function recargar(){
+    location.reload(); 
+  }
+</script>
+
+<script>
+ $(function () {
+     
+     $.ajaxSetup({
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         }
+   });
+     
+   $('#enviar').click(function (e) {
+       e.preventDefault();
+   
+       $.ajax({
+         data: $('#datos').serialize(),
+         url: "{{ route('sucursal.store') }}",
+         type: "POST",
+         dataType: 'json',
+         success: function (data) {
+          $('.btn-info').click();
+         },
+         error: function (data) {
+         var err = JSON.parse(data.responseText);
+         var arreglo = err.errors;
+         /*jQuery.each(arreglo, function(key, value){
+            console.log(arreglo);
+                      });*/
+                      console.log(arreglo);
+          var nombre = arreglo.nombre;
+          var codigo = arreglo.codigopostal;
+          var estado = arreglo.estado;
+          var municipio = arreglo.municipio;
+          var colonia = arreglo.colonia;
+          var calle = arreglo.calle;
+          var numero = arreglo.numero;
+          var telefonono = arreglo.telefono;
+
+          if (nombre == undefined){  
+            $( '#nombre' ).css('borderColor', 'green');         
+            jQuery('#validonombre').show(); 
+            jQuery('#errornombre').hide(); 
+            }else{
+              jQuery('#validonombre').hide(); 
+            jQuery('#errornombre').show();          
+           $( '#nombre' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+
+          if (codigo == undefined){  
+            $( '#codigo_postal' ).css('borderColor', 'green');         
+            jQuery('#validocodigopostal').show(); 
+            jQuery('#errorcodigopostal').hide(); 
+            }else{
+              jQuery('#validocodigopostal').hide(); 
+            jQuery('#errorcodigopostal').show();          
+           $( '#codigo_postal' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+          if (estado == undefined){  
+            $( '#estado' ).css('borderColor', 'green');         
+            jQuery('#validoestado').show(); 
+            jQuery('#errorestado').hide(); 
+            }else{
+              jQuery('#validoestado').hide(); 
+            jQuery('#errorestado').show();          
+           $( '#estado' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+          if (municipio == undefined){  
+            $( '#municipio' ).css('borderColor', 'green');         
+            jQuery('#validomunicipio').show(); 
+            jQuery('#errormunicipio').hide(); 
+            }else{
+              jQuery('#validomunicipio').hide(); 
+            jQuery('#errormunicipio').show();          
+           $( '#municipio' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+
+          if (calle == undefined){  
+            $( '#calle' ).css('borderColor', 'green');         
+            jQuery('#validocalle').show(); 
+            jQuery('#errorcalle').hide(); 
+            }else{
+              jQuery('#validocalle').hide(); 
+            jQuery('#errorcalle').show();          
+           $( '#calle' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+          if (numero == undefined){  
+            $( '#numero' ).css('borderColor', 'green');         
+            jQuery('#validonumero').show(); 
+            jQuery('#errornumero').hide(); 
+            }else{
+              jQuery('#validonumero').hide(); 
+            jQuery('#errornumero').show();          
+           $( '#numero' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+          if (telefono == undefined){  
+            $( '#telefono' ).css('borderColor', 'green');         
+            jQuery('#validotelefono').show(); 
+            jQuery('#errortelefono').hide(); 
+            }else{
+              jQuery('#validotelefono').hide(); 
+            jQuery('#errortelefono').show();          
+           $( '#telefono' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+
+          if (colonia == undefined){  
+            $( '#colonia' ).css('borderColor', 'green');         
+            jQuery('#validocolonia').show(); 
+            jQuery('#errorcolonia').hide(); 
+            }else{
+              jQuery('#validocolonia').hide(); 
+            jQuery('#errorcolonia').show();          
+           $( '#colonia' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+             $('#enviar').html('guardar cambios');
+         }
+     });
+   });
+   
   
-  
+    
+ });
+ </script>
+@endsection  

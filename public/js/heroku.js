@@ -1,7 +1,6 @@
 $(document).ready(function () {
-  var value = document.getElementById("codigo_postal").val();
+  var value = $("#codigo_postal").val();
   obtenerDatos(value);
-    
   $("#codigo_postal").keyup(function () {
        var value = $(this).val();
        document.getElementById("municipio").readOnly = true;
@@ -21,7 +20,7 @@ $(document).ready(function () {
     api.onreadystatechange= function(){
 
       if(this.status == 200 && this.readyState==4){
-        var arreglo=JSON.parse(this.responseText)
+        var arreglo=JSON.parse(this.responseText);
        // console.log(arreglo.municipio);
        
        var municipio = arreglo.municipio;

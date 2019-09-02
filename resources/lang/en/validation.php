@@ -94,7 +94,7 @@ return [
     'not_regex' => 'The :attribute format is invalid.',
     'numeric' => 'The :attribute must be a number.',
     'present' => 'The :attribute field must be present.',
-    'regex' => 'The :attribute format is invalid.',
+    'regex' => 'el formato de :attribute es invalido.',
     'required' => ' Error',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
@@ -119,6 +119,7 @@ return [
     'con_espacios' => ' Error',
     'tele_fono'  => ' Error',
     'postal' => ' Error',
+    'ine'=> ' Error',
     'alpha_spaces'         => 'Rellene con datos correctos',
     'fecha_menor_a_la_actual'=>'NO PUEDES ESCOGER UNA HORA DE RECOGIDA MENOR A LA HORA ACTUAL!!',
     /*

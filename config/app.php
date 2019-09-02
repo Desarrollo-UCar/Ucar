@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        
         /*
          * Package Service Providers...
          */
@@ -171,12 +171,13 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ValidacionesLaravel::class,
         Barryvdh\DomPDF\ServiceProvider::class,//LIBRERIA PDF
-
+        Yajra\DataTables\DataTablesServiceProvider::class,//LIBRERIA AJAX
+       //Collective\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -229,6 +230,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'PDF' => Barryvdh\DomPDF\Facade::class,//PDF
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,//AJAX
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 
