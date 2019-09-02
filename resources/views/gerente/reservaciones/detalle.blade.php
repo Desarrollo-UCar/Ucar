@@ -102,15 +102,14 @@
                         </button>
 
                         @endif
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning2">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning3">
                             <b>Cobrar garantia </b>
                           </button>
 
             </div>
           </div>
           
-        </div>
-      </div>
+ 
 
               <div class="row">
                 <div class="col-md-8">
@@ -157,7 +156,7 @@
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
                       </div>
                       <div class="col-md-2 form-group">
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning3">
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
                               <b>Cambiar VEHICULO</b>
                             </button>
                             </div>
@@ -168,42 +167,45 @@
                     <div class="col-md-8">
                         <h4 ><br>Datos del conductor</h4>
 
-                        
+                        <form method="GET" action="{{ route('cancelaReservacion',$reservacion->id) }}"  role="form">
+                            {{ csrf_field() }}
+
                   <div class="col-md-6 form-group">
                       <label>Numero Licencia</label>
-                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->num_licencia}}">
+                      <input type="text" name="nombre" id="" class="form-control" value=""  title="Escriba numero de licencia">
                     </div>
 
                     <div class="col-md-6 form-group">
                         <label>Nombre conductor</label>
-                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->nombreConductor}}">
+                        <input type="text" name="nombre" id="" class="form-control"  value="">
                       </div>
 
                       
                     <div class="col-md-6 form-group">
                         <label>Fecha expedicion</label>
-                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->expedicion_licencia}}">
+                        <input type="text" name="nombre" id="" class="form-control"  value="">
                       </div>
 
                       
                     <div class="col-md-6 form-group">
                         <label>Fecha expiracion</label>
-                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->expiracion_licencia}}">
+                        <input type="text" name="nombre" id="" class="form-control" value="">
                       </div>
 
                     </div>
-
+                    <button type="submit" class="btn btn-sucess"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar'}}</button>
+                  </form>
                   </div>
 
                   <div class="row">
                     <div clas="col-md-8">
-                        <h4 ><br>Servicios Extras </h4>.
+                        <h4 ><br>Servicios Extras Reservados </h4>.
 
                         <div class="col-md-6 form-group">
                             <table border="1">
                                      <body>
-                                      <th>Identificacion</th>
-                                       <th>Nombre</th>
+                                      <th>Nombre</th>
+                                       <th>Descripcion</th>
                                         <tr>
                                           <td>1</td>
                                           <td>Silla bebe</td>
@@ -235,13 +237,9 @@
                                 @endif
                         </div>                       
                     </div>                    
-                </div>
+             
+   
 
-                </div>
-            </div>
-          </div>
-        </div>
-        </section>
 
         <div class="modal modal-danger fade" id="modal-warning">
             <div class="modal-dialog">
@@ -267,7 +265,7 @@
             <!-- /.modal-dialog -->
           </div>
 
-          <div class="modal modal-warning fade" id="modal-warning4">
+          <div class="modal modal-warning fade" id="modal-warning2">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -279,8 +277,10 @@
                     <p><b>{{'Se registrara un pago por '}} {{$reservacion->saldo}} {{' de saldo pendeiente, de la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span><b>{{'  Cerrar'}}</b></button>
-                    <a href=""class="btn btn-success"><b>Cobrar</b></a>
+                      <form method="GET" action="{{route('pagoReservacion',$reservacion)}}"  role="form">
+                          {{ csrf_field() }}
+                      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{' Registrar cobro'}}</button>
+                      </form>
                   </div>
                 </div>
                 <!-- /.modal-content -->
@@ -289,6 +289,29 @@
             </div>
 
             <div class="modal modal-warning fade" id="modal-warning3">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Cobro de saldo pendiente por reservacion'}}  {{$reservacion->id}}</b> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <p><b>{{'Se registrara un pago por '}} {{$reservacion->saldo}} {{' de saldo pendeiente, de la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form method="GET" action="{{route('garantia',$reservacion)}}"  role="form">
+                            {{ csrf_field() }}
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{' Registrar cobro'}}</button>
+                        </form>
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+
+            <div class="modal modal-warning fade" id="modal-warning4">
 
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -305,7 +328,7 @@
                               <div class="col-md-12 ">
                                 <div class="form-group">
                                   <label> Atencion un vehiculo no debe de cambiarse de una reservacion a menos que sea por motivo de siniestro o fallo para llevar a mantenimiento<br> <br><br>A continuacion se enlistan los vehiculos disponibles en la sucursal para el periodo de renta </label>
-                                  <form action="{{ route('cambia_Vehiculo')}}" method="" enctype="multipart/form-data">
+                                <form action="{{route('cambia_Vehiculo')}}" method="" enctype="multipart/form-data">
                                     <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
                                   <select name= "vehiculo" id="vehiculo" class="form-control select2" style="width: 100%;">
                                     @if(count($disponibles)>0)
