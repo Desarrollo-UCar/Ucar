@@ -82,8 +82,6 @@ AND vehiculosucursales.status ="ACTIVO"
 AND  alquilers.fecha_recogida <= ?
 AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
 
-
-
         //
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //return $datos_reserva;
@@ -145,11 +143,11 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         return view('en_construccion');
     }
 
-    public function en_construccion2(Request $email){
-        $correo   = $email['email'];
-       //return response()->json($email);
-        $cliente= App\Cliente::where('correo','=',$correo)->first();
-        return response()->json($cliente);
+    public function dashboard_cliente(){
+    $correo   = auth()->user()->email;
+    //el cliente no se esta creando al momento del registro
+    $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+        return $cliente;
         return view('en_construccion');
     }
 
@@ -160,7 +158,34 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
 
         $vehiculo       = App\Vehiculo::findOrFail($id_vehiculo);
         $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
-        $servicios_extra= App\serviciosextras::all();
+
+        //consulta para saber los servicios extra disponibles en la fecha indicada
+        $cantidad_servicios_extra = DB::select('SELECT servicioExtra, COUNT(servicioExtra) as cantidad FROM alquilerserviciosextras  
+        WHERE alquiler IN (
+        SELECT alquilers.id FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=? 
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        union
+        SELECT alquilers.id FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND  alquilers.fecha_recogida <= ?
+        AND alquilers.fecha_devolucion >=   ?) GROUP BY servicioExtra',[$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion,$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion]);
+            //como ya tenemos la cantidad y el id del servicio extra, obtenemos de la tabla de servicios extra los datos correspondientes
+            $servicios_extra = [];
+            foreach ($cantidad_servicios_extra as $servicio) {
+                $servicio_e  = App\serviciosextras::findOrFail($servicio->servicioExtra);
+                    array_push($servicios_extra, $servicio_e);  
+            }
+        // cierre de consulta de servicios extra en las fechas indicadas
         return view('reservar_servicios_extra',
             compact('vehiculo','datos_reserva','servicios_extra'
                 ));
