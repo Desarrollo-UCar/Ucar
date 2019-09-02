@@ -16,10 +16,10 @@ class CreateReservaTempsTable extends Migration
         Schema::create('reserva_temps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->datetime('fecha_hora_reserva');
-            $table->string('lugar_recogida');
+            $table->integer('lugar_recogida');
             $table->date('fecha_recogida');
             $table->time('hora_recogida');
-            $table->string('lugar_devolucion');
+            $table->integer('lugar_devolucion');
             $table->date('fecha_devolucion');
             $table->time('hora_devolucion');
             $table->string('codigo_descuento')->nullable();

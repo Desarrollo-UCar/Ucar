@@ -96,7 +96,7 @@
                             <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
                           </ul>
                         </li>
-                        <li><a href="{{ route('en_construccion') }}">Ver tu Reservación</a></li>   
+                        <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
                       </ul>
                     </li>
 
@@ -118,6 +118,9 @@
                     <li class="dropdown">
                       <a href="{{ route('login')}}">Iniciar Sesión </a>
                     </li>
+                    <li class="dropdown">
+                        <a href="{{ route('register')}}">Registrarse </a>
+                      </li>
                     @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

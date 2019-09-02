@@ -59,6 +59,7 @@ return array(
     'App\\Traslado' => $baseDir . '/app/Traslado.php',
     'App\\User' => $baseDir . '/app/User.php',
     'App\\Vehiculo' => $baseDir . '/app/Vehiculo.php',
+    'App\\alquilerserviciosextra' => $baseDir . '/app/alquilerserviciosextra.php',
     'App\\mantenimientos' => $baseDir . '/app/mantenimientos.php',
     'App\\reserva_temp' => $baseDir . '/app/reserva_temp.php',
     'App\\servicioextrasucursales' => $baseDir . '/app/servicioextrasucursales.php',

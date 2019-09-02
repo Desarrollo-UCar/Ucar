@@ -495,6 +495,7 @@ class ComposerStaticInitdd2e518c1c23b828c80166ddbd5948db
         'App\\Traslado' => __DIR__ . '/../..' . '/app/Traslado.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\Vehiculo' => __DIR__ . '/../..' . '/app/Vehiculo.php',
+        'App\\alquilerserviciosextra' => __DIR__ . '/../..' . '/app/alquilerserviciosextra.php',
         'App\\mantenimientos' => __DIR__ . '/../..' . '/app/mantenimientos.php',
         'App\\reserva_temp' => __DIR__ . '/../..' . '/app/reserva_temp.php',
         'App\\servicioextrasucursales' => __DIR__ . '/../..' . '/app/servicioextrasucursales.php',
