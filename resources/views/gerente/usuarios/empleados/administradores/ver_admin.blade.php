@@ -88,8 +88,7 @@
                         <td style="text-align: center">{{$emp->tipo}}</td>
                         <td style="text-align: center">{{$emp->sucursal}}</td>
                         <td style="text-align: center">{{$emp->status}}</td>
-                        <td style="text-align: center"> <a href="{{ route('modificarempleado',['idempleado'=>$emp->idempleado,'idsucursal'=>$emp->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>
-                          
+                        <td style="text-align: center"> <a href="{{ route('modificarempleado',['idempleado'=>$emp->idempleado,'idsucursal'=>$emp->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>                          
                               <td style="text-align: center">
                                   <a href="{{ route('modificarempleado',['idempleado'=>$emp->idempleado,'idsucursal'=>$emp->idsucursal]) }}" title="Eliminar"> <span class="fa fa-trash-o fa-2x" style="color:red;"></span>
                         </td>

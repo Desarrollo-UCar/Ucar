@@ -411,7 +411,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Alta sucursal</h4>
+        <h4 class="modal-title">Modificar Empleado</h4>
       </div>
       <div class="modal-body">
         <p>LOS DATOS FUERON AGREGADOS CORRECTAMENTE&hellip;</p>
@@ -471,7 +471,6 @@
 
 {{--script para municpios--}}
 <script >
-    <script>
    $(document).ready(function () {
     var value = $("#codigo_postal").val();
             obtenerDatos(value);
@@ -595,7 +594,7 @@ function Tipo(){
    $('#upload_form').on('submit', function(event){
     event.preventDefault();
     $.ajax({
-     url:"{{ route('modificarempleado') }}",
+     url:"{{ route('datosempleado') }}",
      method:"POST",
      data:new FormData(this),
      dataType:'JSON',

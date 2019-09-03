@@ -166,41 +166,35 @@ class EmpleadoController extends Controller
    
     public function update(Request $request)
     {
+       
+    
+}
+
+
+    public function modificar(Request $empleado){
+        $foranea = Sucursal::where('idsucursal',$empleado['idsucursal'])->first();      
+        $emp = Empleado::where('idempleado',$empleado['idempleado'])->first();
+        $sucursal=Sucursal::all();
+        $empleadosucursal = EmpleadoSucursal::where('sucursal',$foranea['idsucursal'])->first();
+        return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal'));
+
+    }
+
+    public function ModificarDatos(Request $request){
+
         
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
 
-        //return "no";
-        
-        
-        if($request['tipo']=='CHOFER'){   
-            
-            $request->validate([
-                'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
-                'ine' => 'required|regex:/[0-9]{13}/m',
-                'nombres' =>'required|regex:/^[\pL\s]+$/u',
-                 'primerApellido' =>'required',
-                 'segundoApellido' =>'required',
-                 'fechaNacimiento' =>'required|date',
-                 'nacionalidad' =>'required',
-                 'codigopostal' => 'required|regex:/[0-9]{5}/m',
-                 'estado' =>'required',
-                 'municipio' =>'required',
-                 'colonia' =>'required',
-                 'calle' =>'required',
-                 'correo' =>'required|email',
-                 'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
-                 'tipo' => 'required',
-                 'genero' => 'required',
-                 'sucursal' => 'required',
-                 'numero' => 'required',
-                 'numLicencia' => 'required',
-                 'licenciaFechaExpiracion' => 'required|date',
-                 'licenciaFechaExpedicion' => 'required|date',
-            ]);
-        }else{
-            $request->validate([
-                'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+        $new_name = $request->hidden_image;
+        $image = $request->file('image');       
+      
+
+            if($image != '')
+        { 
+            if($request['tipo']=='CHOFER'){
+                $request->validate([
+                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                    'ine' => 'required|regex:/[0-9]{13}/m',
                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
@@ -217,23 +211,56 @@ class EmpleadoController extends Controller
                     'tipo' => 'required',
                     'genero' => 'required',
                     'sucursal' => 'required',
-            ]);
-        } 
+                    'numero' => 'required',
+                    'numLicencia' => 'required',
+                    'licenciaFechaExpiracion' => 'required|date',
+                    'licenciaFechaExpedicion' => 'required|date',
+                ]);
+            }else{
+                $request->validate([
+                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                    'ine' => 'required|regex:/[0-9]{13}/m',
+                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                    'primerApellido' =>'required',
+                    'segundoApellido' =>'required',
+                    'fechaNacimiento' =>'required|date',
+                    'nacionalidad' =>'required',
+                    'genero' => 'required',
+                    'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                    'estado' =>'required',
+                    'municipio' =>'required',
+                    'colonia' =>'required',
+                    'calle' =>'required',
+                    'correo' =>'required|email',
+                    'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                    'tipo' => 'required',                   
+                    'sucursal' => 'required',
+                    'numero' => 'required',
+                    'status'=> 'required',
+                ]);
+            }      
+                
+      /*return response()->json([
+       'message'   => 'Image Upload Successfully',
+       'uploaded_image' => '<img src="/images/'.$new_name.'" class="img-thumbnail" width="300" />',
+       'class_name'  => 'alert-success'
+      ]);*/
+      
+      
+        
+        $empleado = Empleado::where('ine',$request['ine'])->first();
+         $diff = $date->diffInYears($request['fechaNacimiento']); 
+       if($diff<15 ||$diff > 60){
+            return response()->json(['success'=>'ERROR2']);
+        }
 
-        $diff = $date->diffInYears($request['fechaNacimiento']); 
-        if($diff<15 ||$diff > 60){
-             return response()->json(['success'=>'ERROR2']);
-         }
-
-         $image = $request->file('foto');
+        $image = $request->file('foto');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $new_name);
-        
-        
-            $empleado = Empleado::where('ine',$request['ine'])->first();
-            
-                  $empleado->update([
-                    'ine'=>$request['ine'],
+
+                   
+        $empleado->update([
+                        'ine'=>$request['ine'],
                         'nombres'=>$request['nombres'],
                         'primerApellido'=>$request['primerApellido'],
                         'segundoApellido'=>$request['segundoApellido'],
@@ -256,35 +283,118 @@ class EmpleadoController extends Controller
                         'numLicencia'=>$request['numLicencia'],
                         'created_at'=>$date,
                         'updated_at'=>$date
-             ]);
-                
-          
-        $foranea = Sucursal::where('nombre',$request['sucursal'])->first();      
-        $emp = Empleado::where('ine',$request['ine'])->first();
-        $empleadosucursal=EmpleadoSucursal::where('empleado',$emp['idempleado'])
-        ->first();
-            $empleadosucursal->update([
-                'sucursal'=>$foranea['idsucursal'],
-                'empleado'=>$emp['idempleado'],
-                'status'=>$request['status'],
-                'updated_at'=>$date
+                    ]);
+               
+
+                 $sucu = $request['sucursal'];
+                $foranea = Sucursal::where('nombre',$sucu)->first();      
+                    $emp = Empleado::where('ine',$request['ine'])->first();
+                    EmpleadoSucursal::insert([
+                        'sucursal'=>$foranea->idsucursal,
+                        'empleado'=>$emp->idempleado,
+                        'status'=>$request['status'],
+                        'created_at'=>$date,
+                        'updated_at'=>$date
+                        ]);
+           
+                        return response()->json(['success'=>'EXITO']);
+        }else{
+            if($request['tipo']=='CHOFER'){
+                $request->validate([
+                   'ine' => 'required|regex:/[0-9]{13}/m',
+                   'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                    'primerApellido' =>'required',
+                    'segundoApellido' =>'required',
+                    'fechaNacimiento' =>'required|date',
+                    'nacionalidad' =>'required',
+                    'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                    'estado' =>'required',
+                    'municipio' =>'required',
+                    'colonia' =>'required',
+                    'calle' =>'required',
+                    'correo' =>'required|email',
+                    'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                    'tipo' => 'required',
+                    'genero' => 'required',
+                    'sucursal' => 'required',
+                    'numero' => 'required',
+                    'numLicencia' => 'required',
+                    'licenciaFechaExpiracion' => 'required|date',
+                    'licenciaFechaExpedicion' => 'required|date',
                 ]);
+            }else{
+                $request->validate([
+                    'ine' => 'required|regex:/[0-9]{13}/m',
+                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                    'primerApellido' =>'required',
+                    'segundoApellido' =>'required',
+                    'fechaNacimiento' =>'required|date',
+                    'nacionalidad' =>'required',
+                    'genero' => 'required',
+                    'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                    'estado' =>'required',
+                    'municipio' =>'required',
+                    'colonia' =>'required',
+                    'calle' =>'required',
+                    'correo' =>'required|email',
+                    'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                    'tipo' => 'required',                   
+                    'sucursal' => 'required',
+                    'numero' => 'required',
+                    'status'=> 'required',
+                ]);
+            }      
+               
+      
+      
         
-                return response()->json(['success'=>'EXITO']);
-    
-}
+        $empleado = Empleado::where('ine',$request['ine'])->first();
+         $diff = $date->diffInYears($request['fechaNacimiento']); 
+       if($diff<15 ||$diff > 60){
+            return response()->json(['success'=>'ERROR2']);
+        }
 
+                        
+        $empleado->update([
+                        'ine'=>$request['ine'],
+                        'nombres'=>$request['nombres'],
+                        'primerApellido'=>$request['primerApellido'],
+                        'segundoApellido'=>$request['segundoApellido'],
+                        'fechaNacimiento'=>$request['fechaNacimiento'],
+                        'nacionalidad'=>$request['nacionalidad'],
+                        'codigopostal'=>$request['codigopostal'],
+                        'estado'=>$request['estado'],
+                        'municipio'=>$request['municipio'],
+                        'colonia'=>$request['colonia'],
+                        'calle'=>$request['calle'],
+                        'numero'=>$request['numero'],
+                        'correo'=>$request['correo'],
+                        'telefono'=>$request['telefono'],
+                        'tipo'=>$request['tipo'],
+                        'genero'=>$request['genero'],
+                        'status'=>$request['status'],
+                        'licenciaFechaExpiracion'=>$request['licenciaFechaExpiracion'],
+                        'licenciaFechaExpedicion'=>$request['licenciaFechaExpedicion'],
+                        'numLicencia'=>$request['numLicencia'],
+                        'created_at'=>$date,
+                        'updated_at'=>$date
+                    ]);
+               
 
-    public function modificar(Request $empleado){
-        $foranea = Sucursal::where('idsucursal',$empleado['idsucursal'])->first();      
-        $emp = Empleado::where('idempleado',$empleado['idempleado'])->first();
-        $sucursal=Sucursal::all();
-        $empleadosucursal = EmpleadoSucursal::where('sucursal',$foranea['idsucursal'])->first();
-        return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal'));
+                 $sucu = $request['sucursal'];
+                $foranea = Sucursal::where('nombre',$sucu)->first();      
+                    $emp = Empleado::where('ine',$request['ine'])->first();
+                    EmpleadoSucursal::insert([
+                        'sucursal'=>$foranea->idsucursal,
+                        'empleado'=>$emp->idempleado,
+                        'status'=>$request['status'],
+                        'created_at'=>$date,
+                        'updated_at'=>$date
+                        ]);
+           
+                        return response()->json(['success'=>'EXITO']);
 
-    }
-
-    public function ModificarDatos(Request $request){
+        }
 
     }
     public function destroy(Empleado $empleado)

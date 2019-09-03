@@ -44,7 +44,7 @@
                         <div class="col-md-6 form-group">
                             <label>Número VIN</label>
                           <input type="text" name="vin" id="vin" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" 
-                         pattern="[0-9|A-Z]{17}" maxlength="17">
+                         maxlength="17">
 
                          
                           <span id="errorvin" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -56,7 +56,7 @@
                         
                         <div class="col-md-6 form-group">
                             <label>Placas</label>
-                          <input type="text" name="matricula" id="matricula" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" pattern="[A-Z]{3}-[0-9]{2}-[0-9]{2}">
+                          <input type="text" name="matricula" id="matricula" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" >
                           
                             <span id="errormatricula" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                             <span id="validomatricula" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -123,6 +123,21 @@
                                     <span id="errorrendimiento" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                     <span id="validorendimiento" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
                                   </div>
+
+                                  {{-- FORMULARIO PUERTAS --}}
+                                  <div class="form-group col-md-6">
+                                    <label>Puertas</label>
+                                    <select class="form-control" name="puertas" id="puertas">
+                                      <option>2</option> 
+                                      <option>3</option>
+                                      <option>4</option>
+                                      <option>5</option>
+                                    </select>                                              
+
+                                        <span id="errorpuertas" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                                        <span id="validopuertas" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
+                                </div>  
+                                  
                                         
                               {{-- FORMULARIO COLOR DEL VEHICULO --}}
                                                     
@@ -137,13 +152,17 @@
                                 
                                 {{-- FORMULARIO TIPO DEL VEHICULO --}}
                                 
-                                <div class="col-md-6 form-group">
+                                <div class="form-group col-md-6">
                                   <label>Tipo</label>
-                                  <input type="text" name="tipo" id="tipo" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                  <select class="form-control" name="tipo" id="tipo">
+                                    <option>COMPACTO</option> 
+                                    <option>CAMIONETA</option>
+                                    <option>MOTONETA</option>
+                                  </select>                                              
 
-                                  <span id="errortipo" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                                  <span id="validotipo" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
-                                </div>
+                                      <span id="errorpuertas" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                                      <span id="validopuertas" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
+                              </div> 
 
                                 {{-- FORMULARIO CANTIDAD DE PASAJEROS DEL VEHICULO  --}}
                                 
@@ -315,6 +334,8 @@
   <!-- /.modal-dialog -->
 </div>
 
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info" style="display: none" >
+
 </button>
 <div class="modal modal-info fade" id="modal-info">
   <div class="modal-dialog">
@@ -322,7 +343,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Alta sucursal</h4>
+        <h4 class="modal-title">Alta Vehículo</h4>
       </div>
       <div class="modal-body">
         <p>LOS DATOS FUERON AGREGADOS CORRECTAMENTE&hellip;</p>
@@ -337,6 +358,29 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal ---->
+
+
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#existe" style="display: none" id="existe1">Cancelar</button>
+<div class="modal modal-danger fade" id="existe">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Error </b> </h4>
+        </div>
+        <div class="modal-body">
+          <p>El Vehículo que intenta agregar ya se encuentra registrado&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+        
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
    
 
 @endsection
@@ -383,7 +427,10 @@ document.getElementById("foto").onchange = function(e) {
      success:function(data)
      {      
        var mensaje=data.success;
-       console.log(mensaje);
+      // console.log(mensaje);
+       if(mensaje=='ERROR1'){
+      $('#existe1').click();
+       }
        if(mensaje=='EXITO'){
       $('.btn-info').click();
        }
@@ -412,6 +459,7 @@ document.getElementById("foto").onchange = function(e) {
              var precio = arreglo.precio;
              var status = arreglo.status;
              var sucursal = arreglo.sucursal;
+             var puertas = arreglo.puertas;
                        
              
              if (foto == undefined){  
@@ -497,6 +545,17 @@ document.getElementById("foto").onchange = function(e) {
                  jQuery('#validorendimiento').hide(); 
                jQuery('#errorrendimiento').show();          
               $( '#rendimiento' ).css('borderColor', 'red');
+               //console.log(nombre);
+             }
+
+             if (puertas == undefined){  
+               $( '#puertas' ).css('borderColor', 'green');         
+               jQuery('#validopuertas').show(); 
+               jQuery('#errorpuertas').hide(); 
+               }else{
+                 jQuery('#validopuertas').hide(); 
+               jQuery('#errorpuertas').show();          
+              $( '#puertas' ).css('borderColor', 'red');
                //console.log(nombre);
              }
 
@@ -607,9 +666,7 @@ document.getElementById("foto").onchange = function(e) {
             jQuery('#errorstatus').show();          
            $( '#status' ).css('borderColor', 'red');
             //console.log(nombre);
-          }
-
-          
+          }      
      }
     })
    });

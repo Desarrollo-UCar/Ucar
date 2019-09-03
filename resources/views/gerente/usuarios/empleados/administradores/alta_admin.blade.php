@@ -377,7 +377,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Alta sucursal</h4>
+        <h4 class="modal-title">Alta Empleado</h4>
       </div>
       <div class="modal-body">
         <p>LOS DATOS FUERON AGREGADOS CORRECTAMENTE&hellip;</p>
@@ -496,7 +496,7 @@ function Tipo(){
      {
       
        var mensaje=data.success;
-       console.log(mensaje);
+       console.log('hola');
        if(mensaje=='EXITO'){
       $('.btn-info').click();
        }
@@ -509,6 +509,7 @@ function Tipo(){
                jQuery('#errorfechaNacimiento').show();          
               $( '#fechaNacimiento' ).css('borderColor', 'red');
        }
+       
      },
      error: function (data) {
          var err = JSON.parse(data.responseText);
@@ -539,6 +540,7 @@ function Tipo(){
              var licenciaFechaExpedicion = arreglo.licenciaFechaExpedicion;
              var licenciaFechaExpiracion = arreglo.licenciaFechaExpiracion;
              var foto = arreglo.foto;
+             
              
              if (foto == undefined){  
               
