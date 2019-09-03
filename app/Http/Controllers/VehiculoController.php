@@ -34,63 +34,63 @@ class VehiculoController extends Controller
     
     public function store(Request $request)
     {
+
+
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();              
-        $datos = request()->except('_token');
-        if ($request->hasFile('foto')) {
-            $datos['foto']=$request->file('foto')->store('upload','public');
+        
+
+        $request->validate([
+            'foto'       => 'required|image|mimes:jpeg,png,jpg,gif',
+            'vin'        => 'required',
+            'matricula'  => 'required',
+            'marca'      => 'required',
+            'modelo'     => 'required',
+            'transmicion'=> 'required',
+            'puertas'    => 'required',
+            'redimiento' => 'required',
+            'estatus'    => 'required',
+            'anio'       => 'required',
+            'precio'     => 'required',
+            'costo'      => 'required',
+            'pasajeros'  => 'required',
+            'maletero'   => 'required',
+            'color'      => 'required',
+            'cilindros'  => 'required',
+            'kilometraje'=> 'required',
+            'tipo'       => 'required',
+            'status'     => 'required',
+            'sucursal'   => 'required',
+           // 'descripcion'=> 'required',
+        ]);
+
             Vehiculo::insert([
-                'vin'        =>$datos['vin'],
-                'matricula'  =>$datos['matricula'],
-                'marca'      =>$datos['marca'],
-                'modelo'     =>$datos['modelo'],
-                'transmicion' =>$datos['transmicion'],
-                'puertas' =>$datos['puertas'],
-                'redimiento' =>$datos['rendimiento'],
-                'estatus'     =>$datos['status'],
-                'anio'       =>$datos['anio'],
-                'precio'     =>$datos['precio'],
-                'costo'      =>$datos['costo'],
-                'pasajeros'  =>$datos['pasajeros'],
-                'maletero'   =>$datos['maletero'],
-                'color'      =>$datos['color'],
-                'cilindros'  =>$datos['cilindros'],
-                'kilometraje'=>$datos['kilometraje'],
-                'tipo'       =>$datos['tipo'],
-                'descripcion'=>$datos['descripcion'],
-                'foto'       =>$datos['foto'],
+                'vin'        =>$request['vin'],
+                'matricula'  =>$request['matricula'],
+                'marca'      =>$request['marca'],
+                'modelo'     =>$request['modelo'],
+                'transmicion' =>$request['transmicion'],
+                'puertas' =>$request['puertas'],
+                'redimiento' =>$request['rendimiento'],
+                'estatus'     =>$request['status'],
+                'anio'       =>$request['anio'],
+                'precio'     =>$request['precio'],
+                'costo'      =>$request['costo'],
+                'pasajeros'  =>$request['pasajeros'],
+                'maletero'   =>$request['maletero'],
+                'color'      =>$request['color'],
+                'cilindros'  =>$request['cilindros'],
+                'kilometraje'=>$request['kilometraje'],
+                'tipo'       =>$request['tipo'],
+                'descripcion'=>$request['descripcion'],
+                'foto'       =>$request['foto'],
                 'created_at'=>$date,
                 'updated_at'=>$date
             ]);
-        }
-        else{
-            Vehiculo::insert([
-                'vin'        =>$datos['vin'],
-                'matricula'  =>$datos['matricula'],
-                'marca'      =>$datos['marca'],
-                'modelo'     =>$datos['modelo'],
-                'transmicion' =>$datos['transmicion'],
-                'puertas' =>$datos['puertas'],
-                'redimiento' =>$datos['rendimiento'],
-                'estatus'     =>$datos['status'],
-                'anio'       =>$datos['anio'],
-                'precio'     =>$datos['precio'],
-                'costo'      =>$datos['costo'],
-                'pasajeros'  =>$datos['pasajeros'],
-                'maletero'   =>$datos['maletero'],
-                'color'      =>$datos['color'],
-                'cilindros'  =>$datos['cilindros'],
-                'kilometraje'=>$datos['kilometraje'],
-                'tipo'       =>$datos['tipo'],
-                'descripcion'=>$datos['descripcion'],
-                'foto'       =>null,
-                'created_at'=>$date,
-                'updated_at'=>$date
-            ]);
-        }   
+          
         $sucu = $request->input('sucursal');
         $foranea = Sucursal::where('nombre',$sucu)->first();      
-            $emp = Vehiculo::where('vin',$datos['vin'])->first();
+            $emp = Vehiculo::where('vin',$request['vin'])->first();
             VehiculoSucursales::insert([
                 'sucursal'=>$foranea->idsucursal,
                 'vehiculo'=>$emp->idvehiculo,
@@ -99,7 +99,7 @@ class VehiculoController extends Controller
                 'updated_at'=>$date
                 ]);
    
-        return redirect()->route('vehiculo.create');
+                return response()->json(['success'=>'EXITO']);
     }
 
    

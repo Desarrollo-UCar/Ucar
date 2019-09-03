@@ -31,192 +31,129 @@ class EmpleadoController extends Controller
     
     public function store(Request $request)
     {   
-
-        $empleado = Empleado::where('curp',$request['curp'])->first();
+       // return $request;
+        //$empleado = Empleado::where('ine',$request['ine'])->first();
         //return $empleado;
-        if(!empty($empleado)){
-            return back()->with('msj','EL EMPLEADO '.$request['nombres'].' '.$request['primerApellido'].' YA SE ENCUENTRA REGISTRADO');
-        }
+       // $datos = request()->except('_token');
+         //return response()->json(['errors'=>$request['foto']]);
+         //$request['foto']=$request->file('foto')->store('upload','public');
+         //if ($request->hasFile('foto')) {
+
+           // $imagen = $request['foto'];
+
+          
+
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
-        $diff = $date->diffInYears($request['fechaNacimiento']); 
-        if($diff<15){
-            return back()->with('mensaje','INTRODUZCA UNA FECHA DE NACIMIENTO INCORRECTO:)');
-        }else{         
+            if($request['tipo']=='CHOFER'){
+                $request->validate([
+                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                   'ine' => 'required|regex:/[0-9]{13}/m',
+                   'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                    'primerApellido' =>'required',
+                    'segundoApellido' =>'required',
+                    'fechaNacimiento' =>'required|date',
+                    'nacionalidad' =>'required',
+                    'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                    'estado' =>'required',
+                    'municipio' =>'required',
+                    'colonia' =>'required',
+                    'calle' =>'required',
+                    'correo' =>'required|email',
+                    'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                    'tipo' => 'required',
+                    'genero' => 'required',
+                    'sucursal' => 'required',
+                    'numero' => 'required',
+                    'numLicencia' => 'required',
+                    'licenciaFechaExpiracion' => 'required|date',
+                    'licenciaFechaExpedicion' => 'required|date',
+                ]);
+            }else{
+                $request->validate([
+                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                    'ine' => 'required|regex:/[0-9]{13}/m',
+                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                    'primerApellido' =>'required',
+                    'segundoApellido' =>'required',
+                    'fechaNacimiento' =>'required|date',
+                    'nacionalidad' =>'required',
+                    'genero' => 'required',
+                    'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                    'estado' =>'required',
+                    'municipio' =>'required',
+                    'colonia' =>'required',
+                    'calle' =>'required',
+                    'correo' =>'required|email',
+                    'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                    'tipo' => 'required',                   
+                    'sucursal' => 'required',
+                    'numero' => 'required',
+                    'status'=> 'required',
+                ]);
+            }      
+                
+      /*return response()->json([
+       'message'   => 'Image Upload Successfully',
+       'uploaded_image' => '<img src="/images/'.$new_name.'" class="img-thumbnail" width="300" />',
+       'class_name'  => 'alert-success'
+      ]);*/
+      
+      
         
-       //return $diff;
-        if($request['tipo']=='CHOFER'){
-            if($request->validate([
-                'curp' => 'required|max:18',
-                'nombres' =>'required',
-                'primerApellido' =>'required',
-                'segundoApellido' =>'required',
-                'fechaNacimiento' =>'required|date',
-                'nacionalidad' =>'required',
-                'pais' =>'required',
-                'estado' =>'required',
-                'ciudad' =>'required',
-                'colonia' =>'required',
-                'calle' =>'required',
-                'correo' =>'required|email',
-                'telefono' =>'required',
-                'tipo' => 'required',
-                'numlicencia' => 'required',
-                'licenciaFechaExpiracion' => 'required|date',
-                'licenciaFechaExpedicion' => 'required|date',
-            ])){
-
-        $datos = request()->except('_token');
-        if ($request->hasFile('foto')) {
-            $datos['foto']=$request->file('foto')->store('upload','public');
-
-            Empleado::insert([
-                'curp'=>$datos['curp'],
-                'nombres'=>$datos['nombres'],
-                'primerApellido'=>$datos['primerApellido'],
-                'segundoApellido'=>$datos['segundoApellido'],
-                'fechaNacimiento'=>$datos['fechaNacimiento'],
-                'nacionalidad'=>$datos['nacionalidad'],
-                'pais'=>$datos['pais'],
-                'estado'=>$datos['estado'],
-                'ciudad'=>$datos['ciudad'],
-                'colonia'=>$datos['colonia'],
-                'calle'=>$datos['calle'],
-                'numero'=>$datos['numero'],
-                'foto'=>$datos['foto'],
-                'correo'=>$datos['correo'],
-                'telefono'=>$datos['telefono'],
-                'tipo'=>$datos['tipo'],
-                'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                'numLicencia'=>$datos['numLicencia'],
-                'created_at'=>$date,
-                'updated_at'=>$date
-            ]);
-            
-        }else {
-            Empleado::insert([
-                'curp'=>$datos['curp'],
-                'nombres'=>$datos['nombres'],
-                'primerApellido'=>$datos['primerApellido'],
-                'segundoApellido'=>$datos['segundoApellido'],
-                'fechaNacimiento'=>$datos['fechaNacimiento'],
-                'nacionalidad'=>$datos['nacionalidad'],
-                'pais'=>$datos['pais'],
-                'estado'=>$datos['estado'],
-                'ciudad'=>$datos['ciudad'],
-                'colonia'=>$datos['colonia'],
-                'calle'=>$datos['calle'],
-                'numero'=>$datos['numero'],               
-                'correo'=>$datos['correo'],
-                'telefono'=>$datos['telefono'],
-                'tipo'=>$datos['tipo'],
-                'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                'numLicencia'=>$datos['numLicencia'],
-                'created_at'=>$date,
-                'updated_at'=>$date
-            ]);
+        $empleado = Empleado::where('ine',$request['ine'])->first();
+        if(!empty($empleado)){
+            return response()->json(['success'=>'ERROR1']);
+         }
+         $diff = $date->diffInYears($request['fechaNacimiento']); 
+       if($diff<15 ||$diff > 60){
+            return response()->json(['success'=>'ERROR2']);
         }
 
-        $sucu = $request->input('sucursal');
-        $foranea = Sucursal::where('nombre',$sucu)->first();      
-            $emp = Empleado::where('curp',$datos['curp'])->first();
-            EmpleadoSucursal::insert([
-                'sucursal'=>$foranea->idsucursal,
-                'empleado'=>$emp->idempleado,
-                'status'=>$datos['status'],
-                'created_at'=>$date,
-                'updated_at'=>$date
-                ]);
-   
-                return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-            }
-        }else{
-            if($request->validate([
-                'curp' => 'required|max:18',
-                'nombres' =>'required',
-                'primerApellido' =>'required',
-                'segundoApellido' =>'required',
-                'fechaNacimiento' =>'required|date',
-                'nacionalidad' =>'required',
-                'pais' =>'required',
-                'estado' =>'required',
-                'ciudad' =>'required',
-                'colonia' =>'required',
-                'calle' =>'required',
-                'correo' =>'required|email',
-                'telefono' =>'required',
-            ])){
+        $image = $request->file('foto');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $new_name);
 
-        $datos = request()->except('_token');
-        if ($request->hasFile('foto')) {
-            $datos['foto']=$request->file('foto')->store('upload','public');
+                    Empleado::insert([
+                        'ine'=>$request['ine'],
+                        'nombres'=>$request['nombres'],
+                        'primerApellido'=>$request['primerApellido'],
+                        'segundoApellido'=>$request['segundoApellido'],
+                        'fechaNacimiento'=>$request['fechaNacimiento'],
+                        'nacionalidad'=>$request['nacionalidad'],
+                        'codigopostal'=>$request['codigopostal'],
+                        'estado'=>$request['estado'],
+                        'municipio'=>$request['municipio'],
+                        'colonia'=>$request['colonia'],
+                        'calle'=>$request['calle'],
+                        'numero'=>$request['numero'],
+                        'foto'=>$new_name,
+                        'correo'=>$request['correo'],
+                        'telefono'=>$request['telefono'],
+                        'tipo'=>$request['tipo'],
+                        'genero'=>$request['genero'],
+                        'status'=>$request['status'],
+                        'licenciaFechaExpiracion'=>$request['licenciaFechaExpiracion'],
+                        'licenciaFechaExpedicion'=>$request['licenciaFechaExpedicion'],
+                        'numLicencia'=>$request['numLicencia'],
+                        'created_at'=>$date,
+                        'updated_at'=>$date
+                    ]);
+               
 
-            Empleado::insert([
-                'curp'=>$datos['curp'],
-                'nombres'=>$datos['nombres'],
-                'primerApellido'=>$datos['primerApellido'],
-                'segundoApellido'=>$datos['segundoApellido'],
-                'fechaNacimiento'=>$datos['fechaNacimiento'],
-                'nacionalidad'=>$datos['nacionalidad'],
-                'pais'=>$datos['pais'],
-                'estado'=>$datos['estado'],
-                'ciudad'=>$datos['ciudad'],
-                'colonia'=>$datos['colonia'],
-                'calle'=>$datos['calle'],
-                'numero'=>$datos['numero'],
-                'foto'=>$datos['foto'],
-                'correo'=>$datos['correo'],
-                'telefono'=>$datos['telefono'],
-                'tipo'=>$datos['tipo'],
-                'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                'numLicencia'=>$datos['numLicencia'],
-                'created_at'=>$date,
-                'updated_at'=>$date
-            ]);
-            
-        }else {
-            Empleado::insert([
-                'curp'=>$datos['curp'],
-                'nombres'=>$datos['nombres'],
-                'primerApellido'=>$datos['primerApellido'],
-                'segundoApellido'=>$datos['segundoApellido'],
-                'fechaNacimiento'=>$datos['fechaNacimiento'],
-                'nacionalidad'=>$datos['nacionalidad'],
-                'pais'=>$datos['pais'],
-                'estado'=>$datos['estado'],
-                'ciudad'=>$datos['ciudad'],
-                'colonia'=>$datos['colonia'],
-                'calle'=>$datos['calle'],
-                'numero'=>$datos['numero'],               
-                'correo'=>$datos['correo'],
-                'telefono'=>$datos['telefono'],
-                'tipo'=>$datos['tipo'],
-                'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                'numLicencia'=>$datos['numLicencia'],
-                'created_at'=>$date,
-                'updated_at'=>$date
-            ]);
-        }
-
-        $sucu = $request->input('sucursal');
-        $foranea = Sucursal::where('nombre',$sucu)->first();      
-            $emp = Empleado::where('curp',$datos['curp'])->first();
-            EmpleadoSucursal::insert([
-                'sucursal'=>$foranea->idsucursal,
-                'empleado'=>$emp->idempleado,
-                'status'=>$datos['status'],
-                'created_at'=>$date,
-                'updated_at'=>$date
-                ]);
-   
-                return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-        }
-    }
-}
+                 $sucu = $request['sucursal'];
+                $foranea = Sucursal::where('nombre',$sucu)->first();      
+                    $emp = Empleado::where('ine',$request['ine'])->first();
+                    EmpleadoSucursal::insert([
+                        'sucursal'=>$foranea->idsucursal,
+                        'empleado'=>$emp->idempleado,
+                        'status'=>$request['status'],
+                        'created_at'=>$date,
+                        'updated_at'=>$date
+                        ]);
+           
+                        return response()->json(['success'=>'EXITO']);
+    
     }
 
     
@@ -234,189 +171,107 @@ class EmpleadoController extends Controller
         $date = $carbon->now();
 
         //return "no";
-        $carbon = new \Carbon\Carbon();
-        $date = $carbon->now();
-        $diff = $date->diffInYears($request['fechaNacimiento']); 
-        if($diff<15){
-            return back()->with('mensaje','INTRODUZCA UNA FECHA DE NACIMIENTO INCORRECTO:)');
-        }else{ 
-
-        if($request['tipo']=='CHOFER'){
-            if($request->validate([
-                'curp' => 'required|max:18',
-                'nombres' =>'required',
-                'primerApellido' =>'required',
-                'segundoApellido' =>'required',
-                'fechaNacimiento' =>'required|date',
-                'nacionalidad' =>'required',
-                'pais' =>'required',
-                'estado' =>'required',
-                'ciudad' =>'required',
-                'colonia' =>'required',
-                'calle' =>'required',
-                'correo' =>'required|email',
-                'telefono' =>'required',
-                'tipo' => 'required',
-                'tipo' => 'required',
-                'numlicencia' => 'required',
-                'licenciaFechaExpiracion' => 'required|date',
-                'licenciaFechaExpedicion' => 'required|date',
-            ])){
-                $datos = $request->except('_token');
-                $empleado = Empleado::where('curp',$datos['curp'])->first();
-                $file=$empleado['foto'];
-                  if ($request->hasFile('foto')) {
-                      Storage::delete('public/'.$empleado->foto); 
-                      $datos['foto']=$request->file('foto')->store('upload','public');
-                      $empleado->update([
-                          'curp'=>$datos['curp'],
-                         'nombres'=>$datos['nombres'],
-                         'primerApellido'=>$datos['primerApellido'],
-                         'segundoApellido'=>$datos['segundoApellido'],
-                         'fechaNacimiento'=>$datos['fechaNacimiento'],
-                         'nacionalidad'=>$datos['nacionalidad'],
-                         'pais'=>$datos['pais'],
-                         'estado'=>$datos['estado'],
-                         'ciudad'=>$datos['ciudad'],
-                         'colonia'=>$datos['colonia'],
-                         'calle'=>$datos['calle'],
-                         'numero'=>$datos['numero'],
-                         'foto'=>$datos['foto'],
-                         'correo'=>$datos['correo'],
-                         'telefono'=>$datos['telefono'],
-                         'tipo'=>$datos['tipo'],
-                         'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                         'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                         'numLicencia'=>$datos['numLicencia'],
-                         'updated_at'=>$date
-                 ]);
-                  }else { 
-                      $empleado->update([
-                          'curp'=>$datos['curp'],
-                         'nombres'=>$datos['nombres'],
-                         'primerApellido'=>$datos['primerApellido'],
-                         'segundoApellido'=>$datos['segundoApellido'],
-                         'fechaNacimiento'=>$datos['fechaNacimiento'],
-                         'nacionalidad'=>$datos['nacionalidad'],
-                         'pais'=>$datos['pais'],
-                         'estado'=>$datos['estado'],
-                         'ciudad'=>$datos['ciudad'],
-                         'colonia'=>$datos['colonia'],
-                         'calle'=>$datos['calle'],
-                         'numero'=>$datos['numero'],
-                         'foto'=>$file,
-                         'correo'=>$datos['correo'],
-                         'telefono'=>$datos['telefono'],
-                         'tipo'=>$datos['tipo'],
-                         'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                         'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                         'numLicencia'=>$datos['numLicencia'],               
-                         'updated_at'=>$date
-                 ]);
-                  }  
-          
-                  
-                  $foranea = Sucursal::where('nombre',$datos['sucursal'])->first();      
-                  $emp = Empleado::where('curp',$datos['curp'])->first();
-                  $empleadosucursal=EmpleadoSucursal::where('empleado',$emp['idempleado'])
-                  ->first();
-                      $empleadosucursal->update([
-                          'sucursal'=>$foranea['idsucursal'],
-                          'empleado'=>$emp['idempleado'],
-                          'status'=>$datos['status'],
-                          'updated_at'=>$date
-                          ]);
-                  
-                   return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-            }
+        
+        
+        if($request['tipo']=='CHOFER'){   
             
+            $request->validate([
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                'ine' => 'required|regex:/[0-9]{13}/m',
+                'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                 'primerApellido' =>'required',
+                 'segundoApellido' =>'required',
+                 'fechaNacimiento' =>'required|date',
+                 'nacionalidad' =>'required',
+                 'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                 'estado' =>'required',
+                 'municipio' =>'required',
+                 'colonia' =>'required',
+                 'calle' =>'required',
+                 'correo' =>'required|email',
+                 'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                 'tipo' => 'required',
+                 'genero' => 'required',
+                 'sucursal' => 'required',
+                 'numero' => 'required',
+                 'numLicencia' => 'required',
+                 'licenciaFechaExpiracion' => 'required|date',
+                 'licenciaFechaExpedicion' => 'required|date',
+            ]);
         }else{
+            $request->validate([
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                   'ine' => 'required|regex:/[0-9]{13}/m',
+                   'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                    'primerApellido' =>'required',
+                    'segundoApellido' =>'required',
+                    'fechaNacimiento' =>'required|date',
+                    'nacionalidad' =>'required',
+                    'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                    'estado' =>'required',
+                    'municipio' =>'required',
+                    'colonia' =>'required',
+                    'calle' =>'required',
+                    'correo' =>'required|email',
+                    'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                    'tipo' => 'required',
+                    'genero' => 'required',
+                    'sucursal' => 'required',
+            ]);
+        } 
 
-        if($request->validate([
-            'curp' => 'required|max:18',
-            'nombres' =>'required',
-            'primerApellido' =>'required',
-            'segundoApellido' =>'required',
-            'fechaNacimiento' =>'required|date',
-            'nacionalidad' =>'required',
-            'pais' =>'required',
-            'estado' =>'required',
-            'ciudad' =>'required',
-            'colonia' =>'required',
-            'calle' =>'required',
-            'correo' =>'required|email',
-            'telefono' =>'required',
-        ])){
-            $datos = $request->except('_token');
-            $empleado = Empleado::where('curp',$datos['curp'])->first();
-            $file=$empleado['foto'];
-              if ($request->hasFile('foto')) {
-                  Storage::delete('public/'.$empleado->foto); 
-                  $datos['foto']=$request->file('foto')->store('upload','public');
+        $diff = $date->diffInYears($request['fechaNacimiento']); 
+        if($diff<15 ||$diff > 60){
+             return response()->json(['success'=>'ERROR2']);
+         }
+
+         $image = $request->file('foto');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $new_name);
+        
+        
+            $empleado = Empleado::where('ine',$request['ine'])->first();
+            
                   $empleado->update([
-                      'curp'=>$datos['curp'],
-                     'nombres'=>$datos['nombres'],
-                     'primerApellido'=>$datos['primerApellido'],
-                     'segundoApellido'=>$datos['segundoApellido'],
-                     'fechaNacimiento'=>$datos['fechaNacimiento'],
-                     'nacionalidad'=>$datos['nacionalidad'],
-                     'pais'=>$datos['pais'],
-                     'estado'=>$datos['estado'],
-                     'ciudad'=>$datos['ciudad'],
-                     'colonia'=>$datos['colonia'],
-                     'calle'=>$datos['calle'],
-                     'numero'=>$datos['numero'],
-                     'foto'=>$datos['foto'],
-                     'correo'=>$datos['correo'],
-                     'telefono'=>$datos['telefono'],
-                     'tipo'=>$datos['tipo'],
-                     'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                     'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                     'numLicencia'=>$datos['numLicencia'],
-                     'updated_at'=>$date
+                    'ine'=>$request['ine'],
+                        'nombres'=>$request['nombres'],
+                        'primerApellido'=>$request['primerApellido'],
+                        'segundoApellido'=>$request['segundoApellido'],
+                        'fechaNacimiento'=>$request['fechaNacimiento'],
+                        'nacionalidad'=>$request['nacionalidad'],
+                        'codigopostal'=>$request['codigopostal'],
+                        'estado'=>$request['estado'],
+                        'municipio'=>$request['municipio'],
+                        'colonia'=>$request['colonia'],
+                        'calle'=>$request['calle'],
+                        'numero'=>$request['numero'],
+                        'foto'=>$new_name,
+                        'correo'=>$request['correo'],
+                        'telefono'=>$request['telefono'],
+                        'tipo'=>$request['tipo'],
+                        'genero'=>$request['genero'],
+                        'status'=>$request['status'],
+                        'licenciaFechaExpiracion'=>$request['licenciaFechaExpiracion'],
+                        'licenciaFechaExpedicion'=>$request['licenciaFechaExpedicion'],
+                        'numLicencia'=>$request['numLicencia'],
+                        'created_at'=>$date,
+                        'updated_at'=>$date
              ]);
-              }else { 
-                  $empleado->update([
-                      'curp'=>$datos['curp'],
-                     'nombres'=>$datos['nombres'],
-                     'primerApellido'=>$datos['primerApellido'],
-                     'segundoApellido'=>$datos['segundoApellido'],
-                     'fechaNacimiento'=>$datos['fechaNacimiento'],
-                     'nacionalidad'=>$datos['nacionalidad'],
-                     'pais'=>$datos['pais'],
-                     'estado'=>$datos['estado'],
-                     'ciudad'=>$datos['ciudad'],
-                     'colonia'=>$datos['colonia'],
-                     'calle'=>$datos['calle'],
-                     'numero'=>$datos['numero'],
-                     'foto'=>$file,
-                     'correo'=>$datos['correo'],
-                     'telefono'=>$datos['telefono'],
-                     'tipo'=>$datos['tipo'],
-                     'licenciaFechaExpiracion'=>$datos['licenciaFechaExpiracion'],
-                     'licenciaFechaExpedicion'=>$datos['licenciaFechaExpedicion'],
-                     'numLicencia'=>$datos['numLicencia'],               
-                     'updated_at'=>$date
-             ]);
-              }  
-      
-              
-              $foranea = Sucursal::where('nombre',$datos['sucursal'])->first();      
-              $emp = Empleado::where('curp',$datos['curp'])->first();
-              $empleadosucursal=EmpleadoSucursal::where('empleado',$emp['idempleado'])
-              ->first();
-                  $empleadosucursal->update([
-                      'sucursal'=>$foranea['idsucursal'],
-                      'empleado'=>$emp['idempleado'],
-                      'status'=>$datos['status'],
-                      'updated_at'=>$date
-                      ]);
-              
-                      return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-        }
-    }
-       
-    }
+                
+          
+        $foranea = Sucursal::where('nombre',$request['sucursal'])->first();      
+        $emp = Empleado::where('ine',$request['ine'])->first();
+        $empleadosucursal=EmpleadoSucursal::where('empleado',$emp['idempleado'])
+        ->first();
+            $empleadosucursal->update([
+                'sucursal'=>$foranea['idsucursal'],
+                'empleado'=>$emp['idempleado'],
+                'status'=>$request['status'],
+                'updated_at'=>$date
+                ]);
+        
+                return response()->json(['success'=>'EXITO']);
+    
 }
 
 
@@ -426,6 +281,10 @@ class EmpleadoController extends Controller
         $sucursal=Sucursal::all();
         $empleadosucursal = EmpleadoSucursal::where('sucursal',$foranea['idsucursal'])->first();
         return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal'));
+
+    }
+
+    public function ModificarDatos(Request $request){
 
     }
     public function destroy(Empleado $empleado)

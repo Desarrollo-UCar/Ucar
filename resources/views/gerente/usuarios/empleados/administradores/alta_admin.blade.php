@@ -27,8 +27,6 @@
             <div class="box-header with-border">
               <h3 class="box-title">Nuevo Sucursal</h3>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
 
              
               <form method="post" id="upload_form" enctype="multipart/form-data">
@@ -296,11 +294,6 @@
                       </div>                       
                   </div>                    
               </div>
-              
-             
-
-              
-             
               
               </form>
              

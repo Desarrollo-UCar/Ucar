@@ -78,7 +78,7 @@
 
                     <div class="col-md-6 form-group">
                         <label>Descripción</label>
-                      <textarea name="descripcion" id="" cols="30" rows="1" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();"  ></textarea>
+                      <textarea name="descripcion" id="descripcion" cols="30" rows="1" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();"  ></textarea>
                     </div>
                     </div>
 
@@ -141,6 +141,8 @@ document.getElementById("foto").onchange = function(e) {
   };
 }
 </script>
+
+
 @endsection
 
                   

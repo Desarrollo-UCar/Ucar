@@ -77,8 +77,9 @@ class ReservacionController extends Controller
         //return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
 
         
-        $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
-        $sucursal = $sucur->sucursal;
+
+    $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
+    $sucursal = $sucur->sucursal;
     $fecha_i = $alquiler->fecha_recogida;
     $fecha_f = $alquiler->fecha_devolucion;
   $disponibles = DB::select('SELECT * FROM vehiculos 
