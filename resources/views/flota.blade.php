@@ -5,7 +5,7 @@
         <div class="row nomargin">
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="inner-heading">
-              <h2>Autos en renta disponibles a precios accesibles (Datos de prueba aleatorios)</h2>
+              <h2>Autos disponibles a precios accesibles</h2>
             </div>
           </div>
         </div>
@@ -14,14 +14,33 @@
   <section id="content">
       <div class="container">
         <div class="row nomargin">
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <ul class="portfolio-categ filter">
-              <li class="all active"><a href="#">Todos</a></li>
-              <li class="compacto"><a href="#" title="">Compactos</a></li>
-              <li class="camioneta"><a href="#" title="">Camionetas</a></li>
-              <li class="suburban"><a href="#" title="">Suburbans</a></li>
-              <li class="motoneta"><a href="#" title="">Motonetas</a></li>
-            </ul>
+          <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+              <ul class="portfolio-categ filter">
+                <li class="all active"><a href="#">Todos</a></li>
+                <li class="compacto"><a href="#" title="">Compactos</a></li>
+                <li class="camioneta"><a href="#" title="">Camionetas</a></li>
+                <li class="suburban"><a href="#" title="">Suburbans</a></li>
+                <li class="motoneta"><a href="#" title="">Motonetas</a></li>
+              </ul>
+          </div>
+          <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+              <ul class="portfolio-categ filter">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optradio">Precio de renta
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optradio">Rendimiento
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio">Cilindros
+                      </label>
+                    </div>
+                </ul>
           </div>
         </div>
       </div>
@@ -36,9 +55,13 @@
     <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->idvehiculo}} data-type= {{$vehiculo->tipo}}>
     <div class="pricing-box-wrap special animated-fast flyIn">
             <div class="pricing-heading">
-                <h3><strong>{{$vehiculo->marca}}</strong></h3>
-                <h5><strong>{{$vehiculo->modelo}}</strong></h5>
+                <h3><strong>{{$vehiculo->marca}}</strong> {{$vehiculo->modelo}}</h3>
                 <h5><strong>MXN {{number_format($vehiculo->precio,2)}}</strong></h5>
+                <h6><strong><i class="fa fa-car"  style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->cilindros}} Cilindros
+                            <i class="fa fa-bolt" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->rendimiento}} Km/L
+                            <i class="fa fa-male" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->pasajeros}} Pasajeros</strong>
+                            </h6>
+
             </div>
                     <figure>
                             <div><img src={{$vehiculo->foto}} /></div>

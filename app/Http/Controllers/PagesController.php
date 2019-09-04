@@ -147,8 +147,30 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
     $correo   = auth()->user()->email;
     //el cliente no se esta creando al momento del registro
     $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
-        return $cliente;
-        return view('en_construccion');
+        //pasarle los datos del cliente para proyectarlos arriba
+        //obtener los datos de todas las reservaciones del cliente
+        $reservas_cliente = DB::select('SELECT reservacions.id, reservacions.fecha_reservacion, reservacions.total, reservacions.saldo, sucursals.nombre,alquilers.id as id_alquiler,
+        alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
+        IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+        vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,
+        vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,
+        vehiculos.foto
+        FROM reservacions 
+        INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
+        inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
+        inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
+        INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
+        where id_cliente = ?',[$cliente->idCliente]);
+        //obtenemos los datos de los servicios extra
+
+        $cliente_serv_extra = DB::select('SELECT alquiler,serviciosextras.idserviciosextra,serviciosextras.nombre,serviciosextras.precio
+        FROM alquilerserviciosextras
+        INNER JOIN serviciosextras ON serviciosextras.idserviciosextra = alquilerserviciosextras.servicioExtra
+        INNER JOIN alquilers ON alquilerserviciosextras.alquiler = alquilers.id
+        INNER JOIN reservacions ON reservacions.id = alquilers.id_reservacion
+        INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE id_cliente = ?',[$cliente->idCliente]);
+ 
+        return view('dashboard_cliente',compact('cliente','reservas_cliente','cliente_serv_extra'));
     }
 
     public function reservar_servicios_extra(Request $reserva){
@@ -179,7 +201,7 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         AND vehiculosucursales.status ="ACTIVO"
         AND  alquilers.fecha_recogida <= ?
         AND alquilers.fecha_devolucion >=   ?) GROUP BY servicioExtra',[$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion,$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion]);
-
+        
         //obtenemos los totales de servicios de sucursal
         $cantidad_servicios_extra_totales = DB::select('SELECT * FROM servicioextrasucursales where sucursal = ?',[$datos_reserva->lugar_recogida]);
         //como ya tenemos la cantidad y el id del servicio extra que esta ocupados en la sucursal,
@@ -241,7 +263,7 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
                 foreach ($servicios as $valor) {
                     $datos = App\serviciosextras::findOrFail($valor);
                     $datos->precioRenta = $datos->precio * intval($dias);
-                    $total_serv_extra += $datos->precio;
+                    $total_serv_extra += $datos->precio * intval($dias);
                     array_push($servicios_extra, $datos); 
                 }
             }
@@ -252,16 +274,18 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         //actualizar tabla temporal de la reserva
     $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
     $datos_reserva->total = $totalf;
+    echo($totalf);
     //convertir a cadena para poder alamcenar los datos FORMATO id_servicio-cantidad, id_servicio-cantidad,... 
     $cadena_serv_extra = "";
     if(is_array($servicios)){
         if(count($servicios) > 0 ){
             foreach ($servicios as $valor) {
-                $cadena_serv_extra = $cadena_serv_extra . $valor . "-" . "1" . ","; 
+                $cadena_serv_extra = $cadena_serv_extra . $valor; 
             }
         }
     }
     //
+    //echo($cadena_serv_extra);
     $datos_reserva->servicios_extra = $cadena_serv_extra;
     $datos_reserva->save();
 
@@ -324,18 +348,17 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $alquiler->estatus = 'pendiente_recogida';
     $alquiler->save();
 
-    //rellenamos la tabla de alquileresservicioextra para llevar un control de los servicios eextra que tiene cada alquiler y cada reserva
+    //rellenamos la tabla de alquileresservicioextra para llevar un control de l    os servicios eextra que tiene cada alquiler y cada reserva
     //tenemos uq hacer un foreach para rellenar en caso de que haya mas de un servicio extra
-    $porciones = explode(",", $datos_reserva->servicios_extra);
+    $porciones = str_split($datos_reserva->servicios_extra,1);
+    //echo $datos_reserva->servicios_extra;
+    //return $porciones;
     foreach($porciones as $p){
         $alquiler_serv_extra = new App\alquilerserviciosextra;
         $alquiler_serv_extra->alquiler = $alquiler->id;
         $alquiler_serv_extra->servicioExtra = $p;
         $alquiler_serv_extra->save();
     }
-    return $porciones;
-    
-
 //listo tenemos el alquler
     if($reserva->btnAccion == 'pago_total'){
         $monto = $pago_reserva->total;
@@ -355,6 +378,8 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $reservacion->saldo = $pago_reserva->total - $monto;
     }
     $reservacion->save();
+
+    Mail::to($correo)->send(new EnviarEmail($reservacion));
 
     return view('pago',compact('monto','alquiler'));
 }

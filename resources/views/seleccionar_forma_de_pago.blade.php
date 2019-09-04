@@ -5,7 +5,7 @@
     <div class="row nomargin">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="inner-heading">
-            <h2>Selecciona tu forma de pago (Paso 4</h2>
+            <h2 class="text-center">Selecciona Tu Forma De Pago</h2>
         </div>
         </div>
     </div>
@@ -13,7 +13,8 @@
 </section>
 <section id = "forma-pago">
 <!-- FINALIZA BARRA LATERAL DE INFORMACIÓN -->
-<div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class= "container">
         <form action="{{ route('pago_paypal')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="id_reserva" value="{{$datos_reserva->id}}">
@@ -22,7 +23,7 @@
                     <div class="pricing-box-wrap special animated-fast flyIn">
                         <div class="pricing-heading">
                         <h3>Paga el <strong>Total de la reserva</strong></h3>
-                        <h3> <strong>MXN {{$datos_reserva->total}} </strong></h3>
+                        <h3> <strong>MXN {{number_format($datos_reserva->total,2)}} </strong></h3>
                         </div>
                         <div class="pricing-action">
                         </div>
@@ -47,6 +48,7 @@
             </div>
         </form>
     </div>
+</div>
 </section>
 @endsection
 

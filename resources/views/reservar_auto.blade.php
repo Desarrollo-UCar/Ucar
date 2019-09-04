@@ -5,7 +5,7 @@
     <div class="row nomargin">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="inner-heading">
-            <h2>Selecciona tu Vehículo (Paso 2 de 4)</h2>
+            <h2>Selecciona tu Vehículo</h2>
         </div>
         </div>
     </div>
@@ -68,7 +68,7 @@
                     <dd><a a href="{{ route('reservar_servicios_extra',[
                                             'id_reserva'=>$datos_reserva->id,
                                             'id_vehiculo'=>$vehiculo->idvehiculo
-                                            ]) }}" class="btn btn-warning btn-sm">reservar Ahora</a></dd> 
+                                            ]) }}" class="btn btn-warning btn-sm">Seleccionar</a></dd> 
                 </dl> 
                 
             </div>
