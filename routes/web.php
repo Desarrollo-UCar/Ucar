@@ -89,6 +89,7 @@ Route::post('clientemostrar', 'ClienteController@mostrar')->name('showcliente');
 Route::post('sucursalModificarDatos','SucursalController@ModificarDatos')->name('modificardatos');
 Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->name('datosempleado');
 Route::post('vehiculoModificar','VehiculoController@ModificarDatos')->name('datosvehiculo');
+Route::post('servicioModificar','ServiciosExtraController@ModificarDatos')->name('datoservicio');
 //});
 
 //Route::post('login','UsuariosController@login');

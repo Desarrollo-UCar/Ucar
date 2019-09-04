@@ -99,12 +99,13 @@ class EmpleadoController extends Controller
        'class_name'  => 'alert-success'
       ]);*/
       
-      
-        
+      $todo=Empleado::all();
+      if(count($todo)>0){        
         $empleado = Empleado::where('ine',$request['ine'])->first();
         if(!empty($empleado)){
             return response()->json(['success'=>'ERROR1']);
          }
+        }
          $diff = $date->diffInYears($request['fechaNacimiento']); 
        if($diff<15 ||$diff > 60){
             return response()->json(['success'=>'ERROR2']);
@@ -187,7 +188,7 @@ class EmpleadoController extends Controller
         $date = $carbon->now();
 
         $new_name = $request->hidden_image;
-        $image = $request->file('image');       
+        $image = $request->file('foto');       
       
 
             if($image != '')

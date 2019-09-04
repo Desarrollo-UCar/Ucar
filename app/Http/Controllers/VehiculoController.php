@@ -63,11 +63,14 @@ class VehiculoController extends Controller
             'sucursal'   => 'required',
            // 'descripcion'=> 'required',
         ]);
-
+        
+        $todo=Vehiculo::all();
+        if(count($todo)>0){
         $vehiculo = Vehiculo::where('vin',$request['vin'])->first();
         if(!empty($vehiculo)){
             return response()->json(['success'=>'ERROR1']);
          }
+        }
          $image = $request->file('foto');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $new_name);
@@ -145,7 +148,7 @@ class VehiculoController extends Controller
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();    
         $new_name = $request->hidden_image;
-        $image = $request->file('image');       
+        $image = $request->file('foto');       
       
 
             if($image != '')

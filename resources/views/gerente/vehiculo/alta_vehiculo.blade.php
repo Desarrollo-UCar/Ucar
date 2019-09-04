@@ -47,8 +47,8 @@
                          maxlength="17">
 
                          
-                          <span id="errorvin" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                          <span id="validovin" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                            <span id="errorvin" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                            <span id="validovin" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                         </div>
 
 
@@ -408,6 +408,12 @@ document.getElementById("foto").onchange = function(e) {
     preview.append(image);
   };
 }
+</script>
+
+<script>
+  function recargar(){
+    location.reload(); 
+  }
 </script>
 
 

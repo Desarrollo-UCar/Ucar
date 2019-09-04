@@ -433,12 +433,15 @@ document.getElementById("foto").onchange = function(e) {
   };
 }
 </script>
+<script>
+  function recargar(){
+    location.reload(); 
+  }
+</script>
 
 
 <script>
-  $(document).ready(function(){
-
-   
+  $(document).ready(function(){   
   
    $('#upload_form').on('submit', function(event){
     
@@ -454,7 +457,7 @@ document.getElementById("foto").onchange = function(e) {
      success:function(data)
      {      
        var mensaje=data.success;
-       console.log(mensaje);
+      
       
        if(mensaje=='EXITO'){
       $('.btn-info').click();

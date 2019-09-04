@@ -51,70 +51,59 @@ class ServiciosExtraController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $guardar=0;
+        
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
-        $datos = request()->except('_token');
-        if ($request->hasFile('foto')) {
-            $datos['foto']=$request->file('foto')->store('upload','public');
-            //return $datos;
-          if(  serviciosextras::insert([
-                'nombre'=> $datos['nombre'],                
-                'descripcion'=> $datos['descripcion'],                
-                'disponibilidad'=> $datos['disponibilidad'],                
-                'precio'=> $datos['precio'],                
-                'foto'=> $datos['foto'],
-                'created_at'=>$date,
-                'updated_at'=>$date
-            ])){
-                $guardar = 1;
-                //return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-            }else{
-            //return back()->with('errormsj','ERROR AL GUARDAR LOS DATOS :(');
-                $guardar = 0;
-            }
-        }else{
-            if(serviciosextras::insert([
-                'nombre'=> $datos['nombre'],                
-                'descripcion'=> $datos['descripcion'],                
-                'disponibilidad'=> $datos['disponibilidad'],                
-                'precio'=> $datos['precio'],                
-                'foto'=> null,
-                'created_at'=>$date,
-                'updated_at'=>$date
-                ])){
-                 //   return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-                    $guardar =1;
-                }else{
-               // return back()->with('errormsj','ERROR AL GUARDAR LOS DATOS :(');
-                $guardar=0;
-                }  
-          }
+        //$new_name = $request->hidden_image;
+      
 
-        $sucu = $request->input('sucursal');
-        $foranea = Sucursal::where('nombre',$sucu)->first(); 
-        $serext = Serviciosextras::where('nombre',$datos['nombre'])->first();
+             $request->validate([
+                   'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                   'nombre'=> 'required',               
+                   'descripcion'=> 'required',                
+                   'disponibilidad'=> 'required',                
+                   'precio'=> 'required',
+                   'cantidad'=> 'required',  
+                   'sucursal'=> 'required', 
+                ]);
 
-        if(servicioextrasucursales::insert([
-            'sucursal'=>$foranea->idsucursal,
-            'serviciosextra' => $serext->idserviciosextra,
-            'descripcion'=>$datos['descripcion'],
-            'cantidad' => $datos['cantidad'],
+    $todo =   Serviciosextras::all();
+    if(count($todo)>0){
+        $servicio =  Serviciosextras::where('nombre',$request['nombre']);
+    if(!empty($servicio)){
+        return response()->json(['success'=>'ERROR1']);
+    }
+    }
+
+         $image = $request->file('foto');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $new_name);
+        
+                
+          serviciosextras::insert([
+            'nombre'=> $request['nombre'],                
+            'descripcion'=> $request['descripcion'],                
+            'disponibilidad'=> $request['disponibilidad'],                
+            'precio'=> $request['precio'],                
+            'foto'=> $new_name,
             'created_at'=>$date,
             'updated_at'=>$date
-        ])){
-            $guardar=1;
-        }else{
-            $guardar= 0;
-        }
+        ]);
 
-            if($guardar==1){
-                return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-            }else{
-                return back()->with('errormsj','ERROR AL GUARDAR LOS DATOS :(');
-            }
-        return $datos;
+      
+        $sucu = $request['sucursal'];
+        $foranea = Sucursal::where('nombre',$sucu)->first(); 
+        $serext = Serviciosextras::where('nombre',$request['nombre'])->first();
+
+        servicioextrasucursales::insert([
+            'sucursal'=>$foranea->idsucursal,
+            'serviciosextra' => $serext->idserviciosextra,
+            'descripcion'=>$request['descripcion'],
+            'cantidad' => $request['cantidad'],
+            'created_at'=>$date,
+            'updated_at'=>$date
+        ]);
+        return response()->json(['success'=>'EXITO']);
     }
 
     /**
@@ -149,6 +138,7 @@ class ServiciosExtraController extends Controller
         $serviciosucursal=servicioextrasucursales::where('sucursal',$servicioextra['sucursal'])
         ->where('serviciosextra',$servicioextra['servicioextra'])
         ->first();
+        //return  $serviciosucursal;
         return view('gerente.servicio_extra.editar_servicios',compact('servicio','sucursal','foranea','serviciosucursal'));
       //return $servicioextra;
     }
@@ -161,75 +151,102 @@ class ServiciosExtraController extends Controller
      */
     public function update(Request $request)
     {
-        $guardar=0;
-        $carbon = new \Carbon\Carbon();
-        $date = $carbon->now();
-        $datos = $request->except('_token'); 
-        $servicio=Serviciosextras::where('nombre',$request['nombre'])->first();    
-        if ($request->hasFile('foto')) {
-            Storage::delete('public/'.$servicio->foto); 
-            $datos['foto']=$request->file('foto')->store('upload','public');
-            if(  $servicio->update([
-                'nombre'=> $datos['nombre'],                
-                'descripcion'=> $datos['descripcion'],                
-                'disponibilidad'=> $datos['disponibilidad'],                
-                'precio'=> $datos['precio'],                
-                'foto'=> $datos['foto'],
-                'updated_at'=>$date
-            ])){
-                $guardar = 1;
-                //return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-            }else{
-            //return back()->with('errormsj','ERROR AL GUARDAR LOS DATOS :(');
-                $guardar = 0;
-            }
-        }else{
-            if(  $servicio->update([
-                'nombre'=> $datos['nombre'],                
-                'descripcion'=> $datos['descripcion'],                
-                'disponibilidad'=> $datos['disponibilidad'],                
-                'precio'=> $datos['precio'],                
-                'updated_at'=>$date
-            ])){
-                $guardar = 1;
-                //return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-            }else{
-            //return back()->with('errormsj','ERROR AL GUARDAR LOS DATOS :(');
-                $guardar = 0;
-            }            
-        }
-            $sucursal=Sucursal::where('nombre',$datos['sucursal'])->first();
-            $serviciosucursal=servicioextrasucursales::where('serviciosextra',$servicio['idserviciosextra'])->first();
-            //return $sucursal['nombre'];
-            if( $serviciosucursal->update([
-                'sucursal'=>$sucursal['idsucursal'],
-                'serviciosextra' => $servicio['idserviciosextra'],
-                'descripcion'=>$datos['descripcion'],
-                'cantidad' => $datos['cantidad'],
-                'updated_at'=>$date
-            ])               
-            ){
-                $guardar = 1;
-            }else{
-                $guardar = 0;
-            }
-
-            if($guardar==1){
-                return back()->with('msj','DATOS MODIFICADOS EXITOSAMENTE :)');
-            }else{
-                return back()->with('errormsj','ERROR AL MODIFICAR LOS DATOS :(');
-            }
-     return $datos;   
+        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ServicioExtra  $servicioExtra
-     * @return \Illuminate\Http\Response
-     */
-   /* public function destroy(ServiciosExtra $servicioExtra)
-    {
-        //
-    }*/
+    public function ModificarDatos(Request $request){
+
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+        $new_name = $request->hidden_image;
+        $image = $request->file('foto');
+
+       // return response()->json(['success'=>'EXITO']);
+    
+        if($image != '')
+        {
+             $request->validate([
+                   'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                   'nombre'=> 'required',               
+                   'descripcion'=> 'required',                
+                   'disponibilidad'=> 'required',                
+                   'precio'=> 'required',
+                   'cantidad'=> 'required',  
+                   'sucursal'=> 'required', 
+                ]);   
+    
+
+         $image = $request->file('foto');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $new_name);
+        
+        $servicio=Serviciosextras::where('idserviciosextra',$request['idservicio'])->first(); 
+        $servicio->update([
+            'nombre'=> $request['nombre'],                
+            'descripcion'=> $request['descripcion'],                
+            'disponibilidad'=> $request['disponibilidad'],                
+            'precio'=> $request['precio'],                
+            'foto'=> $new_name,
+            'created_at'=>$date,
+            'updated_at'=>$date
+        ]);
+
+        $sucursal = Sucursal::where('nombre',$request['sucursal'])->first();
+    
+        $serviciosucursal=servicioextrasucursales::where('serviciosextra',$servicio['idserviciosextra'])
+        ->first();
+                $serviciosucursal->update([
+                    'sucursal'=>$sucursal['idsucursal'],
+                    'serviciosextra' => $servicio['idserviciosextra'],
+                    'descripcion'=>$request['descripcion'],
+                    'cantidad' => $request['cantidad'],
+                    'updated_at'=>$date
+        ]);
+        return response()->json(['success'=>'EXITO']);
+
+        }else{
+            //return response()->json(['success'=>'EXITO']);
+            $request->validate([
+                'nombre'=> 'required',               
+                'descripcion'=> 'required',                
+                'disponibilidad'=> 'required',                
+                'precio'=> 'required',
+                'cantidad'=> 'required',  
+                'sucursal'=> 'required', 
+             ]);
+     
+       
+             $servicio=Serviciosextras::where('idserviciosextra',$request['idservicio'])->first(); 
+     $servicio->update([
+         'nombre'=> $request['nombre'],                
+         'descripcion'=> $request['descripcion'],                
+         'disponibilidad'=> $request['disponibilidad'],                
+         'precio'=> $request['precio'],   
+         'created_at'=>$date,
+         'updated_at'=>$date
+     ]);
+
+     
+    
+     $serviciosucursal=servicioextrasucursales::where('serviciosextra',$servicio['idserviciosextra'])->first();
+
+
+     $sucu = $request['sucursal'];
+     $foranea = Sucursal::where('nombre',$sucu)->first(); 
+     $serext = Serviciosextras::where('idserviciosextra',$request['idservicio'])->first(); 
+
+     $serviciosucursal->update([
+         'sucursal'=>$foranea->idsucursal,
+         'serviciosextra' => $serext->idserviciosextra,
+         'descripcion'=>$request['descripcion'],
+         'cantidad' => $request['cantidad'],
+         'created_at'=>$date,
+         'updated_at'=>$date
+     ]);
+     return response()->json(['success'=>'EXITO']);
+        }
+
+      
+    }
+   
 }
