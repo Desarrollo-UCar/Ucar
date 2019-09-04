@@ -19,6 +19,12 @@
           <h4>Reservación cancelada!</h4>
         </div>
         @endif
+
+        @if($alquiler->estatus=='terminado')
+        <div class="alert alert-warning alert-dismissible">
+            <h4>Alquiler terminadO!</h4>
+          </div>
+          @endif
         
     <div class="row">
       <div class="col-md-12">
@@ -32,7 +38,7 @@
 
             <div class="col-md-8">
 
-                <h4 >Datos del <a href="">cliente </a></h4>
+            <h4 >Datos del <a href="">cliente </a></h4>
                    <!-- {{$alquiler->id  }} -->
                    
                    <div class="col-md-6">
@@ -40,7 +46,7 @@
                       @if($cliente->credencial==null)
                      Pasaporte
                      @else
-                    INE
+                    Identificacion
                      @endif cliente</label>
                       <input type="text" name="cliente" id="" class="form-control" disabled value="@if($cliente->credencial==null)
                       {{$cliente->pasaporte}}
@@ -88,7 +94,7 @@
 
 
                 @if($reservacion->saldo==0)
-                  <h3>Se pago el total de la reservacion en linea</h3>
+                  <h3>Se pago el total de la reservacion</h3>
                  @else
                 <div class="col-md-6 form-group">
                     <label>Saldo</label>
@@ -101,10 +107,15 @@
                           <b>Cobrar Saldo pendiente </b>
                         </button>
 
-                        @endif
+                        @endif 
+                        @if($alquiler->estatus!='terminado')
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning3">
                             <b>Cobrar garantia </b>
                           </button>
+                          @endif
+                          <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#pagos">
+                              <b>Ver pagos </b>
+                            </button>
 
             </div>
           </div>
@@ -136,29 +147,34 @@
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->transmicion}}">
                       </div>
 
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-6 form-group">
                       <label>Fecha Entrega</label>
                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_recogida}}">
                     </div>
                     
-                    <div class="col-md-2 form-group">
+                    <div class="col-md-6 form-group">
                         <label>Hora</label>
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
                       </div>
   
-                     <div class="col-md-4 form-group">
+                     <div class="col-md-6 form-group">
                        <label>Fecha Devolucion</label>
                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
                     </div>
 
-                    <div class="col-md-2 form-group">
+                    <div class="col-md-6 form-group">
                         <label>Hora</label>
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
                       </div>
                       <div class="col-md-2 form-group">
+                          @if($alquiler->estatus!='terminado')
                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
                               <b>Cambiar VEHICULO</b>
                             </button>
+                            @else
+                            <button type="button" class="btn btn-danger" data-toggle="modal"  disabled data-target="">
+                                <b>Cambiar VEHICULO</b>
+                                @endif
                             </div>
                   </div>
                 </div>
@@ -167,12 +183,17 @@
                     <div class="col-md-8">
                         <h4 ><br>Datos del conductor</h4>
 
-                        <form method="GET" action="{{ route('cancelaReservacion',$reservacion->id) }}"  role="form">
+                        <form method="GET" action="{{ route('conductor') }}"  role="form">
                             {{ csrf_field() }}
+                            <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
+                            <input name="alquiler" type="hidden" value= "{{$alquiler->id}}">
 
+                        
                   <div class="col-md-6 form-group">
                       <label>Numero Licencia</label>
-                      <input type="text" name="nombre" id="" class="form-control" value=""  title="Escriba numero de licencia">
+                      @if($alquiler->num_licencia!=null)
+                  <input type="text" name="numero" id="" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
+                  @endif
                     </div>
 
                     <div class="col-md-6 form-group">
@@ -183,17 +204,18 @@
                       
                     <div class="col-md-6 form-group">
                         <label>Fecha expedicion</label>
-                        <input type="text" name="nombre" id="" class="form-control"  value="">
+                        <input type="date" name="fecha_e" id="" class="form-control"  value="">
+
                       </div>
 
                       
                     <div class="col-md-6 form-group">
                         <label>Fecha expiracion</label>
-                        <input type="text" name="nombre" id="" class="form-control" value="">
+                        <input type="date" name="fecha_c" id="" class="form-control" value="">
                       </div>
-
+                      <button type="submit" class="btn btn-sucess"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar'}}</button>
                     </div>
-                    <button type="submit" class="btn btn-sucess"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar'}}</button>
+
                   </form>
                   </div>
 
@@ -204,12 +226,20 @@
                         <div class="col-md-6 form-group">
                             <table border="1">
                                      <body>
+
                                       <th>Nombre</th>
                                        <th>Descripcion</th>
-                                        <tr>
-                                          <td>1</td>
-                                          <td>Silla bebe</td>
+                                       
+                                            @if($servicios->count())  
+                                            @foreach($servicios as $servicio) 
+                                            <tr>
+                                        <td>{{$servicio->nombre}}</td>
+                                        <td>{{$servicio->descripcion}}</td>
                                         </tr>
+                                      @endforeach
+                                      @else
+                                      <td>No har extras reservados!</td>
+                                      @endif
                                      </body>
 
                                       </table>
@@ -222,11 +252,18 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div class="box-footer" style="float: right">
-                            @if($alquiler->estatus=='cancelado'||$reservacion->estatus=='rentado')
+                        @if($alquiler->estatus == 'en curso')
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#recibir">
+                            <b>Recibir</b>
+                          </button>
+                          @endif
+
+                            @if($alquiler->estatus=='cancelado'||$reservacion->estatus=='en curso'||$alquiler->estatus=='terminado')
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#" disabled>
                                 <b>Cancelada</b>
                               </button>
                               <a  disabled class="btn btn-success" disabled><b>Contrato</b></a>
+
                               </div>
                               @else
 
@@ -234,6 +271,7 @@
                                   <b>Cancelar</b>
                                 </button>
                                 <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Contrato</b></a>
+
                                 @endif
                         </div>                       
                     </div>                    
@@ -364,7 +402,116 @@
                 <!-- /.modal-dialog -->
               </div>
 
-            </div>
+              <div class="modal fade in" id="pagos">
+
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+  
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Pagos por motivo de la reservacion'}}  {{$reservacion->id}}</b> </h4>
+                      </div>
+                      <div class="modal-body">
+  
+                          <div class="box-body">
+                              <div class="row">
+                                <div class="col-md-12 ">
+                                  <div class="form-group">
+
+                              
+                                    <table border="1">
+                                      <th>Numero</th>
+                                      <th>Datos del pago</th>
+                                      <th>Fecha</th>
+                                      <th>Total</th>
+                                      @if($pagos->count())  
+                                      @foreach($pagos as $pago)  
+                                      <tr>
+                                      <td>{{$pago->id}}</td>
+                                 
+                                     
+                                  
+                                        <td> {{$pago->paypal_Datos}}
+           
+                                        {{$pago->mostrador_Datos}} 
+                    
+                                         {{$pago->garantia_Datos}} </td>
+
+                                         <td>{{$pago->fecha}}</td>
+
+                                        <td>{{$pago->total}}</td>
+                                        </tr>
+                                      @endforeach
+                                      @endif
+
+                                    </table>
+                                  
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                              
+                        <p><b>{{'Lista de pagos por la reservacion '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
+                      </div>
+                      <div class="modal-footer">
+
+                      </div>
+                      </form>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+
+
+                <div class="modal fade in" id="recibir">
+
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+    
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Pagos por motivo de la reservacion'}}  {{$reservacion->id}}</b> </h4>
+                        </div>
+                        <div class="modal-body">
+    
+                            <div class="box-body">
+                                <div class="row">
+                                  <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <form method="GET" action="{{ route('recibir') }}"  role="form">
+                                            {{ csrf_field() }}
+
+                                            <input name="alquiler" type="hidden" value= "{{$alquiler->id}}">
+                                        <div class="col-md-6 form-group">
+                                            <label>Kilometraje del vehiculo</label>
+                                        <input type="number" name="km" id="" class="form-control"  value="{{$vehiculo->kilometraje}}" min="{{$vehiculo->kilometraje}}">
+                                          </div>
+
+                                          <div class="col-md-6 form-group">
+                                              <label>Comentario</label>
+                                              <input type="text" name="comentario" id="" class="form-control"  value="">
+                                            </div>
+                                    
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                                
+                          <p><b>{{'Se recibira el vehiculo rentado de la reservacion  '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{'Terminar'}}</button>
+                        </div>
+                        </form>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+            </div>  
           </div>
         </div>
       </div>
@@ -372,4 +519,73 @@
 
   @section('scripts')
 
+  <!-- bootstrap datepicker -->
+<script src="{{asset("assets/$theme/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js")}}"></script>
+  <script>
+      $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+    
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        //Money Euro
+        $('[data-mask]').inputmask()
+    
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+          {
+            ranges   : {
+              'Today'       : [moment(), moment()],
+              'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+              'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+              'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+              'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+              'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            startDate: moment().subtract(29, 'days'),
+            endDate  : moment()
+          },
+          function (start, end) {
+            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+          }
+        )
+    
+        //Date picker
+        $('#datepicker').datepicker({
+          autoclose: true
+        })
+    
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+          checkboxClass: 'icheckbox_minimal-blue',
+          radioClass   : 'iradio_minimal-blue'
+        })
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+          checkboxClass: 'icheckbox_minimal-red',
+          radioClass   : 'iradio_minimal-red'
+        })
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+          checkboxClass: 'icheckbox_flat-green',
+          radioClass   : 'iradio_flat-green'
+        })
+    
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+    
+        //Timepicker
+        $('.timepicker').timepicker({
+          showInputs: false
+        })
+      })
+    </script>
 @endsection

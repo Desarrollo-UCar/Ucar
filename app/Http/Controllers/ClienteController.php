@@ -120,7 +120,12 @@ class ClienteController extends Controller
     public function show($id)
     {
        
-        //
+        //    public function index()
+    
+          $clientes  = Cliente::where('idCliente','=',$id)->get();
+           return view ('gerente.clientes.ver_clientes',compact('clientes'));
+         
+     
     }
 
     /**

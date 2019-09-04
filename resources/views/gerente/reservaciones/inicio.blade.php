@@ -57,7 +57,7 @@
                         <td>{{$reservacion->total}}</td>
                        <!-- <td>{{$reservacion->estatus}}</td> -->
                         <td>  
-                          <form action ="{{route('reservacion.show',$reservacion)}}" method ="GET" enctype="multipart/form-data">
+                          <form action ="{{route('reservacion',$reservacion)}}" method ="GET" enctype="multipart/form-data">
                                 {{csrf_field()}}
                                <button type="sumbit" class="btn btn-primary btn-xs" type="sumbit">
                                {{'Detalles  '}}
