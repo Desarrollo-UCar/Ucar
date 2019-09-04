@@ -5,12 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<<<<<<< HEAD
-  <title> Reservaciones</title>
-=======
-  <title>Reservas</title>
->>>>>>> 2f3835739178a22da978347580a33d5f4fa0ebdb
- 
+  <title>Reservas</title> 
   <link rel="stylesheet" type="text/css" href="{{URL::asset('/css/tabla.css')}}">
   <link rel="stylesheet" type="text/css" href="{{URL::asset('https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')}}">
  </head>
@@ -57,7 +52,11 @@
                         <td>{{$reservacion->total}}</td>
                        <!-- <td>{{$reservacion->estatus}}</td> -->
                         <td>  
+<<<<<<< HEAD
                           <form action ="{{route('reservacion',$reservacion)}}" method ="GET" enctype="multipart/form-data">
+=======
+                         <form action ="{{route('reservacion.show',$reservacion)}}" method ="GET" enctype="multipart/form-data">
+>>>>>>> 2e0f0facbcbeb1c82bfffaa62a8a4e412a3f5296
                                 {{csrf_field()}}
                                <button type="sumbit" class="btn btn-primary btn-xs" type="sumbit">
                                {{'Detalles  '}}

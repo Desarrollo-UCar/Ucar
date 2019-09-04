@@ -13,20 +13,21 @@ class CrearEmpleado extends Migration
      */
     public function up()
     {
-        Schema::create('empleados', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+        Schema::create('empleados', function (Blueprint $table) {          
             $table->bigIncrements('idempleado');
-            $table->string('identificación');
+            $table->string('ine');
             $table->string('nombres')->require;
             $table->string('primerApellido')->require;
             $table->string('segundoApellido');
             $table->date('fechaNacimiento')->require;
-            $table->string('codigo_postal')->require;
+            $table->string('genero')->require;
+            $table->string('Nacionalidad')->require;
+            $table->string('codigopostal')->require;
             $table->string('estado')->require;
             $table->string('municipio')->require;
             $table->string('colonia')->require;
             $table->string('calle')->requiere;
-            $table->integer('numero')->requiere;
+            $table->string('numero')->requiere;
             $table->string('foto')->nullable();
             $table->string('correo')->require;
             $table->string('telefono')->require;

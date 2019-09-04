@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sucursal;
 use Illuminate\Http\Request;
-use Sabberworm\CSS\Value\Size;
-
+//use App\Providers\ValidacionesLaravel;
 class SucursalController extends Controller
 {
     /**
@@ -43,19 +42,20 @@ class SucursalController extends Controller
         //
      //$dato=$this->validarLetra($request['nombre']);
      
-        //return $request;
+       
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
        $request->validate([
-            'nombre'=>'required|con_espacios',
-            'codigopostal'=>'required|postal',
+            'nombre'=>'required|regex:/^[\pL\s]+$/u',
+            'codigopostal'=>'required|regex:/[0-9]{5}/m',
             'estado'=>'required',
             'municipio'=>'required',
             'colonia'=>'required',
             'calle'=>'required',
             'numero'=>'required',
-            'telefono'=>'required|tele_fono',
+            'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
         ]);
+
         Sucursal::create([
             'nombre'=> $request['nombre'],
             'codigopostal'=>$request['codigopostal'],
@@ -70,7 +70,7 @@ class SucursalController extends Controller
             'updated_at'=> $date
         ]);
    
-        return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
+        return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
     
    
     }
@@ -99,31 +99,28 @@ class SucursalController extends Controller
 
         return view('gerente.sucursal.editar_sucursal',compact('sucursal'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sucursal  $sucursal
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
+    
+   
+    
+    public function destroy(Sucursal $sucursal)
     {
-        //       
-       // return $request;
-        $carbon = new \Carbon\Carbon();
-        $date = $carbon->now();
-       $request->validate([
-        'nombre'=>'required|con_espacios',
-        'codigopostal'=>'required|postal',
+        //
+    }
+
+   public function ModificarDatos(Request $request){
+    $carbon = new \Carbon\Carbon();
+    $date = $carbon->now();
+    $request->validate([
+        'nombre'=>'required|regex:/^[\pL\s]+$/u',
+        'codigopostal'=>'required|regex:/[0-9]{5}/m',
         'estado'=>'required',
         'municipio'=>'required',
         'colonia'=>'required',
         'calle'=>'required',
         'numero'=>'required',
-        'telefono'=>'required|tele_fono',
+        'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
         ]);
-            $sucursal=Sucursal::where('nombre',$request['nombre'])->first();
+        $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
           
         $sucursal->update([
             'nombre'=> $request['nombre'],
@@ -137,25 +134,7 @@ class SucursalController extends Controller
             'status'=> 'ACTIVO',
             'updated_at'=> $date
         ]);
-        return back()->with('msj','DATOS MODIFICADOS EXITOSAMENTE :)');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Sucursal  $sucursal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sucursal $sucursal)
-    {
-        //
-    }
-
-   public function Autocomplete($cadena){
-    
-    echo $cadena;
-    return response()->json($cadena);
+        return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
 
     }
 

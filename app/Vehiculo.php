@@ -9,6 +9,6 @@ class Vehiculo extends Model
     //
     protected $primaryKey ='idvehiculo';
     protected $fillable = [
-        'vin','matricula','marca','modelo','anio','precio', 'costo','pasajeros','color','cilindros','status','kilometraje','tipo','descripcion','foto'
+        'vin','matricula','marca','modelo','anio','precio', 'costo','pasajeros','color','cilindros','estatus','kilometraje','tipo','descripcion','foto','puertas'
     ];
 }

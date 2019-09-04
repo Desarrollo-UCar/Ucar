@@ -86,8 +86,10 @@ Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehicu
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
 Route::get('modificarsucursal','SucursalController@modificar')->name('modificarsucursal');
 Route::post('clientemostrar', 'ClienteController@mostrar')->name('showcliente');
-Route::post('clientever', 'ClienteController@show')->name('vercliente');
-Route::post('sucursalautocomplete','SucursalController@Autocomplete')->name('auto');
+Route::post('sucursalModificarDatos','SucursalController@ModificarDatos')->name('modificardatos');
+Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->name('datosempleado');
+Route::post('vehiculoModificar','VehiculoController@ModificarDatos')->name('datosvehiculo');
+Route::post('servicioModificar','ServiciosExtraController@ModificarDatos')->name('datoservicio');
 //});
 
 //Route::post('login','UsuariosController@login');

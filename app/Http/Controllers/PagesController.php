@@ -159,8 +159,8 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         $vehiculo       = App\Vehiculo::findOrFail($id_vehiculo);
         $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
 
-        //consulta para saber los servicios extra disponibles en la fecha indicada
-        $cantidad_servicios_extra = DB::select('SELECT servicioExtra, COUNT(servicioExtra) as cantidad FROM alquilerserviciosextras  
+        //consulta para saber los servicios extra ocupados en la fecha indicada y en dicha sucursal
+        $cantidad_servicios_extra_ocupados = DB::select('SELECT servicioExtra, COUNT(servicioExtra) as cantidad FROM alquilerserviciosextras  
         WHERE alquiler IN (
         SELECT alquilers.id FROM vehiculos  
         INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
@@ -179,12 +179,39 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         AND vehiculosucursales.status ="ACTIVO"
         AND  alquilers.fecha_recogida <= ?
         AND alquilers.fecha_devolucion >=   ?) GROUP BY servicioExtra',[$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion,$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion]);
-            //como ya tenemos la cantidad y el id del servicio extra, obtenemos de la tabla de servicios extra los datos correspondientes
-            $servicios_extra = [];
-            foreach ($cantidad_servicios_extra as $servicio) {
-                $servicio_e  = App\serviciosextras::findOrFail($servicio->servicioExtra);
-                    array_push($servicios_extra, $servicio_e);  
+
+        //obtenemos los totales de servicios de sucursal
+        $cantidad_servicios_extra_totales = DB::select('SELECT * FROM servicioextrasucursales where sucursal = ?',[$datos_reserva->lugar_recogida]);
+        //como ya tenemos la cantidad y el id del servicio extra que esta ocupados en la sucursal,
+            //obtener los qye estan ocupadoos id y cantidad por sucursal
+            // filtrar los que estan disponibles segun la tabla servicios extra sucursal
+            $total_s_e_por_sucursal  = App\servicioextrasucursales::all();
+            $servicios_extra_antes = [];
+            if(empty($cantidad_servicios_extra_ocupado)){
+                $servicios_extra_antes = $cantidad_servicios_extra_totales;
+            }else{
+                foreach ($cantidad_servicios_extra_totales as $servicio_total) {
+                    foreach($cantidad_servicios_extra_ocupado as $servicio_ocupado){
+                        if($servicio_total->servicioextra == $servicio_ocupado->servicioExtra){ // ya filtramos solo los servicios perteneciientes a a la sucursal
+                            if($servicio_total->cantidad > $servicio_ocupado->cantidad)
+                                array_push($servicios_extra_antes, $servicio);  //falta obtener los datos a proyectar de la tabla serviciosextra
+                        }
+                    }
+                }
             }
+            //return $servicios_extra_antes;
+            $servicios_e  = App\serviciosextras::all();
+            $servicios_extra = [];
+            //obtener los datos necesarios a proyectar        
+            foreach ($servicios_e as $extra_datos) {
+                foreach($servicios_extra_antes as $extra){   
+                    if($extra_datos->idserviciosextra == $extra->serviciosextra){
+                        array_push($servicios_extra, $extra_datos); 
+                    }
+                }
+            }
+
+            
         // cierre de consulta de servicios extra en las fechas indicadas
         return view('reservar_servicios_extra',
             compact('vehiculo','datos_reserva','servicios_extra'
@@ -225,6 +252,17 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         //actualizar tabla temporal de la reserva
     $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
     $datos_reserva->total = $totalf;
+    //convertir a cadena para poder alamcenar los datos FORMATO id_servicio-cantidad, id_servicio-cantidad,... 
+    $cadena_serv_extra = "";
+    if(is_array($servicios)){
+        if(count($servicios) > 0 ){
+            foreach ($servicios as $valor) {
+                $cadena_serv_extra = $cadena_serv_extra . $valor . "-" . "1" . ","; 
+            }
+        }
+    }
+    //
+    $datos_reserva->servicios_extra = $cadena_serv_extra;
     $datos_reserva->save();
 
         return view('reservar_realizar_pago',
@@ -234,13 +272,12 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
 public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta logeado
 
     $correo   = auth()->user()->email;
-    
 //el cliente no se esta creando al momento del registro
     $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
     $datos_reserva  = App\reserva_temp::findOrFail($reserva->id_reserva);
     $datos_reserva->id_cliente = $cliente->idCliente;//guardo el cliente en la temporal por si acaso
     $datos_reserva->save();
-
+    
     // Creamos el objeto para Reservacion
     $reservacion = new App\Reservacion;
 
@@ -249,6 +286,7 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $reservacion->motivo_visita = 'por rellenar';
     $reservacion->comentarios = 'por rellenar';
     $reservacion->total = $datos_reserva->total;
+    $reservacion->saldo = 0.0;
     $reservacion->save();
     // listo tenemos la reserva
 
@@ -256,10 +294,14 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $pago_reserva = new App\Pago_reservacion;
     $pago_reserva->id_reserva = $reservacion->id;
     $pago_reserva->paypal_datos = 'por rellenar';
+    $pago_reserva->mostrador_datos = 'por rellenar en mostrador';
+    $pago_reserva->garantia_datos = 'por rellenar en mostrador';
     $pago_reserva->fecha = date('Y\-m\-d H\:i\:s');
     $pago_reserva->total = $reservacion->total;
-    $pago_reserva->status = 'pendiente';
+    $pago_reserva->estatus = 'pendiente';
+    $pago_reserva->reservacion = 0;
     $pago_reserva->save();
+    
  // listo tenemos el pago de la rserva creado falata que el cliente pague
 // buscamos el vehiculo para proceder a crear el alquiler con todos los datos
     $vehiculo       = App\Vehiculo::findOrFail($datos_reserva->id_vehiculo);
@@ -281,9 +323,24 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $alquiler->expiracion_licencia = 'por rellenar';
     $alquiler->estatus = 'pendiente_recogida';
     $alquiler->save();
+
+    //rellenamos la tabla de alquileresservicioextra para llevar un control de los servicios eextra que tiene cada alquiler y cada reserva
+    //tenemos uq hacer un foreach para rellenar en caso de que haya mas de un servicio extra
+    $porciones = explode(",", $datos_reserva->servicios_extra);
+    foreach($porciones as $p){
+        $alquiler_serv_extra = new App\alquilerserviciosextra;
+        $alquiler_serv_extra->alquiler = $alquiler->id;
+        $alquiler_serv_extra->servicioExtra = $p;
+        $alquiler_serv_extra->save();
+    }
+    return $porciones;
+    
+
 //listo tenemos el alquler
     if($reserva->btnAccion == 'pago_total'){
         $monto = $pago_reserva->total;
+        $reservacion->saldo = 0.0;
+    $reservacion->save();
     }else{//volvemos a calcular los dias para SACAR EL ANTICIPO
     $devolucion = new DateTime($alquiler->fecha_devolucion);
     $salida     = new DateTime($alquiler->fecha_recogida);
@@ -294,7 +351,11 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     if($dias == 0)
         $dias = 1;
     $monto = $total / $dias;
+
+    $reservacion->saldo = $pago_reserva->total - $monto;
     }
+    $reservacion->save();
+
     return view('pago',compact('monto','alquiler'));
 }
     
