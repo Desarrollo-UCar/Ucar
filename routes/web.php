@@ -42,6 +42,7 @@ Route::get('prueba', function () {
     return view('prueba');
 })->name('prueba');
 
+
 //Route::get('gerente', 'AdminController@inicio')->name('home');
 
 //Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG');

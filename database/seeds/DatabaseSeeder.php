@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(cliente::class);
         $this->call(Alquiler::class);
         $this->call(Reservacion::class);
+        $this->call(nacionalidades::class);
     }
 }

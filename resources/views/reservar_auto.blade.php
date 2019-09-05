@@ -40,7 +40,7 @@
             <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <div class="post-slider">
                     <div class="flexslider">
-                            <img src="{{$vehiculo->foto}}" />
+                            <img src="{{ '/images/'.$vehiculo->foto}}"/>
                     </div>
                     <!-- end flexslider -->
                 </div>

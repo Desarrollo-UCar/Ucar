@@ -89,6 +89,7 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
         
     }
+    
 
     public function pflota(){
         $flota = App\Vehiculo::all();
@@ -275,7 +276,7 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         //actualizar tabla temporal de la reserva
     $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
     $datos_reserva->total = $totalf;
-    echo($totalf);
+    //echo($totalf);
     //convertir a cadena para poder alamcenar los datos FORMATO id_servicio-cantidad, id_servicio-cantidad,... 
     $cadena_serv_extra = "";
     if(is_array($servicios)){
