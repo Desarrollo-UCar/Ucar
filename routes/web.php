@@ -87,7 +87,9 @@ Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modi
 Route::get('modificarsucursal','SucursalController@modificar')->name('modificarsucursal');
 Route::post('clientemostrar', 'ClienteController@mostrar')->name('showcliente');
 Route::post('sucursalModificarDatos','SucursalController@ModificarDatos')->name('modificardatos');
-Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->name('modificarempleado');
+Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->name('datosempleado');
+Route::post('vehiculoModificar','VehiculoController@ModificarDatos')->name('datosvehiculo');
+Route::post('servicioModificar','ServiciosExtraController@ModificarDatos')->name('datoservicio');
 //});
 
 //Route::post('login','UsuariosController@login');
@@ -106,3 +108,7 @@ Route::resource('reservacion', 'ReservacionController');
 Route::get('/customer/print-pdf/{reservacion}', 'ReservacionController@printPDF')->name('contrato');
 Route::get('/customeer', 'ReservacionController@cambia_Vehiculo')->name('cambia_Vehiculo');
 Route::get('/reservacion/{reservacion}', 'ReservacionController@garantia')->name('garantia');
+
+Route::get('/detalle/{reservacion}', 'ReservacionController@show')->name('reservacion');
+Route::get('/conductor','ReservacionController@registra_conductor')->name('conductor');
+Route::get('/recibir','ReservacionController@recibe_vehiculo')->name('recibir');

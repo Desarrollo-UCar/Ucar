@@ -65,46 +65,53 @@ class ReservacionController extends Controller
     {
 
         $carbon = new \Carbon\Carbon();
-
+        //return response()->json($reservacion);
         //    
         $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
+        //return response()->json($cliente);
         $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+        //return response()->json($alquiler);
         $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
         $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
         $edad = $carbon->parse( $newDate)->age; // 1990-10-25
         //dump($edad);
         //$reservacion = Reservacion::where('id','=',$id)->first();
-        //return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
+    ///return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
 
         
         $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
         $sucursal = $sucur->sucursal;
-    $fecha_i = $alquiler->fecha_recogida;
-    $fecha_f = $alquiler->fecha_devolucion;
-  $disponibles = DB::select('SELECT * FROM vehiculos 
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.idvehiculo NOT IN (
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  UNION
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND  alquilers.fecha_recogida <= ?
-  AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+        $fecha_i = $alquiler->fecha_recogida;
+        $fecha_f = $alquiler->fecha_devolucion;
+        $disponibles = DB::select('SELECT * FROM vehiculos 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.idvehiculo NOT IN (
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        UNION
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND  alquilers.fecha_recogida <= ?
+        AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
 
 
-        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles'));
+        $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get();
+
+        $servicios = App\alquilerserviciosextra::where('alquiler','=',$alquiler->id)->
+        join('serviciosextras','idserviciosextra','=','alquilerserviciosextras.servicioExtra')->get();
+
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos','servicios'));
     }
 
     /**
@@ -168,34 +175,37 @@ class ReservacionController extends Controller
         $alquiler->estatus = 'cancelado';
         $alquiler->save();
 
+        return back()->with('message','Operation Successful !');
+
         $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
         $sucursal = $sucur->sucursal;
-    $fecha_i = $alquiler->fecha_recogida;
-    $fecha_f = $alquiler->fecha_devolucion;
-  $disponibles = DB::select('SELECT * FROM vehiculos 
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.idvehiculo NOT IN (
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  UNION
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND  alquilers.fecha_recogida <= ?
-  AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+        $fecha_i = $alquiler->fecha_recogida;
+        $fecha_f = $alquiler->fecha_devolucion;
+        $disponibles = DB::select('SELECT * FROM vehiculos 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.idvehiculo NOT IN (
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        UNION
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+         AND  alquilers.fecha_recogida <= ?
+        AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
 
 
-        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles'));
+        $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get() ;
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos'));
 
 
     
@@ -219,6 +229,8 @@ class ReservacionController extends Controller
        //return response()->json($reservacion);
 
        $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+       $alquiler->estatus = 'en curso';
+       $alquiler->save();
 
        $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
 
@@ -263,7 +275,7 @@ class ReservacionController extends Controller
         $reservacion->saldo = '0';
         $reservacion->save();
 
-
+        return back()->with('message','Operation Successful !');
         
         $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
         $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
@@ -274,45 +286,52 @@ class ReservacionController extends Controller
 
         $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
         $sucursal = $sucur->sucursal;
-    $fecha_i = $alquiler->fecha_recogida;
-    $fecha_f = $alquiler->fecha_devolucion;
-  $disponibles = DB::select('SELECT * FROM vehiculos 
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND vehiculos.idvehiculo NOT IN (
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  UNION
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND  alquilers.fecha_recogida <= ?
-  AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+        $fecha_i = $alquiler->fecha_recogida;
+         $fecha_f = $alquiler->fecha_devolucion;
+        $disponibles = DB::select('SELECT * FROM vehiculos 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND vehiculos.idvehiculo NOT IN (
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        UNION
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND  alquilers.fecha_recogida <= ?
+        AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
     
     //return response()->json($disponibles);
 
-        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles'));
+    
+    $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get() ;
 
-
-
-
-        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo', 'cliente','edad'));
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos'));
     }
 
     public function garantia(Reservacion $reservacion)
-    {  
+    {        
+         $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+ 
+        $servicios = App\alquilerserviciosextra::where('alquiler','=',$alquiler->id)->
+        join('serviciosextras','idserviciosextra','=','alquilerserviciosextras.servicioExtra')->get();
+        
+        $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get() ;;
+
         $carbon = new \Carbon\Carbon();
+
+
     
         $pago = new App\Pago_reservacion;
         $pago->total = $reservacion->saldo;
@@ -325,7 +344,8 @@ class ReservacionController extends Controller
         $pago->reservacion = $reservacion->id;
         $pago->estatus= 'pagado';
         $pago->save();
-            
+        return back()->with('message','Operation Successful !');
+
         $reservacion->saldo = '0';
         $reservacion->save();
 
@@ -340,31 +360,31 @@ class ReservacionController extends Controller
 
         $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
         $sucursal = $sucur->sucursal;
-    $fecha_i = $alquiler->fecha_recogida;
-    $fecha_f = $alquiler->fecha_devolucion;
-  $disponibles = DB::select('SELECT * FROM vehiculos 
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND vehiculos.idvehiculo NOT IN (
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  UNION
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND  alquilers.fecha_recogida <= ?
-  AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+        $fecha_i = $alquiler->fecha_recogida;
+        $fecha_f = $alquiler->fecha_devolucion;
+        $disponibles = DB::select('SELECT * FROM vehiculos 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND vehiculos.idvehiculo NOT IN (
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        UNION
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND  alquilers.fecha_recogida <= ?
+        AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
     
     //return response()->json($disponibles);
 
@@ -397,6 +417,8 @@ class ReservacionController extends Controller
         $alquiler->id_vehiculo = $vehiculo_cambio->idvehiculo;
          $alquiler->save();
 
+         return back()->with('message','Operation Successful !');
+
          $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
 
         $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
@@ -408,31 +430,31 @@ class ReservacionController extends Controller
 
         $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
         $sucursal = $sucur->sucursal;
-    $fecha_i = $alquiler->fecha_recogida;
-    $fecha_f = $alquiler->fecha_devolucion;
-  $disponibles = DB::select('SELECT * FROM vehiculos 
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND vehiculos.idvehiculo NOT IN (
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-  UNION
-  SELECT vehiculos.idvehiculo FROM vehiculos  
-  INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-  INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-  WHERE vehiculosucursales.sucursal=?
-  AND vehiculos.estatus ="disponible"
-  AND vehiculosucursales.status ="ACTIVO"
-  AND  alquilers.fecha_recogida <= ?
-  AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+        $fecha_i = $alquiler->fecha_recogida;
+        $fecha_f = $alquiler->fecha_devolucion;
+        $disponibles = DB::select('SELECT * FROM vehiculos 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND vehiculos.idvehiculo NOT IN (
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        UNION
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND  alquilers.fecha_recogida <= ?
+        AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
     
     //return response()->json($disponibles);
 
@@ -445,6 +467,86 @@ class ReservacionController extends Controller
 
 
     }
+
+    public function registra_conductor(Request $request){
+   
+            $alquiler = Alquiler::where('id','=',$request['alquiler'])->first();
+
+            $alquiler->num_licencia = $request['numero'];
+            $alquiler->nombreConductor = $request['nombre'];
+            $alquiler->expedicion_licencia = $request['fecha_e'];
+            $alquiler->expiracion_licencia = $request['fecha_c'];
+            $alquiler->save();
+            return back()->with('message','Operation Successful !');
+            $carbon = new \Carbon\Carbon();
+            //return response()->json($reservacion);
+            $reservacion = Reservacion::where('id','=',$request['reservacion']);
+            //    
+            $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
+            //return response()->json($cliente);
+            $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+            //return response()->json($alquiler);
+            $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
+            $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
+            $edad = $carbon->parse( $newDate)->age; // 1990-10-25
+            //dump($edad);
+            //$reservacion = Reservacion::where('id','=',$id)->first();
+        ///return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
+    
+            
+            $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
+            $sucursal = $sucur->sucursal;
+            $fecha_i = $alquiler->fecha_recogida;
+            $fecha_f = $alquiler->fecha_devolucion;
+            $disponibles = DB::select('SELECT * FROM vehiculos 
+            INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+            WHERE vehiculosucursales.sucursal=?
+            AND vehiculos.idvehiculo NOT IN (
+            SELECT vehiculos.idvehiculo FROM vehiculos  
+            INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+            INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+            WHERE vehiculosucursales.sucursal=?
+            AND vehiculos.estatus ="disponible"
+            AND vehiculosucursales.status ="ACTIVO"
+            AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+            OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+            UNION
+            SELECT vehiculos.idvehiculo FROM vehiculos  
+            INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+            INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+            WHERE vehiculosucursales.sucursal=?
+            AND vehiculos.estatus ="disponible"
+            AND vehiculosucursales.status ="ACTIVO"
+            AND  alquilers.fecha_recogida <= ?
+            AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+    
+    
+            $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get();
+    
+            $servicios = App\alquilerserviciosextra::where('alquiler','=',$alquiler->id)->
+            join('serviciosextras','idserviciosextra','=','alquilerserviciosextras.servicioExtra')->get();
+    
+            return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos','servicios'));
+
+          return response()->json($alquiler);
+    }
  
+    public function recibe_vehiculo(Request $request){
+        $alquiler = Alquiler::where('id','=',$request['alquiler'])->first();
+        $alquiler->estatus = 'terminado';
+        $alquiler->save();
+
+        $reservacion = Reservacion::where('id','=',$request['reservacion']);
+        $reservacion->comentarios = $request['comentario'];
+        $reservacion->save();
+
+        $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
+        $vehiculo->kilometraje = $request['km'];
+        $vehiculo->save();
+
+        return back()->with('message','Operation Successful !');
+
+
+    }
 
     }

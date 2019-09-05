@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App;
 use DB;
 use DateTime;
+use Mail;
 class PagesController extends Controller
 {
     public function inicio(){//PRUEBA
@@ -379,7 +380,7 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     }
     $reservacion->save();
 
-    Mail::to($correo)->send(new EnviarEmail($reservacion));
+    Mail::to($correo)->send(new App\Mail\Enviar($reservacion));
 
     return view('pago',compact('monto','alquiler'));
 }

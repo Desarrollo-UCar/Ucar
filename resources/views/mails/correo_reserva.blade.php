@@ -18,9 +18,7 @@
         <li>Latitud:</li>
         <li>Longitud: </li>
         <li>
-            <a href="https://www.google.com/maps/dir/">
-                Ver en Google Maps
-            </a>
+            
         </li>
     </ul>
 </body>

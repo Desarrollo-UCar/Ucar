@@ -7,18 +7,17 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EnviarEmail extends Mailable
+class Enviar extends Mailable
 {
     use Queueable, SerializesModels;
-    public $enviar;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($enviar)
+    public function __construct()
     {
-        $this->enviar = $enviar;
+      
     }
 
     /**
@@ -26,9 +25,8 @@ class EnviarEmail extends Mailable
      *
      * @return $this
      */
-    public function build(){
+    public function build()
+    {
         return $this->view('mails.correo_reserva');
     }
-
-    }
-
+}
