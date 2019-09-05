@@ -79,6 +79,7 @@ class PagesController extends Controller
         //return $datos_reserva;
         return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));        
     }
+    
 
     public function pflota(){
         $flota = App\Vehiculo::all();
@@ -255,6 +256,7 @@ class PagesController extends Controller
         //actualizar tabla temporal de la reserva
     $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
     $datos_reserva->total = $totalf;
+    //echo($totalf);
     //convertir a cadena para poder alamcenar los datos FORMATO id_servicio-cantidad, id_servicio-cantidad,... 
     $cadena_serv_extra = "";
     if(is_array($servicios)){
