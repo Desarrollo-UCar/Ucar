@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App;
 use DB;
@@ -26,68 +24,60 @@ class PagesController extends Controller
             return back()->with('mensaje', 'No puede tener una hora de devolución menor la de recogida!');
         if($R == date('Y\-m\-d') & $hora_de_recogida <= $hora_actual)
             return redirect()->back()->with('mensaje', 'Hora de recogida expiradal!');
-        // buscamos el id de sucursal que hace referencia el lugar de recogida
+        if($R == $D & $hora_de_recogida == $hora_de_devolucion)
+            return redirect()->back()->with('mensaje', 'Dias y Horas Iguales!');
+// buscamos el id de sucursal que hace referencia el lugar de recogida
         $sucursales = App\Sucursal::all();
         $sucursal = 1;
         foreach ($sucursales as $su) {
             if($su->nombre == $request->lugarrecogida)
                 $sucursal = $su->idsucursal; 
         }
-        
-        // Creamos el objeto
+// Creamos el objeto
         $reserva_temp = new App\reserva_temp;
-        // Seteamos las propiedades
+// Seteamos las propiedades
         $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
         $reserva_temp->lugar_recogida = $sucursal;
-        
         $reserva_temp->fecha_recogida = $request->fechaRecogida;
         $reserva_temp->hora_recogida = $request->horaRecogida;
-
         $reserva_temp->lugar_devolucion = $sucursal;
-
         $reserva_temp->fecha_devolucion = $request->fechaDevolucion;
         $reserva_temp->hora_devolucion = $request->horaDevolucion;
-
         $reserva_temp->codigo_descuento =  'en_construccion';
         $reserva_temp->tipo_vehiculo= 'en construccion';
         $reserva_temp->id_vehiculo = 0;
         $reserva_temp->total = 0;
         $reserva_temp->servicios_extra = 'ee';
         $reserva_temp->id_cliente = 0;
-        // Guardamos en la base de datos (equivalente al flush de Doctrine)
+// Guardamos en la base de datos (equivalente al flush de Doctrine)
         $reserva_temp->save();
-        
-//EJECUTAR PROCESO DE BUSQUEDA DE DISPONIBLES
 // consulta a los vehiculos disponibles
-$fecha_i = $request->fechaRecogida;
-$fecha_f = $request->fechaDevolucion;
-$vehiculos_disponibles = DB::select('SELECT * FROM vehiculos 
-INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-WHERE vehiculosucursales.sucursal=?
-AND vehiculos.idvehiculo NOT IN (
-SELECT vehiculos.idvehiculo FROM vehiculos  
-INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-WHERE vehiculosucursales.sucursal=?
-AND vehiculos.estatus ="disponible"
-AND vehiculosucursales.status ="ACTIVO"
-AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-UNION
-SELECT vehiculos.idvehiculo FROM vehiculos  
-INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-WHERE vehiculosucursales.sucursal=2
-AND vehiculos.estatus ="disponible"
-AND vehiculosucursales.status ="ACTIVO"
-AND  alquilers.fecha_recogida <= ?
-AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
-
-        //
+    $fecha_i = $request->fechaRecogida;
+    $fecha_f = $request->fechaDevolucion;
+    $vehiculos_disponibles = DB::select('SELECT * FROM vehiculos 
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.idvehiculo NOT IN (
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="disponible"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    UNION
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=2
+    AND vehiculos.estatus ="disponible"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND  alquilers.fecha_recogida <= ?
+    AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //return $datos_reserva;
-        return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));
-        
+        return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));        
     }
 
     public function pflota(){
@@ -112,17 +102,9 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         return view('sucursales');
     }
 
-    public function sucursal_Puerto_Escondido(){
-        return view('sucursal_Puerto_Escondido');
-    }
-
-    public function sucursal_Ixtepec(){
-        return view('sucursal_Ixtepec');
-    }
-
-    public function sucursal_Istmo(){
-        return view('sucursal_Istmo');
-    }
+    public function sucursal_Puerto_Escondido(){return view('sucursal_Puerto_Escondido');}
+    public function sucursal_Ixtepec(){return view('sucursal_Ixtepec');}
+    public function sucursal_Istmo(){return view('sucursal_Istmo');}
 
     public function renta_auto(){
         return view('renta_auto');
@@ -236,9 +218,7 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
 
             
         // cierre de consulta de servicios extra en las fechas indicadas
-        return view('reservar_servicios_extra',
-            compact('vehiculo','datos_reserva','servicios_extra'
-                ));
+        return view('reservar_servicios_extra',compact('vehiculo','datos_reserva','servicios_extra'));
     }
 
     public function reservar_realizar_pago(Request $reserva){
@@ -275,7 +255,6 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
         //actualizar tabla temporal de la reserva
     $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
     $datos_reserva->total = $totalf;
-    echo($totalf);
     //convertir a cadena para poder alamcenar los datos FORMATO id_servicio-cantidad, id_servicio-cantidad,... 
     $cadena_serv_extra = "";
     if(is_array($servicios)){
@@ -285,17 +264,13 @@ AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fe
             }
         }
     }
-    //
-    //echo($cadena_serv_extra);
     $datos_reserva->servicios_extra = $cadena_serv_extra;
     $datos_reserva->save();
-
         return view('reservar_realizar_pago',
             compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total'));
     }
 
 public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta logeado
-
     $correo   = auth()->user()->email;
 //el cliente no se esta creando al momento del registro
     $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
@@ -305,7 +280,6 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     
     // Creamos el objeto para Reservacion
     $reservacion = new App\Reservacion;
-
     $reservacion->id_cliente = $cliente->idCliente;
     $reservacion->fecha_reservacion = date('Y\-m\-d H\:i\:s');
     $reservacion->motivo_visita = 'por rellenar';
@@ -357,31 +331,49 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     foreach($porciones as $p){
         $alquiler_serv_extra = new App\alquilerserviciosextra;
         $alquiler_serv_extra->alquiler = $alquiler->id;
-        $alquiler_serv_extra->servicioExtra = $p;
+        $alquiler_serv_extra->servicioExtra = intval($p);
         $alquiler_serv_extra->save();
     }
 //listo tenemos el alquler
     if($reserva->btnAccion == 'pago_total'){
         $monto = $pago_reserva->total;
         $reservacion->saldo = 0.0;
-    $reservacion->save();
+        $reservacion->save();
     }else{//volvemos a calcular los dias para SACAR EL ANTICIPO
-    $devolucion = new DateTime($alquiler->fecha_devolucion);
-    $salida     = new DateTime($alquiler->fecha_recogida);
-    $diferencia = $salida->diff($devolucion);
-    $dias = $diferencia->format('%a');
-    $total = $pago_reserva->total;
-
-    if($dias == 0)
-        $dias = 1;
-    $monto = $total / $dias;
-
-    $reservacion->saldo = $pago_reserva->total - $monto;
+        $devolucion = new DateTime($alquiler->fecha_devolucion);
+        $salida     = new DateTime($alquiler->fecha_recogida);
+        $diferencia = $salida->diff($devolucion);
+        $dias = $diferencia->format('%a');
+        $total = $pago_reserva->total;
+        if($dias == 0)
+            $dias = 1;
+        $monto = $total / $dias;
+        $reservacion->saldo = $pago_reserva->total - $monto;
     }
     $reservacion->save();
-
-    Mail::to($correo)->send(new App\Mail\Enviar($reservacion));
-
+    //obtener los datos de todas las reservaciones del cliente
+    $reserva_correo = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
+    reservacions.saldo, sucursals.nombre, alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
+    IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,
+    1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+    vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,
+    vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,
+    vehiculos.foto
+    FROM reservacions
+    INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
+    inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
+    inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
+    INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
+    where reservacions.id = ?',[$reservacion->id]);
+    //obtenemos los datos de los servicios extra
+    $serv_extra_correo = DB::select('SELECT alquiler,serviciosextras.idserviciosextra,serviciosextras.nombre,serviciosextras.precio
+    FROM alquilerserviciosextras
+    INNER JOIN serviciosextras ON serviciosextras.idserviciosextra = alquilerserviciosextras.servicioExtra
+    INNER JOIN alquilers ON alquilerserviciosextras.alquiler = alquilers.id
+    INNER JOIN reservacions ON reservacions.id = alquilers.id_reservacion
+    INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE reservacions.id = ?',[$reservacion->id]);
+//return $reserva_correo;
+    Mail::to($correo)->send(new App\Mail\Enviar($reserva_correo,$serv_extra_correo));
     return view('pago',compact('monto','alquiler'));
 }
     
