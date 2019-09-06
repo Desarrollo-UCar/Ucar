@@ -80,51 +80,9 @@ class PagesController extends Controller
         return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));        
     }
     
-
     public function pflota(){
         $flota = App\Vehiculo::all();
         return view('flota',compact('flota'));
-    }
-
-
-    public function reservacion(){
-        return view('reservacion');
-    }
-
-    public function inicio_sesion_cliente(){
-        return view('inicio_sesion_cliente');
-    }
-
-    public function servicios(){
-        return view('servicios');
-    }
-
-    public function sucursales(){
-        return view('sucursales');
-    }
-
-    public function sucursal_Puerto_Escondido(){return view('sucursal_Puerto_Escondido');}
-    public function sucursal_Ixtepec(){return view('sucursal_Ixtepec');}
-    public function sucursal_Istmo(){return view('sucursal_Istmo');}
-
-    public function renta_auto(){
-        return view('renta_auto');
-    }
-
-    public function renta_traslado(){
-        return view('renta_traslado');
-    }
-
-    public function renta_flotilla(){
-        return view('renta_flotilla');
-    }
-
-    public function modificar_renta(){
-        return view('modificar_renta');
-    }
-
-    public function en_construccion(){
-        return view('en_construccion');
     }
 
     public function dashboard_cliente(){
@@ -374,13 +332,11 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     INNER JOIN alquilers ON alquilerserviciosextras.alquiler = alquilers.id
     INNER JOIN reservacions ON reservacions.id = alquilers.id_reservacion
     INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE reservacions.id = ?',[$reservacion->id]);
-//return $reserva_correo;
     //Mail::to($correo)->send(new App\Mail\Enviar($reserva_correo,$serv_extra_correo));
     $reservacion = $reserva_correo;
     $serv_extra = $serv_extra_correo;
     $asunto = 'Confirmacion de Reserva';
     //return view('mails.correo_reserva', compact('reservacion','serv_extra'));
-
 //////-------------------------
 Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
     $message->from('ucardesarollo@gmail.com', 'Ucar');
@@ -388,86 +344,10 @@ Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function 
     foreach($reservacion as $reserva){
         $message->attach($reserva->foto);
     }
-    
-
 });
 /////////-------------------------
     return view('pago',compact('monto','alquiler'));
 }
-    
-
-//parte de la reserva de un traslado
-
-
-    public function renta_traslado_vehiculo(Request $request){  
-        //estimar fecha y hora de llegada
-        $fecha_estimada = $request->fecha_salida; 
-        $hora_estimada =  $request->hora_salida;
-         // Creamos el objeto traslado_temp
-         $traslado_temp = new App\traslado_temp;
-         // Seteamos las propiedades de la tabla traslado_temp
-         $traslado_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
-        
-         $traslado_temp->lugar_salida = $request->lugar_salida;
-         $traslado_temp->fecha_salida = $request->fecha_salida;
-         $traslado_temp->hora_salida = $request->hora_salida;
-
-         $traslado_temp->lugar_llegada = $request->lugar_llegada;
-         $traslado_temp->fecha_llegada_estimada = $fecha_estimada;
-         $traslado_temp->hora_llegada_estimada = $hora_estimada;
-         $traslado_temp->id_vehiculo = 0;
-         $traslado_temp->km_recorridos = $request->km_recorridos;
-         $traslado_temp->tiempo_estimado = $request->tiempo_estimado;
-
-        $traslado_temp->precio_litro_gasolina = 0;
-        $traslado_temp->litros_gasolina = 0;
-        $traslado_temp->monto_gasolina = 0;
-        $traslado_temp->num_choferes = 1;
-        $traslado_temp->sueldo_chofer = 0;
-        $traslado_temp->total = 0;
-         // Guardamos en la base de datos (equivalente al flush de Doctrine)
-         $traslado_temp->save();
-        //Consultas a las bases de datos flota disponible en las fechas dadas y devolucion de los datos de la reserva de un traslado
-         $vehiculos_disponibles  = App\Vehiculo::all();
-         $datos_reserva_traslado = App\traslado_temp::findOrFail($traslado_temp->id);
-        return view('renta_traslado_vehiculo',compact('vehiculos_disponibles', 'datos_reserva_traslado'));
-    }
-
-    public function renta_traslado_datos(Request $reserva){
-        $id_vehiculo    = $reserva['id_vehiculo'];
-        //return $id_vehiculo;
-        $id_reserva     = $reserva['id_reserva_traslado'];
-   
-        $vehiculo       = App\Vehiculo::findOrFail($id_vehiculo);
-        $datos_reserva_traslado  = App\traslado_temp::findOrFail($id_reserva);
-        $chofer = App\serviciosextras::findOrFail(3);
-        $datos_reserva_traslado->id_vehiculo = $id_vehiculo;
-        //hacer el save
-        ///------
-        //calcular los costos del traslado
-        $km = ($datos_reserva_traslado->km_recorridos)/1000;
-        $hrs = ($datos_reserva_traslado->tiempo_estimado)/3600;
-        $dias = $hrs/24;
-        $precio_gasolina = 20.6; // checar si se solicita al cliente
-        $litros_gasolina = $km/$vehiculo->rendimiento;
-        $monto_gasolina = $litros_gasolina * $precio_gasolina;
-        $num_choferes = ($km>400) ? 2 : 1;
-        $alquiler_vehiculo = $dias * $vehiculo->precio;
-        $sueldo_choferes = ($num_choferes * $chofer->precio) * $dias;
-        $total = ($monto_gasolina + $alquiler_vehiculo + $sueldo_choferes) * 2;
-
-        $datos_reserva_traslado->precio_litro_gasolina = $precio_gasolina;
-        $datos_reserva_traslado->litros_gasolina = $litros_gasolina;
-        $datos_reserva_traslado->monto_gasolina = $monto_gasolina;
-        $datos_reserva_traslado->num_choferes = $num_choferes;
-        $datos_reserva_traslado->sueldo_chofer = $sueldo_choferes;
-        $datos_reserva_traslado->total = $total;
-        $datos_reserva_traslado->save();
-        return view('renta_traslado_datos',compact('vehiculo','datos_reserva_traslado'));
-    }
-
-    public function solicita_informacion_traslado(Request $reserva){
-        }
 
     public function validar_logeo(Request $reserva){
         $r     = $reserva['id_reserva'];

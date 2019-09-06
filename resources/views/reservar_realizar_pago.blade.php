@@ -61,7 +61,7 @@
                     <li class="dropdown">
                       <a href="#">Sucursales <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ route('sucursal_Puerto_Escondido') }}">Puerto Escondido</a></li>
+                        <li><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido</a></li>
                         <li><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto Ixtepec</a></li>
                         <li><a href="{{ route('sucursal_Istmo') }}">Istmo</a></li>
                       </ul>
@@ -480,7 +480,7 @@
 <!-- Grid column -->
 <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
     <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
-    <p><a href="{{ route('sucursal_Puerto_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
+    <p><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
     <p><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto, Ixtepec, Oaxaca, +52 954 149 0304 </a></p>
     <p><a href="{{ route('sucursal_Istmo') }}">Istmo, Oaxaca, +52 954 149 0304 </a></p>
 </div>

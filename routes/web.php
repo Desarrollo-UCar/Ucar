@@ -1,47 +1,34 @@
 <?php
-
 Auth::routes(); 
-
-Route::get('register', function () {
-    return view('/auth/register');
-})->name('register')->middleware('guest');
-
-Route::get('login', function () {
-    return view('/auth/login');
-})->name('login')->middleware('guest');
-
-Route::get('/','PagesController@inicio')->name('index') ;
-Route::get('flota','PagesController@pflota')->name('flota');
-Route::get('Reservacion','PagesController@reservacion')->name('reservacion') ;
-Route::get('inicio_sesion_cliente','PagesController@inicio_sesion_cliente')->name('inicio_sesion_cliente') ;
-Route::get('servicios', 'PagesController@servicios')->name('servicios') ;
-Route::get('sucursales', 'PagesController@sucursales')->name('sucursales') ;
-Route::get('sucursal_Puerto_Escondido', 'PagesController@sucursal_Puerto_Escondido')->name('sucursal_Puerto_Escondido') ;
-Route::get('sucursal_Ixtepec', 'PagesController@sucursal_Ixtepec')->name('sucursal_Ixtepec') ;
-Route::get('sucursal_Istmo', 'PagesController@sucursal_Istmo')->name('sucursal_Istmo') ;
-Route::get('renta_auto', 'PagesController@renta_auto')->name('renta_auto') ;
-Route::get('renta_motoneta', 'PagesController@renta_motoneta')->name('renta_motoneta') ;
-Route::get('renta_flotilla', 'PagesController@renta_flotilla')->name('renta_flotilla') ;
-Route::get('modificar_renta', 'PagesController@modificar_renta')->name('modificar_renta') ;
-Route::post('postFormularioindex', 'PagesController@postFormularioindex')->name('postFormularioindex') ;
-Route::get('reservar_servicios_extra', 'PagesController@reservar_servicios_extra')->name('reservar_servicios_extra') ;
-Route::post('reservar_realizar_pago', 'PagesController@reservar_realizar_pago')->name('reservar_realizar_pago') ;
-Route::get('renta_traslado', 'PagesController@renta_traslado')->name('renta_traslado') ;
-Route::post('renta_traslado_vehiculo', 'PagesController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
-Route::get('renta_traslado_datos', 'PagesController@renta_traslado_datos')->name('renta_traslado_datos') ;
-Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacion_traslado')->name('solicita_informacion_traslado') ;
-Route::get('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');//estamos en esta probando el envio por get desde el formulario
-Route::post('pago_paypal', 'PagesController@pago_paypal')->name('pago_paypal')->middleware('auth');
-Route::post('correo_reserva', 'PagesController@correo_reserva')->name('correo_reserva')->middleware('auth');
-
-Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion');//ruta para todas las que aun no estan
-Route::get('dashboard_cliente', 'PagesController@dashboard_cliente')->name('dashboard_cliente')->middleware('auth') ;
-Route::get('terminos_y_condiciones', 'PagesController@terminos_y_condiciones')->name('terminos_y_condiciones') ;
-//______________________________________
-
-Route::get('prueba', function () {
-    return view('prueba');
-})->name('prueba');
+Route::get('register', function () {return view('/auth/register');})->name('register')->middleware('guest');
+Route::get('login', function () {return view('/auth/login');})->name('login')->middleware('guest');
+//routes para PagesController
+Route::get('/',                       'PagesController@inicio')->                  name('index') ;
+Route::get('flota',                   'PagesController@pflota')->                  name('flota');
+Route::post('postFormularioindex',    'PagesController@postFormularioindex')->     name('postFormularioindex') ;
+Route::get('reservar_servicios_extra','PagesController@reservar_servicios_extra')->name('reservar_servicios_extra') ;
+Route::post('reservar_realizar_pago', 'PagesController@reservar_realizar_pago')->  name('reservar_realizar_pago') ;
+Route::get('validar_logeo',           'PagesController@validar_logeo')->           name('validar_logeo')->middleware('auth');
+Route::post('pago_paypal',            'PagesController@pago_paypal')->             name('pago_paypal')->middleware('auth');
+Route::post('correo_reserva',         'PagesController@correo_reserva')->          name('correo_reserva')->middleware('auth');
+Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->       name('dashboard_cliente')->middleware('auth') ;
+Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
+///routes para traslado controller
+Route::post('renta_traslado_vehiculo','TrasladoController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
+Route::get('renta_traslado_datos',    'TrasladoController@renta_traslado_datos')-> name('renta_traslado_datos') ;
+Route::get('solicita_info_traslado',  'TrasladoController@solicita_info_traslado')->name('solicita_info_traslado') ;
+//routes para SoloVistasController
+Route::get('Reservacion',             'SoloVistasController@reservacion')->         name('reservacion') ;
+Route::get('servicios',               'SoloVistasController@servicios')->            name('servicios') ;
+Route::get('sucursales',              'SoloVistasController@sucursales')->           name('sucursales') ;
+Route::get('sucursal_P_Escondido',    'SoloVistasController@sucursal_P_Escondido')->name('sucursal_P_Escondido') ;
+Route::get('sucursal_Ixtepec',        'SoloVistasController@sucursal_Ixtepec')->     name('sucursal_Ixtepec') ;
+Route::get('sucursal_Istmo',          'SoloVistasController@sucursal_Istmo')->       name('sucursal_Istmo') ;
+Route::get('renta_flotilla',          'SoloVistasController@renta_flotilla')->       name('renta_flotilla') ;
+Route::get('en_construccion',         'SoloVistasController@en_construccion')->      name('en_construccion');//ruta para todas las que aun no estan
+Route::get('renta_traslado',          'SoloVistasController@renta_traslado')->       name('renta_traslado') ;
+////----------------------
+Route::get('prueba', function () {return view('prueba');})->name('prueba');
 
 
 //Route::get('gerente', 'AdminController@inicio')->name('home');
