@@ -19,7 +19,7 @@
                 <li class="all active"><a href="#">Todos</a></li>
                 <li class="compacto"><a href="#" title="">Compactos</a></li>
                 <li class="camioneta"><a href="#" title="">Camionetas</a></li>
-                <li class="suburban"><a href="#" title="">Suburbans</a></li>
+                <li class="suburban"><a href="#" title="">Vans</a></li>
                 <li class="motoneta"><a href="#" title="">Motonetas</a></li>
               </ul>
           </div>

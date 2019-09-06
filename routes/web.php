@@ -32,6 +32,7 @@ Route::get('renta_traslado_datos', 'PagesController@renta_traslado_datos')->name
 Route::get('solicita_informacion_traslado', 'PagesController@solicita_informacion_traslado')->name('solicita_informacion_traslado') ;
 Route::get('validar_logeo', 'PagesController@validar_logeo')->name('validar_logeo')->middleware('auth');//estamos en esta probando el envio por get desde el formulario
 Route::post('pago_paypal', 'PagesController@pago_paypal')->name('pago_paypal')->middleware('auth');
+Route::post('correo_reserva', 'PagesController@correo_reserva')->name('correo_reserva')->middleware('auth');
 
 Route::get('en_construccion', 'PagesController@en_construccion')->name('en_construccion');//ruta para todas las que aun no estan
 Route::get('dashboard_cliente', 'PagesController@dashboard_cliente')->name('dashboard_cliente')->middleware('auth') ;
