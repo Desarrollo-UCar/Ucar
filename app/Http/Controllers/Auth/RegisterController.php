@@ -80,6 +80,8 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data){
+
+        return response()->json(['success'=>'esta es una prueba']);
         //crear cliente
 // Creamos el objeto para Cliente
         $cliente = new App\Cliente;
