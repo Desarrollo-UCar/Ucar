@@ -375,7 +375,23 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     INNER JOIN reservacions ON reservacions.id = alquilers.id_reservacion
     INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE reservacions.id = ?',[$reservacion->id]);
 //return $reserva_correo;
-    Mail::to($correo)->send(new App\Mail\Enviar($reserva_correo,$serv_extra_correo));
+    //Mail::to($correo)->send(new App\Mail\Enviar($reserva_correo,$serv_extra_correo));
+    $reservacion = $reserva_correo;
+    $serv_extra = $serv_extra_correo;
+    $asunto = 'Confirmacion de Reserva';
+    //return view('mails.correo_reserva', compact('reservacion','serv_extra'));
+
+//////-------------------------
+Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
+    $message->from('ucardesarollo@gmail.com', 'Ucar');
+    $message->to($correo)->subject($asunto);
+    foreach($reservacion as $reserva){
+        $message->attach($reserva->foto);
+    }
+    
+
+});
+/////////-------------------------
     return view('pago',compact('monto','alquiler'));
 }
     
@@ -466,5 +482,4 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
         $anticipo = $datos_reserva->total / $dias;
         return view('seleccionar_forma_de_pago',compact('datos_reserva','anticipo'));
     }
-
 }
