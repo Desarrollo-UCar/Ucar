@@ -64,6 +64,7 @@ class UsuariosController extends Controller
         return redirect()->route('user.create');
     
         //return $request;
-    }   
+    }
+    
 }
 

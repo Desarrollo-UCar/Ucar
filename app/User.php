@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Role;
+use App\Empleado;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -70,5 +71,19 @@ public function hasRole($role)
     }
     return false;
 }
+
+public function nombre(){
+   $empleado = Empleado::where('correo','=',$this->email)->first();
+   return $empleado->nombres;
+
+}
+
+public function rol(){
+    $empleado = User::join('role_user','role_user.user_id','=','users.id')
+    ->join('roles','role_user.role_id','=','roles.id')
+    ->where('email','=',$this->email)->first();
+    return $empleado->description;
+ 
+ }
 
 }

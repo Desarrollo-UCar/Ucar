@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Empleado;
+use App\EmpleadoSucursal;
 use App\Vehiculo;
 use App\Sucursal;
 use App\VehiculoSucursales;
@@ -13,20 +14,47 @@ use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 class VehiculoController extends Controller
 {
   
-    public function index()
+    public function index(request $request)
     {
+        if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            $vehiculo = Vehiculo::join('vehiculosucursales','idvehiculo','=','vehiculosucursales.vehiculo')
+            ->join('sucursals','vehiculosucursales.sucursal','=','sucursals.idsucursal')
+            ->select('vehiculos.*','vehiculosucursales.*','sucursals.*')
+            ->where('vehiculosucursales.sucursal','=',$sucursale->sucursal)
+            ->get();
+            return view('gerente.vehiculo.ver_vehiculo',compact('vehiculo'));
+
+        }
+
+
         $vehiculo = Vehiculo::join('vehiculosucursales','idvehiculo','=','vehiculosucursales.vehiculo')
         ->join('sucursals','vehiculosucursales.sucursal','=','sucursals.idsucursal')
-        ->select('vehiculos.*','vehiculosucursales.*','sucursals.*')
-        ->get();
+        ->select('vehiculos.*','vehiculosucursales.*','sucursals.*') ->get();
         return view('gerente.vehiculo.ver_vehiculo',compact('vehiculo'));
 
     }
 
   
-    public function create()
+    public function create(request $request)
     {
         //
+        if(!$request->user()->hasRole('gerente')){
+
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            return view('gerente.vehiculo.alta_vehiculo',compact('sucursal'));
+        }
+
         $sucursal=Sucursal::all();
         return view('gerente.vehiculo.alta_vehiculo',compact('sucursal'));
     }
@@ -128,7 +156,18 @@ class VehiculoController extends Controller
        
         $foranea = Sucursal::where('idsucursal',$vehiculo['sucursal'])->first();      
         $vehi = Vehiculo::where('idvehiculo',$vehiculo['vehiculo'])->first();
+
+        if(!$vehiculo->user()->hasRole('gerente')){
+            $email = $vehiculo->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();  
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+
+            $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+        }
+        else{
         $sucursal=Sucursal::all();
+    }
         $vehiculosucursal = VehiculoSucursales::where('sucursal',$foranea['idsucursal'])->first();
         
         //return $vehi;

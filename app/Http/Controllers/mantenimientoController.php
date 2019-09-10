@@ -7,6 +7,9 @@ use App\Vehiculo;
 use App\Tallerservicios;
 use App\Detalletallerservicios;
 use App\vehiculosucursales;
+use App\Empleado;
+use App\Sucursal;
+use App\EmpleadoSucursal;
 use Illuminate\Http\Request;
 
 class mantenimientoController extends Controller
@@ -16,13 +19,32 @@ class mantenimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
         //
+
+        if(!$request->user()->hasRole('gerente')){
+
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            $mantenimiento = mantenimientos::join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')->
+            join('vehiculosucursales','vehiculosucursales.vehiculo','=','mantenimientos.vehiculo')
+            ->where('vehiculosucursales.sucursal','=',$sucursale->sucursal)
+            ->select('mantenimientos.*','vehiculos.*','mantenimientos.tipo as servicio')
+
+            ->get();
+
+        }
+        else{
         $mantenimiento = mantenimientos::join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')
         ->select('mantenimientos.*','vehiculos.*','mantenimientos.tipo as servicio')
         ->get();
         //return $mantenimiento;
+        }
         return view('gerente.mantenimiento.ver_mantenimiento',compact('mantenimiento'));
     }
 

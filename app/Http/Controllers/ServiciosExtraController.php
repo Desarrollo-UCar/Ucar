@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Empleado;
+use App\EmpleadoSucursal;
 use App\Serviciosextras;
 use App\Sucursal;
 use App\servicioextrasucursales;
@@ -17,13 +19,30 @@ class ServiciosExtraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
+
+        if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            $serviciosextra = Serviciosextras::join('servicioextrasucursales','idserviciosextra','=','servicioextrasucursales.serviciosextra')
+            ->join('sucursals','idsucursal','=','servicioextrasucursales.sucursal')
+            ->select('serviciosextras.*','servicioextrasucursales.*','sucursals.nombre as sucursal','sucursals.idsucursal')->
+            where('servicioextrasucursales.sucursal','=',$sucursale->sucursal)
+            ->get();
+    
+            //return $serviciosextra;
+        } 
+        else{
         $serviciosextra = Serviciosextras::join('servicioextrasucursales','idserviciosextra','=','servicioextrasucursales.serviciosextra')
         ->join('sucursals','idsucursal','=','servicioextrasucursales.sucursal')
         ->select('serviciosextras.*','servicioextrasucursales.*','sucursals.nombre as sucursal','sucursals.idsucursal')
         ->get();
-
+        }
         //return $serviciosextra;
         return view('gerente.servicio_extra.ver_serviciosextras',compact('serviciosextra'));
     }
@@ -33,11 +52,19 @@ class ServiciosExtraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(request $request)
     {
         //
+        if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+        }
+            else{
         $sucursal= Sucursal::all();
-         
+            }
            return view('gerente.servicio_extra.alta_servicio',compact('sucursal'));
         
         
@@ -133,7 +160,20 @@ class ServiciosExtraController extends Controller
         //return $servicioextra;
         $servicio=Serviciosextras::where('idserviciosextra',$servicioextra['servicioextra'])
                                 ->first();
+
+        if(!$servicioextra->user()->hasRole('gerente')){   
+
+            $email = $servicioextra->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)     ->where('status','=','activo')->first();
+
+            $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+
+       }    
+       else{
         $sucursal=Sucursal::all();
+       }
         $foranea =sucursal::where('idsucursal',$servicioextra['sucursal'])->first(); 
         $serviciosucursal=servicioextrasucursales::where('sucursal',$servicioextra['sucursal'])
         ->where('serviciosextra',$servicioextra['servicioextra'])

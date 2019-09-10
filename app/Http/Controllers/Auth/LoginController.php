@@ -40,7 +40,7 @@ class LoginController extends Controller
     public function redirectTo()
     {    //    return reponse()->json(\Auth::user()->hasRole());
 
-        if(\Auth::user()->hasRole('admin'))
+        if(\Auth::user()->hasRole('admin')||\Auth::user()->hasRole('gerente'))
             return '/gerente/inicio';
         
         

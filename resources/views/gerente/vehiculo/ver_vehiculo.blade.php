@@ -59,6 +59,7 @@
                               <th style="text-align: center;background: lightblue">Modificar</th>
                               <th style="text-align: center;background: lightblue">Mantenimiento</th>
                               <th style="text-align: center;background: lightblue">Eliminar</th>
+                              <th style="text-align: center;background: lightblue">Reservaciones</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -100,6 +101,10 @@
                             <td style="text-align: center">
                                 <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}" title="Eliminar"> <span class="fa fa-trash-o fa-2x" style="color:red;"></span>
                       </td>
+
+                      <td style="text-align: center">
+                          <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
+                </td>
                       </tr>
                 @endforeach
                       </tbody>

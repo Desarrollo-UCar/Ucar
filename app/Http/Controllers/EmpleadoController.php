@@ -12,8 +12,21 @@ use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 
 class EmpleadoController extends Controller
 {
-        public function index()
+        public function index(request $request)
     {
+        if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleados = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleados->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            $empleado = Empleado::join('empleadosucursals','idempleado','=','empleadosucursals.empleado')        ->join('sucursals','empleadosucursals.sucursal','=','sucursals.idsucursal')
+            ->where('empleadosucursals.sucursal','=', $sucursale->sucursal)
+            ->where('tipo','!=','ADMINISTRADOR')->get();
+            return view('gerente.usuarios.empleados.administradores.ver_admin',compact('empleado'));
+
+        }
         $empleado = Empleado::join('empleadosucursals','idempleado','=','empleadosucursals.empleado')
         ->join('sucursals','empleadosucursals.sucursal','=','sucursals.idsucursal')
         ->select('empleados.*','empleadosucursals.status','sucursals.nombre as sucursal','sucursals.idsucursal')
@@ -22,8 +35,22 @@ class EmpleadoController extends Controller
     }
 
     
-    public function create()
-    {
+    public function create(request $request)
+    { 
+        
+        if(!$request->user()->hasRole('gerente')){
+
+        $email = $request->user()->email;
+        $empleado = Empleado::where('correo','=',$email)->first();
+        $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+        ->where('status','=','activo')->first();
+        $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+
+        $sucursal=Sucursal::where('sucursals.idsucursal','=',$sucursale->sucursal)->get();
+        return view('gerente.usuarios.empleados.administradores.alta_admin',compact('sucursal'));
+
+    }
         $sucursal=Sucursal::all();
         return view('gerente.usuarios.empleados.administradores.alta_admin',compact('sucursal'));
     }
@@ -173,10 +200,28 @@ class EmpleadoController extends Controller
 
 
     public function modificar(Request $empleado){
+
+
+
         $foranea = Sucursal::where('idsucursal',$empleado['idsucursal'])->first();      
+
+
         $emp = Empleado::where('idempleado',$empleado['idempleado'])->first();
+
+        if(!$empleado->user()->hasRole('gerente')){
+
+            $sucursal=Sucursal::where('idsucursal','=',$foranea->idsucursal);
+            $empleadosucursal = EmpleadoSucursal::where('sucursal',$foranea['idsucursal'])->first();
+
+
+        return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal'));
+
+    }
+
+
         $sucursal=Sucursal::all();
         $empleadosucursal = EmpleadoSucursal::where('sucursal',$foranea['idsucursal'])->first();
+
         return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal'));
 
     }

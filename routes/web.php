@@ -62,18 +62,19 @@ Route::get('prueba', function () {
 
 Route::resource('user','UsuariosController');
 //Route::post('login','UsuariosController@login');
-//Route::group(['middleware' => 'auth'], function () {
+//Route::group(['role' => 'admin'], function () {
 
 //Route::get('/usuario','UsuariosController@Login');
 
 //Route::get('gerente', 'AdminController@inicio')->name('home');
-Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG');//->middleware('auth');
 
+Route::get('gerente/inicio', 'AdminController@inicioGerente')->name('homeG')->middleware('auth','roleAdmin:admin');
 
+Route::group(['middleware' => 'auth','roleAdmin:admin'], function () {
 //Route::get('gerente/usuarios/vehiculo/alta_vehiculo','AdminController@Vehiculo')->name('vehiculo');
-Route::resource('vehiculo','VehiculoController');
-Route::resource('products','ProductController');
-Route::resource('sucursal','SucursalController');
+Route::resource('vehiculo','VehiculoController');//admin
+Route::resource('products','ProductController');//admin
+Route::resource('sucursal','SucursalController');//admin
 Route::resource('empleado','EmpleadoController');
 Route::resource('servicioe', 'ServiciosExtraController');
 Route::resource('mantenimiento', 'MantenimientoController');
@@ -91,6 +92,7 @@ Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->na
 Route::post('vehiculoModificar','VehiculoController@ModificarDatos')->name('datosvehiculo');
 Route::post('servicioModificar','ServiciosExtraController@ModificarDatos')->name('datoservicio');
 //});
+
 
 //Route::post('login','UsuariosController@login');
 
@@ -112,3 +114,7 @@ Route::get('/reservacion/{reservacion}', 'ReservacionController@garantia')->name
 Route::get('/detalle/{reservacion}', 'ReservacionController@show')->name('reservacion');
 Route::get('/conductor','ReservacionController@registra_conductor')->name('conductor');
 Route::get('/recibir','ReservacionController@recibe_vehiculo')->name('recibir');
+Route::get('/reservacionesFecha','ReservacionController@fechaRecogida')->name('porFecha');
+Route::get('/reservacionesCliente','ReservacionController@cliente')->name('porCliente');
+Route::get('/reservacionesVehiculo','ReservacionController@vehiculo')->name('porVehiculo');
+});
