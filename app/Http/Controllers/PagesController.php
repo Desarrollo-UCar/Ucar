@@ -5,13 +5,11 @@ use App;
 use DB;
 use DateTime;
 use Mail;
-class PagesController extends Controller
-{
-    public function inicio(){//PRUEBA
+class PagesController extends Controller{
+    public function inicio(){//SE RELLENA EL SELECT DE SUCURSALES
         $sucursales = App\Sucursal::all();
         return view('index',compact('sucursales'));
     }
-
     public function postFormularioindex(Request $request){ 
         $hora_actual = strtotime(date('H\:i'));
         $hora_de_recogida = strtotime(date(" H\:i", strtotime($request->horaRecogida)));
@@ -35,7 +33,6 @@ class PagesController extends Controller
         }
 // Creamos el objeto
         $reserva_temp = new App\reserva_temp;
-// Seteamos las propiedades
         $reserva_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
         $reserva_temp->lugar_recogida = $sucursal;
         $reserva_temp->fecha_recogida = $request->fechaRecogida;
@@ -104,7 +101,6 @@ class PagesController extends Controller
         INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
         where id_cliente = ?',[$cliente->idCliente]);
         //obtenemos los datos de los servicios extra
-
         $cliente_serv_extra = DB::select('SELECT alquiler,serviciosextras.idserviciosextra,serviciosextras.nombre,serviciosextras.precio
         FROM alquilerserviciosextras
         INNER JOIN serviciosextras ON serviciosextras.idserviciosextra = alquilerserviciosextras.servicioExtra
@@ -116,7 +112,6 @@ class PagesController extends Controller
     }
 
     public function reservar_servicios_extra(Request $reserva){
-        //return $reserva;
         $id_vehiculo    = $reserva['id_vehiculo'];
         $id_reserva     = $reserva['id_reserva'];
 
@@ -174,28 +169,23 @@ class PagesController extends Controller
                     }
                 }
             }
-
-            
         // cierre de consulta de servicios extra en las fechas indicadas
         return view('reservar_servicios_extra',compact('vehiculo','datos_reserva','servicios_extra'));
     }
 
     public function reservar_realizar_pago(Request $reserva){
-        //return $reserva;
         $id_vehiculo     = $reserva['id_vehiculo'];
         $id_reserva      = $reserva['id_reserva'];
         $servicios     = $reserva['id'];
 
         $vehiculo       = App\Vehiculo::findOrFail($id_vehiculo);
         $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
-
         $devolucion = new DateTime($datos_reserva->fecha_devolucion);
         $salida     = new DateTime($datos_reserva->fecha_recogida);
         $diferencia = $salida->diff($devolucion);
         $dias = $diferencia->format('%a');
         if($dias == 0)
             $dias = 1;
-
         $servicios_extra = [];
         $total_serv_extra = 0; 
         if(is_array($servicios)){
@@ -214,14 +204,12 @@ class PagesController extends Controller
         //actualizar tabla temporal de la reserva
     $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
     $datos_reserva->total = $totalf;
-    //echo($totalf);
     //convertir a cadena para poder alamcenar los datos FORMATO id_servicio-cantidad, id_servicio-cantidad,... 
     $cadena_serv_extra = "";
     if(is_array($servicios)){
         if(count($servicios) > 0 ){
-            foreach ($servicios as $valor) {
-                $cadena_serv_extra = $cadena_serv_extra . $valor; 
-            }
+            foreach ($servicios as $valor)
+                $cadena_serv_extra = $cadena_serv_extra . $valor;
         }
     }
     $datos_reserva->servicios_extra = $cadena_serv_extra;
@@ -260,7 +248,6 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $pago_reserva->estatus = 'pendiente';
     $pago_reserva->reservacion = 0;
     $pago_reserva->save();
-    
  // listo tenemos el pago de la rserva creado falata que el cliente pague
 // buscamos el vehiculo para proceder a crear el alquiler con todos los datos
     $vehiculo       = App\Vehiculo::findOrFail($datos_reserva->id_vehiculo);
@@ -282,7 +269,6 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $alquiler->expiracion_licencia = 'por rellenar';
     $alquiler->estatus = 'pendiente_recogida';
     $alquiler->save();
-
     //rellenamos la tabla de alquileresservicioextra para llevar un control de l    os servicios eextra que tiene cada alquiler y cada reserva
     //tenemos uq hacer un foreach para rellenar en caso de que haya mas de un servicio extra
     $porciones = str_split($datos_reserva->servicios_extra,1);
@@ -314,11 +300,9 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     //obtener los datos de todas las reservaciones del cliente
     $reserva_correo = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
     reservacions.saldo, sucursals.nombre, alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
-    IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,
-    1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+    IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
     vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,
-    vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,
-    vehiculos.foto
+    vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,vehiculos.foto
     FROM reservacions
     INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
     inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
@@ -336,23 +320,21 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $reservacion = $reserva_correo;
     $serv_extra = $serv_extra_correo;
     $asunto = 'Confirmacion de Reserva';
-    //return view('mails.correo_reserva', compact('reservacion','serv_extra'));
 //////-------------------------
-Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
-    $message->from('ucardesarollo@gmail.com', 'Ucar');
-    $message->to($correo)->subject($asunto);
-    foreach($reservacion as $reserva){
-        $message->attach($reserva->foto);
-    }
-});
+    Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
+        $message->from('ucardesarollo@gmail.com', 'Ucar');
+        $message->to($correo)->subject($asunto);
+        foreach($reservacion as $reserva){
+            $message->attach($reserva->foto);
+        }
+    });
 /////////-------------------------
     return view('pago',compact('monto','alquiler'));
-}
+    }
 
     public function validar_logeo(Request $reserva){
         $r     = $reserva['id_reserva'];
         $datos_reserva  = App\reserva_temp::findOrFail($r);
-
         $devolucion = new DateTime($datos_reserva->fecha_devolucion);
         $salida     = new DateTime($datos_reserva->fecha_recogida);
         $diferencia = $salida->diff($devolucion);
