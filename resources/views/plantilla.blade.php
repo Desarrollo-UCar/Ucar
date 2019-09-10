@@ -3,7 +3,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <title>Ucar Renta de vehĂ­culos</title>
+    <title>Ucar Renta de vehí­culos</title>
     <!-- Add meta tags for mobile and IE -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -87,7 +87,7 @@
                     </li>
 
                     <li class="dropdown">
-                      <a href="#">ReservaciĂłn <i class="icon-angle-down"></i></a>
+                      <a href="#">Reservación <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
                         <li class="dropdown"><a href="#">Reservar<i class="icon-angle-right"></i></a>
                           <ul class="dropdown-menu sub-menu-level1">
@@ -96,7 +96,7 @@
                             <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
                           </ul>
                         </li>
-                        <li><a href="{{ route('en_construccion') }}">Ver tu ReservaciĂłn</a></li>   
+                        <li><a href="{{ route('en_construccion') }}">Ver tu Reservación</a></li>   
                       </ul>
                     </li>
 
@@ -115,7 +115,7 @@
                       <a href="{{ route('servicios') }}">Servicios</a>
                     </li>
                     <li class="dropdown">
-                      <a href="{{ route('en_construccion') }}">Iniciar SesiĂłn </a>
+                      <a href="{{ route('en_construccion') }}">Iniciar Sesión </a>
                     </li>
                   </ul>
                 </nav>

@@ -4,19 +4,14 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <title>Ü-car Renta de vehículos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans:300,400,600,700,800" rel="stylesheet">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- CSS -->    <!-- CSS -->
+   
     <link href="css/bootstrap.css" rel="stylesheet" />
-    <link href="css/flexslider.css" rel="stylesheet" />
-    <link href="css/prettyPhoto.css" rel="stylesheet" />
-    {{-- <link href="css/camera.css" rel="stylesheet" /> --}}
-    <link href="css/jquery.bxslider.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <link href="css/shortcodes.css" rel="stylesheet" />
     
-    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
+    <link href="css/style.css" rel="stylesheet" />
+   
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
     <!-- Theme skin -->
     <link href="color/blue.css" rel="stylesheet" />
@@ -176,7 +171,7 @@
                                     <div class="row">
                                             
                                     
-                                        <form action="{{ route('validar_logeo')}}" method="GET" enctype="multipart/form-data">
+                                        <form action="{{ route('validar_logeo')}}" method="POST" enctype="multipart/form-data">
                                         @csrf    
                                         <input type="hidden" name="id_reserva" value="{{$datos_reserva->id}}">
                                             @if(!(Auth::user()))
@@ -186,7 +181,7 @@
                                                     <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
                                                 </div>    
                                                 <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
-                                                    <a class="nav-link text-success" href="{{ route('register',['id_reserva'=>$datos_reserva->id]) }}" data-toggle="modal" data-target=".bd-example-modal-lg" >No tengo una cuenta.</a> 
+                                                    <a class="nav-link text-success" data-toggle="modal" data-target=".bd-example-modal-lg" >No tengo una cuenta.</a> 
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -205,12 +200,15 @@
                                                     <button class="btn btn-primary" type="submit" style="margin-top: 15%;">Continuar</button>
                                                 </div>
                                         
-                                                <div class="form-group col-sm-1 col-md-1 col-lg-1 col-xl-1">
-                                                    <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value="." style="margin-top: 100%; margin-left: 100%;"  required>
-                                                </div>
-                                                <div class="form-group col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                                                    <a class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" >HE LEÍDO Y ACEPTO LOS TÉRMINOS Y CONDICIONES</a> 
-                                                </div> 
+                                                <div class="row">
+                                                  <div style="margin-top: 2%;">
+                                                      <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value="."  required>
+                                                      <label class="form-check-label" for="terminos_condiciones">HE LEÍDO Y ACEPTO </label>
+                                                  </div>
+                                                  <div>
+                                                      <a class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" >TÉRMINOS Y CONDICIONES</a> 
+                                                  </div>
+                                              </div>
                                             </div>          
                                                         
                                                         
@@ -236,21 +234,12 @@
             </div>
             <div class="modal-body">
                     <div class="container-fluid">
-                            <form method="POST" id="#upload_form" enctype="multipart/form-data">
-                                {{ csrf_field() }}
+                            <form id="upload_form" method="POST" enctype="multipart/form-data">
+                            {{-- {{ csrf_field() }} --}}
+                            @csrf
                       <div class="row">
                             
                            
-                            <div class="col-md-12 ml-auto">
-                                <div class="col-md-3 ml-auto" style="margin-right: 40%;">
-                                    <div class="alert" id="message" style="display: none"></div>
-                                  <div id="preview" style="margin-left: 35%;">                               
-                                    <img class="col-md-offset-4" src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 80px;height:80px;border-radius: 50%;">                
-                                  
-                                  </div>
-                                  <input id="foto" type="file" name="foto">
-                                </div>
-                              </div>    
                                                
                                     {{-- FORMULARIO DE NOMBRES --}}
                                   
@@ -258,8 +247,8 @@
                                             <label>Nombres</label>
                                             <input type="text" class="form-control" placeholder="nombres" name="nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" id="nombres">
                     
-                                            <span id="errornombres" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                                            <span id="validonombres" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                                            <span id="errornombres" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;" aria-hidden="true"></span>
+                                            <span id="validonombres" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;" aria-hidden="true"></span>
                                         </div> 
                                      {{-- FOMULARIO DEL PRIMER APELLIDO --}}
                           
@@ -295,7 +284,7 @@
                                 ->get(); ?>
                         <div class="form-group col-md-4 col-sm-4">
                                 <label>Nacionalidad</label>
-                          <select class="form-control" id="nacionalidad" name="nacionalidad">
+                          <select class="form-control" id="nacionalidad" name="nacionalidad" onchange="cambio();">
                             @foreach ($nacion as $nacion)
                             <option>{{$nacion->nombre}}</option>
                             @endforeach                             
@@ -305,7 +294,7 @@
                                 <span id="validonacionalidad" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                             </div>
     
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-4 col-sm-4" id="identificacion" style="display: none">
                                     <label>INE</label>
                                   <input type="text" class="form-control" autofocus placeholder="Número de credencial de elector" name="ine" data-inputmask='"mask": "9999999999999"' data-mask id="ine">
                 
@@ -313,12 +302,12 @@
                                 <span id="validoine" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                 </div>   
                                                   
-                                <div class="form-group col-md-4 col-sm-4">
+                                <div class="form-group col-md-4 col-sm-4"  id="pasa">
                                         <label>Pasaporte</label>
-                                      <input type="text" class="form-control" autofocus placeholder="Número de credencial de elector" name="pasaporte" data-inputmask='"mask": "9999999999999"' data-mask id="pasaporte">
+                                      <input type="text" class="form-control" autofocus placeholder="Pasaporte" name="pasaporte" data-inputmask='"mask": "9999999999999"' data-mask id="pasaporte">
                     
-                                      <span id="errorine" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                                    <span id="validoine" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                                      <span id="errorpasaporte" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                                    <span id="validopasaporte" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                     </div>   
     
                                   {{--DATOS PARA EL TELEFONO--}}
@@ -398,7 +387,7 @@
                           {{-- FORMULARIO DE CONTRASEÑA --}}
                             <div class="form-group col-md-4 col-sm-4">
                                     <label>Contraseña</label>
-                                    <input id="password" type="password" class="form-control"  name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control"  name="password"  autocomplete="new-password">
     
                                     <span id="errorpassword" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                     <span id="validopassword" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -407,7 +396,7 @@
                             {{-- FORMULARIO PARA LA CONFIRMACION DEL CORREO --}}
                                 <div class="form-group col-md-4 col-sm-4">
                                         <label>Confirmar Contraseña</label>
-                                        <input id="password-confirm" type="password" class="form-control"  name="password-confirm" required autocomplete="new-password">
+                                        <input id="password-confirm" type="password" class="form-control"  name="password-confirm"  autocomplete="new-password">
         
                                         <span id="errorpassword-confirm" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                         <span id="validopassword-confirm" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -415,7 +404,7 @@
     
                                     <div class="modal-footer col-md-12">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                            <button type="button" class="btn btn-primary">Guardar</button>
+                                            <input type="submit" name="upload" id="upload" class="btn btn-primary" value="Agregar">
                                           </div>
                                   </div> {{-- aqui termina el div row --}}
                                  </form> {{-- AQUI TERMINA EL FORM --}}
@@ -503,43 +492,352 @@
 <!-- Footer Links -->
 </footer>
 </div>
-<!-- Footer -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script> --}}
-      {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> --}}
-
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> --}}
-
+      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- javascript================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  {{-- <script src="js/bootstrap.js"></script> --}}
-
-  {{-- <script src="js/modernizr.custom.js"></script> --}}
-  {{-- <script src="js/toucheffects.js"></script> --}}
-  {{-- <script src="js/google-code-prettify/prettify.js"></script> --}}
-  <script src="js/jquery.bxslider.min.js"></script>
-  {{-- <script src="js/camera/camera.js"></script> --}}
-  {{-- <script src="js/camera/setting.js"></script> --}}
-
-  <script src="js/jquery.prettyPhoto.js"></script>
-  <script src="js/portfolio/jquery.quicksand.js"></script>
-  {{-- <script src="js/portfolio/setting.js"></script> --}}
-
-  {{-- <script src="js/jquery.flexslider.js"></script> --}}
-  {{-- <script src="js/animate.js"></script> --}}
-  {{-- <script src="js/inview.js"></script> --}}
-  {{-- <script src="js/daterangepicker.js"></script> --}}
+  <script src="js/jquery.js"></script>  
+  <script src="js/jquery.bxslider.min.js"></script>  
   <script src="js/custom.js"></script>
 
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script> --}}
+
+
+ 
+<script>
+
+  function cambio(){
+    var nacionalidad = document.getElementById("nacionalidad");
+    text = nacionalidad.options[nacionalidad.selectedIndex].innerText;
+    console.log(text);
+    var ide= document.getElementById("identificacion");
+    var pas =document.getElementById("pasa");
+    if(text == 'MEXICANA'){
+      ide.style.display='block';
+      pas.style.display='none';
+    }
+    else{
+      ide.style.display='none';
+      pas.style.display='block';
+    }
+  }
+  </script>
+  
+  <script>
+    // $(function () {
+        
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //   });
+        
+    //   $('#enviar').click(function (e) {
+
+        $(document).ready(function(){
+  
+  $('#upload_form').on('submit', function(event){
+          event.preventDefault();
+        //    var nombres = $('#nombres').val();
+        //    console.log(nombres);
+        //  var formData = new FormData($('#upload_form') [0]);
+        //  formData.append('nombres',nombres);
+        // formData.append('primerApellido',$('#primerApellido').val());
+        // formData.append('segundoApellido',$('#segundoApellido').val());
+        // formData.append('fechaNacimiento',$('#fechaNacimiento').val());
+        // formData.append('nacionalidad',$('#nacionalidad').val());
+        // formData.append('genero',$('#genero').val());
+      
+
+      event.preventDefault();
+      $.ajax({      
+       method:"POST",
+       url:"{{route('agregarcliente')}}",
+       data:$('#upload_form').serialize(),//new FormData(this),
+       dataType:'json',
+       contentType: false,
+       cache: false,
+       processData: false,
+       success:function(data)
+       {
+        
+         var mensaje=data.success;
+         console.log(mensaje);
+
+         if(mensaje=='ERRORCONTRA'){
+          $( '#password' ).css('borderColor', 'red');         
+                 jQuery('#validopassword').show(); 
+                 jQuery('#errorpassword').hide(); 
+                 $( '#password-cofirm' ).css('borderColor', 'red');
+                 jQuery('#validopassword-confirm').show(); 
+                 jQuery('#errorpassword-confirm').hide(); 
+                 $('#errorpassword-confirm').html('la contraseña no coincide');
+         }
+        //  if(mensaje=='ERROR1'){
+        // $('#existe1').click();
+        //  }
+        //  if(mensaje=='ERROR2'){
+        // $('#rango1').click();
+        // jQuery('#validofechaNacimiento').hide(); 
+        //          jQuery('#errorfechaNacimiento').show();          
+        //         $( '#fechaNacimiento' ).css('borderColor', 'red');
+        //  }
+         
+       },
+       error: function (data) {
+        console.log(data);
+           var err = JSON.parse(data.responseText);
+           var arreglo = err.errors;
+           /*jQuery.each(arreglo, function(key, value){
+              console.log(arreglo);
+                        });*/
+           console.log(arreglo);
+            var nombres = arreglo.nombres;
+            var primerApellido = arreglo.primerApellido;
+            var segundoApellido = arreglo.segundoApellido;
+            var fechaNacimiento = arreglo.fechaNacimiento;
+            var nacionalidad = arreglo.nacionalidad;      
+            // var ine = arreglo.ine;
+            var pasaporte = arreglo.pasaporte; 
+            var pais = arreglo.pais;
+            var estado = arreglo.estado;
+            var ciudad = arreglo.ciudad;
+            var colonia = arreglo.colonia;
+            var calle = arreglo.calle;
+            var telefono = arreglo.telefono;
+            var numero = arreglo.numero;
+            var email = arreglo.email;
+            var password = arreglo.password;
+            var passwordconfirm = arreglo.password-confirm;
+            // var genero = arreglo.genero;
+            // var foto = arreglo.foto;
+               
+               
+              //  if (foto == undefined){  
+                
+              //    }else{
+              //     $('#message').css('display', 'block');
+              //   $('#message').html('AGREGA UNA FOTO DE EMPLEADO');
+              //   $('#message').addClass("alert alert-danger");
+              //    //console.log(nombre);
+              //  }
+             
+               if (nombres == undefined){  
+                 $( '#nombres' ).css('borderColor', 'green');         
+                 jQuery('#validonombres').show(); 
+                 jQuery('#errornombres').hide(); 
+                 }else{
+                   jQuery('#validonombres').hide(); 
+                 jQuery('#errornombres').show();          
+                $( '#nombres' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+  
+               if (primerApellido == undefined){  
+                 $( '#primerApellido' ).css('borderColor', 'green');         
+                 jQuery('#validoprimerApellido').show(); 
+                 jQuery('#errorprimerApellido').hide(); 
+                 }else{
+                   jQuery('#validoprimerApellido').hide(); 
+                 jQuery('#errorprimerApellido').show();          
+                $( '#primerApellido' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+  
+              if (segundoApellido == undefined){  
+                 $( '#segundoApellido' ).css('borderColor', 'green');         
+                 jQuery('#validosegundoApellido').show(); 
+                 jQuery('#errorsegundoApellido').hide(); 
+                 }else{
+                   jQuery('#validosegundoApellido').hide(); 
+                 jQuery('#errorsegundoApellido').show();          
+                $( '#segundoApellido' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+     
+               if (fechaNacimiento == undefined){  
+                 $( '#fechaNacimiento' ).css('borderColor', 'green');         
+                 jQuery('#validofechaNacimiento').show(); 
+                 jQuery('#errorfechaNacimiento').hide(); 
+                 }else{
+                   jQuery('#validofechaNacimiento').hide(); 
+                 jQuery('#errorfechaNacimiento').show();          
+                $( '#fechaNacimiento' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+  
+               if (nacionalidad == undefined){  
+                 $( '#nacionalidad' ).css('borderColor', 'green');         
+                 jQuery('#validonacionalidad').show(); 
+                 jQuery('#errornacionalidad').hide(); 
+                 }else{
+                   jQuery('#validonacionalidad').hide(); 
+                 jQuery('#errornacionalidad').show();          
+                $( '#nacionalidad' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+  
+              /* if (genero == undefined){  
+                 $( '#genero' ).css('borderColor', 'green');         
+                 jQuery('#validogenero').show(); 
+                 jQuery('#errorgenero').hide(); 
+                 }else{
+                   jQuery('#validogenero').hide(); 
+                 jQuery('#errorgenero').show();          
+                $( '#genero' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }*/
+  
+               if (email == undefined){  
+                 $( '#email' ).css('borderColor', 'green');         
+                 jQuery('#validoemail').show(); 
+                 jQuery('#erroremail').hide(); 
+                 }else{
+                   jQuery('#validoemail').hide(); 
+                 jQuery('#erroremail').show();          
+                $( '#email' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+
+               if (pasaporte == undefined){  
+                 $( '#pasaporte' ).css('borderColor', 'green');         
+                 jQuery('#validopasaporte').show(); 
+                 jQuery('#errorpasaporte').hide(); 
+                 }else{
+                   jQuery('#validopasaporte').hide(); 
+                 jQuery('#errorpasaporte').show();          
+                $( '#pasaporte' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+  
+  
+  
+  
+            // if (ine == undefined){  
+            //      $( '#ine' ).css('borderColor', 'green');         
+            //      jQuery('#validoine').show(); 
+            //      jQuery('#errorine').hide(); 
+            //      }else{
+            //        jQuery('#validoine').hide(); 
+            //      jQuery('#errorine').show();          
+            //     $( '#ine' ).css('borderColor', 'red');
+            //      //console.log(nombre);
+            //    }          
+            
+  
+            if (pais == undefined){  
+              $( '#pais' ).css('borderColor', 'green');         
+              jQuery('#validopais').show(); 
+              jQuery('#errorpais').hide(); 
+              }else{
+                jQuery('#validopais').hide(); 
+              jQuery('#errorpais').show();          
+             $( '#pais' ).css('borderColor', 'red');
+              //console.log(nombre);
+            }
+            if (estado == undefined){  
+              $( '#estado' ).css('borderColor', 'green');         
+              jQuery('#validoestado').show(); 
+              jQuery('#errorestado').hide(); 
+              }else{
+                jQuery('#validoestado').hide(); 
+              jQuery('#errorestado').show();          
+             $( '#estado' ).css('borderColor', 'red');
+              //console.log(nombre);
+            }
+            if (ciudad == undefined){  
+              $( '#ciudad' ).css('borderColor', 'green');         
+              jQuery('#validociudad').show(); 
+              jQuery('#errorciudad').hide(); 
+              }else{
+                jQuery('#validociudad').hide(); 
+              jQuery('#errorciudad').show();          
+             $( '#ciudad' ).css('borderColor', 'red');
+              //console.log(nombre);
+            }
+  
+            if (calle == undefined){  
+              $( '#calle' ).css('borderColor', 'green');         
+              jQuery('#validocalle').show(); 
+              jQuery('#errorcalle').hide(); 
+              }else{
+                jQuery('#validocalle').hide(); 
+              jQuery('#errorcalle').show();          
+             $( '#calle' ).css('borderColor', 'red');
+              //console.log(nombre);
+            }
+            if (numero == undefined){  
+              $( '#numero' ).css('borderColor', 'green');         
+              jQuery('#validonumero').show(); 
+              jQuery('#errornumero').hide(); 
+              }else{
+                jQuery('#validonumero').hide(); 
+              jQuery('#errornumero').show();          
+             $( '#numero' ).css('borderColor', 'red');
+              //console.log(nombre);
+            }
+            if (telefono == undefined){  
+              $( '#telefono' ).css('borderColor', 'green');         
+              jQuery('#validotelefono').show(); 
+              jQuery('#errortelefono').hide(); 
+              }else{
+                jQuery('#validotelefono').hide(); 
+              jQuery('#errortelefono').show();          
+             $( '#telefono' ).css('borderColor', 'red');
+              //console.log(nombre);
+            }
+  
+            if (colonia == undefined){  
+              $( '#colonia' ).css('borderColor', 'green');         
+              jQuery('#validocolonia').show(); 
+              jQuery('#errorcolonia').hide(); 
+              }else{
+                jQuery('#validocolonia').hide(); 
+              jQuery('#errorcolonia').show();          
+             $( '#colonia' ).css('borderColor', 'red');
+              //console.log(nombre);
+            }
+
+            if (email == undefined){  
+                 $( '#email' ).css('borderColor', 'green');         
+                 jQuery('#validoemail').show(); 
+                 jQuery('#erroremail').hide(); 
+                 }else{
+                   jQuery('#validoemail').hide(); 
+                 jQuery('#erroremail').show();          
+                $( '#email' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+
+               if (password == undefined){  
+                 $( '#password' ).css('borderColor', 'green');         
+                 jQuery('#validopassword').show(); 
+                 jQuery('#errorpassword').hide(); 
+                 }else{
+                   jQuery('#validopassword').hide(); 
+                 jQuery('#errorpassword').show();          
+                $( '#password' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+
+               if (passwordconfirm == undefined){  
+                 $( '#password-confirm' ).css('borderColor', 'green');         
+                 jQuery('#validopassword-confirm').show(); 
+                 jQuery('#errorpassword-confirm').hide(); 
+                 }else{
+                   jQuery('#validopassword-confirm').hide(); 
+                 jQuery('#errorpassword-confirm').show();          
+                $( '#password-confirm' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }
+
+            $('#updload').val('guardar cambios');
+       }
+      })
+     });
+    
+    });
+    </script>
+
 
 </body>
 </html>

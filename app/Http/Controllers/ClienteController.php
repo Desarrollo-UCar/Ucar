@@ -40,7 +40,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+      return response()->json(['success'=>$request['nombres']]);
         /*
         costo del chofer ponerlo por 8 hrs
         quitar el prepago 
@@ -160,5 +160,41 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function Agregar(Request $request)
+    {
+        //
+        
+        //return response()->json(['success'=>$request['nombres']]);
+
+       
+
+        $request->validate([
+          // 'ine' => 'required|regex:/[0-9]{13}/m',
+           'nombres' =>'required|regex:/^[\pL\s]+$/u',
+           'primerApellido' =>'required',
+           'segundoApellido' =>'required',
+           'fechaNacimiento' =>'required|date',
+           'nacionalidad' =>'required',
+           'pasaporte' =>'required',
+           'pais' => 'required',
+           'estado' =>'required',
+           'ciudad' =>'required',
+           'colonia' =>'required',
+           'calle' =>'required',
+           'email' =>'required|email',
+           'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+           //  'genero' => 'required',
+          //  'sucursal' => 'required',
+           'numero' => 'required',
+          'password'=> 'required',
+          'password-confirm'=>'required',
+       ]);
+
+       if($request['password']!= $request['password-confirm']){
+        return response()->json(['success'=>'ERRORCONTRA']);
+      }
+        
     }
 }

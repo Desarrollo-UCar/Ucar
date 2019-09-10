@@ -80,8 +80,7 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data){
-
-        return response()->json(['success'=>'esta es una prueba']);
+       // return response()->json(['success'=>'esta es una prueba']);
         //crear cliente
 // Creamos el objeto para Cliente
         $cliente = new App\Cliente;
@@ -119,7 +118,9 @@ class RegisterController extends Controller
     
 
     public function redirectTo()
-    {    //    return reponse()->json(\Auth::user()->hasRole());
+    {    
+        
+        //return reponse()->json(\Auth::user()->hasRole());
 
         if(\Auth::user()->hasRole('admin'))
             return '/gerente/inicio';
