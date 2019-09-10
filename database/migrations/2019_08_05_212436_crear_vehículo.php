@@ -30,10 +30,14 @@ class CrearVehículo extends Migration
             $table->string('maletero');
             $table->string('color');
             $table->integer('cilindros');
-            $table->float('kilometraje');
+            $table->integer('kilometraje');
             $table->string('tipo');
             $table->string('descripcion')->nullable(); 
             $table->string('foto')->nullable();
+            $table->string('foto_derecha')->nullable();
+            $table->string('foto_izquierda')->nullable();
+            $table->string('foto_frente')->nullable();
+            $table->string('foto_trasera')->nullable();
             $table->timestamps();
         });
     }

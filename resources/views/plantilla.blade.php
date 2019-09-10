@@ -16,7 +16,6 @@
     <link href="css/jquery.bxslider.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/shortcodes.css" rel="stylesheet" />
-    <link href="css/mapas.css" rel="stylesheet" />
     <!-- <link href="css/overwrite.css" rel="stylesheet" />  checar por el asunto del calendario -->
     <!-- Theme skin -->
     <link href="color/blue.css" rel="stylesheet" />
@@ -24,44 +23,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
-
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-          height: 80%;
-        }
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-        }
-        
-  
-        #origin-input:focus,
-        #destination-input:focus {
-          border-color: #4d90fe;
-        }
-  
-        #mode-selector {
-          color: #fff;
-          background-color: #4d90fe;
-          margin-left: 12px;
-          padding: 5px 11px 0px 11px;
-        }
-  
-        #mode-selector label {
-          font-family: Roboto;
-          font-size: 13px;
-          font-weight: 300;
-        }
-  
-      </style>
-
-
-
   </head>
   <body>
     <div id="wrapper">
@@ -96,14 +57,14 @@
                             <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
                           </ul>
                         </li>
-                        <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
+                        <li><a href="{{ route('en_construccion') }}">Ver tu Reservación</a></li>   
                       </ul>
                     </li>
 
                     <li class="dropdown">
                       <a href="#">Sucursales <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ route('sucursal_Puerto_Escondido') }}">Puerto Escondido</a></li>
+                        <li><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido</a></li>
                         <li><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto Ixtepec</a></li>
                         <li><a href="{{ route('sucursal_Istmo') }}">Istmo</a></li>
                       </ul>
@@ -114,32 +75,9 @@
                     <li class="dropdown">
                       <a href="{{ route('servicios') }}">Servicios</a>
                     </li>
-                    @if(!(Auth::user()))
                     <li class="dropdown">
-                      <a href="{{ route('login')}}">Iniciar Sesión </a>
+                      <a href="{{ route('en_construccion') }}">Iniciar Sesión </a>
                     </li>
-                    <li class="dropdown">
-                        <a href="{{ route('register')}}">Registrarse </a>
-                      </li>
-                    @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                    @endif
                   </ul>
                 </nav>
               </div>
@@ -175,16 +113,16 @@
     <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
       <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
       <p>
-        <a href="{{ route('index') }}">Iniciar una reservación</a>
+        <a href="{{ route('index') }}">Iniciar una reservaciĂłn</a>
       </p>
       <p>
-        <a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservación</a>
+        <a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservaciĂłn</a>
       </p>
       
     </div>
     <!-- Grid column -->
     <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
+      <h6 class="text-uppercase font-weight-bold">VehĂ­culos</h6>
       <p>
         <a href="{{ route('flota') }}">Toda la flota</a>
       </p>
@@ -218,7 +156,7 @@
                     <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
                       <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
                       <p>
-                        <a href="{{ route('sucursal_Puerto_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
+                        <a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
                       <p>
                         <a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto, Ixtepec, Oaxaca, +52 954 149 0304 </a></p>
                       <p>
@@ -234,7 +172,7 @@
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
           <div class="copyright">
-            <p><span>&copy;2019 Ü-CAR. Todos los derechos reservados.</span></p>
+            <p><span>&copy;2019 Ăś-CAR. Todos los derechos reservados.</span></p>
           </div>
         </div>
       </div>
@@ -248,9 +186,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGDfu_8YDhR8k6LHqpGfQjCwC5YlxJ9Tk&libraries=places&callback=initMap" async defer></script>
-    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
     <!-- javascript
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
@@ -273,11 +209,9 @@
   <script src="js/animate.js"></script>
   <script src="js/inview.js"></script>
   <!-- Template Custom JavaScript File -->
-  <script src="js/custom.js"></script>
+  <script src="js/custom_p.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-<script src="js/bootstrap-datetimepicker.min.js"></script>
-
 
   </body>
 </html>

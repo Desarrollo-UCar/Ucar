@@ -58,16 +58,7 @@ class EmpleadoController extends Controller
     
     public function store(Request $request)
     {   
-       // return $request;
-        //$empleado = Empleado::where('ine',$request['ine'])->first();
-        //return $empleado;
-       // $datos = request()->except('_token');
-         //return response()->json(['errors'=>$request['foto']]);
-         //$request['foto']=$request->file('foto')->store('upload','public');
-         //if ($request->hasFile('foto')) {
-
-           // $imagen = $request['foto'];
-
+       
           
 
         $carbon = new \Carbon\Carbon();

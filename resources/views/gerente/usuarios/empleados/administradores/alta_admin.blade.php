@@ -25,7 +25,7 @@
     
         <div class="box box-primary">             
             <div class="box-header with-border">
-              <h3 class="box-title">Nuevo Sucursal</h3>
+              <h3 class="box-title">Nuevo Empleado</h3>
             </div>
 
              

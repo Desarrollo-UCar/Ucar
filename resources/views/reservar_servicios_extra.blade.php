@@ -5,7 +5,7 @@
     <div class="row nomargin">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="inner-heading">
-            <h2>Elige Servicios Adicionales (Paso 3 de 4)</h2>
+            <h2>Elige Servicios Adicionales</h2>
         </div>
         </div>
     </div>
@@ -27,8 +27,7 @@
                             <dt>Fecha / Hora de devolución:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_devolucion))}} a las {{$datos_reserva->hora_devolucion}} hrs</dd>
                             </dl> 
-                        </div>
-                        <a a href="{{ route('index') }}" class="btn btn-warning btn-sm">Modificar</a>   
+                        </div>  
                 </div>
                 <div class="widget">
                         <div id="lista_itinerario">
@@ -45,8 +44,7 @@
                                 <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
                                 <dt>Tarifa: ${{$vehiculo->precio}}</dt>
                             </dl> 
-                        </div>
-                        <a a href="{{ route('index') }}" class="btn btn-warning btn-sm">Modificar</a>   
+                        </div> 
                 </div>
                 </aside>
             </div>
@@ -88,7 +86,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <button class="btn btn-primary" type="submit">Reservar Ahora</button>
+                            <button class="btn btn-primary" type="submit">Continuar</button>
                         </div>
                     </div>
                 </form>
