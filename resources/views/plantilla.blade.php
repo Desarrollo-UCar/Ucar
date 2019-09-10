@@ -3,7 +3,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <title>Ucar Renta de vehí­culos</title>
+    <title>Ucar Renta de vehículos</title>
     <!-- Add meta tags for mobile and IE -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,7 +16,6 @@
     <link href="css/jquery.bxslider.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/shortcodes.css" rel="stylesheet" />
-    <link href="css/mapas.css" rel="stylesheet" />
     <!-- <link href="css/overwrite.css" rel="stylesheet" />  checar por el asunto del calendario -->
     <!-- Theme skin -->
     <link href="color/blue.css" rel="stylesheet" />
@@ -24,44 +23,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
-
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-          height: 80%;
-        }
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-        }
-        
-  
-        #origin-input:focus,
-        #destination-input:focus {
-          border-color: #4d90fe;
-        }
-  
-        #mode-selector {
-          color: #fff;
-          background-color: #4d90fe;
-          margin-left: 12px;
-          padding: 5px 11px 0px 11px;
-        }
-  
-        #mode-selector label {
-          font-family: Roboto;
-          font-size: 13px;
-          font-weight: 300;
-        }
-  
-      </style>
-
-
-
   </head>
   <body>
     <div id="wrapper">
@@ -103,7 +64,7 @@
                     <li class="dropdown">
                       <a href="#">Sucursales <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ route('sucursal_Puerto_Escondido') }}">Puerto Escondido</a></li>
+                        <li><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido</a></li>
                         <li><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto Ixtepec</a></li>
                         <li><a href="{{ route('sucursal_Istmo') }}">Istmo</a></li>
                       </ul>
@@ -195,7 +156,7 @@
                     <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
                       <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
                       <p>
-                        <a href="{{ route('sucursal_Puerto_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
+                        <a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
                       <p>
                         <a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto, Ixtepec, Oaxaca, +52 954 149 0304 </a></p>
                       <p>
@@ -225,9 +186,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGDfu_8YDhR8k6LHqpGfQjCwC5YlxJ9Tk&libraries=places&callback=initMap" async defer></script>
-    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
     <!-- javascript
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
@@ -248,14 +207,11 @@
 
   <script src="js/jquery.flexslider.js"></script>
   <script src="js/animate.js"></script>
-  <script src="js/datatimeconfig.js"></script>
   <script src="js/inview.js"></script>
   <!-- Template Custom JavaScript File -->
   <script src="js/custom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-<script src="js/bootstrap-datetimepicker.min.js"></script>
-
 
   </body>
 </html>

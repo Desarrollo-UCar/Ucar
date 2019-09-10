@@ -11,11 +11,13 @@ if (jQuery().quicksand) {
 		$(".filter li").removeClass("active");	
 		// Use the last category class as the category to filter by. This means that multiple categories are not supported (yet)
 		var filterClass=$(this).attr('class').split(' ').slice(-1)[0];
-		
+		//console.log(filterClass);//llega el campo por el que se va a filtrar 
 		if (filterClass == 'all') {
 			var $filteredData = $data.find('.item-thumbs');
+		//	console.log($filteredData);
 		} else {
 			var $filteredData = $data.find('.item-thumbs[data-type=' + filterClass + ']');
+		//	console.log($filteredData);
 		}
 		$(".portfolio,.team").quicksand($filteredData, {
 			duration: 600,
