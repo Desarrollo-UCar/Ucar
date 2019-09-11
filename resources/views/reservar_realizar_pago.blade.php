@@ -670,7 +670,7 @@
        
        },
        error: function (data) {
-        console.log(data);
+        // console.log(data);
            var err = JSON.parse(data.responseText);
            var arreglo = err.errors;
            /*jQuery.each(arreglo, function(key, value){
