@@ -80,7 +80,7 @@ Route::post('sucursalModificarDatos','SucursalController@ModificarDatos')->name(
 Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->name('datosempleado');
 Route::post('vehiculoModificar','VehiculoController@ModificarDatos')->name('datosvehiculo');
 Route::post('servicioModificar','ServiciosExtraController@ModificarDatos')->name('datoservicio');
-Route::get('clienteagregar', 'ClienteController@Agregar')->name('agregarcliente');
+
 //});
 
 
@@ -108,3 +108,4 @@ Route::get('/reservacionesFecha','ReservacionController@fechaRecogida')->name('p
 Route::get('/reservacionesCliente','ReservacionController@cliente')->name('porCliente');
 Route::get('/reservacionesVehiculo','ReservacionController@vehiculo')->name('porVehiculo');
 });
+Route::get('clienteagregar', 'ClienteController@Agregar')->name('agregarcliente');

@@ -166,9 +166,8 @@ class ClienteController extends Controller
 
     public function Agregar(Request $request)
     {
-        //
-        
-        //return response()->json(['success'=>$request['nombres']]);
+        //        
+        // return response()->json(['success'=>'hola mundo']);
 
        
       if($request['nacionalidad']!='MEXICANA'){
@@ -231,7 +230,7 @@ class ClienteController extends Controller
         if($diff<18 ||$diff > 70){
              return response()->json(['success'=>'ERROR2']);
          }
-        //  return response()->json(['success'=>'EXITO']);
+          return response()->json(['success'=>'EXITO']);
         Cliente::insert([
           'credencial'=>$request['ine'],
           'pasaporte'=>$request['pasaporte'],
@@ -271,4 +270,6 @@ class ClienteController extends Controller
       
         
     }
+
+    
 }
