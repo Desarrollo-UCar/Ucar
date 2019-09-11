@@ -1,8 +1,11 @@
 <?php
 
 namespace App;
+//namespace App\Notifications;
 use App\Role;
 
+//use App\Notifications\ResetPasswordNotification;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -69,6 +72,10 @@ public function hasRole($role)
         return true;
     }
     return false;
+}
+//--aregado
+public function sendPasswordResetNotification($token){
+   $this->notify(new ResetPasswordNotification($token));
 }
 
 }

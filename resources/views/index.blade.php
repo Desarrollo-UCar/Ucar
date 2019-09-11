@@ -205,7 +205,7 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                                   </div>
-                                  <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" required>
+                                  <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" value="Selecciona tus fechas" required>
                                   <input type="hidden" id='fechaRecogida' name="fechaRecogida" value="0">
                                   <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
                               </div>

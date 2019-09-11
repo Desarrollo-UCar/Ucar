@@ -66,7 +66,7 @@
 
             </div>
                     <figure>
-                            <div><img src={{$vehiculo->foto}} /></div>
+                            <div><img src={{'/images/'.$vehiculo->foto}} /></div>
                     </figure>
             <div class="pricing-action">
                 <!-- Button trigger modal -->
@@ -101,19 +101,19 @@
                         <div class="flexslider">
                           <ul class="slides">
                             <li>
-                              <img src="img/auto/1.jpg." alt="" />
+                              <img src={{'/images/'.$vehiculo->foto}}  alt="" />
                             </li>
                             <li>
-                              <img src="img/auto/2.jpg" alt="" />
+                              <img src={{'/images/'.$vehiculo->foto_derecha}}  alt="" />
                             </li>
                             <li>
-                              <img src="img/auto/3.jpg" alt="" />
+                              <img src={{'/images/'.$vehiculo->foto_izquierda}}  alt="" />
                             </li>
                             <li>
-                              <img src="img/auto/4.jpg" alt="" />
+                              <img src={{'/images/'.$vehiculo->foto_frente}}  alt="" />
                             </li>
                             <li>
-                              <img src="img/auto/5.jpg" alt="" />
+                              <img src={{'/images/'.$vehiculo->foto_trasera}}  alt="" />
                             </li>
                           </ul>
                         </div>
