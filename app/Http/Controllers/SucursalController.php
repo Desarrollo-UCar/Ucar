@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Empleado;
+use App\EmpleadoSucursal;
 use App\Sucursal;
 use Illuminate\Http\Request;
 //use App\Providers\ValidacionesLaravel;
@@ -12,8 +14,17 @@ class SucursalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(request $request)
+    {   
+        //return response()->json($request);
+           if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+            return view('gerente.sucursal.versucursales',compact('sucursals'));
+        }
         //
         $sucursals = Sucursal::all();
        // return $sucursals;
@@ -25,10 +36,11 @@ class SucursalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(request $request)
     {
-        //
+        if($request->user()->hasRole('gerente'))
         return view('gerente.sucursal.alta_sucursal');
+        return abort(403, 'No tienes autorización para ingresar.');
     }
 
     /**

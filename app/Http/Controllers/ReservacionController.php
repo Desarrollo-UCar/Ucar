@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Alquiler;
+use App\Empleado;
+use App\EmpleadoSucursal;
 use App\Reservacion;
 use Illuminate\Http\Request;
 use App\Cliente;
@@ -23,14 +25,35 @@ class ReservacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        //
-        $reservaciones = Reservacion::join('clientes','idCliente','=','id_cliente')->get();
-        //->select('reservaciones.*','reservaciones.*','reservacion.id')
+        //return response()->json($request);
 
-        //return $reser
-       // $reservaciones=Reservacion::orderBy('id','DESC')->paginate(300);
+        if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            $reservaciones = Alquiler::
+            join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+            join('clientes','idCliente','=','reservacions.id_cliente')->
+            join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
+            join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
+            where('vehiculosucursales.sucursal','=',$sucursale->sucursal)->
+            where('vehiculosucursales.status','=','ACTIVO')->get();
+
+            return view('gerente.reservaciones.inicio', compact ('reservaciones'));
+
+        }
+
+        $reservaciones = Alquiler::  
+        join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+        join('clientes','idCliente','=','reservacions.id_cliente')->
+        join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
+        join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->get();
+
         return view('gerente.reservaciones.inicio', compact ('reservaciones'));
     }
 
@@ -536,7 +559,8 @@ class ReservacionController extends Controller
         $alquiler->estatus = 'terminado';
         $alquiler->save();
 
-        $reservacion = Reservacion::where('id','=',$request['reservacion']);
+   
+        $reservacion = Reservacion::where('id','=',$alquiler->id_reservacion)->first();
         $reservacion->comentarios = $request['comentario'];
         $reservacion->save();
 
@@ -547,6 +571,102 @@ class ReservacionController extends Controller
         return back()->with('message','Operation Successful !');
 
 
+    }
+
+    public function fechaRecogida(Request $request)
+    {  
+        if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            $reservaciones = Alquiler::
+            join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+            join('clientes','idCliente','=','reservacions.id_cliente')->
+            join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
+            join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
+            where('vehiculosucursales.sucursal','=',$sucursale->sucursal)->
+            where('vehiculosucursales.status','=','ACTIVO')->
+            where('alquilers.fecha_recogida','=',$request['fecha_e'])->
+            orderby('alquilers.fecha_recogida')->get();
+           // return response()->json($reservaciones);
+            return view('gerente.reservaciones.inicio', compact ('reservaciones'));
+
+            //return response()->json($reservaciones);
+        }
+        
+        $reservaciones = Alquiler::join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+        join('clientes','idCliente','=','id_cliente')->
+        join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
+        where('alquilers.fecha_recogida','=',$request['fecha_e'])->get();
+
+        return view('gerente.reservaciones.inicio', compact ('reservaciones'));
+
+        
+    }
+
+    
+    public function cliente(Request $request)
+    {  
+        if(!$request->user()->hasRole('gerente')){
+            $email = $request->user()->email;
+            $empleado = Empleado::where('correo','=',$email)->first();
+            $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
+            ->where('status','=','activo')->first();
+            $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
+
+            $reservaciones = Alquiler::
+            join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+            join('clientes','idCliente','=','reservacions.id_cliente')->
+            join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
+            join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
+            where('vehiculosucursales.sucursal','=',$sucursale->sucursal)->
+            where('vehiculosucursales.status','=','ACTIVO')->
+            where('clientes.nombre','=',$request['nombre'])->
+            where('clientes.primer_apellido','=',$request['apellido'])->
+            where('clientes.fecha_nacimiento','=',$request['nac'])->
+            orderby('alquilers.fecha_recogida')->get();
+           // return response()->json($reservaciones);
+            return view('gerente.reservaciones.inicio', compact ('reservaciones'));
+
+            //return response()->json($reservaciones);
+        }
+        
+        
+        $reservaciones = Alquiler::join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+        join('clientes','idCliente','=','id_cliente')->
+        join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
+        where('clientes.nombre','=',$request['nombre'])->
+        orWhere('clientes.primer_apellido','=',$request['apellido'])->
+        orWhere('clientes.fecha_nacimiento','=',$request['nac'])->get();
+
+        //return response()->json($reservaciones);
+
+        return view('gerente.reservaciones.inicio', compact ('reservaciones'));
+
+        
+    }
+
+    public function vehiculo(Request $request)
+    { 
+
+     
+          $reservaciones = Alquiler::join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+        join('vehiculos','idvehiculo','=','alquilers.id_vehiculo')->
+        join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
+        join('clientes','idCliente','=','reservacions.id_cliente')->
+        where('vehiculosucursales.status','=','ACTIVO')->
+        where('vehiculos.idvehiculo','=',$request['vehiculo'])->get();
+       
+
+
+        //return response()->json($reservaciones);
+
+        return view('gerente.reservaciones.inicio', compact ('reservaciones'));
+
+        
     }
 
     }

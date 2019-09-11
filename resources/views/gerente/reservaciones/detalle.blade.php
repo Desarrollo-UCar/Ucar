@@ -30,7 +30,7 @@
       <div class="col-md-12">
           <div class="box box-primary">
               <div class="box-header">
-                  <h3 class="box-title">{{'Detalle Reservacion'}} <b>{{$reservacion->id}}</b></h3>
+                  <h3 class="box-title">{{'Detalle Reservación'}} <b>{{$reservacion->id}}</b></h3>
                   </div>
                 <div class="box-body">
 
@@ -46,7 +46,7 @@
                       @if($cliente->credencial==null)
                      Pasaporte
                      @else
-                    Identificacion
+                    Identificación
                      @endif cliente</label>
                       <input type="text" name="cliente" id="" class="form-control" disabled value="@if($cliente->credencial==null)
                       {{$cliente->pasaporte}}
@@ -81,9 +81,9 @@
          
                   <div class="row">
                       <div class="col-md-8">
-                          <h4 ><br>Datos de la reservacion</h4>
+                          <h4 ><br>Datos de la reservación</h4>
                   <div class="col-md-6">
-                      <label>Fecha Reservacion</label>
+                      <label>Fecha Reservación</label>
                       <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
                   </div>
                     
@@ -94,7 +94,7 @@
 
 
                 @if($reservacion->saldo==0)
-                  <h3>Se pago el total de la reservacion</h3>
+                  <h3>Se pago el total de la reservación</h3>
                  @else
                 <div class="col-md-6 form-group">
                     <label>Saldo</label>
@@ -124,7 +124,7 @@
 
               <div class="row">
                 <div class="col-md-8">
-                    <h4 ><br>Datos del <a href="">vehiculo </a></h4> 
+                    <h4 ><br>Datos del <a href="">vehículo </a></h4> 
 
 
                   <div class="col-md-6 form-group">
@@ -138,12 +138,12 @@
                    </div>
 
                    <div class="col-md-6 form-group">
-                      <label>Vehiculo</label>
+                      <label>Vehículo</label>
                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}">
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Transmision</label>
+                        <label>Transmisión</label>
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->transmicion}}">
                       </div>
 
@@ -158,7 +158,7 @@
                       </div>
   
                      <div class="col-md-6 form-group">
-                       <label>Fecha Devolucion</label>
+                       <label>Fecha Devolución</label>
                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
                     </div>
 
@@ -169,11 +169,11 @@
                       <div class="col-md-2 form-group">
                           @if($alquiler->estatus!='terminado')
                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
-                              <b>Cambiar VEHICULO</b>
+                              <b>Cambiar VEHÍCULO</b>
                             </button>
                             @else
                             <button type="button" class="btn btn-danger" data-toggle="modal"  disabled data-target="">
-                                <b>Cambiar VEHICULO</b>
+                                <b>Cambiar VEHÍCULO</b>
                                 @endif
                             </div>
                   </div>
@@ -203,14 +203,14 @@
 
                       
                     <div class="col-md-6 form-group">
-                        <label>Fecha expedicion</label>
+                        <label>Fecha expedición</label>
                         <input type="date" name="fecha_e" id="" class="form-control"  value="">
 
                       </div>
 
                       
                     <div class="col-md-6 form-group">
-                        <label>Fecha expiracion</label>
+                        <label>Fecha expiración</label>
                         <input type="date" name="fecha_c" id="" class="form-control" value="">
                       </div>
                       <button type="submit" class="btn btn-sucess"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar'}}</button>
@@ -238,7 +238,9 @@
                                         </tr>
                                       @endforeach
                                       @else
+                                      <tr>
                                       <td>No har extras reservados!</td>
+                                      </tr>
                                       @endif
                                      </body>
 
@@ -473,7 +475,7 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Pagos por motivo de la reservacion'}}  {{$reservacion->id}}</b> </h4>
+                          <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Terminar renta de vehiculo de reservacion'}}  {{$reservacion->id}}</b> </h4>
                         </div>
                         <div class="modal-body">
     
@@ -483,7 +485,7 @@
                                     <div class="form-group">
                                         <form method="GET" action="{{ route('recibir') }}"  role="form">
                                             {{ csrf_field() }}
-
+                                            <input name="reservacion" type="hidden" value= "{{$alquiler->id_reservacion}}">
                                             <input name="alquiler" type="hidden" value= "{{$alquiler->id}}">
                                         <div class="col-md-6 form-group">
                                             <label>Kilometraje del vehiculo</label>

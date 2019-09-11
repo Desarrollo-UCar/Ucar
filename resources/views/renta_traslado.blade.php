@@ -3,7 +3,7 @@
 @section('seccion')
 <section id="formulario">
     <div class="bg-white" id='formulario_reserva_vehiculo'>
-        <h5 class="text-center"><strong>Cotiza el costo aproximado de </strong>tu viaje de la manera mas rápida</h5>
+        <h5 class="text-center"><strong>Solicita la cotizacion de </strong>tu viaje de la manera mas rápida</h5>
     </div>
 <div class="container">
     <div class="row">

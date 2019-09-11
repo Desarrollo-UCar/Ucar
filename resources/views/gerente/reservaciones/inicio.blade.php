@@ -5,12 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<<<<<<< HEAD
-  <title>Reservas</title>
- 
-=======
   <title>Reservas</title> 
->>>>>>> 7bf245220d3b95f0aaadb18b85ff5b2e9b69ee92
   <link rel="stylesheet" type="text/css" href="{{URL::asset('/css/tabla.css')}}">
   <link rel="stylesheet" type="text/css" href="{{URL::asset('https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')}}">
  </head>
@@ -34,8 +29,13 @@
                 <thead>
                     <tr>
                       <th>Número</th>
-                      <th>identificación/Pasaporte Cliente</th>
-                      <th>Fecha</th>
+                      <th>Fecha de reservacion</th>
+                      <th>Cliente</th>
+                      <th>identificación/Pasaporte</th>
+                      <th>Vehiculo</th>
+                      <th>Placas</th>
+                      <th>Fecha entrega</th>
+                      <th>Fecha devolucion</th>
                       <th>Motivo</th>
                       <th>Total</th>
                       <th>Acción</th>
@@ -45,18 +45,25 @@
                       @if($reservaciones->count())  
                       @foreach($reservaciones as $reservacion)  
                       <tr>
-                        <td>{{$reservacion->id}}</td>
-                       <td> @if($reservacion->credencial==null)
-                        {{$reservacion->pasaporte}}
-                        @else
-                        {{$reservacion->credencial}}
-                        @endif </td>
-                       <!-- <td>{{$reservacion->id_cliente}}</td> -->
-                        <td>{{$reservacion->fecha_reservacion}}</td>
+                        <td>{{$reservacion->id}}</td> <!--Datos de la reservacion -->
+                        <td>{{date("d\-m\-Y", strtotime($reservacion->fecha_reservacion))}}</td>
+                      <td>{{$reservacion->nombre}} {{$reservacion->primer_apellido}} {{$reservacion->segundo_apellido}}</td>
+                        <td> @if($reservacion->credencial==null)
+                            {{$reservacion->pasaporte}}
+                            @else
+                            {{$reservacion->credencial}}
+                            @endif </td>
+                        <td>{{$reservacion->marca}} {{$reservacion->modelo}} {{$reservacion->anio}} </td>
+                        <td>{{$reservacion->matricula}} </td>
+                        <td>{{date("d\-m\-Y", strtotime($reservacion->fecha_recogida))}}</td>
+                        <td>{{date("d\-m\-Y", strtotime($reservacion->fecha_devolucion))}} </td>
                         <td>{{$reservacion->motivo_visita}}</td>
-                        <td>{{$reservacion->total}}</td>
+                        <td>{{$reservacion->total}}</td>  
                        <!-- <td>{{$reservacion->estatus}}</td> -->
                         <td>  
+<<<<<<< HEAD
+                          <form action ="{{route('reservacion',$reservacion)}}" method ="GET" enctype="multipart/form-data">
+=======
 <<<<<<< HEAD
                         {{--  <form action ="{{route('reservacion.show',$reservacion)}}" method ="GET" enctype="multipart/form-data">
 =======
@@ -66,6 +73,7 @@
                          <form action ="{{route('reservacion.show',$reservacion)}}" method ="GET" enctype="multipart/form-data">
 >>>>>>> 2e0f0facbcbeb1c82bfffaa62a8a4e412a3f5296
 >>>>>>> 7bf245220d3b95f0aaadb18b85ff5b2e9b69ee92
+>>>>>>> 6632bcdaf22919943eea11d38a36b6dbd9ba279d
                                 {{csrf_field()}}
                                <button type="sumbit" class="btn btn-primary btn-xs" type="sumbit">
                                {{'Detalles  '}}
