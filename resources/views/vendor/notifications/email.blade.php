@@ -51,8 +51,8 @@
 @isset($actionText)
 @slot('subcopy')
 @lang(
-    " \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser: [:actionURL](:actionURL)',
+    "Si el boton no funciona correctamente \":actionText\" button, Copia y pega la URL \n".
+    'En tu navegador: [:actionURL](:actionURL)',
     [
         'actionText' => $actionText,
         'actionURL' => $actionUrl,
@@ -61,3 +61,5 @@
 @endslot
 @endisset
 @endcomponent
+
+<!-- solo para commit-->

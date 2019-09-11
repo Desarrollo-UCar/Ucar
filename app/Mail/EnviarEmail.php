@@ -26,6 +26,7 @@ class EnviarEmail extends Mailable
      *
      * @return $this
      */
+    //holi solo para commit
     public function build(){
         return $this->view('mails.correo_reserva');
     }

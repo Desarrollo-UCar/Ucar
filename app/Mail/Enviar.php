@@ -24,6 +24,8 @@ class Enviar extends Mailable{
      *
      * @return $this
      */
+
+     //solo para commit
     public function build(){
         return $this->view('mails.correo_reserva',compact('reservacion','serv_extra'));
     }

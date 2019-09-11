@@ -80,3 +80,5 @@ class ResetPasswordNotification extends Notification
         static::$toMailCallback = $callback;
     }
 }
+
+//solo para commit
