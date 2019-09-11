@@ -171,7 +171,7 @@
                                     <div class="row">
                                             
                                     
-                                        <form action="{{ route('validar_logeo')}}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('validar_logeo')}}" method="GET" enctype="multipart/form-data">
                                         @csrf    
                                         <input type="hidden" name="id_reserva" value="{{$datos_reserva->id}}">
                                             @if(!(Auth::user()))
@@ -181,7 +181,7 @@
                                                     <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
                                                 </div>    
                                                 <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
-                                                    <a class="nav-link text-success" data-toggle="modal" data-target=".bd-example-modal-lg" >No tengo una cuenta.</a> 
+                                                    <a class="nav-link text-success" data-toggle="modal" data-target=".bd-example-modal-lg" {{-- href="{{ route('register',['id_reserva'=>$datos_reserva->id]) }}"--}}style="cursor:pointer">No tengo una cuenta.</a> 
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -396,10 +396,10 @@
                             {{-- FORMULARIO PARA LA CONFIRMACION DEL CORREO --}}
                                 <div class="form-group col-md-4 col-sm-4">
                                         <label>Confirmar Contraseña</label>
-                                        <input id="password-confirm" type="password" class="form-control"  name="password-confirm"  autocomplete="new-password">
+                                        <input id="passwordconfirm" type="password" class="form-control"  name="passwordconfirm"  autocomplete="new-password">
         
-                                        <span id="errorpassword-confirm" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                                        <span id="validopassword-confirm" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                                        <span id="errorpasswordconfirm" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                                        <span id="validopasswordconfirm" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                     </div>
     
                                     <div class="modal-footer col-md-12">
@@ -416,6 +416,57 @@
       </div>
     </div>
     </div> {{-- AQUI TERMINA EL MODAL  --}}
+
+    {{-- MODAL PARA NOTIFICAR QUE NO SE PUEDE AGREGAR UN CLIENTE MENOR DE 18 AÑOS --}}
+
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rango" style="display: none" id="rango1">Cancelar</button>
+
+  <div class="modal modal-danger fade" id="rango">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background: red;">
+          <div class="modal-header">
+            <button type="button" style="color: white;" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"></b> </h4>
+          </div>
+          <div class="modal-body">
+            <p style="color: white">No puede agregar un USUARIO menor de 18 años o mayor a 60 años&hellip;</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success pull-left" data-dismiss="modal"   data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
+          
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+
+    
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#existe" style="display: none" id="existe1">Cancelar</button>
+<div class="modal modal-danger fade" id="existe">
+    <div class="modal-dialog" >
+      <div class="modal-content" style="background: red;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"></b> </h4>
+        </div>
+        <div class="modal-body">
+          <p style="color: white">Ustede ya se encuentra registrado&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal"
+          data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
+        
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+    
     
     </section>
    
@@ -499,8 +550,10 @@
   <script src="js/jquery.js"></script>  
   <script src="js/jquery.bxslider.min.js"></script>  
   <script src="js/custom.js"></script>
-
-
+  <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.js")}}"></script>
+  <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.date.extensions.js")}}"></script>
+  <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.extensions.js")}}"></script>
+  <script src= "{{asset("assets/$theme/bower_components/select2/dist/js/select2.full.min.js")}}"></script>
 
  
 <script>
@@ -521,6 +574,15 @@
     }
   }
   </script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()           
+    $('[data-mask]').inputmask()
+    $("#example2").inputmask("Regex");
+  })
+</script>
   
   <script>
     // $(function () {
@@ -565,13 +627,32 @@
 
          if(mensaje=='ERRORCONTRA'){
           $( '#password' ).css('borderColor', 'red');         
-                 jQuery('#validopassword').show(); 
-                 jQuery('#errorpassword').hide(); 
+                 jQuery('#validopassword').hide(); 
+                 jQuery('#errorpassword').show(); 
                  $( '#password-cofirm' ).css('borderColor', 'red');
-                 jQuery('#validopassword-confirm').show(); 
-                 jQuery('#errorpassword-confirm').hide(); 
-                 $('#errorpassword-confirm').html('la contraseña no coincide');
+                 jQuery('#validopasswordconfirm').hide(); 
+                 jQuery('#errorpasswordconfirm').show(); 
+                 $('#errorpasswordconfirm').html('la contraseña no coincide');
+                 $('#errorpassword').html('la contraseña no coincide');                 
+         }else{
+          $( '#password' ).css('borderColor', 'red');         
+            jQuery('#validopassword').show(); 
+            jQuery('#errorpassword').hide();
+          $('#password-cofirm' ).css('borderColor', 'green');
+          jQuery('#validopasswordconfirm').show(); 
+                 jQuery('#errorpasswordconfirm').hide(); 
          }
+
+         if(mensaje=='ERROR1'){
+      $('#existe1').click();
+       }
+
+         if(mensaje=='ERROR2'){
+      $('#rango1').click();
+      jQuery('#validofechaNacimiento').hide(); 
+               jQuery('#errorfechaNacimiento').show();          
+              $( '#fechaNacimiento' ).css('borderColor', 'red');
+       }
         //  if(mensaje=='ERROR1'){
         // $('#existe1').click();
         //  }
@@ -596,7 +677,7 @@
             var segundoApellido = arreglo.segundoApellido;
             var fechaNacimiento = arreglo.fechaNacimiento;
             var nacionalidad = arreglo.nacionalidad;      
-            // var ine = arreglo.ine;
+             var ine = arreglo.ine;
             var pasaporte = arreglo.pasaporte; 
             var pais = arreglo.pais;
             var estado = arreglo.estado;
@@ -607,7 +688,7 @@
             var numero = arreglo.numero;
             var email = arreglo.email;
             var password = arreglo.password;
-            var passwordconfirm = arreglo.password-confirm;
+            var passwordconfirm = arreglo.passwordconfirm;
             // var genero = arreglo.genero;
             // var foto = arreglo.foto;
                
@@ -712,16 +793,16 @@
   
   
   
-            // if (ine == undefined){  
-            //      $( '#ine' ).css('borderColor', 'green');         
-            //      jQuery('#validoine').show(); 
-            //      jQuery('#errorine').hide(); 
-            //      }else{
-            //        jQuery('#validoine').hide(); 
-            //      jQuery('#errorine').show();          
-            //     $( '#ine' ).css('borderColor', 'red');
-            //      //console.log(nombre);
-            //    }          
+            if (ine == undefined){  
+                 $( '#ine' ).css('borderColor', 'green');         
+                 jQuery('#validoine').show(); 
+                 jQuery('#errorine').hide(); 
+                 }else{
+                   jQuery('#validoine').hide(); 
+                 jQuery('#errorine').show();          
+                $( '#ine' ).css('borderColor', 'red');
+                 //console.log(nombre);
+               }          
             
   
             if (pais == undefined){  
@@ -820,13 +901,14 @@
                }
 
                if (passwordconfirm == undefined){  
-                 $( '#password-confirm' ).css('borderColor', 'green');         
-                 jQuery('#validopassword-confirm').show(); 
-                 jQuery('#errorpassword-confirm').hide(); 
+                 $( '#passwordconfirm' ).css('borderColor', 'green');         
+                 jQuery('#validopasswordconfirm').show(); 
+                 jQuery('#errorpasswordconfirm').hide(); 
                  }else{
-                   jQuery('#validopassword-confirm').hide(); 
-                 jQuery('#errorpassword-confirm').show();          
-                $( '#password-confirm' ).css('borderColor', 'red');
+                   jQuery('#validopasswordconfirm').hide(); 
+                 jQuery('#errorpasswordconfirm').show();          
+                $( '#passwordconfirm' ).css('borderColor', 'red');
+                $('#errorpasswordconfirm').html('la contraseña no coincide');
                  //console.log(nombre);
                }
 

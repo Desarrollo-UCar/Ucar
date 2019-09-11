@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Cliente;
+use App\User;
+use App\Role;
 Use App\Reservacion;
-
+use Illuminate\Support\Facades\Hash;
 use DB; 
 class ClienteController extends Controller
 {
@@ -169,7 +171,7 @@ class ClienteController extends Controller
         //return response()->json(['success'=>$request['nombres']]);
 
        
-
+      if($request['nacionalidad']!='MEXICANA'){
         $request->validate([
           // 'ine' => 'required|regex:/[0-9]{13}/m',
            'nombres' =>'required|regex:/^[\pL\s]+$/u',
@@ -189,12 +191,84 @@ class ClienteController extends Controller
           //  'sucursal' => 'required',
            'numero' => 'required',
           'password'=> 'required',
-          'password-confirm'=>'required',
+          'passwordconfirm'=>'required',
        ]);
+        }else{
+          $request->validate([
+             'ine' => 'required|regex:/[0-9]{13}/m',
+             'nombres' =>'required|regex:/^[\pL\s]+$/u',
+             'primerApellido' =>'required',
+             'segundoApellido' =>'required',
+             'fechaNacimiento' =>'required|date',
+             'nacionalidad' =>'required',
+             'pais' => 'required',
+             'estado' =>'required',
+             'ciudad' =>'required',
+             'colonia' =>'required',
+             'calle' =>'required',
+             'email' =>'required|email',
+             'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+             'numero' => 'required',
+            'password'=> 'required',
+            'passwordconfirm'=>'required',
+         ]);
 
-       if($request['password']!= $request['password-confirm']){
-        return response()->json(['success'=>'ERRORCONTRA']);
-      }
+        }
+
+        $consulta = Cliente::where('correo',$request['email'])->first();
+
+        if(!empty($consulta)){
+          return response()->json(['success'=>'ERROR1']);
+        }
+
+        if($request['password']!= $request['passwordconfirm']){
+          return response()->json(['success'=>'ERRORCONTRA']);
+        }
+        
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+        $diff = $date->diffInYears($request['fechaNacimiento']); 
+        if($diff<18 ||$diff > 70){
+             return response()->json(['success'=>'ERROR2']);
+         }
+        //  return response()->json(['success'=>'EXITO']);
+        Cliente::insert([
+          'credencial'=>$request['ine'],
+          'pasaporte'=>$request['pasaporte'],
+          'nombre'=> $request['nombres'],
+          'primer_apellido'=>$request['primerApellido'],
+          'segundo_apellido'=>$request['segundoApellido'],
+          'fecha_nacimiento'=>$request['fechaNacimiento'],
+          'nacionalidad'=>$request['nacionalidad'],
+          'correo'=>$request['email'],
+          'telefono'=>$request['telefono'],
+          'calle'=>$request['calle'],
+          'numero'=>$request['numero'],
+          'colonia'=>$request['colonia'],
+          'ciudad'=>$request['ciudad'],
+          'estado'=>$request['estado'],
+          'pais'=>$request['pais'],
+          'created_at'=>$date,
+          'updated_at'=>$date
+        ]);
+        
+        
+        // return response()->json(['success'=>'EXITO']);
+
+        
+        $user = User::create([
+          'name' => $request['nombres'],
+          'email' => $request['email'],
+          'password' => Hash::make($request['password']),
+      ]);
+
+      // return response()->json(['success'=>'EXITO']);
+
+      $user->roles()->attach(Role::where('name', 'user')->first());
+
+    
+        return response()->json(['success'=>'EXITO']);
+      
         
     }
 }
