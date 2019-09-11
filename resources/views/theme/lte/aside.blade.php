@@ -5,21 +5,22 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image">
+         <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Gerente General</p>
-          <a href="#"><i class="fa fa-circle text-success"></i>Activo</a>
+            <p>{{auth::user()->nombre()}} </p>
+          <p>{{auth::user()->rol()}}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i>Activo</a> 
         </div>
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
+      <!--       <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
-              </span>
+              </span>-->
         </div>
       </form>
       <!-- /.search form -->
@@ -37,8 +38,12 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('sucursal.create')}}"><i class="fa fa-circle-o"></i>Nuevas Sucursal</a></li>
+
+          @if(auth::user()->hasRole('gerente'))
+            <li><a href="{{ route('sucursal.create')}}"><i class="fa fa-circle-o"></i>Nueva Sucursal</a></li><!--GERENTE -->
+            @endif
             <li><a href="{{ route('sucursal.index') }}"><i class="fa fa-circle-o"></i>Ver todas las sucursales</a></li>
+       
           </ul>
         </li>
 
@@ -47,11 +52,13 @@
             <i class="fa fa-calendar-check-o"></i>
             <span>Reservaciones</span>
             <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('reservacion.index')}}"><i class="fa fa-circle-o"></i>Ver reservaciones</a></li>
+            <li><a href="{{ route('reservacion.index')}}"><i class="fa fa-circle-o"></i>Ver todas las reservaciones</a></li>
+            <li><a href="#reservacionFechas" data-toggle="modal" data-target="#reservacionFechas"><i class="fa fa-circle-o"></i>Ver reservaciones por fecha</a></li>
+            <li><a data-toggle="modal" data-target="#reservacionesCliente"><i class="fa fa-circle-o"></i>Ver reservaciones por cliente</a></li>
           </ul>
         </li>
         
@@ -103,6 +110,7 @@
               <li><a href="{{ route('mantenimiento.index') }}"><i class="fa fa-circle-o"></i>Ver Mantenimientos</a></li>
             </ul>
           </li> 
+          @if(auth::user()->hasRole('gerente'))
           <li class="treeview">
               <a href="#"><i class="fa fa-cogs"></i>Servicio de mantenimiento
                 <span class="pull-right-container">
@@ -114,6 +122,7 @@
                 <li><a href="{{ route('tallerservicio.index') }}"><i class="fa fa-circle-o"></i>Ver servicios</a></li>
               </ul>
             </li> 
+            @endif
             <li class="treeview">
                 <li><a href="{{ route('cliente.index') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
               </ul>
@@ -122,3 +131,99 @@
     </section>
     <!-- /.sidebar -->
   </aside>
+
+  <div class="modal fade in" id="reservacionFechas">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Ver reservaciones por fecha de recogida'}} </b> </h4>
+          </div>
+          <div class="modal-body">
+
+              <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="form-group">
+                        Ingrese el campo requerido
+                          <form method="GET" action="{{ route('porFecha') }}"  role="form">
+                              {{ csrf_field() }}
+
+
+                              <div class="col-md-6 form-group">
+                                  <label>Fecha recogida</label>
+                                  <input type="date" name="fecha_e" id="" class="form-control"  value="">
+                                </div>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  
+            <p><b>{{'Se mostraran las reservaciones coincidentes'}} {{' '}} </b>&hellip;</p>
+          </div>
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{'Ver'}}</button>
+          </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade in" id="reservacionesCliente">
+
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Ver reservaciones por cliente'}} </b> </h4>
+            </div>
+            <div class="modal-body">
+  
+                <div class="box-body">
+                    <div class="row">
+                      <div class="col-md-12 ">
+                        <div class="form-group">
+                          Ingrese los siguientes campos, todos son requeridos.
+                            <form method="GET" action="{{ route('porCliente') }}"  role="form">
+                                {{ csrf_field() }}
+  
+  
+                                <div class="col-md-6 form-group">
+                                    <label>Nombre(s)</label>
+                                    <input type="text" name="nombre" id="" class="form-control"  value="">
+                                  </div>
+
+                                <div class="col-md-6 form-group">
+                                  <label>Primer Apellido</label>
+                                  <input type="text" name="apellido" id="" class="form-control"  value="">
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label>Fecha de Nac.</label>
+                                    <input type="date" name="nac" id="" class="form-control"  value="">
+                                  </div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    
+              <p><b>{{'Se mostraran las reservaciones coincidentes'}} {{' '}} </b>&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{'Ver'}}</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>

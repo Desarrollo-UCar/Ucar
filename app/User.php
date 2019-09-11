@@ -3,6 +3,7 @@
 namespace App;
 //namespace App\Notifications;
 use App\Role;
+use App\Empleado;
 
 //use App\Notifications\ResetPasswordNotification;
 use App\Notifications\ResetPasswordNotification;
@@ -77,5 +78,19 @@ public function hasRole($role)
 public function sendPasswordResetNotification($token){
    $this->notify(new ResetPasswordNotification($token));
 }
+
+public function nombre(){
+   $empleado = Empleado::where('correo','=',$this->email)->first();
+   return $empleado->nombres;
+
+}
+
+public function rol(){
+    $empleado = User::join('role_user','role_user.user_id','=','users.id')
+    ->join('roles','role_user.role_id','=','roles.id')
+    ->where('email','=',$this->email)->first();
+    return $empleado->description;
+ 
+ }
 
 }
