@@ -16,13 +16,13 @@
   <section class="content">
     @if($alquiler->estatus=='cancelado')
       <div class="alert alert-warning alert-dismissible">
-          <h4>Reservación cancelada!</h4>
+          <h4>¡Reservación cancelada!</h4>
         </div>
         @endif
 
         @if($alquiler->estatus=='terminado')
         <div class="alert alert-warning alert-dismissible">
-            <h4>Alquiler terminadO!</h4>
+            <h4>¡Alquiler terminado!</h4>
           </div>
           @endif
         
@@ -95,7 +95,7 @@
 
                 @if($reservacion->saldo==0)
                   <h3>Se pago el total de la reservación</h3>
-                 @else
+                  @endif 
                 <div class="col-md-6 form-group">
                     <label>Saldo</label>
                     <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->saldo}}">
@@ -104,23 +104,25 @@
                     <div class="col-md-8">
    
                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning2">
-                          <b>Cobrar Saldo pendiente </b>
+                          <b>Registrar cobro </b>
                         </button>
-
-                        @endif 
-                        @if($alquiler->estatus!='terminado')
+                      </div>
+                    </div>
+                      
+                        {{-- @if($alquiler->estatus!='terminado')
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning3">
                             <b>Cobrar garantia </b>
                           </button>
-                          @endif
+                          
+                          @endif --}}
                           <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#pagos">
-                              <b>Ver pagos </b>
+                              <b>Ver cobros </b>
                             </button>
 
-            </div>
-          </div>
+
           
- 
+                      </div>
+                    </div>
 
               <div class="row">
                 <div class="col-md-8">
@@ -287,8 +289,8 @@
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title"> <span class="glyphicon glyphicon-alert"></span> <b> {{' Esta seguro de cancelar la reservacion'}}  {{$reservacion->id}}</b> </h4>
-                </div>
+                       <h4 class="modal-title"> <span class="glyphicon glyphicon-alert"></span> <b> {{' Esta seguro de cancelar la reservacion'}}  {{$reservacion->id}}</b> </h4>
+                    </div>
                 <div class="modal-body">
                   <p><b>{{'La reservacion del servicio de alquiler y sus servicios extra seran cancelados'}} </b>&hellip;</p>
                 </div>
@@ -311,18 +313,52 @@
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Cobro de saldo pendiente por reservacion'}}  {{$reservacion->id}}</b> </h4>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Registrar cobro '}}</b> </h4>
                   </div>
                   <div class="modal-body">
-                    <p><b>{{'Se registrara un pago por '}} {{$reservacion->saldo}} {{' de saldo pendeiente, de la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
+
+                    
+                      <form method="POST" action="{{ route('pagoReservacion') }}"  role="form" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
+                    <p><b>{{'Se registrara un cobro con relacion a la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
+
+                    <div class="row">
+                        <div class="col-md-4">
+
+                               
+                             <label>Motivo</label>
+                             <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
+                             
+                      <option value="otro">Otro</option>
+                        @if($reservacion->saldo!=0)
+                        <option value="saldo">Saldo</option>
+                         @endif
+                    </select>
+ 
+                  </div>
+
+                    <div class="col-md-4">
+                    <label>Monto</label>
+                    <input type="number" name="monto" id="" class="form-control"  value="">
+                    </div>
+
+                  <div class="col-md-4">
+                      <label>Comentario</label>
+                      <input type="text" name="comentario" id="" class="form-control"  value="">
+                    </div>
+  
+
+                  </div>
                   </div>
                   <div class="modal-footer">
-                      <form method="GET" action="{{route('pagoReservacion',$reservacion)}}"  role="form">
-                          {{ csrf_field() }}
+                     
                       <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{' Registrar cobro'}}</button>
-                      </form>
+              </form>
+    
                   </div>
                 </div>
+                
                 <!-- /.modal-content -->
               </div>
               <!-- /.modal-dialog -->

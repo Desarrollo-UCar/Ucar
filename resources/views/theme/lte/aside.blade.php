@@ -10,7 +10,7 @@
         <div class="pull-left info">
             <p>{{auth::user()->nombre()}} </p>
           <p>{{auth::user()->rol()}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i>Activo</a> 
+          {{-- <a href="#"><i class="fa fa-circle text-success"></i>Activo</a>  --}}
         </div>
       </div>
       <!-- search form -->
