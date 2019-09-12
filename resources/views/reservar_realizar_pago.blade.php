@@ -425,7 +425,7 @@
       <div class="modal-dialog">
         <div class="modal-content" style="background: red;">
           <div class="modal-header">
-            <button type="button" style="color: white;" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" style="color: white;" class="close" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-lg" aria-label="Close">
               <span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title"></b> </h4>
           </div>
@@ -433,7 +433,7 @@
             <p style="color: white">No puede agregar un USUARIO menor de 18 años o mayor a 60 años&hellip;</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success pull-left" data-dismiss="modal"   data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
+            <button type="button" class="btn btn-success pull-left" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
           
           </div>
         </div>
@@ -449,7 +449,7 @@
     <div class="modal-dialog" >
       <div class="modal-content" style="background: red;">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-lg" data-toggle="modal" data-target=".bd-example-modal-lg" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title"></b> </h4>
         </div>
@@ -457,8 +457,7 @@
           <p style="color: white">Ustede ya se encuentra registrado&hellip;</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal"
-          data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal"  data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
         
         </div>
       </div>
@@ -467,6 +466,31 @@
     <!-- /.modal-dialog -->
   </div>
     
+
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info" style="display: none" >
+
+  </button>
+  <div class="modal modal-info fade" id="modal-info">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: cornflowerblue;"">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <p style="color: white;">LOS DATOS FUERON AGREGADOS CORRECTAMENTE&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" onclick="recargar()">Continuar</button>
+          
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal ---->
     
     </section>
    
@@ -583,39 +607,27 @@
     $("#example2").inputmask("Regex");
   })
 </script>
+
+
+<script>
+  function recargar(){
+    location.reload(); 
+  }
+</script>
   
   <script>
-    // $(function () {
-        
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //   });
-        
-    //   $('#enviar').click(function (e) {
 
         $(document).ready(function(){
   
   $('#upload_form').on('submit', function(event){
-          event.preventDefault();
-        //    var nombres = $('#nombres').val();
-        //    console.log(nombres);
-        //  var formData = new FormData($('#upload_form') [0]);
-        //  formData.append('nombres',nombres);
-        // formData.append('primerApellido',$('#primerApellido').val());
-        // formData.append('segundoApellido',$('#segundoApellido').val());
-        // formData.append('fechaNacimiento',$('#fechaNacimiento').val());
-        // formData.append('nacionalidad',$('#nacionalidad').val());
-        // formData.append('genero',$('#genero').val());
-      
+          event.preventDefault();      
 
       event.preventDefault();
       $.ajax({      
        method:"POST",
        url:"{{route('agregarcliente')}}",
        data:$('#upload_form').serialize(),//new FormData(this),
-       dataType:'json',
+       dataType:'JSON',
        contentType: false,
        cache: false,
        processData: false,
@@ -623,8 +635,10 @@
        {
         
          var mensaje=data.success;
-         console.log(mensaje);
-
+        //  console.log(mensaje);
+         if(mensaje=='EXITO'){
+      $('.btn-info').click();
+       }
          if(mensaje=='ERRORCONTRA'){
           $( '#password' ).css('borderColor', 'red');         
                  jQuery('#validopassword').hide(); 
@@ -653,19 +667,10 @@
                jQuery('#errorfechaNacimiento').show();          
               $( '#fechaNacimiento' ).css('borderColor', 'red');
        }
-        //  if(mensaje=='ERROR1'){
-        // $('#existe1').click();
-        //  }
-        //  if(mensaje=='ERROR2'){
-        // $('#rango1').click();
-        // jQuery('#validofechaNacimiento').hide(); 
-        //          jQuery('#errorfechaNacimiento').show();          
-        //         $( '#fechaNacimiento' ).css('borderColor', 'red');
-        //  }
-         
+       
        },
        error: function (data) {
-        console.log(data);
+        // console.log(data);
            var err = JSON.parse(data.responseText);
            var arreglo = err.errors;
            /*jQuery.each(arreglo, function(key, value){
@@ -689,18 +694,7 @@
             var email = arreglo.email;
             var password = arreglo.password;
             var passwordconfirm = arreglo.passwordconfirm;
-            // var genero = arreglo.genero;
-            // var foto = arreglo.foto;
-               
-               
-              //  if (foto == undefined){  
-                
-              //    }else{
-              //     $('#message').css('display', 'block');
-              //   $('#message').html('AGREGA UNA FOTO DE EMPLEADO');
-              //   $('#message').addClass("alert alert-danger");
-              //    //console.log(nombre);
-              //  }
+          
              
                if (nombres == undefined){  
                  $( '#nombres' ).css('borderColor', 'green');         

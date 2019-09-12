@@ -1,5 +1,7 @@
 <?php
 Auth::routes(); 
+  
+Auth::routes(['verify' => true]);
 Route::get('register', function () {return view('/auth/register');})->name('register')->middleware('guest');
 Route::get('login', function () {return view('/auth/login');})->name('login')->middleware('guest');
 //routes para PagesController
@@ -8,10 +10,10 @@ Route::get('flota',                   'PagesController@pflota')->               
 Route::post('postFormularioindex',    'PagesController@postFormularioindex')->     name('postFormularioindex') ;
 Route::get('reservar_servicios_extra','PagesController@reservar_servicios_extra')->name('reservar_servicios_extra') ;
 Route::post('reservar_realizar_pago', 'PagesController@reservar_realizar_pago')->  name('reservar_realizar_pago') ;
-Route::get('validar_logeo',           'PagesController@validar_logeo')->           name('validar_logeo')->middleware('auth');
-Route::post('pago_paypal',            'PagesController@pago_paypal')->             name('pago_paypal')->middleware('auth');
-Route::post('correo_reserva',         'PagesController@correo_reserva')->          name('correo_reserva')->middleware('auth');
-Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->       name('dashboard_cliente')->middleware('auth') ;
+Route::get('validar_logeo',           'PagesController@validar_logeo')->           name('validar_logeo')->middleware(['auth', 'verified']);
+Route::post('pago_paypal',            'PagesController@pago_paypal')->             name('pago_paypal')->middleware(['auth', 'verified']);
+Route::post('correo_reserva',         'PagesController@correo_reserva')->          name('correo_reserva')->middleware(['auth', 'verified']);
+Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->       name('dashboard_cliente')->middleware(['auth', 'verified']);
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
 ///routes para traslado controller
 Route::post('renta_traslado_vehiculo','TrasladoController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
@@ -108,5 +110,4 @@ Route::get('/reservacionesFecha','ReservacionController@fechaRecogida')->name('p
 Route::get('/reservacionesCliente','ReservacionController@cliente')->name('porCliente');
 Route::get('/reservacionesVehiculo','ReservacionController@vehiculo')->name('porVehiculo');
 });
-
 Route::get('clienteagregar', 'ClienteController@Agregar')->name('agregarcliente');

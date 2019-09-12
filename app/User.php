@@ -1,14 +1,17 @@
 <?php
 
 namespace App;
+//namespace App\Notifications;
 use App\Role;
 use App\Empleado;
 
+//use App\Notifications\ResetPasswordNotification;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -71,6 +74,10 @@ public function hasRole($role)
     }
     return false;
 }
+//--aregado
+public function sendPasswordResetNotification($token){
+   $this->notify(new ResetPasswordNotification($token));
+}
 
 public function nombre(){
    $empleado = Empleado::where('correo','=',$this->email)->first();
@@ -87,3 +94,5 @@ public function rol(){
  }
 
 }
+
+//solo para commit

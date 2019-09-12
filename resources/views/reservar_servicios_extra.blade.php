@@ -73,7 +73,7 @@
                                         <input class="form-check-input" name = "id[]" value = "{{$servicio->idserviciosextra}}" type="checkbox" >
                                         </div>     
                                     </th>
-                                    <td><img src="{{$servicio->foto}}" class="rounded mx-auto d-block" alt=""/></td>
+                                    <td><img src="{{'/images/'.$servicio->foto}}" class="rounded mx-auto d-block" alt=""/></td>
                                     <td>
                                         <h6>{{$servicio->nombre}}</h6>
                                         <p>{{$servicio->descripcion}}</p>

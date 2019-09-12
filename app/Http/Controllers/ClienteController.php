@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Cliente;
 use App\User;
 use App\Role;
-Use App\Reservacion;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 use DB; 
 class ClienteController extends Controller
@@ -166,9 +166,8 @@ class ClienteController extends Controller
 
     public function Agregar(Request $request)
     {
-        //
-        
-        //return response()->json(['success'=>$request['nombres']]);
+        //        
+        // return response()->json(['success'=>'hola mundo']);
 
        
       if($request['nacionalidad']!='MEXICANA'){
@@ -231,7 +230,7 @@ class ClienteController extends Controller
         if($diff<18 ||$diff > 70){
              return response()->json(['success'=>'ERROR2']);
          }
-        //  return response()->json(['success'=>'EXITO']);
+          // return response()->json(['success'=>'EXITO']);
         Cliente::insert([
           'credencial'=>$request['ine'],
           'pasaporte'=>$request['pasaporte'],
@@ -266,9 +265,20 @@ class ClienteController extends Controller
 
       $user->roles()->attach(Role::where('name', 'user')->first());
 
-    
-        return response()->json(['success'=>'EXITO']);
+          // $credenciales= validate($request(),[
+          //   'email' =>'required|email',
+          //   'password'=> 'required',
+          // ]);
+          
+          if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']])){
+            return response()->json(['success'=>'EXITO']);
+          }    else{
+            return response()->json(['success'=>'NO SE PUDO CONECTAR']);
+          }      
+        
       
         
     }
+
+    
 }
