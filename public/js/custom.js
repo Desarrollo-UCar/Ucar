@@ -133,13 +133,13 @@ jQuery(document).ready(function ($) {
   });
 
   //flexslider
-  $('.flexslider').flexslider({
-    animation: "fade",
-    directionNav: true,
-    controlNav: false,
-    pauseOnAction: true,
-    pauseOnHover: true,
-    slideshowSpeed: 5500
-  });
+  // $('.flexslider').flexslider({
+  //   animation: "fade",
+  //   directionNav: true,
+  //   controlNav: false,
+  //   pauseOnAction: true,
+  //   pauseOnHover: true,
+  //   slideshowSpeed: 5500
+  // });
 
 });
