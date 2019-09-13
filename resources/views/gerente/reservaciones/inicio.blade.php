@@ -61,25 +61,16 @@
                         <td>{{$reservacion->total}}</td>  
                        <!-- <td>{{$reservacion->estatus}}</td> -->
                         <td>  
-<<<<<<< HEAD
+
                           <form action ="{{route('reservacion',$reservacion)}}" method ="GET" enctype="multipart/form-data">
-=======
-<<<<<<< HEAD
-                        {{--  <form action ="{{route('reservacion.show',$reservacion)}}" method ="GET" enctype="multipart/form-data">
-=======
-<<<<<<< HEAD
-                          <form action ="{{route('reservacion',$reservacion)}}" method ="GET" enctype="multipart/form-data">
-=======
-                         <form action ="{{route('reservacion.show',$reservacion)}}" method ="GET" enctype="multipart/form-data">
->>>>>>> 2e0f0facbcbeb1c82bfffaa62a8a4e412a3f5296
->>>>>>> 7bf245220d3b95f0aaadb18b85ff5b2e9b69ee92
->>>>>>> 6632bcdaf22919943eea11d38a36b6dbd9ba279d
+
+
                                 {{csrf_field()}}
                                <button type="sumbit" class="btn btn-primary btn-xs" type="sumbit">
                                {{'Detalles  '}}
                                <span class="glyphicon glyphicon-new-window"></span>
                                </button>
-                          </form>--}}
+                          </form>
                       </td>
                         
                        </tr>
