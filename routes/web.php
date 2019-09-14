@@ -15,6 +15,8 @@ Route::post('pago_paypal',            'PagesController@pago_paypal')->          
 Route::post('correo_reserva',         'PagesController@correo_reserva')->          name('correo_reserva')->middleware(['auth', 'verified']);
 Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->       name('dashboard_cliente')->middleware(['auth', 'verified']);
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
+Route::post('continuar_despues_de_verificacion',  'PagesController@continuar_despues_de_verificacion')->  name('continuar_despues_de_verificacion') ;
+
 ///routes para traslado controller
 Route::post('renta_traslado_vehiculo','TrasladoController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
 Route::get('renta_traslado_datos',    'TrasladoController@renta_traslado_datos')-> name('renta_traslado_datos') ;
@@ -29,6 +31,7 @@ Route::get('sucursal_Istmo',          'SoloVistasController@sucursal_Istmo')->  
 Route::get('renta_flotilla',          'SoloVistasController@renta_flotilla')->       name('renta_flotilla') ;
 Route::get('en_construccion',         'SoloVistasController@en_construccion')->      name('en_construccion');//ruta para todas las que aun no estan
 Route::get('renta_traslado',          'SoloVistasController@renta_traslado')->       name('renta_traslado') ;
+Route::get('bienvenida',              'SoloVistasController@bienvenida')->           name('bienvenida');//bienvenida al cliente al verificar su cuenta de correo
 ////----------------------
 Route::get('prueba', function () {return view('prueba');})->name('prueba');
 
@@ -96,7 +99,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //---------------------------------------------------------------------------mis rutas K
 //rutas reservacion
-Route::get('pago/{reservacion}', 'ReservacionController@pago_Reservacion')->name('pagoReservacion');
+Route::post('pago/', 'ReservacionController@pago_Reservacion')->name('pagoReservacion');
 Route::get('cancel/{id}', 'ReservacionController@cancela')->name('cancelaReservacion');
 Route::resource('reservacion', 'ReservacionController');
 Route::get('/customer/print-pdf/{reservacion}', 'ReservacionController@printPDF')->name('contrato');

@@ -32,7 +32,7 @@
                 <div class="widget">
                         <div id="lista_itinerario">
                             <h6><strong>Tu vehículo:</strong></h6>  
-                            <img src="{{$vehiculo->foto}}" class="rounded mx-auto d-block" alt="" style="width:80%"/>  
+                            <img src="{{ '/images/'.$vehiculo->foto}}" class="rounded mx-auto d-block" alt="" style="width:80%"/>  
                             <dl>
                                 <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
                                 <dd><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</dd>

@@ -344,4 +344,8 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
         $anticipo = $datos_reserva->total / $dias;
         return view('seleccionar_forma_de_pago',compact('datos_reserva','anticipo'));
     }
+
+    public function continuar_despues_de_verificacion(){
+        return back()->with('mensaje', 'favor!');
+    }
 }

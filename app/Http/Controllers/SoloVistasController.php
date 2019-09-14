@@ -15,4 +15,5 @@ public function sucursal_Istmo(){   return view('sucursal_Istmo');}
 public function renta_traslado(){   return view('renta_traslado');}
 public function renta_flotilla(){   return view('renta_flotilla');}
 public function en_construccion(){  return view('en_construccion');}
+public function bienvenida(){       return view('bienvenida');}
 }

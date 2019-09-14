@@ -11,6 +11,7 @@ use App\Role;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use DB; 
+use Illuminate\Foundation\Auth\RegistersUsers;
 class ClienteController extends Controller
 {
     /**
@@ -265,11 +266,18 @@ class ClienteController extends Controller
 
       $user->roles()->attach(Role::where('name', 'user')->first());
 
-          // $credenciales= validate($request(),[
+
+       
+          
+       
+       
+       // $credenciales= validate($request(),[
           //   'email' =>'required|email',
           //   'password'=> 'required',
           // ]);
           
+
+
           if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']])){
             return response()->json(['success'=>'EXITO']);
           }    else{
