@@ -84,11 +84,13 @@ class SucursalController extends Controller
             
         $contar = Sucursal::all();
         if(count($contar)>0){
+            
             $comparar = Sucursal::where('nombre',$request['nombre'])->first();
             if($comparar->nombre == $request['nombre']){
-                return response()->json(['success'=>'existe']);
+                return response()->json(['success'=>'EXISTE']);
             }
         }
+
         return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
     
    
