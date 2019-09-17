@@ -9,8 +9,8 @@ class Vehiculo extends Seeder{
      */
     public function run(){
             \DB::table('vehiculos')->insert(array(
-                'vin' => '1GNCS13Z6M0246599',
-                'matricula' => 'URU-197-J',
+                'vin' => '1GNCS13Z6M0246591',
+                'matricula' => 'URU-197-A',
                 'marca' => 'Nissan',
                 'modelo' => 'March - 2018',
                 'transmicion' => 'standar',
@@ -201,6 +201,233 @@ class Vehiculo extends Seeder{
                 'cilindros' => 250,         //considerar
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+
+            //carros duplicados
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246599',
+                'matricula' => 'URU-197-I',
+                'marca' => 'Subaru',
+                'modelo' => 'XV-2018',
+                'transmicion' => 'standar',
+                'puertas' => 4,
+                'rendimiento' => 18,
+                'estatus' => 'disponible',
+                'anio' => 2018,
+                'precio' => 1200.00, 
+                'costo' => 150000.00, 
+                'pasajeros' => 5,
+                'maletero' =>  '2 Maletas Grandes',
+                'color' =>  'Plata',
+                'cilindros' => 4,
+                'kilometraje' => 3000,
+                'tipo' => 'compacto',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246600',
+                'matricula' => 'URU-197-J',
+                'marca' => 'Subaru',
+                'modelo' => 'XV-2018',
+                'transmicion' => 'standar',
+                'puertas' => 4,
+                'rendimiento' => 18,
+                'estatus' => 'disponible',
+                'anio' => 2018,
+                'precio' => 1200.00, 
+                'costo' => 150000.00, 
+                'pasajeros' => 5,
+                'maletero' =>  '2 Maletas Grandes',
+                'color' =>  'Plata',
+                'cilindros' => 4,
+                'kilometraje' => 3000,
+                'tipo' => 'compacto',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246601',
+                'matricula' => 'URU-197-K',
+                'marca' => 'Honda',
+                'modelo' => 'Dio-2019',
+                'transmicion' => 'no aplica',//no aplica
+                'puertas' => 0,              //no aplica
+                'rendimiento' => 25,
+                'estatus' => 'disponible',
+                'anio' => 2019,
+                'precio' => 900.00, 
+                'costo' => 15000.00, 
+                'pasajeros' => 0,           //no aplica
+                'maletero' =>  'no aplica', //no aplica
+                'color' =>  'Azul',
+                'cilindros' => 250,         //considerar
+                'kilometraje' => 15000,
+                'tipo' => 'motoneta',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246602',
+                'matricula' => 'URU-197-L',
+                'marca' => 'Honda',
+                'modelo' => 'Dio-2019',
+                'transmicion' => 'no aplica',//no aplica
+                'puertas' => 0,              //no aplica
+                'rendimiento' => 25,
+                'estatus' => 'disponible',
+                'anio' => 2019,
+                'precio' => 900.00, 
+                'costo' => 15000.00, 
+                'pasajeros' => 0,           //no aplica
+                'maletero' =>  'no aplica', //no aplica
+                'color' =>  'Azul',
+                'cilindros' => 250,         //considerar
+                'kilometraje' => 15000,
+                'tipo' => 'motoneta',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246603',
+                'matricula' => 'URU-197-M',
+                'marca' => 'Honda',
+                'modelo' => 'Dio-2019',
+                'transmicion' => 'no aplica',//no aplica
+                'puertas' => 0,              //no aplica
+                'rendimiento' => 25,
+                'estatus' => 'disponible',
+                'anio' => 2019,
+                'precio' => 900.00, 
+                'costo' => 15000.00, 
+                'pasajeros' => 0,           //no aplica
+                'maletero' =>  'no aplica', //no aplica
+                'color' =>  'Azul',
+                'cilindros' => 250,         //considerar
+                'kilometraje' => 15000,
+                'tipo' => 'motoneta',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246604',
+                'matricula' => 'URU-197-N',
+                'marca' => 'Honda',
+                'modelo' => 'Dio-2019',
+                'transmicion' => 'no aplica',//no aplica
+                'puertas' => 0,              //no aplica
+                'rendimiento' => 25,
+                'estatus' => 'disponible',
+                'anio' => 2019,
+                'precio' => 900.00, 
+                'costo' => 15000.00, 
+                'pasajeros' => 0,           //no aplica
+                'maletero' =>  'no aplica', //no aplica
+                'color' =>  'Azul',
+                'cilindros' => 250,         //considerar
+                'kilometraje' => 15000,
+                'tipo' => 'motoneta',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246605',
+                'matricula' => 'URU-197-O',
+                'marca' => 'Honda',
+                'modelo' => 'Dio-2019',
+                'transmicion' => 'no aplica',//no aplica
+                'puertas' => 0,              //no aplica
+                'rendimiento' => 25,
+                'estatus' => 'disponible',
+                'anio' => 2019,
+                'precio' => 900.00, 
+                'costo' => 15000.00, 
+                'pasajeros' => 0,           //no aplica
+                'maletero' =>  'no aplica', //no aplica
+                'color' =>  'Azul',
+                'cilindros' => 250,         //considerar
+                'kilometraje' => 15000,
+                'tipo' => 'motoneta',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246606',
+                'matricula' => 'URU-197-P',
+                'marca' => 'Honda',
+                'modelo' => 'Dio-2019',
+                'transmicion' => 'no aplica',//no aplica
+                'puertas' => 0,              //no aplica
+                'rendimiento' => 25,
+                'estatus' => 'disponible',
+                'anio' => 2019,
+                'precio' => 900.00, 
+                'costo' => 15000.00, 
+                'pasajeros' => 0,           //no aplica
+                'maletero' =>  'no aplica', //no aplica
+                'color' =>  'Azul',
+                'cilindros' => 250,         //considerar
+                'kilometraje' => 15000,
+                'tipo' => 'motoneta',
+                'descripcion' =>'Aire acondicionado, bolsas de aire',
+                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
+                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+            ));
+            \DB::table('vehiculos')->insert(array(
+                'vin' => '1GNCS13Z6M0246607',
+                'matricula' => 'URU-197-Q',
+                'marca' => 'Dodge',
+                'modelo' => 'Durango-2013',
+                'transmicion' => 'standar',
+                'puertas' => 4,
+                'rendimiento' => 10,
+                'estatus' => 'disponible',
+                'anio' => 2013,
+                'precio' => 1800.00, 
+                'costo' => 230000.00, 
+                'pasajeros' => 7,
+                'maletero' =>  '5 Maletas Grandes',
+                'color' =>  'Plata',
+                'cilindros' => 6,
+                'kilometraje' => 5000,
+                'tipo' => 'camioneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
                 'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
                 'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',

@@ -34,17 +34,28 @@
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                     // Show a success message to the buyer
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    alert('Transaccion completaaaasseeess ' + details.payer.name.given_name + '!');
                         // Call your server to save the transaction
-                        return fetch('/paypal-transaction-complete', {
-                            method: 'post',
-                            headers: {
-                                'content-type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                orderID: data.orderID
-                            })
-                        });
+                        
+                            var parametros = {
+                                "orderID": data.orderID
+                            };
+                            $.ajax({      
+                                    method:"POST",
+                                    url:"{{route('despues_de_pago')}}",
+                                    data:data.orderID,
+                                    dataType:'JSON',
+                                    contentType: false,
+                                    cache: false,
+                                    processData: false,
+                                    success: function( data ) {
+                                        alert(data);
+                                        },
+                                    error: function(xhr, status, error) {
+                                        alert(error); // check status && error
+                                        },
+                            });
+                            
                 });
             }
 

@@ -16,7 +16,7 @@ class vehiculosucursal extends Seeder
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
         $faker = Faker::create();
-        for ($i=0; $i <8; $i++) {
+        for ($i=0; $i <17; $i++) {
         DB::table('vehiculosucursales')-> insert([
             'sucursal' => $faker->numberBetween(1,3),
             'vehiculo' => $i+1,

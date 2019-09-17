@@ -14,9 +14,8 @@ Route::get('validar_logeo',           'PagesController@validar_logeo')->        
 Route::post('pago_paypal',            'PagesController@pago_paypal')->             name('pago_paypal')->middleware(['auth', 'verified']);
 Route::post('correo_reserva',         'PagesController@correo_reserva')->          name('correo_reserva')->middleware(['auth', 'verified']);
 Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->       name('dashboard_cliente')->middleware(['auth', 'verified']);
+Route::get('despues_de_pago',         'PagesController@despues_de_pago')->         name('despues_de_pago')->middleware(['auth', 'verified']);
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
-Route::post('continuar_despues_de_verificacion',  'PagesController@continuar_despues_de_verificacion')->  name('continuar_despues_de_verificacion') ;
-
 ///routes para traslado controller
 Route::post('renta_traslado_vehiculo','TrasladoController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
 Route::get('renta_traslado_datos',    'TrasladoController@renta_traslado_datos')-> name('renta_traslado_datos') ;
@@ -32,6 +31,8 @@ Route::get('renta_flotilla',          'SoloVistasController@renta_flotilla')->  
 Route::get('en_construccion',         'SoloVistasController@en_construccion')->      name('en_construccion');//ruta para todas las que aun no estan
 Route::get('renta_traslado',          'SoloVistasController@renta_traslado')->       name('renta_traslado') ;
 Route::get('bienvenida',              'SoloVistasController@bienvenida')->           name('bienvenida');//bienvenida al cliente al verificar su cuenta de correo
+//vamos a ver que onda con los pagos
+
 ////----------------------
 Route::get('prueba', function () {return view('prueba');})->name('prueba');
 

@@ -140,7 +140,7 @@
                             <h6><strong>Datos Generales:</strong></h6>    
                             <dl>
                             <dt>Lugar de Recogida y Devolución</dt>
-                            <dd>{{$datos_reserva->lugar_recogida}}</dd>
+                            <dd>{{$sucursal->nombre}}</dd>
                             <dt>Fecha / Hora de recolección:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
                             <dt>Fecha / Hora de devolución:</dt>
@@ -152,14 +152,23 @@
                                 <div id="lista_itinerario">
                                     <h6><strong>Tu vehículo:</strong></h6>  
                                     <dl>
+                                        @if($vehiculo->tipo != "motoneta")
+                                        <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
+                                        <dd><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</dd>
+                                        <dd><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</dd>
+                                        <dd><i class="fa fa-car"   aria-hidden="true"></i>{{$vehiculo->puertas}} Puertas</dd>
+                                        <dd><i class="fa fa-exchange"aria-hidden="true"></i>Transmisión {{$vehiculo->transmicion}}</dd>
+                                        <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</dd>
+                                        <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</dd>
+                                        <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
+                                        <dt>Tarifa: ${{$vehiculo->precio}}</dt>
+                                    @else
                                     <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
-                                    <dd><i class="fa fa-male"       aria-hidden="true"></i>  {{$vehiculo->pasajeros}} Pasajeros</dd>
-                                    <dd><i class="fa fa-suitcase"   aria-hidden="true"></i> {{$vehiculo->maletero}}</dd>
-                                    <dd><i class="fa fa-car"   aria-hidden="true"></i> {{$vehiculo->puertas}} Puertas</dd>
-                                    <dd><i class="fa fa-exchange"aria-hidden="true"></i> Transmisión {{$vehiculo->transmicion}}</dd>
-                                    <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i> {{$vehiculo->cilindros}} Cilindros</dd>
-                                    <dd><i class="fa fa-bolt"       aria-hidden="true"></i> {{$vehiculo->rendimiento}} Kilómetros por litro</dd>
-                                    <dd><i class="fa fa-bolt"       aria-hidden="true"></i> Color: {{$vehiculo->color}}</dd>
+                                        <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} CC</dd>
+                                        <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</dd>
+                                        <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
+                                        <dt>Tarifa: ${{$vehiculo->precio}}</dt>
+                                    @endif
                                     </dl>   
                                 </div>
                             </div>
