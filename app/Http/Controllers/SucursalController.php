@@ -68,6 +68,20 @@ class SucursalController extends Controller
             'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
         ]);
 
+        $contar = Sucursal::all();
+        if(!empty($contar)){
+            $nombre = str_replace(' ', '', $request['nombre']);// trim($request['nombre'],"\t\n\r\0\x0B");
+            $comparar = Sucursal::all();
+            foreach($comparar as $comp){
+            $nom=str_replace(' ', '', $comp['nombre']);//trim($comparar['nombre'],'\r');
+          
+            // return response()->json(['success'=>$nombre]);
+            if($nom == $nombre){
+                return response()->json(['success'=>'EXISTE']);
+            }
+        }
+        }
+
         Sucursal::create([
             'nombre'=> $request['nombre'],
             'codigopostal'=>$request['codigopostal'],
@@ -82,14 +96,7 @@ class SucursalController extends Controller
             'updated_at'=> $date
         ]);
             
-        $contar = Sucursal::all();
-        if(count($contar)>0){
-            
-            $comparar = Sucursal::where('nombre',$request['nombre'])->first();
-            if($comparar->nombre == $request['nombre']){
-                return response()->json(['success'=>'EXISTE']);
-            }
-        }
+    
 
         return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
     
