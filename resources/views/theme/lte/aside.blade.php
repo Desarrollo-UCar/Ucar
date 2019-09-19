@@ -82,6 +82,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            
+          @if(auth::user()->hasRole('gerente'))
+            <li><a href="{{ route('catalogos')}}"><i class="fa fa-circle-o"></i>Marcas/Modelos/Categorias</a></li>
+            @endif
             <li><a href="{{ route('vehiculo.create')}}"><i class="fa fa-circle-o"></i>Nuevo</a></li>
             <li><a href="{{ route('vehiculo.index') }}"><i class="fa fa-circle-o"></i>Ver vehiculos</a></li>
            
@@ -110,8 +114,9 @@
               <li><a href="{{ route('mantenimiento.index') }}"><i class="fa fa-circle-o"></i>Ver Mantenimientos</a></li>
             </ul>
           </li> 
-          @if(auth::user()->hasRole('gerente'))
+
           <li class="treeview">
+              @if(auth::user()->hasRole('gerente'))
               <a href="#"><i class="fa fa-cogs"></i>Servicio de mantenimiento
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -124,9 +129,23 @@
             </li> 
             @endif
             <li class="treeview">
-                <li><a href="{{ route('cliente.index') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
-              </ul>
+                <li><a href="{{ route('cliente.index') }}"><i class="fa fa-circle-o"></i>Clientes</a> </li>
+       
               </li> 
+              
+
+      <li class="treeview">
+          <a href="#"><i class="fa fa-wrench"></i> Reportes
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('reportesFechaReservacion')}}"><i class="fa fa-circle-o"></i>Reservaciones por fecha</a></li>
+            <li><a href="{{ route('mantenimiento.index') }}"><i class="fa fa-circle-o"></i>Ver Mantenimientos</a></li>
+          </ul>
+        </li> 
+
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -20,7 +20,7 @@
             <div class="inner">
               <h3>0</h3>
 
-              <p>Reservaciones Nuevas</p>
+              <p>Reservaciones</p>
             </div>
             <div class="icon">
               <i class="	fa fa-clipboard"></i>
@@ -103,19 +103,11 @@
 
         
       </div>
+
     </section>
 @endsection
 
 @section('scripts')
-<!-- Morris.js charts -->
-<script src="{{asset("assets/$theme/bower_components/raphael/raphael.min.js")}}"></script>
-<script src="{{asset("assets/$theme/bower_components/morris.js/morris.min.js")}}"></script>
 
-<!-- jvectormap -->
-<script src="{{asset("assets/$theme/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js")}}"></script>
-<script src="{{asset("assets/$theme/plugins/jvectormap/jquery-jvectormap-world-mill-en.js")}}"></script>
-
-<!-- jQuery Knob Chart-->
-<script src="{{asset("assets/$theme/bower_components/jquery-knob/dist/jquery.knob.min.js")}}"></script>
 
 @endsection

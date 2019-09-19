@@ -102,10 +102,11 @@
                   </div>
                   <div class="row">
                     <div class="col-md-8">
-   
+                      @if($alquiler->estatus!='cancelado'&&$alquiler->estatus!='terminado')
                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning2">
                           <b>Registrar cobro </b>
                         </button>
+                        @endif
                       </div>
                     </div>
                       
@@ -169,7 +170,7 @@
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
                       </div>
                       <div class="col-md-2 form-group">
-                          @if($alquiler->estatus!='terminado')
+                          @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado')
                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
                               <b>Cambiar VEHÍCULO</b>
                             </button>
@@ -195,31 +196,46 @@
                       <label>Numero Licencia</label>
                       @if($alquiler->num_licencia!=null)
                   <input type="text" name="numero" id="" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
+                  @else
+                  <input type="text" name="numero" id="" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
                   @endif
                     </div>
 
                     <div class="col-md-6 form-group">
                         <label>Nombre conductor</label>
-                        <input type="text" name="nombre" id="" class="form-control"  value="">
+                        @if($alquiler->nombreConductor!=null)
+                        <input type="text" name="nombre" id="" class="form-control"  value="{{$alquiler->nombreConductor}} " required>
+                        @else
+                        <input type="text" name="nombre" id="" class="form-control"  value="" required>
+                        @endif
                       </div>
 
                       
                     <div class="col-md-6 form-group">
                         <label>Fecha expedición</label>
+                        @if($alquiler->expedicion_licecncia!=null)
                         <input type="date" name="fecha_e" id="" class="form-control"  value="">
-
+                        @else
+                        <input type="date" name="fecha_e" id="" class="form-control"  value="{{date($alquiler->expedicion_licencia)}}">
+                        @endif
                       </div>
 
                       
                     <div class="col-md-6 form-group">
                         <label>Fecha expiración</label>
-                        <input type="date" name="fecha_c" id="" class="form-control" value="">
-                      </div>
-                      <button type="submit" class="btn btn-sucess"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar'}}</button>
-                    </div>
-
+                        @if($alquiler->expedicion_licecncia1!=null)
+                        <input type="date" name="fecha_c" id="" class="form-control"  value="">
+                        @else
+                        <input type="date" name="fecha_c" id="" class="form-control"  value="{{date($alquiler->expiracion_licencia)}}">
+                        @endif
+                 </div>
+                 @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado')
+                 <button type="submit" class="btn btn-sucess"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar'}}</button>
+                @endif
                   </form>
                   </div>
+                </div>
+
 
                   <div class="row">
                     <div clas="col-md-8">
@@ -264,17 +280,21 @@
 
                             @if($alquiler->estatus=='cancelado'||$reservacion->estatus=='en curso'||$alquiler->estatus=='terminado')
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#" disabled>
-                                <b>Cancelada</b>
+                                <b>Cancelar</b>
                               </button>
                               <a  disabled class="btn btn-success" disabled><b>Contrato</b></a>
 
                               </div>
                               @else
 
+                              @if($reservacion->estatus!='en curso')
                               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
                                   <b>Cancelar</b>
                                 </button>
+                                @endif
+                                @if($alquiler->nombreConductor!=null&&$alquiler->expedicion_licencia!=null&&$alquiler->num_licencia!=null&&$alquiler->expiracion_licencia!=null&&$alquiler->estatus!='en curso')
                                 <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Contrato</b></a>
+                                @endif
 
                                 @endif
                         </div>                       
@@ -321,16 +341,13 @@
                       <form method="POST" action="{{ route('pagoReservacion') }}"  role="form" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
-                    <p><b>{{'Se registrara un cobro con relacion a la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
+                    <p><b>{{'Se registrara un nuevo cobro'}} </b>&hellip;</p>
 
                     <div class="row">
-                        <div class="col-md-4">
-
-                               
-                             <label>Motivo</label>
+                        <div class="col-md-3">
+                      <label>Motivo</label>
                              <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
-                             
-                      <option value="otro">Otro</option>
+                        <option value="otro">Otro</option>
                         @if($reservacion->saldo!=0)
                         <option value="saldo">Saldo</option>
                          @endif
@@ -338,12 +355,21 @@
  
                   </div>
 
-                    <div class="col-md-4">
+                  <div class="col-md-3">
+                    <label>Datos</label>
+                    <input type="text" name="datos" id="" class="form-control"  value="">
+                  </div>
+
+                    <div class="col-md-3">
                     <label>Monto</label>
+                    @if($reservacion->saldo!=0)
+                    <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
+                     @else
                     <input type="number" name="monto" id="" class="form-control"  value="">
+                    @endif
                     </div>
 
-                  <div class="col-md-4">
+                  <div class="col-md-9">
                       <label>Comentario</label>
                       <input type="text" name="comentario" id="" class="form-control"  value="">
                     </div>
@@ -448,7 +474,7 @@
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Pagos por motivo de la reservacion'}}  {{$reservacion->id}}</b> </h4>
+                        <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Cobros por la reservacion'}}  {{$reservacion->id}}</b> </h4>
                       </div>
                       <div class="modal-body">
   
@@ -461,24 +487,25 @@
                                     <table border="1">
                                       <th>Numero</th>
                                       <th>Datos del pago</th>
+                                      <th>Motivo</th>
                                       <th>Fecha</th>
-                                      <th>Total</th>
+                                      <th>Monto</th>
+                                      <th>Comentario</th>
                                       @if($pagos->count())  
                                       @foreach($pagos as $pago)  
                                       <tr>
                                       <td>{{$pago->id}}</td>
-                                 
-                                     
                                   
                                         <td> {{$pago->paypal_Datos}}
            
                                         {{$pago->mostrador_Datos}} 
-                    
-                                         {{$pago->garantia_Datos}} </td>
+                                                                  </td>
+                                          <td>{{$pago->motivo}}</td>
 
                                          <td>{{$pago->fecha}}</td>
 
                                         <td>{{$pago->total}}</td>
+                                        <td>{{$pago->comentario}}</td>
                                         </tr>
                                       @endforeach
                                       @endif
@@ -490,7 +517,6 @@
                               </div>
                             </div>
                               
-                        <p><b>{{'Lista de pagos por la reservacion '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
                       </div>
                       <div class="modal-footer">
 
@@ -553,6 +579,8 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
     @endsection
 
   @section('scripts')

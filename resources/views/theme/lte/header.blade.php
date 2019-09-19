@@ -31,9 +31,8 @@
               <!-- User image -->
               <li class="user-header">
               <!--  <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image"> -->
-
                 <p>
-                  ADMINISTRADOR
+                    {{auth::user()->rol()}} 
                 <!--  <small>Member since Nov. 2012</small> -->
                 </p>
               </li>
@@ -54,7 +53,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Mis datos</a>
+                  {{-- <a href="#" class="btn btn-default btn-flat">Mis datos</a> --}}
                 </div>
                 <div class="pull-right">
 

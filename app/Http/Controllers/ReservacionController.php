@@ -283,16 +283,72 @@ class ReservacionController extends Controller
      */
     public function pago_Reservacion(request $request)
     {   //return response()->json(date('Y\-m\-d H\:i\:s'));
-        return response()->json($request);
+         $reservacion = Reservacion::where('id','=',$request['reservacion'])->first();
         
         if($request['motivo']=='saldo'){
+        $saldoNuevo = $reservacion->saldo - $request['monto'];
+        $reservacion->saldo = $saldoNuevo;
+        $reservacion->save();
 
-
-        }
+        }  
         
         $carbon = new \Carbon\Carbon();
         
- 
+        $pago = new App\Pago_reservacion;
+        $pago->total = $request['monto'];
+        $pago->fecha =date('Y\-m\-d H\:i\:s');
+        //return response()->json($pago);
+        $pago->mostrador_Datos = $request['datos'];
+        $pago->id_reserva = $reservacion->id;
+        $pago->estatus= 'pagado';
+        $pago->motivo = $request['motivo'];
+        $pago->comentario = $request['comentario'];
+        $pago->save();
+
+
+        return back()->with('message','Operation Successful !');
+        
+        $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
+        $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
+        $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
+
+        $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
+        $edad = $carbon->parse( $newDate)->age; // 1990-10-25
+
+        $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
+        $sucursal = $sucur->sucursal;
+        $fecha_i = $alquiler->fecha_recogida;
+         $fecha_f = $alquiler->fecha_devolucion;
+        $disponibles = DB::select('SELECT * FROM vehiculos 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND vehiculos.idvehiculo NOT IN (
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+        UNION
+        SELECT vehiculos.idvehiculo FROM vehiculos  
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+        WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
+        AND vehiculosucursales.status ="ACTIVO"
+        AND  alquilers.fecha_recogida <= ?
+        AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+    
+    //return response()->json($disponibles);
+
+    
+    $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get() ;
+
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos'));
     }
 
     public function garantia(Reservacion $reservacion)
