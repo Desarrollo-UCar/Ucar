@@ -51,7 +51,7 @@ class PagesController extends Controller{
 // consulta a los vehiculos disponibles
     $fecha_i = $request->fechaRecogida;
     $fecha_f = $request->fechaDevolucion;
-    $vehiculos_disponibles = DB::select('SELECT * FROM vehiculos 
+    $vehiculos_disp = DB::select('SELECT * FROM vehiculos 
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
     WHERE vehiculosucursales.sucursal=?
     AND vehiculos.idvehiculo NOT IN (
@@ -71,14 +71,74 @@ class PagesController extends Controller{
     AND vehiculos.estatus ="disponible"
     AND vehiculosucursales.status ="ACTIVO"
     AND  alquilers.fecha_recogida <= ?
-    AND alquilers.fecha_devolucion >= ?)',[$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
+    AND alquilers.fecha_devolucion >= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
+                                        [$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
-        //return $datos_reserva;
-        return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva'));        
+        //obtener solo un vehiculo por marca y modelo
+        $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
+
+        if(!empty($vehiculos_disp)){
+        $v_anterior = "h";
+        $vehiculos_disponibles = [];
+        foreach($vehiculos_disp as $v){
+            if($v_anterior != "h"){
+                //echo $v_anterior->marca . $v_anterior->modelo;
+                //echo $v->marca . $v->modelo;
+                if($v_anterior->marca . $v_anterior->modelo == $v->marca . $v->modelo){
+                    $v_anterior = $v;
+                }
+                else{
+                    $v_anterior = $v;
+                    array_push($vehiculos_disponibles, $v);  
+                    //echo "agregando";
+                }
+                //echo "---------------------";
+            }
+            else{
+            $v_anterior = $v;
+            //echo $v_anterior->marca . $v_anterior->modelo;
+              //  echo $v->marca . $v->modelo;
+            array_push($vehiculos_disponibles, $v);
+            //echo "agregando"; 
+            //echo "---------------------";
+            }
+        }
+    }
+       //return $datos_reserva; colocar un if en la vista para cuando el arreglo este vacio y mandar un mensaje de que no hay disponibilidad
+       return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva','sucursal'));         
     }
     
     public function pflota(){
-        $flota = App\Vehiculo::all();
+        $vehiculos_disp = DB::select('SELECT *  FROM vehiculos ORDER BY precio,marca,modelo');
+
+        if(!empty($vehiculos_disp)){
+            $v_anterior = "h";
+            $flota = [];
+            foreach($vehiculos_disp as $v){
+                if($v_anterior != "h"){
+                    //echo $v_anterior->marca . $v_anterior->modelo;
+                    //echo $v->marca . $v->modelo;
+                    if($v_anterior->marca . $v_anterior->modelo == $v->marca . $v->modelo){
+                        $v_anterior = $v;
+                    }
+                    else{
+                        $v_anterior = $v;
+                        array_push($flota, $v);  
+                        //echo "agregando";
+                    }
+                    //echo "---------------------";
+                }
+                else{
+                $v_anterior = $v;
+                //echo $v_anterior->marca . $v_anterior->modelo;
+                  //  echo $v->marca . $v->modelo;
+                array_push($flota, $v);
+                //echo "agregando"; 
+                //echo "---------------------";
+                }
+            }
+        }
+
         return view('flota',compact('flota'));
     }
 
@@ -169,8 +229,9 @@ class PagesController extends Controller{
                     }
                 }
             }
+            $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
         // cierre de consulta de servicios extra en las fechas indicadas
-        return view('reservar_servicios_extra',compact('vehiculo','datos_reserva','servicios_extra'));
+        return view('reservar_servicios_extra',compact('vehiculo','datos_reserva','servicios_extra','sucursal'));
     }
 
     public function reservar_realizar_pago(Request $reserva){
@@ -214,8 +275,9 @@ class PagesController extends Controller{
     }
     $datos_reserva->servicios_extra = $cadena_serv_extra;
     $datos_reserva->save();
+    $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
         return view('reservar_realizar_pago',
-            compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total'));
+            compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total','sucursal'));
     }
 
 public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta logeado
@@ -343,5 +405,13 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
             $dias = 1;
         $anticipo = $datos_reserva->total / $dias;
         return view('seleccionar_forma_de_pago',compact('datos_reserva','anticipo'));
+    }
+
+    public function despues_de_pago(Request $pago){
+        $respuesta = $pago['nacionalidad'];
+        return $respuesta;
+                return response()->json(['success'=>'EXITO']);
+        return 'hola r';
+        return view('bienvenida');
     }
 }

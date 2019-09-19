@@ -21,20 +21,13 @@ class CreateTrasladoTempsTable extends Migration
             $table->date('fecha_salida');
             $table->time('hora_salida');
             $table->string('lugar_llegada');
-            $table->date('fecha_llegada_estimada');//estimacion de fecha segun tiempo estimado
-            $table->time('hora_llegada_estimada');//estimacion de hora segun tiempo estimado
-           
-            $table->integer('km_recorridos');//dado en metros
-            $table->integer('tiempo_estimado'); //dado en segundos
-            $table->integer('id_vehiculo');
-
-            $table->decimal('precio_litro_gasolina');
-            $table->integer('litros_gasolina');
-            $table->decimal('monto_gasolina');
-
-            $table->integer('num_choferes');
-            $table->decimal('sueldo_chofer');
-            $table->decimal('total');
+            $table->date('fecha_llegada_solicitada');//estimacion de fecha segun tiempo estimado
+            $table->integer('n_pasajeros');
+            $table->string('nombres');
+            $table->string('primer_apellido');
+            $table->string('segundo_apellido');
+            $table->string('telefono');
+            $table->string('email');
             //los datos personales 
             $table->timestamps();
         });

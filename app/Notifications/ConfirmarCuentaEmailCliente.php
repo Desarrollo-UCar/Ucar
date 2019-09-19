@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Notifications;
 namespace Illuminate\Auth\Notifications;
 
 use Illuminate\Support\Carbon;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class VerifyEmail extends Notification
+class ConfirmarCuentaEmailCliente extends Notification
 {
     /**
      * The callback that should be used to build the mail message.
@@ -44,10 +45,10 @@ class VerifyEmail extends Notification
         }
 
         return (new MailMessage)
-            ->subject(Lang::getFromJson('Confirme su dirección de correo electrónico'))
-            ->line(Lang::getFromJson('Haga clic en el botón de abajo para verificar su dirección de correo electrónico.'))
-            ->action(Lang::getFromJson('Confirme su dirección de correo electrónico'), $verificationUrl)
-            ->line(Lang::getFromJson('Si no creó una cuenta, no se requiere ninguna otra acción.'));
+            ->subject(Lang::getFromJson('Verify Email Address'))
+            ->line(Lang::getFromJson('Please click the button below to verify your email address.'))
+            ->action(Lang::getFromJson('Verify Email Address'), $verificationUrl)
+            ->line(Lang::getFromJson('If you did not create an account, no further action is required.'));
     }
 
     /**
@@ -76,3 +77,4 @@ class VerifyEmail extends Notification
         static::$toMailCallback = $callback;
     }
 }
+

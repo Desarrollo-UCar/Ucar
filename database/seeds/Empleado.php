@@ -35,7 +35,7 @@ class Empleado extends Seeder
             'telefono'=> '9514786952',
             'tipo' => 'gerente',
             'status' => 'activo'
-
         ));
+        
     }
 }

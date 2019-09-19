@@ -21,7 +21,7 @@
                         <h6><strong>Datos Generales:</strong></h6>    
                         <dl>
                             <dt>Lugar de Recogida y Devolución</dt>
-                            <dd>{{$datos_reserva->lugar_recogida}}</dd>
+                            <dd>{{$sucursal->nombre}}</dd>
                             <dt>Fecha / Hora de recolección:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
                             <dt>Fecha / Hora de devolución:</dt>
@@ -46,17 +46,24 @@
                 </div>
             </div>
             <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                    >>> {{$vehiculo->tipo}}
+                    
+                    <h6><strong>{{$vehiculo->tipo}}</strong></h6>
                 <ul>
-                
+                @if($vehiculo->tipo != "motoneta")
                 <li><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</li>
-                <li><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</li>
                 <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->puertas}} Puertas</li>
                 <li><i class="fa fa-exchange"   aria-hidden="true"></i>Transmisión:  {{$vehiculo->transmicion}} </li>
+                <li><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</li>
                 <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</li>
                 <li><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</li>
                 <li><i class="fa fa-pencil-square"aria-hidden="true"></i>Color: {{$vehiculo->color}}</li>
                 <li></i>{{$vehiculo->descripcion}}</li>
+                @else
+                <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->cilindros}} CC</li>
+                <li><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</li>
+                <li><i class="fa fa-pencil-square"aria-hidden="true"></i>Color: {{$vehiculo->color}}</li>
+                <li></i>{{$vehiculo->descripcion}}</li>
+                @endif
                 </ul>
             </div>
             <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
