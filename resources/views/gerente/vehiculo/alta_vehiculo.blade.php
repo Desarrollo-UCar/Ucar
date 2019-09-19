@@ -89,7 +89,7 @@
                           <div class="col-md-6 form-group">
                               <label>Año</label>
                               <?php
-                                  $cont = date('Y');
+                                  $cont = date('Y')+1;
                                   $aux = $cont;
                               ?>
                                   <select id="anio" name="anio" class="form-control">

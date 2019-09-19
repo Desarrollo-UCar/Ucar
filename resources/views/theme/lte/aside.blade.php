@@ -88,7 +88,7 @@
             @endif
             <li><a href="{{ route('vehiculo.create')}}"><i class="fa fa-circle-o"></i>Nuevo</a></li>
             <li><a href="{{ route('vehiculo.index') }}"><i class="fa fa-circle-o"></i>Ver vehiculos</a></li>
-           
+            <li><a href="{{ route('modelovehiculo') }}"><i class="fa fa-circle-o"></i>Agregar Modelo</a></li>
           </ul>
         </li>
         <li class="treeview">

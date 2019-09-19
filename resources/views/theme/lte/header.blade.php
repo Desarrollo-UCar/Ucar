@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="../../index2.html" class="logo" style="position: fixed;">
+    <a href="{{ route('homeG') }}" class="logo" style="position: fixed;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>Ü</b></span>
       <!-- logo for regular state and mobile devices -->

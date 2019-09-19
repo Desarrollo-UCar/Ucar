@@ -5,6 +5,7 @@ use App\Empleado;
 use App\EmpleadoSucursal;
 use App\Vehiculo;
 use App\Sucursal;
+use App\Modelo;
 use App\VehiculoSucursales;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Nullable;
@@ -328,4 +329,28 @@ class VehiculoController extends Controller
         return redirect()->route('vehiculo.index');
         //
     }
+
+    public function Modelo(Request $request){
+        return view('gerente.vehiculo.modelovehiculo'); 
+    }
+
+    public function insertModelo(Request $request){
+
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();   
+
+        $request->validate([
+            'modelo' => 'required',
+            'descripcion'=> 'required',
+        ]);
+        // return response()->json(['success'=>'EXITO']);
+        Modelo::insert([
+            'nombremodelo'=>$request['modelo'],
+            'descripcion'=>$request['descripcion'],
+            'created_at'=>$date,
+            'updated_at'=>$date
+            ]);
+            return response()->json(['success'=>'EXITO']);
+    }
+    
 }
