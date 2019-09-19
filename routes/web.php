@@ -80,6 +80,8 @@ Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado'
 Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehiculo');
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
 Route::get('modificarsucursal','SucursalController@modificar')->name('modificarsucursal');
+Route::get('vehiculomodelo','VehiculoController@Modelo')->name('modelovehiculo');//admin
+Route::post('vehiculoinsert','VehiculoController@insertModelo')->name('insertmodelo');//admin
 Route::post('clientemostrar', 'ClienteController@mostrar')->name('showcliente');
 Route::post('sucursalModificarDatos','SucursalController@ModificarDatos')->name('modificardatos');
 Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->name('datosempleado');

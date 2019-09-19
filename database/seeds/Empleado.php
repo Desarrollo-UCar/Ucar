@@ -16,7 +16,7 @@ class Empleado extends Seeder
         $faker = Faker::create();
         //
         \DB::table('empleados')->insert(array(
-            'ine' => '00000000000000a',
+            'ine' => '000000000000001',
             'nombres' => 'Adriana',
             'primerApellido' => 'Rodriguez',
             'segundoApellido' => 'Benitez',
@@ -36,6 +36,18 @@ class Empleado extends Seeder
             'tipo' => 'gerente',
             'status' => 'activo'
         ));
-        
+
+        \DB::table('users')->insert(array(
+            'name' => 'Adriana',
+            'email' => 'gerente@ucar.com',
+            'password'=> Hash::make('12345678'),
+        ));
+
+        \DB::table('role_user')->insert(array(
+            'role_id' => '3',
+            'user_id' => '1',
+            //'password'=> Hash::make('12345678'),
+        ));
+
     }
 }
