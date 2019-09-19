@@ -46,7 +46,8 @@
                 </div>
             </div>
             <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                    >>> {{$vehiculo->tipo}}
+                    
+                    <h6><strong>{{$vehiculo->tipo}}</strong></h6>
                 <ul>
                 @if($vehiculo->tipo != "motoneta")
                 <li><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</li>

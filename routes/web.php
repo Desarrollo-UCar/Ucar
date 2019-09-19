@@ -17,9 +17,8 @@ Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->    
 Route::get('despues_de_pago',         'PagesController@despues_de_pago')->         name('despues_de_pago')->middleware(['auth', 'verified']);
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
 ///routes para traslado controller
-Route::post('renta_traslado_vehiculo','TrasladoController@renta_traslado_vehiculo')->name('renta_traslado_vehiculo') ;
-Route::get('renta_traslado_datos',    'TrasladoController@renta_traslado_datos')-> name('renta_traslado_datos') ;
-Route::get('solicita_info_traslado',  'TrasladoController@solicita_info_traslado')->name('solicita_info_traslado') ;
+Route::post('enviar_datos_traslado',  'TrasladoController@enviar_datos_traslado')->name('enviar_datos_traslado') ;
+Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo') ;
 //routes para SoloVistasController
 Route::get('Reservacion',             'SoloVistasController@reservacion')->         name('reservacion') ;
 Route::get('servicios',               'SoloVistasController@servicios')->            name('servicios') ;

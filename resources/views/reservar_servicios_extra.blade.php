@@ -43,13 +43,13 @@
                                 <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</dd>
                                 <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</dd>
                                 <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
-                                <dt>Tarifa: ${{$vehiculo->precio}}</dt>
+                                <dt>Tarifa: ${{number_format($vehiculo->precio,2)}}</dt>
                             @else
                             <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
                                 <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} CC</dd>
                                 <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</dd>
                                 <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
-                                <dt>Tarifa: ${{$vehiculo->precio}}</dt>
+                                <dt>Tarifa: ${{number_format($vehiculo->precio,2)}}</dt>
                             @endif
                             </dl> 
                         </div> 

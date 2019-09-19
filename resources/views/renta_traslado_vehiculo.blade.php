@@ -35,8 +35,7 @@
                             <dt>Sucursal encargada</dt>
                             
                         </dl> 
-                    </div>
-                    <a a href="{{ route('renta_traslado') }}" class="btn btn-warning btn-sm">Modificar</a>    
+                    </div>   
               </div>
             </aside>
           </div>
