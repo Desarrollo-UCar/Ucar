@@ -21,7 +21,7 @@
                             <h6><strong>Datos Generales:</strong></h6>    
                             <dl>
                             <dt>Lugar de Recogida y Devolución</dt>
-                            <dd>{{$datos_reserva->lugar_recogida}}</dd>
+                            <dd>{{$sucursal->nombre}}</dd>
                             <dt>Fecha / Hora de recolección:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
                             <dt>Fecha / Hora de devolución:</dt>
@@ -34,6 +34,7 @@
                             <h6><strong>Tu vehículo:</strong></h6>  
                             <img src="{{ '/images/'.$vehiculo->foto}}" class="rounded mx-auto d-block" alt="" style="width:80%"/>  
                             <dl>
+                            @if($vehiculo->tipo != "motoneta")
                                 <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
                                 <dd><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</dd>
                                 <dd><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</dd>
@@ -42,7 +43,14 @@
                                 <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</dd>
                                 <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</dd>
                                 <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
-                                <dt>Tarifa: ${{$vehiculo->precio}}</dt>
+                                <dt>Tarifa: ${{number_format($vehiculo->precio,2)}}</dt>
+                            @else
+                            <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
+                                <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} CC</dd>
+                                <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</dd>
+                                <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
+                                <dt>Tarifa: ${{number_format($vehiculo->precio,2)}}</dt>
+                            @endif
                             </dl> 
                         </div> 
                 </div>

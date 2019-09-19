@@ -11,7 +11,7 @@
     <link href="css/bootstrap.css" rel="stylesheet" />
     
     <link href="css/style.css" rel="stylesheet" />
-   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
     <!-- Theme skin -->
     <link href="color/blue.css" rel="stylesheet" />
@@ -119,7 +119,10 @@
     <section id="content">
         <div class="container">
             <div class="row">
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="container">
+                        <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <div id="lista_itinerario">
                             <h6><strong>Tu Cotización:</strong></h6>    
                             <table class="table table-sm">
@@ -135,12 +138,12 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <div id="lista_itinerario">
                             <h6><strong>Datos Generales:</strong></h6>    
                             <dl>
                             <dt>Lugar de Recogida y Devolución</dt>
-                            <dd>{{$datos_reserva->lugar_recogida}}</dd>
+                            <dd>{{$sucursal->nombre}}</dd>
                             <dt>Fecha / Hora de recolección:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
                             <dt>Fecha / Hora de devolución:</dt>
@@ -148,22 +151,54 @@
                             </dl> 
                         </div>
                     </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">    
-                                <div id="lista_itinerario">
-                                    <h6><strong>Tu vehículo:</strong></h6>  
-                                    <dl>
-                                    <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
-                                    <dd><i class="fa fa-male"       aria-hidden="true"></i>  {{$vehiculo->pasajeros}} Pasajeros</dd>
-                                    <dd><i class="fa fa-suitcase"   aria-hidden="true"></i> {{$vehiculo->maletero}}</dd>
-                                    <dd><i class="fa fa-car"   aria-hidden="true"></i> {{$vehiculo->puertas}} Puertas</dd>
-                                    <dd><i class="fa fa-exchange"aria-hidden="true"></i> Transmisión {{$vehiculo->transmicion}}</dd>
-                                    <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i> {{$vehiculo->cilindros}} Cilindros</dd>
-                                    <dd><i class="fa fa-bolt"       aria-hidden="true"></i> {{$vehiculo->rendimiento}} Kilómetros por litro</dd>
-                                    <dd><i class="fa fa-bolt"       aria-hidden="true"></i> Color: {{$vehiculo->color}}</dd>
-                                    </dl>   
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div id="lista_itinerario">
+                            <h6><strong><span class="colored">*Documentos que deberá presentar obligatoriamente en mostrador al momento de la entrega del vehículo:</span></strong></h6>    
+                            <dl>
+                            <dt>- INE o pasaporte vigente de quien realizó la reserva</dt>
+                            <dd>En el caso de nacionales se solicita INE y para extranjeros pasaporte.</dd>
+                            <dt>- Licencia de conducir vigente</dt>
+                            <dt>- Tarjeta de crédito</dt>
+                            <dt>- Pago de garantia</dt>
+                            <dd>De la tarjeta de crédito se retendrán 20,000.00MX como garantia en caso de cualquier siniestro o percanse.</dd>  
+                            <dt>- Pago total de la renta</dt>
+                            <dd>El pago total de la renta se liquida en el momento de la entrega el vehiculo.</dd>
+                            <dt>- En caso de dudas</dt>
+                            <dd>Consultar los términos y condiciones del servicio.</dd>
+                            </dl> 
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">    
+                  <div id="lista_itinerario">
+                      <h6><strong>Tu vehículo:</strong></h6>  
+                      <dl>
+                          @if($vehiculo->tipo != "motoneta")
+                          <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
+                          <dd><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</dd>
+                          <dd><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</dd>
+                          <dd><i class="fa fa-car"   aria-hidden="true"></i>{{$vehiculo->puertas}} Puertas</dd>
+                          <dd><i class="fa fa-exchange"aria-hidden="true"></i>Transmisión {{$vehiculo->transmicion}}</dd>
+                          <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</dd>
+                          <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Km por litro</dd>
+                          <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
+                          <dt>Tarifa: ${{number_format($vehiculo->precio,2)}}</dt>
+                      @else
+                      <dt>{{$vehiculo->marca}} {{$vehiculo->modelo}}</dt>
+                          <dd><i class="fa fa-snowflake-o"aria-hidden="true"></i>{{$vehiculo->cilindros}} CC</dd>
+                          <dd><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</dd>
+                          <dd><i class="fa fa-bolt"       aria-hidden="true"></i>Color: {{$vehiculo->color}}</dd>
+                          <dt>Tarifa: ${{number_format($vehiculo->precio,2)}}</dt>
+                      @endif
+                      </dl>   
+                  </div>
+              </div>
+                            
+                            <div class="col-sm-8 col-md-4 col-lg-4 col-xl-4">
                                 {{-- <div class="container"> --}}
                                     <div class="row">
                                             
@@ -212,6 +247,15 @@
                                                         
                                             @endif
                                         </form>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div id="lista_itinerario">
+                                                
+                                                <dt class = "text-danger"><strong>¡¡¡IMPORTANTE!!!</strong></dt>
+                                                <dd>De no cumplir con los documentos aqui mostrados, no se le podrá hacer entrega del vehículo, ni de su pago de reserva.</dd>
+                                                </dl> 
+                                            </div>
+                                        </div>
                                     </div>
                                 {{-- </div> --}}
                             </div>
@@ -370,9 +414,9 @@
                                                 <span id="validonumero" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                             </div>
     
-                                         
+                                        
     
-                                            {{--FORMULARIO DE CORREO EMAIL--}}
+                        {{--FORMULARIO DE CORREO EMAIL--}}
                         <div class="form-group col-md-4 col-sm-4">
                                 <label>Email</label>
                                 <input type="email" class="form-control" placeholder="Correo Eléctronico" name="email" id="email">

@@ -121,13 +121,19 @@
                 <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <ul>
                         >>>{{$vehiculo->tipo}}
-                        <li><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</li>
-                        <li><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</li>
-                        <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->puertas}} Puertas</li>
-                        <li><i class="fa fa-exchange"   aria-hidden="true"></i>Transmisión:  {{$vehiculo->transmicion}} </li>
-                        <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</li>
-                        <li><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</li>
-                        <li><i class="fa fa-pencil-square"aria-hidden="true"></i>Color: {{ $vehiculo->color}}</li>
+                        @if($vehiculo->tipo != "motoneta")
+                          <li><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</li>
+                          <li><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</li>
+                          <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->puertas}} Puertas</li>
+                          <li><i class="fa fa-exchange"   aria-hidden="true"></i>Transmisión:  {{$vehiculo->transmicion}} </li>
+                          <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</li>
+                          <li><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</li>
+                          <li><i class="fa fa-pencil-square"aria-hidden="true"></i>Color: {{ $vehiculo->color}}</li>
+                        @else
+                          <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</li>
+                          <li><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</li>
+                          <li><i class="fa fa-pencil-square"aria-hidden="true"></i>Color: {{ $vehiculo->color}}</li>
+                        @endif
                         </ul>
                         <p>{{$vehiculo->descripcion}}</p>
                 </div>

@@ -1,16 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App;
+use DB;
 use App\Http\Controllers\Controller;
 
 class TrasladoController extends Controller{
     //parte de la reserva de un traslado
     public function renta_traslado_vehiculo(Request $request){  
-        //estimar fecha y hora de llegada
-        $fecha_estimada = $request->fecha_salida; 
-        $hora_estimada =  $request->hora_salida;
+        if($request->fecha_salida=='0' || $request->fecha_solicitada =='0')
+            return back()->with('mensaje', 'Seleccione fechas!');
          // Creamos el objeto traslado_temp
          $traslado_temp = new App\traslado_temp;
          // Seteamos las propiedades de la tabla traslado_temp
@@ -19,29 +19,23 @@ class TrasladoController extends Controller{
          $traslado_temp->lugar_salida = $request->lugar_salida;
          $traslado_temp->fecha_salida = $request->fecha_salida;
          $traslado_temp->hora_salida = $request->hora_salida;
-
          $traslado_temp->lugar_llegada = $request->lugar_llegada;
-         $traslado_temp->fecha_llegada_estimada = $fecha_estimada;
-         $traslado_temp->hora_llegada_estimada = $hora_estimada;
-         $traslado_temp->id_vehiculo = 0;
-         $traslado_temp->km_recorridos = $request->km_recorridos;
-         $traslado_temp->tiempo_estimado = $request->tiempo_estimado;
+         $traslado_temp->fecha_llegada_solicitada = $request->fecha_solicitada;
+         $traslado_temp->n_pasajeros = intval($request->n_pasajeros);
 
-        $traslado_temp->precio_litro_gasolina = 0;
-        $traslado_temp->litros_gasolina = 0;
-        $traslado_temp->monto_gasolina = 0;
-        $traslado_temp->num_choferes = 1;
-        $traslado_temp->sueldo_chofer = 0;
-        $traslado_temp->total = 0;
+         $traslado_temp->nombres = $request->nombres;
+         $traslado_temp->primer_apellido = $request->primerApellido;
+         $traslado_temp->segundo_apellido = $request->segundoApellido;
+         $traslado_temp->telefono = $request->telefono;
+         $traslado_temp->email = $request->email;
          // Guardamos en la base de datos (equivalente al flush de Doctrine)
          $traslado_temp->save();
         //Consultas a las bases de datos flota disponible en las fechas dadas y devolucion de los datos de la reserva de un traslado
-         $vehiculos_disponibles  = App\Vehiculo::all();
          $datos_reserva_traslado = App\traslado_temp::findOrFail($traslado_temp->id);
-        return view('renta_traslado_vehiculo',compact('vehiculos_disponibles', 'datos_reserva_traslado'));
+        return view('renta_traslado_datos',compact('datos_reserva_traslado'));
     }
 
-    public function renta_traslado_datos(Request $reserva){
+    public function enviar_datos_traslado(Request $reserva){
         $id_vehiculo    = $reserva['id_vehiculo'];
         //return $id_vehiculo;
         $id_reserva     = $reserva['id_reserva_traslado'];
