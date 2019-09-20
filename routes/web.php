@@ -120,6 +120,6 @@ Route::get('clienteagregar', 'ClienteController@Agregar')->name('agregarcliente'
 Route::get('reportesFechaReservacion', 'ReportesController@fechaReservacion')->name ('reportesFechaReservacion');
 
 Route::get('catalogos', 'MarcaVehiculoController@index')->name('catalogos');
-Route::post('registrarMarca','MarcaVehiculoController@store')->name('registrarMarca');
+Route::get('registrarMarca','MarcaVehiculoController@store')->name('registrarMarca');
 Route::post('registrarModelo','ModeloVehiculoController@store')->name('registrarModelo');
 Route::resource('marca', 'MarcaVehiculoController');
