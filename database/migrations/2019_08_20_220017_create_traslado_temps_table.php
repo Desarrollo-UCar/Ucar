@@ -28,6 +28,8 @@ class CreateTrasladoTempsTable extends Migration
             $table->string('segundo_apellido');
             $table->string('telefono');
             $table->string('email');
+            $table->boolean('viaje_redondo');
+            $table->integer('dias_espera')->nullable();
             //los datos personales 
             $table->timestamps();
         });

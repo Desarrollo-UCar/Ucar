@@ -166,18 +166,6 @@
                                     <span id="validoemail" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                 </div>
 
-                                <div class="form-group col-md-4 col-sm-4">
-                                  <div class = "row">
-                                    <div style="margin-top: 10%; margin-left: 10%;">
-                                        <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value="."  required>
-                                        <label class="form-check-label" for="terminos_condiciones"><small>HE LEÍDO Y ACEPTO LOS</small></label>
-                                    </div>
-                                    <div>
-                                        <a style="margin-top: 17%; margin-left: -8%;" class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" ><small>TÉRMINOS Y CONDICIONES</small></a> 
-                                    </div>
-                                  </div>
-                                </div>
-
                     <div class="form-row">
                             <div class="form-group col-md-12 col-sm-12">
                                     <h6><strong>Información de su cotización de viaje:</strong></h6>  
@@ -207,7 +195,7 @@
                                     <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                                     </div>
-                                    <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" value="Selecciona tus fechas" required>
+                                    <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" value="Selecciona tu fecha" required>
                                     <input type="hidden" id='fecha_salida' name="fecha_salida" value="0">
                                     <input type="hidden" id='fecha_solicitada' name="fecha_solicitada" value="0">
                                 </div>
@@ -219,6 +207,10 @@
                                     <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                     </div>
                                     <select name = 'hora_salida' class="form-control" required>
+                                      <option>00:00</option><option>01:00</option>
+                                      <option>02:00</option><option>03:00</option>
+                                      <option>04:00</option><option>05:00</option>
+                                      <option>06:00</option><option>07:00</option>
                                         <option>08:00</option><option>09:00</option>
                                         <option selected>10:00</option><option>11:00</option>
                                         <option>12:00</option><option>13:00</option>
@@ -226,6 +218,8 @@
                                         <option>16:00</option><option>17:00</option>
                                         <option>18:00</option><option>19:00</option>
                                         <option>20:00</option><option>21:00</option>
+                                        <option>22:00</option><option>23:00</option>
+                                        <option>24:00</option>
                                     </select>
                                 </div>
                             </div>
@@ -235,14 +229,35 @@
                                         <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
                                         </div>
-                                        <input name = 'n_pasajeros' id="n_pasajeros" class="form-control form-control-lg" type="text" placeholder="N° Pasajeros" data-inputmask='"mask": "99"' data-mask required>
+                                        <input type="text" class="form-control" placeholder="N° Pasajeros" name="n_pasajeros" 
+                                        type="number" id="telefono" required>
                                     </div>
                               </div> 
                               <div class="form-group col-md-3 col-sm-3">
                                     <div style="margin-top: 15%; margin-left: 10%;">
-                                        <input type="checkbox" id="viaje_redondo" name="viaje_redondo" value="."  required>
-                                        <label class="form-check-label" for="viaje_redondo">VIAJE REDONDO?</label>
+                                        <input type="checkbox" id="viaje_redondo" name="viaje_redondo" value ="1">
+                                        <label class="form-check-label" for="viaje_redond">VIAJE REDONDO?</label>
                                     </div>
+                              </div>
+                              <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3"  style="display: none;" id="tiempo_espera">
+                                  <label for="dias_espera">DIAS DE ESPERA PARA RETORNO</label>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
+                                      </div>
+                                      <input name = 'dias_espera' id="dias_espera" class="form-control form-control-lg" type="text" placeholder="Dias de espera" type="number"  >
+                                  </div>
+                              </div> 
+                              <div class="form-group col-md-4 col-sm-4">
+                                  <div class = "row">
+                                    <div style="margin-top: 10%; margin-left: 10%;">
+                                        <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value = "1" required>
+                                        <label class="form-check-label" for="terminos_condiciones"><small>HE LEÍDO Y ACEPTO LOS</small></label>
+                                    </div>
+                                    <div>
+                                        <a style="margin-top: 17%; margin-left: -8%;" class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" ><small>TÉRMINOS Y CONDICIONES</small></a> 
+                                    </div>
+                                  </div>
                                 </div> 
                             <div class="form-group col-md-2 col-sm-2">
                                     <button type="submit" class="btn btn-medium btn-theme" style="margin-top: 13%;"> Continuar</button>
@@ -398,6 +413,31 @@
           $("#example2").inputmask("Regex");
         })
       </script>
+<script>
+
+
+
+var checkbox = document.getElementById('viaje_redondo');
+checkbox.addEventListener("change", validaCheckbox, true);
+
+function validaCheckbox(){
+  var checked = checkbox.checked;
+  var tiempo_espera= document.getElementById("tiempo_espera");
+  if(checked)
+    tiempo_espera.style.display = (tiempo_espera.style.display == 'none')?'block' : 'none';
+  else
+    tiempo_espera.style.display = (tiempo_espera.style.display == 'block')?'none' : 'block';
+}
+</script>
+<script>
+  $(document).ready(function() {
+    var tiempo_espera= document.getElementById("tiempo_espera");
+    if(document.getElementById('viaje_redondo').checked == true)
+    tiempo_espera.style.display = (tiempo_espera.style.display == 'block')?'block' : 'none';
+  else
+    tiempo_espera.style.display = (tiempo_espera.style.display == 'none')?'none' : 'block';
+  })
+</script>
 </body>
 </html>
 

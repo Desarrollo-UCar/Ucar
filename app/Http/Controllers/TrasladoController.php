@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 
 class TrasladoController extends Controller{
     //parte de la reserva de un traslado
-    public function renta_traslado_vehiculo(Request $request){  
+    public function renta_traslado_vehiculo(Request $request){ 
+        //return $request; 
         if($request->fecha_salida=='0' || $request->fecha_solicitada =='0')
             return back()->with('mensaje', 'Seleccione fechas!');
          // Creamos el objeto traslado_temp
@@ -28,6 +29,8 @@ class TrasladoController extends Controller{
          $traslado_temp->segundo_apellido = $request->segundoApellido;
          $traslado_temp->telefono = $request->telefono;
          $traslado_temp->email = $request->email;
+         $traslado_temp->viaje_redondo = $request->viaje_redondo;
+         $traslado_temp->dias_espera = $request->dias_espera;
          // Guardamos en la base de datos (equivalente al flush de Doctrine)
          $traslado_temp->save();
         //Consultas a las bases de datos flota disponible en las fechas dadas y devolucion de los datos de la reserva de un traslado
