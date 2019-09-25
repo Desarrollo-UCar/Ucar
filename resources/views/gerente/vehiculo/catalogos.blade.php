@@ -81,7 +81,7 @@
                       <!-- /.tab-pane -->
                       <div class="tab-pane" id="tab_2-2">
                             <b>Registrar:</b>
-                            <form action="{{ route('registrarModelo') }}" method="POST">
+                            <form id="modeloform" {{--action="{{ route('registrarModelo') }}"--}} method="POST">
                                      @csrf
                                        <div class="row">
                                           <div class="col-md-12">
@@ -92,7 +92,7 @@
                                         </div>
                                        <div class="form-group col-md-4">
                                         <label>Marca</label>
-                                        <select name= "marca" id="vehiculo" class="form-control select2" style="width: 100%;">
+                                        <select name= "marca" id="marca" class="form-control select2" style="width: 100%;" >
                                                 @foreach($marcas as $marca)  
                                    <option value={{$marca->id}}>
                                 {{$marca->nombre}}</option>
@@ -102,7 +102,10 @@
 
                                     <div class="form-group col-md-4">
                                             <label>Modelo</label>
-                                            <input type="text" class="form-control" placeholder="Modelo del auto" name="modelo"  autofocus required>
+                                            <input type="text" class="form-control" placeholder="Modelo del auto" name="modelo"  autofocus required onkeyup="javascript:this.value=this.value.toUpperCase();" id="modelo">
+
+                                            <span id="errormodelo" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                                            <span id="validomodelo" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                         </div>
     
                                     <div class="row">
@@ -267,5 +270,59 @@
   });
   </script>
 
+<script>
+  $(document).ready(function(){
+  
+   $('#modeloform').on('submit', function(event){
+    event.preventDefault();
+    $.ajax({
+     url:"{{ route('registrarModelo') }}",
+     method:"get",
+     data:$('#modeloform').serialize(),//new FormData(this),
+     dataType:'JSON',
+     contentType: false,
+     cache: false,
+     processData: false,
+     success:function(data)
+     {      
+       var mensaje=data.success;
+       console.log(mensaje);
+       if(mensaje=='ERROR1'){
+      $('#existe1').click();
+       }
+       if(mensaje=='EXITO'){
+      $('.btn-info').click();
+       }
 
+       $( '#nombre' ).css('borderColor', 'green');         
+                     jQuery('#validonombre').show(); 
+                     jQuery('#errornombre').hide(); 
+
+     },
+     error: function (data) {
+         var err = JSON.parse(data.responseText);
+         var arreglo = err.errors;
+         /*jQuery.each(arreglo, function(key, value){
+            console.log(arreglo);
+                      });*/
+                     console.log(arreglo);
+           var modelo = arreglo.modelo;        
+                       
+           if (modelo == undefined){  
+                     $( '#modelo' ).css('borderColor', 'green');         
+                     jQuery('#validomodelo').show(); 
+                     jQuery('#errormodelo').hide(); 
+                     }else{
+                       jQuery('#validomodelo').hide(); 
+                     jQuery('#errormodelo').show();          
+                    $('#modelo' ).css('borderColor', 'red');
+                     //console.log(nombre);
+                   }       
+                
+     }
+    })
+   });
+  
+  });
+  </script>
 @endsection
