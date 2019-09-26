@@ -19,7 +19,16 @@ Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')-
 ///routes para traslado controller
 Route::post('enviar_datos_traslado',  'TrasladoController@enviar_datos_traslado')->name('enviar_datos_traslado') ;
 Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo') ;
+//generar la cotizacion del lado del adminitrador
+Route::get('vista_generar_cotizacion_traslado','SoloVistasController@vista_generar_cotizacion_traslado')->name('vista_generar_cotizacion_traslado') ;
+Route::post('vehiculos_disponibles', 'TrasladoController@vehiculos_disponibles')-> name('vehiculos_disponibles') ;
+
+Route::post('disponibles', 'TrasladoController@index')-> name('disponibles') ;
+//Route::post('CreateImage','TrasladoController@store');
+
+//
 //routes para SoloVistasController
+
 Route::get('Reservacion',             'SoloVistasController@reservacion')->         name('reservacion') ;
 Route::get('servicios',               'SoloVistasController@servicios')->            name('servicios') ;
 Route::get('sucursales',              'SoloVistasController@sucursales')->           name('sucursales') ;

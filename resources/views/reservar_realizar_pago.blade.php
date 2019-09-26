@@ -614,7 +614,7 @@
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/jquery.js"></script>  
   <script src="js/jquery.bxslider.min.js"></script>  
-  <script src="js/custom.js"></script>
+  <script src="js/custom_p.js"></script>
   <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.js")}}"></script>
   <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.date.extensions.js")}}"></script>
   <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.extensions.js")}}"></script>

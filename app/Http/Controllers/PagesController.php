@@ -67,12 +67,12 @@ class PagesController extends Controller{
     SELECT vehiculos.idvehiculo FROM vehiculos  
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
     INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-    WHERE vehiculosucursales.sucursal=2
+    WHERE vehiculosucursales.sucursal=?
     AND vehiculos.estatus ="disponible"
     AND vehiculosucursales.status ="ACTIVO"
     AND  alquilers.fecha_recogida <= ?
     AND alquilers.fecha_devolucion >= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
-                                        [$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
+                                        [$sucursal,$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //obtener solo un vehiculo por marca y modelo
         $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);

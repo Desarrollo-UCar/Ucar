@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 use App;
 use DB;
 use App\Http\Controllers\Controller;
@@ -19,9 +21,9 @@ class TrasladoController extends Controller{
         
          $traslado_temp->lugar_salida = $request->lugar_salida;
          $traslado_temp->fecha_salida = $request->fecha_salida;
-         $traslado_temp->hora_salida = $request->hora_salida;
          $traslado_temp->lugar_llegada = $request->lugar_llegada;
-         $traslado_temp->fecha_llegada_solicitada = $request->fecha_solicitada;
+         $traslado_temp->fecha_llegada_solicitada = date("Y\-m\-d", strtotime($request->fecha_solicitada));
+         $traslado_temp->hora_llegada = $request->hora_llegada;
          $traslado_temp->n_pasajeros = intval($request->n_pasajeros);
 
          $traslado_temp->nombres = $request->nombres;
@@ -29,14 +31,101 @@ class TrasladoController extends Controller{
          $traslado_temp->segundo_apellido = $request->segundoApellido;
          $traslado_temp->telefono = $request->telefono;
          $traslado_temp->email = $request->email;
-         $traslado_temp->viaje_redondo = $request->viaje_redondo;
+         $traslado_temp->viaje_redondo = intval($request->viaje_redondo);
+         if(!intval($request->viaje_redondo) == 0)
          $traslado_temp->dias_espera = $request->dias_espera;
+         else
+         $traslado_temp->dias_espera = 0;
          // Guardamos en la base de datos (equivalente al flush de Doctrine)
          $traslado_temp->save();
         //Consultas a las bases de datos flota disponible en las fechas dadas y devolucion de los datos de la reserva de un traslado
          $datos_reserva_traslado = App\traslado_temp::findOrFail($traslado_temp->id);
         return view('renta_traslado_datos',compact('datos_reserva_traslado'));
     }
+
+    ///------------------------------------------------------------------------------------------------
+public function vehiculos_disponibles(Request $reserva){
+// Creamos el objeto traslado_temp
+$traslado_temp = App\traslado_temp::findOrFail($reserva['id']);
+// Seteamos las propiedades de la tabla traslado_temp
+$traslado_temp->lugar_salida  = $reserva['lugar_salida'];
+$traslado_temp->fecha_salida  = date("Y\-m\-d", strtotime($reserva['fecha_salida']));
+$traslado_temp->hora_salida   = $reserva['hora_salida'];
+$traslado_temp->lugar_llegada = $reserva['lugar_llegada'];
+$traslado_temp->hora_llegada  = $reserva['hora_llegada'];
+$traslado_temp->n_pasajeros   = $reserva['n_pasajeros'];
+$traslado_temp->viaje_redondo = intval($reserva['viaje_redondo']);
+//return intval($reserva['viaje_redondo']);
+//return $reserva['dias_espera'];
+if(!$reserva['viaje_redondo'] == 0)
+    $traslado_temp->dias_espera   = $reserva['dias_espera'];
+else
+     $traslado_temp->dias_espera = 0;
+$traslado_temp->fecha_llegada_solicitada = date("Y\-m\-d", strtotime($reserva['fecha_llegada_solicitada']));
+// Guardamos en la base de datos (equivalente al flush de Doctrine)
+//return $traslado_temp->dias_espera;
+$traslado_temp->save();
+$solicitud_traslado= $traslado_temp;
+    $vehiculos_disp = DB::select(' SELECT vehiculos.idvehiculo, vehiculos.marca, vehiculos.modelo, vehiculos.transmicion,
+    vehiculos.puertas, vehiculos.rendimiento, vehiculos.precio, vehiculos.pasajeros,
+    vehiculos.maletero, vehiculos.color, vehiculos.cilindros, vehiculos.tipo, vehiculos.descripcion,
+    vehiculos.foto, sucursals.idsucursal,sucursals.nombre FROM vehiculos 
+       INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+          INNER JOIN sucursals ON sucursals.idsucursal = vehiculosucursales.sucursal
+       AND vehiculos.idvehiculo NOT IN (
+       SELECT vehiculos.idvehiculo FROM vehiculos  
+       INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+       INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+      
+       AND vehiculos.estatus ="disponible"
+       AND vehiculosucursales.status ="ACTIVO"
+       AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+       OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+       UNION
+       SELECT vehiculos.idvehiculo FROM vehiculos  
+       INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+       INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+      
+       AND vehiculos.estatus ="disponible"
+       AND vehiculosucursales.status ="ACTIVO"
+       AND  alquilers.fecha_recogida <= ?
+       AND alquilers.fecha_devolucion >= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo, sucursals.idsucursal',
+                                            [$reserva['fecha_salida'],$reserva['fecha_solicitada'],$reserva['fecha_salida'],$reserva['fecha_solicitada']]);
+
+        if(!empty($vehiculos_disp)){
+            $v_anterior = "h";
+            $vehiculos_disponibles = [];
+            foreach($vehiculos_disp as $v){
+                if($v_anterior != "h"){
+                    //echo $v_anterior->marca . $v_anterior->modelo;
+                    //echo $v->marca . $v->modelo;
+                    if($v_anterior->marca . $v_anterior->modelo .$v_anterior->nombre == $v->marca . $v->modelo . $v->nombre){
+                        $v_anterior = $v;
+                    }
+                    else{
+                        $v_anterior = $v;
+                            if($v->tipo != "motoneta")
+                            array_push($vehiculos_disponibles, $v);  
+                        //echo "agregando";
+                    }
+                    //echo "---------------------";
+                }
+                else{
+                $v_anterior = $v;
+                //echo $v_anterior->marca . $v_anterior->modelo;
+                  //  echo $v->marca . $v->modelo;
+                  if($v->tipo != "motoneta")
+                    array_push($vehiculos_disponibles, $v);
+                //echo "agregando"; 
+                //echo "---------------------";
+                }
+            }
+        }
+        $solicitud_traslado = App\traslado_temp::findOrFail($traslado_temp->id);
+
+        return view('traslado_elegir_vehiculo',compact('solicitud_traslado','vehiculos_disponibles'));
+    }//fin de la funcion de vehiculos disponibles
+
 
     public function enviar_datos_traslado(Request $reserva){
         $id_vehiculo    = $reserva['id_vehiculo'];
@@ -69,8 +158,4 @@ class TrasladoController extends Controller{
         $datos_reserva_traslado->save();
         return view('renta_traslado_datos',compact('vehiculo','datos_reserva_traslado'));
     }
-
-    public function solicita_info_traslado(Request $reserva){
-        }
-    
 }

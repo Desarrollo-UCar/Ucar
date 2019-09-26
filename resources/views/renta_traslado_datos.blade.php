@@ -23,11 +23,11 @@
                             <dl>
                             <dt>Origen</dt>
                             <dd>{{$datos_reserva_traslado->lugar_salida}}</dd>
-                            <dt>Fecha / Hora de recolección:</dt>
+                            <dt>Fecha / Hora de salida:</dt>
                             <dd>{{$datos_reserva_traslado->fecha_salida}} a las {{$datos_reserva_traslado->hora_salida}} hrs</dd>
                             <dt>Destino</dt>
                             <dd>{{$datos_reserva_traslado->lugar_llegada}}</dd>
-                            <dt>Fecha / Hora de recolección:</dt>
+                            <dt>Fecha / Hora de llegada:</dt>
                             <dd>{{$datos_reserva_traslado->fecha_llegada_solicitada}} a las ?? hrs</dd>
                             <dt>Número de pasajeros:</dt>
                             <dd>{{$datos_reserva_traslado->n_pasajeros}} Pasajeros</dd>
