@@ -130,5 +130,5 @@ Route::get('reportesFechaReservacion', 'ReportesController@fechaReservacion')->n
 
 Route::get('catalogos', 'MarcaVehiculoController@index')->name('catalogos');
 Route::get('registrarMarca','MarcaVehiculoController@store')->name('registrarMarca');
-Route::post('registrarModelo','ModeloVehiculoController@store')->name('registrarModelo');
+Route::get('registrarModelo','ModeloVehiculoController@store')->name('registrarModelo');
 Route::resource('marca', 'MarcaVehiculoController');
