@@ -121,7 +121,7 @@
 
     <section id="formulario">
       <div class="bg-white" id='formulario_reserva_vehiculo'>
-        <h5 class="text-center"><strong>Generar cotización </strong>del tralado --- Solicitud: <strong>{{$solicitud_traslado->id}}</strong></h5>
+        <h5 class="text-center"><strong>Generar cotización </strong>del traslado --- Solicitud: <strong>{{$solicitud_traslado->id}}</strong></h5>
         <h5 class="text-center"></h5>
     </div>
     <div class="container">
@@ -138,36 +138,32 @@
                           <div class="form-group col-md-12 col-sm-12">
                             <h6><strong>Información de contacto del cliente:</strong></h6>  
                             <input type="hidden" id='id' name="id" value={{$solicitud_traslado->id}}>
-                        </div>
+                          </div>
                             {{-- FORMULARIO DE NOMBRES --}}                     
-                            <div class="form-group col-md-4 col-sm-4">
-                                    <label>Nombres</label>
-                                    <input id="nombres" type="text" class="form-control" value ="{{$solicitud_traslado->nombres}}" placeholder="nombres" name="nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" required>
-                                    
-                                </div> 
+                            <div class="form-group col-md-3 col-sm-3">
+                                <label>Nombres</label>
+                                <input id="nombres" type="text" class="form-control" value ="{{$solicitud_traslado->nombres}}" placeholder="nombres" name="nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" required>        
+                            </div> 
                             {{-- FOMULARIO DEL PRIMER APELLIDO --}}
-                            <div class="form-group col-md-4 col-sm-4">
-                            <label>Primer Apellido </label>
-                            <input type="text" class="form-control" placeholder="primer apellido" value ="{{$solicitud_traslado->primer_apellido}}" name="primerApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="primerApellido" readonly = "readonly" required>
-                            
+                            <div class="form-group col-md-2 col-sm-2">
+                                <label>Primer Apellido </label>
+                                <input type="text" class="form-control" placeholder="primer apellido" value ="{{$solicitud_traslado->primer_apellido}}" name="primerApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="primerApellido" readonly = "readonly" required>
                             </div> 
                             {{-- FORMULARIO DEL SEGUNDO APELLIDO --}}
-                            <div class="form-group col-md-4 col-sm-4">
-                            <label>Segundo Apellido</label>
-                            <input type="text" class="form-control" placeholder="segundo apellido" value ="{{$solicitud_traslado->segundo_apellido}}" name="segundoApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" id="segundoApellido" required>
-
+                            <div class="form-group col-md-2 col-sm-2">
+                                <label>Segundo Apellido</label>
+                                <input type="text" class="form-control" placeholder="segundo apellido" value ="{{$solicitud_traslado->segundo_apellido}}" name="segundoApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" id="segundoApellido" required>
                             </div>
                             {{--DATOS PARA EL TELEFONO--}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-2 col-sm-2">
                                 <label>Teléfono</label>
-                            <input type="text" class="form-control" placeholder="Teléfono" value ="{{$solicitud_traslado->telefono}}" name="telefono" id="telefono" pattern="[0-9]*" minlength = "10" maxlength="10" title="Número a 10 digitos" readonly = "readonly" required>
+                                <input type="text" class="form-control" placeholder="Teléfono" value ="{{$solicitud_traslado->telefono}}" name="telefono" id="telefono" pattern="[0-9]*" minlength = "10" maxlength="10" title="Número a 10 digitos" readonly = "readonly" required>
                             </div> 
                             {{--FORMULARIO DE CORREO EMAIL--}}
-                            <div class="form-group col-md-4 col-sm-4">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" value ="{{$solicitud_traslado->email}}" placeholder="Correo Eléctronico" name="email" id="email" readonly = "readonly" required>
-
-                                </div>
+                            <div class="form-group col-md-3 col-sm-3">
+                                <label>Email</label>
+                                <input type="email" class="form-control" value ="{{$solicitud_traslado->email}}" placeholder="Correo Eléctronico" name="email" id="email" readonly = "readonly" required>
+                            </div>
 
                     <div class="form-row">
                             <div class="form-group col-md-12 col-sm-12">
@@ -296,9 +292,9 @@
                               <div class="form-group col-md-3 col-sm-3">
                                 <div style="margin-top: 15%; margin-left: 10%;">
                                   @if($solicitud_traslado->viaje_redondo == 1)
-                                    <input type="checkbox" id="viaje_redondo" name="viaje_redondo" value = "1" title="Desea regresar con nosotros?" checked>
+                                    <input type="checkbox" id="viaje_redondo" name="viaje_redondo" title="Desea regresar con nosotros?" checked>
                                   @else
-                                  <input type="checkbox" id="viaje_redondo" name="viaje_redondo" value = "0" title="Desea regresar con nosotros?">
+                                  <input type="checkbox" id="viaje_redondo" value="0" name="viaje_redondo" title="Desea regresar con nosotros?">
                                   @endif
                                     <label class="form-check-label" for="viaje_redond">VIAJE REDONDO?</label>
                                 </div>
@@ -367,7 +363,7 @@
               <dd>Costo por dia:</dd>
               <dd><h4><strong><span class="colored"> $ {{number_format($vehiculo->precio,2)}} MXN</span></strong></h4></dd>
               <dd>Incluye IVA</dd>
-              <dd><a a href="{{ route('reservar_servicios_extra',[
+              <dd><a a href="{{ route('calculo_costos_traslado',[
                                       'id_vehiculo'=>$vehiculo->idvehiculo,
                                       'id_sol_traslado'=> $solicitud_traslado->id
                                       ]) }}" class="btn btn-warning btn-sm">Seleccionar</a></dd> 
@@ -511,7 +507,7 @@
     "startDate": new Date(),
     "minDate": new Date()
 }, function(start, end, label) {
-  document.getElementById('fecha_llegada_solicitada').value = end.format('YYYY-MM-DD');
+  document.getElementById('fecha_llegada_solicitada').value = end.format('DD-MM-YYYY');
 });
 $('#fecha_salida').daterangepicker({
     "autoApply": true,

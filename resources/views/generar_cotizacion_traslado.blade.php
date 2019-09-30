@@ -140,30 +140,30 @@
                             <input type="hidden" id='id' name="id" value={{$solicitud_traslado->id}}>
                         </div>
                             {{-- FORMULARIO DE NOMBRES --}}                     
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-3 col-sm-3">
                                     <label>Nombres</label>
                                     <input id="nombres" type="text" class="form-control" value ="{{$solicitud_traslado->nombres}}" placeholder="nombres" name="nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" required>
                                     
                                 </div> 
                             {{-- FOMULARIO DEL PRIMER APELLIDO --}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-2 col-sm-2">
                             <label>Primer Apellido </label>
                             <input type="text" class="form-control" placeholder="primer apellido" value ="{{$solicitud_traslado->primer_apellido}}" name="primerApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="primerApellido" readonly = "readonly" required>
                             
                             </div> 
                             {{-- FORMULARIO DEL SEGUNDO APELLIDO --}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-2 col-sm-2">
                             <label>Segundo Apellido</label>
                             <input type="text" class="form-control" placeholder="segundo apellido" value ="{{$solicitud_traslado->segundo_apellido}}" name="segundoApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" id="segundoApellido" required>
 
                             </div>
                             {{--DATOS PARA EL TELEFONO--}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-2 col-sm-2">
                                 <label>Teléfono</label>
                             <input type="text" class="form-control" placeholder="Teléfono" value ="{{$solicitud_traslado->telefono}}" name="telefono" id="telefono" pattern="[0-9]*" minlength = "10" maxlength="10" title="Número a 10 digitos" readonly = "readonly" required>
                             </div> 
                             {{--FORMULARIO DE CORREO EMAIL--}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-3 col-sm-3">
                                     <label>Email</label>
                                     <input type="email" class="form-control" value ="{{$solicitud_traslado->email}}" placeholder="Correo Eléctronico" name="email" id="email" readonly = "readonly" required>
 
@@ -300,11 +300,11 @@
                               <div class="form-group col-md-3 col-sm-3">
                                 <div style="margin-top: 15%; margin-left: 10%;">
                                   @if($solicitud_traslado->viaje_redondo == 1)
-                                    <input type="checkbox" id="viaje_redondo" name="viaje_redondo" value = "0" title="Desea regresar con nosotros?" checked>
+                                    <input type="checkbox" id="viaje_redondo" name="viaje_redondo" title="Desea regresar con nosotros?" checked>
                                   @else
-                                  <input type="checkbox" id="viaje_redondo" value = "1" title="Desea regresar con nosotros?" name="viaje_redondo">
+                                  <input type="checkbox" id="viaje_redondo" value="0" title="Desea regresar con nosotros?" name="viaje_redondo">
                                   @endif
-                                <label class="form-check-label" for="viaje_redond">VIAJE REDONDO? </label>
+                                <label class="form-check-label" for="viaje_redondo">VIAJE REDONDO? </label>
                                 </div>
                               </div>
                               <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3"  style="display: none;" id="tiempo_espera">
