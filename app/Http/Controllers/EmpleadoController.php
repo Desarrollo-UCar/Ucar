@@ -58,8 +58,7 @@ class EmpleadoController extends Controller
     
     public function store(Request $request)
     {   
-       
-          
+        
 
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();

@@ -46,12 +46,33 @@ class MarcaVehiculoController extends Controller
      */
     public function store(Request $request)
     {
+        //  return response()->json(['success'=>$request['nombre']]);
         //
       // return reSPONSE()->json($request);
+
+      $request->validate([
+         'nombre'=>'required|regex:/^[\pL\s]+$/u',
+      ]);
+        $todo=MarcaVehiculo::all();
+
+        if(!empty($todo)){
+            $nombre = str_replace(' ', '', $request['nombre']);
+            foreach($todo as $comp){
+                $nom=str_replace(' ', '', $comp['nombre']);//trim($comparar['nombre'],'\r');
+              
+                // return response()->json(['success'=>$nombre]);
+                if($nom == $nombre){
+                    return response()->json(['success'=>'ERROR1']);
+                }
+        }
+    }
+
+
         MarcaVehiculo::insert([
             'nombre'=>$request['nombre'],
         ]);
-        return back()->with('msj','Marca agregada');
+        
+        return response()->json(['success'=>'EXITO']);
     }
 
     /**

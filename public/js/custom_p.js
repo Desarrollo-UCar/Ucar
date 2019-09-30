@@ -107,12 +107,12 @@ jQuery(document).ready(function ($) {
   });
 
   // prettyphoto
-  $("a[data-pretty^='prettyPhoto']").prettyPhoto({
-    social_tools: ''
-  });
+  // $("a[data-pretty^='prettyPhoto']").prettyPhoto({
+  //   social_tools: ''
+  // });
 
   // tooltip
-  $('.social-network li a, .options_box .color a').tooltip();
+  // $('.social-network li a, .options_box .color a').tooltip();
 
   //scroll to top
   $(window).scroll(function () {
@@ -133,13 +133,13 @@ jQuery(document).ready(function ($) {
   });
 
   //flexslider
-  $('.flexslider').flexslider({
-    animation: "fade",
-    directionNav: true,
-    controlNav: false,
-    pauseOnAction: true,
-    pauseOnHover: true,
-    slideshowSpeed: 5500
-  });
+  // $('.flexslider').flexslider({
+  //   animation: "fade",
+  //   directionNav: true,
+  //   controlNav: false,
+  //   pauseOnAction: true,
+  //   pauseOnHover: true,
+  //   slideshowSpeed: 5500
+  // });
 
 });

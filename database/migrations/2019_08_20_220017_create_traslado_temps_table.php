@@ -18,16 +18,19 @@ class CreateTrasladoTempsTable extends Migration
             $table->datetime('fecha_hora_reserva');//fecha y hora de creacion de la reserva de un traslado
            
             $table->string('lugar_salida');
-            $table->date('fecha_salida');
-            $table->time('hora_salida');
+            $table->date('fecha_salida')->nullable();
+            $table->time('hora_salida')->nullable();
             $table->string('lugar_llegada');
             $table->date('fecha_llegada_solicitada');//estimacion de fecha segun tiempo estimado
+            $table->time('hora_llegada');
             $table->integer('n_pasajeros');
             $table->string('nombres');
             $table->string('primer_apellido');
             $table->string('segundo_apellido');
             $table->string('telefono');
             $table->string('email');
+            $table->boolean('viaje_redondo')->nullable();
+            $table->integer('dias_espera')->nullable();
             //los datos personales 
             $table->timestamps();
         });

@@ -120,9 +120,10 @@
     <!-- end header -->
 
     <section id="formulario">
-        <div class="bg-white" id='formulario_reserva_vehiculo'>
-            <h5 class="text-center"><strong>Solicita la cotizacion de </strong>tu viaje de la manera mas rápida</h5>
-        </div>
+      <div class="bg-white" id='formulario_reserva_vehiculo'>
+        <h5 class="text-center"><strong>Generar cotización </strong>del tralado --- Solicitud: <strong>{{$solicitud_traslado->id}}</strong></h5>
+        <h5 class="text-center"></h5>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -131,51 +132,46 @@
                 <!--Card content-->
                 <div class="card-body">
                     <!-- inicio Formulario reserva-->
-                    <form action="{{ route('renta_traslado_vehiculo')}}" method="POST" enctype="multipart/form-data">
+                    <form id="reserva_traslado" action="{{ route('vehiculos_disponibles')}}"  method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col-md-12 col-sm-12">
-                                <h6><strong>Información de contacto:</strong></h6>  
-                            </div>
+                          <div class="form-group col-md-12 col-sm-12">
+                            <h6><strong>Información de contacto del cliente:</strong></h6>  
+                            <input type="hidden" id='id' name="id" value={{$solicitud_traslado->id}}>
+                        </div>
                             {{-- FORMULARIO DE NOMBRES --}}                     
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-3 col-sm-3">
                                     <label>Nombres</label>
-                                    <input id="nombres" type="text" class="form-control"  placeholder="nombres" name="nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
-                                    <span id="errornombres" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;" aria-hidden="true"></span>
-                                    <span id="validonombres" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;" aria-hidden="true"></span>
+                                    <input id="nombres" type="text" class="form-control" value ="{{$solicitud_traslado->nombres}}" placeholder="nombres" name="nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" required>
+                                    
                                 </div> 
                             {{-- FOMULARIO DEL PRIMER APELLIDO --}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-2 col-sm-2">
                             <label>Primer Apellido </label>
-                            <input type="text" class="form-control" placeholder="primer apellido" name="primerApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="primerApellido" required>
-                            <span id="errorprimerApellido" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                            <span id="validoprimerApellido" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                            <input type="text" class="form-control" placeholder="primer apellido" value ="{{$solicitud_traslado->primer_apellido}}" name="primerApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="primerApellido" readonly = "readonly" required>
+                            
                             </div> 
                             {{-- FORMULARIO DEL SEGUNDO APELLIDO --}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-2 col-sm-2">
                             <label>Segundo Apellido</label>
-                            <input type="text" class="form-control" placeholder="segundo apellido" name="segundoApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="segundoApellido" required>
+                            <input type="text" class="form-control" placeholder="segundo apellido" value ="{{$solicitud_traslado->segundo_apellido}}" name="segundoApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly = "readonly" id="segundoApellido" required>
 
-                            <span id="errorsegundoApellido" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                            <span id="validosegundoApellido" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                             </div>
                             {{--DATOS PARA EL TELEFONO--}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-2 col-sm-2">
                                 <label>Teléfono</label>
-                            <input type="text" class="form-control" placeholder="Teléfono" name="telefono" id="telefono" pattern="[0-9]*" minlength = "10" maxlength="10" title="Número a 10 digitos" required>
+                            <input type="text" class="form-control" placeholder="Teléfono" value ="{{$solicitud_traslado->telefono}}" name="telefono" id="telefono" pattern="[0-9]*" minlength = "10" maxlength="10" title="Número a 10 digitos" readonly = "readonly" required>
                             </div> 
                             {{--FORMULARIO DE CORREO EMAIL--}}
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="form-group col-md-3 col-sm-3">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" placeholder="Correo Eléctronico" name="email" id="email" required>
+                                    <input type="email" class="form-control" value ="{{$solicitud_traslado->email}}" placeholder="Correo Eléctronico" name="email" id="email" readonly = "readonly" required>
 
-                                    <span id="erroremail" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                                    <span id="validoemail" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                 </div>
 
                     <div class="form-row">
                             <div class="form-group col-md-12 col-sm-12">
-                                    <h6><strong>Información de su cotización de viaje:</strong></h6>  
+                              <h6><strong>Información de su cotización de viaje: (*Datos a rellenar)</strong></h6>  
                             </div>
                             <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                 <label for="lugar_salida">LUGAR DE SALIDA</label>
@@ -183,7 +179,7 @@
                                     <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
                                     </div>
-                                    <input name = 'lugar_salida' id="origin-input" class="form-control form-control-lg" type="text" placeholder="Ingresa el lugar de salida" required>
+                                    <input name = 'lugar_salida' id="origin-input" class="form-control form-control-lg" type="text" value ="{{$solicitud_traslado->lugar_salida}}" placeholder="Ingresa el lugar de salida" required>
                                 </div>
                             </div>
                             <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -192,39 +188,101 @@
                                     <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
                                     </div>
-                                    <input name = 'lugar_llegada' id="destination-input" class="form-control form-control-lg" type="text" placeholder="Ingresa el lugar de llegada" required>
+                                    <input name = 'lugar_llegada' id="destination-input" class="form-control form-control-lg" type="text" value ="{{$solicitud_traslado->lugar_llegada}}" placeholder="Ingresa el lugar de llegada" required>
                                 </div>
                             </div>
+
+
+
+                            <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                              <label for="fecha">*FECHA DE SALIDA</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
+                                  </div>
+                                  @if(!$solicitud_traslado->fecha_salida == null)
+                                  <input id = 'fecha_salida' name = 'fecha_salida' class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida" value="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_salida))}}" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY"  required>
+                                  @else
+                                  <input id = 'fecha_salida' name = 'fecha_salida' class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida"  pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY"  required>
+                                  @endif
+                              </div>
+                          </div>
+                          <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                              <label for="horaRecogida">*HORA DE SALIDA</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
+                                  </div>
+                                  <select name = 'hora_salida' class="form-control" required>
+                                      <option <?php if($solicitud_traslado->hora_salida == "00:00:00") echo "selected";?>>00:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "01:00:00") echo "selected";?>>01:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "02:00:00") echo "selected";?>>02:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "03:00:00") echo "selected";?>>03:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "04:00:00") echo "selected";?>>04:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "05:00:00") echo "selected";?>>05:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "06:00:00") echo "selected";?>>06:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "07:00:00") echo "selected";?>>07:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "08:00:00") echo "selected";?>>08:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "09:00:00") echo "selected";?>>09:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "10:00:00") echo "selected";?>>10:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "11:00:00") echo "selected";?>>11:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "12:00:00") echo "selected";?>>12:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "13:00:00") echo "selected";?>>13:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "14:00:00") echo "selected";?>>14:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "15:00:00") echo "selected";?>>15:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "16:00:00") echo "selected";?>>16:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "17:00:00") echo "selected";?>>17:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "18:00:00") echo "selected";?>>18:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "19:00:00") echo "selected";?>>19:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "20:00:00") echo "selected";?>>20:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "21:00:00") echo "selected";?>>21:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "22:00:00") echo "selected";?>>22:00</option>
+                                      <option <?php if($solicitud_traslado->hora_salida == "23:00:00") echo "selected";?>>23:00</option>
+                                  </select>
+                              </div>
+                          </div>
+
                         
                             <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <label for="fecha">CUANDO DESEA LLEGAR A SU DESTINO?</label>
+                                <label for="fecha">FECHA DE LLEGADA</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                                     </div>
-                                    <input id = 'fecha_solicitada' name = 'fecha_solicitada' class="form-control" type="text" autocomplete="off"   placeholder="Seleccione sus fechas" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY" required>
+                                    <input id = 'fecha_llegada_solicitada' name = 'fecha_llegada_solicitada' class="form-control" type="text" value ="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_llegada_solicitada))}}" autocomplete="off" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY"  required>
                                 </div>
                             </div>
-                            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                <label for="horaRecogida">A QUE HORA DESEA LLEGAR?</label>
+                            <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                <label for="horaRecogida">HORA DE LLEGADA</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                     </div>
                                     <select name = 'hora_llegada' class="form-control" required>
-                                      <option>00:00</option><option>01:00</option>
-                                      <option>02:00</option><option>03:00</option>
-                                      <option>04:00</option><option>05:00</option>
-                                      <option>06:00</option><option>07:00</option>
-                                        <option>08:00</option><option>09:00</option>
-                                        <option selected>10:00</option><option>11:00</option>
-                                        <option>12:00</option><option>13:00</option>
-                                        <option>14:00</option><option>15:00</option>
-                                        <option>16:00</option><option>17:00</option>
-                                        <option>18:00</option><option>19:00</option>
-                                        <option>20:00</option><option>21:00</option>
-                                        <option>22:00</option><option>23:00</option>
-                                        <option>24:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "00:00:00") echo "selected";?>>00:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "01:00:00") echo "selected";?>>01:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "02:00:00") echo "selected";?>>02:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "03:00:00") echo "selected";?>>03:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "04:00:00") echo "selected";?>>04:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "05:00:00") echo "selected";?>>05:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "06:00:00") echo "selected";?>>06:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "07:00:00") echo "selected";?>>07:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "08:00:00") echo "selected";?>>08:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "09:00:00") echo "selected";?>>09:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "10:00:00") echo "selected";?>>10:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "11:00:00") echo "selected";?>>11:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "12:00:00") echo "selected";?>>12:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "13:00:00") echo "selected";?>>13:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "14:00:00") echo "selected";?>>14:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "15:00:00") echo "selected";?>>15:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "16:00:00") echo "selected";?>>16:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "17:00:00") echo "selected";?>>17:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "18:00:00") echo "selected";?>>18:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "19:00:00") echo "selected";?>>19:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "20:00:00") echo "selected";?>>20:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "21:00:00") echo "selected";?>>21:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "22:00:00") echo "selected";?>>22:00</option>
+                                      <option <?php if($solicitud_traslado->hora_llegada == "23:00:00") echo "selected";?>>23:00</option>
                                     </select>
                                 </div>
                             </div>
@@ -234,15 +292,20 @@
                                         <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
                                         </div>
-                                        <input type="number" class="form-control" placeholder="N° Pasajeros" name="n_pasajeros" 
+                                        <input type="number" class="form-control" placeholder="N° Pasajeros" 
+                                        value ="{{$solicitud_traslado->n_pasajeros}}" name="n_pasajeros" 
                                          id="telefono" pattern="[0-9]*" min = "1" max="40" title="Mínimo: 1. Máximo: 40" required>
                                     </div>
                               </div> 
                               <div class="form-group col-md-3 col-sm-3">
-                                    <div style="margin-top: 15%; margin-left: 10%;">
-                                        <input type="checkbox" id="viaje_redondo" name="viaje_redondo" value ="1">
-                                        <label class="form-check-label" for="viaje_redond">VIAJE REDONDO?</label>
-                                    </div>
+                                <div style="margin-top: 15%; margin-left: 10%;">
+                                  @if($solicitud_traslado->viaje_redondo == 1)
+                                    <input type="checkbox" id="viaje_redondo" name="viaje_redondo" title="Desea regresar con nosotros?" checked>
+                                  @else
+                                  <input type="checkbox" id="viaje_redondo" value="0" title="Desea regresar con nosotros?" name="viaje_redondo">
+                                  @endif
+                                <label class="form-check-label" for="viaje_redondo">VIAJE REDONDO? </label>
+                                </div>
                               </div>
                               <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3"  style="display: none;" id="tiempo_espera">
                                   <label for="dias_espera">DIAS DE ESPERA PARA RETORNO</label>
@@ -250,34 +313,24 @@
                                       <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
                                       </div>
-                                      <input name = 'dias_espera' id="dias_espera" class="form-control form-control-lg" type="number" placeholder="Dias de espera" pattern="[0-9]*" min = "1" max="40" title="Mínimo: 1. Máximo: 40" >
+                                      <input name = 'dias_espera' id="dias_espera" class="form-control form-control-lg" type="number" 
+                                      value ="{{$solicitud_traslado->dias_espera}}" placeholder="Dias de espera" pattern="[0-9]*" min = "0" max="40" title="Mínimo: 1. Máximo: 40" >
                                   </div>
                               </div> 
-                              <div class="form-group col-md-4 col-sm-4">
-                                  <div class = "row">
-                                    <div style="margin-top: 10%; margin-left: 10%;">
-                                        <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value = "1" required>
-                                        <label class="form-check-label" for="terminos_condiciones"><small>HE LEÍDO Y ACEPTO LOS</small></label>
-                                    </div>
-                                    <div>
-                                        <a style="margin-top: 17%; margin-left: -8%;" class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" ><small>TÉRMINOS Y CONDICIONES</small></a> 
-                                    </div>
-                                  </div>
-                                </div> 
+ 
                             <div class="form-group col-md-2 col-sm-2">
                                     <button type="submit" class="btn btn-medium btn-theme" style="margin-top: 13%;"> Continuar</button>
-                            </div> 
-                            @if(session('mensaje'))
-                            <div class="alert aler-danger">
-                                <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
-                            </div>
-                            @endif     
+                            </div>     
                         </div>
                     </div>
                     </form>
                     <!-- fin formulario reserva -->
                 </div>
-            </div>       
+            </div>    
+            
+            
+
+            
         </div>
     </div>
     </div>
@@ -394,8 +447,8 @@
   <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.date.extensions.js")}}"></script>
   <script src= "{{asset("assets/$theme/plugins/input-mask/jquery.inputmask.extensions.js")}}"></script>
   <script src= "{{asset("assets/$theme/bower_components/select2/dist/js/select2.full.min.js")}}"></script>
-<script>
-    $('#fecha_solicitada').daterangepicker({
+  <script>
+    $('#fecha_llegada_solicitada').daterangepicker({
     "autoApply": true,
     "linkedCalendars": false,
     "autoUpdateInput": false,
@@ -404,9 +457,20 @@
     "startDate": new Date(),
     "minDate": new Date()
 }, function(start, end, label) {
-  document.getElementById('fecha_solicitada').value = end.format('DD-MM-YYYY');
+  document.getElementById('fecha_llegada_solicitada').value = end.format('DD-MM-YYYY');
 });
-</script> 
+$('#fecha_salida').daterangepicker({
+    "autoApply": true,
+    "linkedCalendars": false,
+    "autoUpdateInput": false,
+    "showCustomRangeLabel": false,
+    "singleDatePicker": true,
+    "startDate": new Date(),
+    "minDate": new Date()
+}, function(start, end, label) {
+  document.getElementById('fecha_salida').value = end.format('DD-MM-YYYY');
+});
+</script>
 <script>
         $(function () {
           //Initialize Select2 Elements
@@ -426,25 +490,29 @@ function validaCheckbox(){
   var checked = checkbox.checked;
   var tiempo_espera= document.getElementById("tiempo_espera");
   if(checked){
-    tiempo_espera.style.display = (tiempo_espera.style.display == 'none')?'block' : 'none';
+    tiempo_espera.style.display = 'block';
     document.getElementById("dias_espera").required = true;
+    console.log("1");
   }
   else{
-    tiempo_espera.style.display = (tiempo_espera.style.display == 'block')?'none' : 'block';
+    tiempo_espera.style.display = 'none';
     document.getElementById("dias_espera").required = false;
+    console.log("2");
   }
 }
 </script>
 <script>
   $(document).ready(function() {
-    var tiempo_espera= document.getElementById("tiempo_espera");
+    var tiempo_espera= document.getElementById("tiempo_espera");    
     if(document.getElementById('viaje_redondo').checked == true){
     tiempo_espera.style.display = 'block';
     document.getElementById("dias_espera").required = true;
+    console.log("3");
     }
   else{
     tiempo_espera.style.display = 'none';
     document.getElementById("dias_espera").required = false;
+    console.log("4");
   }
   });
 </script>

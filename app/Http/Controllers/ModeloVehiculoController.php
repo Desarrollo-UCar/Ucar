@@ -38,10 +38,31 @@ class ModeloVehiculoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return response()->json(['success'=>$request['marca']]);
+
+        $request->validate([
+            'modelo'=>'required|regex:/^[\pL\s]+$/u',
+            'marca'=>'required',
+         ]);
+            
+         $todo=ModeloVehiculo::all();
+         
+         if(!empty($todo)){
+             $modelo=str_replace(' ', '', $request['modelo']);
+             foreach($todo as $comp){
+                $nom=str_replace(' ', '', $comp['nombre']);//trim($comparar['nombre'],'\r');
+              
+                // return response()->json(['success'=>$nombre]);
+                if($nom == $modelo){
+                    return response()->json(['success'=>'ERROR1']);
+                }
+        }
+         }
+
         ModeloVehiculo::insert([
             'nombre'=>$request['modelo'],
         ]);
+
         
         $modelo = ModeloVehiculo::where('nombre','=',$request['modelo'])->first();
         $marca = MarcaVehiculo::where('id','=',$request['marca'])->first();
@@ -51,7 +72,8 @@ class ModeloVehiculoController extends Controller
             'idModelo'=>$modelo->id
         ]);
 
-        return back()->with('msj','Modelo agregado');
+        return response()->json(['success'=>'EXITO']);
+
     }
 
     /**
