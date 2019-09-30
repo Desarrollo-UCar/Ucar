@@ -8,8 +8,8 @@
 @section('contenido')
 <section class="content-header">
     <h1>
-      Fecha en que se realizaron las reservaciones
-      <small>Graficas</small>
+      Panel de administracion
+      <small>Gerente</small>
     </h1>
 </section>
 <section class="content">
@@ -21,8 +21,8 @@
                 <div class="box box-primary">
                   <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
-                    
-                    <h3 class="box-title">Reservaciones realizadas en la ultima semana</h3>
+      
+                    <h3 class="box-title">Alquileres de la ultima semana</h3>
     
                   </div>
                   <div class="box-body">
@@ -45,7 +45,7 @@
               <div class="box-header with-border">
                 <i class="fa fa-bar-chart-o"></i>
   
-              <h3 class="box-title">Reservaciones realizadas en el año {{date('Y')}}</h3>
+              <h3 class="box-title">Alquileres realizados en el año {{date('Y')}}</h3>
 
               </div>
               <div class="box-body">
@@ -61,7 +61,7 @@
   <div class="box">
       <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
-        <h3 class="box-title">Reservaciones realizadas en los ultimos años</h3>
+        <h3 class="box-title">Alquileres realizados en los ultimos años</h3>
 
       </div>
       <div class="box-body chart-responsive">

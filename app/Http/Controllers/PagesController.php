@@ -179,45 +179,60 @@ class PagesController extends Controller{
         $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
 
         //consulta para saber los servicios extra ocupados en la fecha indicada y en dicha sucursal
-        $cantidad_servicios_extra_ocupados = DB::select('SELECT servicioExtra, COUNT(servicioExtra) as cantidad FROM alquilerserviciosextras  
-        WHERE alquiler IN (
-        SELECT alquilers.id FROM vehiculos  
-        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-        WHERE vehiculosucursales.sucursal=? 
-        AND vehiculos.estatus ="disponible"
-        AND vehiculosucursales.status ="ACTIVO"
-        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-        union
-        SELECT alquilers.id FROM vehiculos  
-        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-        WHERE vehiculosucursales.sucursal=?
-        AND vehiculos.estatus ="disponible"
-        AND vehiculosucursales.status ="ACTIVO"
-        AND  alquilers.fecha_recogida <= ?
-        AND alquilers.fecha_devolucion >=   ?) GROUP BY servicioExtra',[$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion,$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion]);
-        
+        $cantidad_servicios_extra_ocupados = DB::select('SELECT idserviciosextra AS servicioExtra, COUNT(*) AS cantidad FROM(
+            SELECT serviciosextras.idserviciosextra, alquilers.id  FROM serviciosextras
+              INNER JOIN servicioextrasucursales on servicioextrasucursales.serviciosextra = serviciosextras.idserviciosextra
+              INNER JOIN alquilerserviciosextras ON serviciosextras.idserviciosExtra = alquilerserviciosextras.servicioExtra
+              INNER JOIN alquilers ON alquilers.id = alquilerserviciosextras.alquiler
+                WHERE servicioextrasucursales.sucursal = ?
+              AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+              OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+              UNION
+              SELECT serviciosextras.idserviciosextra, alquilers.id FROM serviciosextras
+          INNER JOIN servicioextrasucursales on servicioextrasucursales.serviciosextra = serviciosextras.idserviciosextra
+          INNER JOIN alquilerserviciosextras ON serviciosextras.idserviciosextra = alquilerserviciosextras.servicioExtra
+          INNER JOIN alquilers ON alquilers.id = alquilerserviciosextras.alquiler
+            WHERE servicioextrasucursales.sucursal = ?
+          AND  alquilers.fecha_recogida >= ?
+          AND alquilers.fecha_devolucion <= ?) tablita GROUP BY idserviciosextra
+          ',[$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion,$datos_reserva->lugar_recogida,$datos_reserva->fecha_recogida,$datos_reserva->fecha_devolucion]);
+        //return $cantidad_servicios_extra_ocupados;
         //obtenemos los totales de servicios de sucursal
         $cantidad_servicios_extra_totales = DB::select('SELECT * FROM servicioextrasucursales where sucursal = ?',[$datos_reserva->lugar_recogida]);
+        //return $cantidad_servicios_extra_totales ;
         //como ya tenemos la cantidad y el id del servicio extra que esta ocupados en la sucursal,
             //obtener los qye estan ocupadoos id y cantidad por sucursal
             // filtrar los que estan disponibles segun la tabla servicios extra sucursal
-            $total_s_e_por_sucursal  = App\servicioextrasucursales::all();
+           // $total_s_e_por_sucursal  = App\servicioextrasucursales::all();
             $servicios_extra_antes = [];
-            if(empty($cantidad_servicios_extra_ocupado)){
+            if(empty($cantidad_servicios_extra_ocupados)){
                 $servicios_extra_antes = $cantidad_servicios_extra_totales;
             }else{
                 foreach ($cantidad_servicios_extra_totales as $servicio_total) {
-                    foreach($cantidad_servicios_extra_ocupado as $servicio_ocupado){
-                        if($servicio_total->servicioextra == $servicio_ocupado->servicioExtra){ // ya filtramos solo los servicios perteneciientes a a la sucursal
-                            if($servicio_total->cantidad > $servicio_ocupado->cantidad)
-                                array_push($servicios_extra_antes, $servicio);  //falta obtener los datos a proyectar de la tabla serviciosextra
+                    $encontrado = 0;
+                    foreach($cantidad_servicios_extra_ocupados as $servicio_ocupado){
+
+                       // echo('Total '.$servicio_total->serviciosextra.' Ocupado: '. $servicio_ocupado->servicioExtra);
+                        if($servicio_total->serviciosextra == $servicio_ocupado->servicioExtra){ // ya filtramos solo los servicios perteneciientes a a la s=ucursal
+                            if($servicio_total->cantidad > $servicio_ocupado->cantidad){
+                                array_push($servicios_extra_antes, $servicio_total);  //falta obtener los datos a proyectar de la tabla serviciosextra
+
+                            }
+                            $encontrado = 1;
+                            //echo('encontrado'); 
                         }
+
                     }
+                    //dd('----'.$encontrado); 
+                        if($encontrado == 0)
+                        array_push($servicios_extra_antes, $servicio_total);
                 }
             }
+            //--------------------------------------------
+
+   
+
+
             //return $servicios_extra_antes;
             $servicios_e  = App\serviciosextras::all();
             $servicios_extra = [];
