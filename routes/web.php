@@ -20,13 +20,12 @@ Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->    
 Route::get('despues_de_pago',         'PagesController@despues_de_pago')->         name('despues_de_pago')->middleware(['auth', 'verified']);
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
 ///routes para traslado controller
-Route::post('enviar_datos_traslado',  'TrasladoController@enviar_datos_traslado')->name('enviar_datos_traslado') ;
-Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo') ;
+Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo') ;//solicitud del cliente
 //generar la cotizacion del lado del adminitrador
-Route::get('vista_generar_cotizacion_traslado','SoloVistasController@vista_generar_cotizacion_traslado')->name('vista_generar_cotizacion_traslado') ;
-Route::post('vehiculos_disponibles', 'TrasladoController@vehiculos_disponibles')-> name('vehiculos_disponibles') ;
-
-Route::post('disponibles', 'TrasladoController@index')-> name('disponibles') ;
+Route::get('vista_generar_cotizacion_traslado','SoloVistasController@vista_generar_cotizacion_traslado')->name('vista_generar_cotizacion_traslado');//cargar la vista inicial de administrador para cotizar el traslado
+Route::post('vehiculos_disponibles', 'TrasladoController@vehiculos_disponibles')-> name('vehiculos_disponibles');//elegir vehiculo disponible para traslado
+Route::get('calculo_costos_traslado',  'TrasladoController@calculo_costos_traslado')->name('calculo_costos_traslado') ;
+Route::post('crear_reservacion_traslado', 'TrasladoController@crear_reservacion_traslado')-> name('crear_reservacion_traslado');
 //Route::post('CreateImage','TrasladoController@store');
 
 //
