@@ -38,6 +38,7 @@ class MarcaModeloController extends Controller
     public function store(Request $request)
     {
         //
+        return response()->json(['success'=>'HAY UNA PETICIÓN']);
     }
 
     /**
@@ -83,5 +84,11 @@ class MarcaModeloController extends Controller
     public function destroy(MarcaModelo $marcaModelo)
     {
         //
+    }
+
+    public function Consultar(Request $request)
+    {
+        //
+        return response()->json(['success'=>$request['text']]);
     }
 }

@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Route;
+
 Auth::routes(); 
   
 Auth::routes(['verify' => true]);
@@ -132,3 +135,5 @@ Route::get('catalogos', 'MarcaVehiculoController@index')->name('catalogos');
 Route::get('registrarMarca','MarcaVehiculoController@store')->name('registrarMarca');
 Route::get('registrarModelo','ModeloVehiculoController@store')->name('registrarModelo');
 Route::resource('marca', 'MarcaVehiculoController');
+ //Route::resource('marcamodelo', 'MarcaModeloController');
+Route::post('marcasmodelos','MarcaModeloController@Consultar')->name('marcasmodelos');

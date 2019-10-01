@@ -7,7 +7,9 @@ use App\Vehiculo;
 use App\Sucursal;
 use App\Modelo;
 use App\VehiculoSucursales;
+use App\MarcaVehiculo;
 use Illuminate\Http\Request;
+
 use phpDocumentor\Reflection\Types\Nullable;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
@@ -52,12 +54,13 @@ class VehiculoController extends Controller
             $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
             ->where('status','=','activo')->first();
             $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
-
-            return view('gerente.vehiculo.alta_vehiculo',compact('sucursal'));
+            $marca= MarcaVehiculo::all();
+            return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca'));
         }
 
         $sucursal=Sucursal::all();
-        return view('gerente.vehiculo.alta_vehiculo',compact('sucursal'));
+        $marca= MarcaVehiculo::all();
+        return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca'));
     }
 
     

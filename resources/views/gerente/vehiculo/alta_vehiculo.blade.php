@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Alta vehiculo</title>
   <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.9.0/d3.min.js"></script>
  
@@ -64,9 +65,17 @@
 
                         {{-- FORMULARIO DE MARCA DEL VEHICULO --}}
                         
-                        <div class="col-md-6 form-group">
-                          <label>Marca</label>
-                          <input type="text" name="marca" id="marca" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                     
+                           
+                          <div class="form-group col-md-6">
+                            <label>Marca</label>
+                            <form role="form" name="marcas" id="marcas" method="post">
+                            <select class="form-control" name="marca" id="marca">
+                              @foreach ($marca as $marca)
+                              <option>{{$marca->nombre}}</option>
+                              @endforeach                             
+                            </select>
+                          </form>
 
                           
                             <span id="errormarca" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -678,6 +687,46 @@ document.getElementById("foto").onchange = function(e) {
    });
   
   });
+  </script>
+
+
+<script>
+$(document).ready(function(){
+  var opcion= document.getElementById("marca");
+  var texto = opcion.options[opcion.selectedIndex].text;
+  console.log(texto);
+
+  consulta(texto);
+
+function consulta(dato){
+  console.log(dato);
+  var opcion= document.getElementById("marca");
+  var texto = opcion.options[opcion.selectedIndex].text;
+  var dato='hola';
+  // event.preventDefault();
+  $.ajax({ 
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
+     url:"{{ route('marcasmodelos') }}",
+     type: "POST",
+     data:{text: texto, dat:dato},
+     dataType:'JSON',
+     contentType: false,
+     cache: false,
+     processData: false,
+     success:function(data)
+     {      
+       var mensaje=data.success;
+        // var err = JSON.parse(mensaje.responseText);
+       console.log(mensaje);
+       
+     },
+     error: function (data) {
+
+     }
+  });
+}
+
+});
   </script>
 
 @endsection
