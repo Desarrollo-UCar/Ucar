@@ -68,14 +68,13 @@
                      
                            
                           <div class="form-group col-md-6">
-                            <label>Marca</label>
-                            <form role="form" name="marcas" id="marcas" method="post">
-                            <select class="form-control" name="marca" id="marca">
+                            <label>Marca</label>                            
+                            <select class="form-control" name="marca" id="marca" onchange="consulta()">
                               @foreach ($marca as $marca)
                               <option>{{$marca->nombre}}</option>
                               @endforeach                             
                             </select>
-                          </form>
+                        
 
                           
                             <span id="errormarca" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -86,7 +85,9 @@
                           
                         <div class="col-md-6 form-group">
                             <label>Modelo</label>
-                            <input type="text" name="modelo" id="modelo" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                            <select class="form-control" name="modelo" id="modelo" onchange="consulta()">
+                              <option value="">Ninguno</option>                           
+                            </select>
 
                             
                             <span id="errormodelo" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -692,42 +693,48 @@ document.getElementById("foto").onchange = function(e) {
 
 <script>
 $(document).ready(function(){
-  var opcion= document.getElementById("marca");
-  var texto = opcion.options[opcion.selectedIndex].text;
-  console.log(texto);
+  
+  consulta();
 
-  consulta(texto);
 
-function consulta(dato){
-  console.log(dato);
+
+});
+  </script>
+
+<script>
+function consulta(){
+  // console.log(dato);
   var opcion= document.getElementById("marca");
-  var texto = opcion.options[opcion.selectedIndex].text;
-  var dato='hola';
+  var dato = opcion.options[opcion.selectedIndex].text;
+var formData = new FormData();
+formData.append("text",dato)
   // event.preventDefault();
   $.ajax({ 
     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
      url:"{{ route('marcasmodelos') }}",
      type: "POST",
-     data:{text: texto, dat:dato},
+     data:formData,
      dataType:'JSON',
      contentType: false,
      cache: false,
      processData: false,
      success:function(data)
      {      
-       var mensaje=data.success;
-        // var err = JSON.parse(mensaje.responseText);
-       console.log(mensaje);
-       
+       var mensaje=data.success;     
+        var select = document.getElementById("modelo");
+        select.options.length = 0;
+        mensaje.forEach(function(item){
+          var arr = item.nombre;
+          select.options[select.options.length] = new Option(arr, arr);
+        // console.log(item.nombre);
+        });
      },
      error: function (data) {
 
      }
   });
 }
-
-});
-  </script>
+</script>
 
 @endsection
 
