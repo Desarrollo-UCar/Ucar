@@ -17,7 +17,7 @@ class Reservacion extends Seeder
         for ($i=0; $i <300; $i++) {
             \DB::table('reservacions')->insert(array(
                 'id_cliente' => $faker->numberBetween(1,540),
-               'fecha_reservacion' => $faker->dateTimeBetween('-2 years','-1 day'),
+               'fecha_reservacion' => $faker->dateTimeBetween('-3 years','-1 day'),
                 'motivo_visita' => $faker->randomElement(['Turismo','Negocios','Vacaciones']),
                 'comentarios' => 'por comentar',
                 'total' => $faker->numberBetween(1000,20000),

@@ -126,6 +126,9 @@ Route::get('/reservacionesVehiculo','ReservacionController@vehiculo')->name('por
 Route::get('clienteagregar', 'ClienteController@Agregar')->name('agregarcliente');
 
 Route::get('reportesFechaReservacion', 'ReportesController@fechaReservacion')->name ('reportesFechaReservacion');
+Route::get('fechaAlquiler', 'ReportesController@fechaAlquiler')->name ('fechaAlquiler');
+Route::get('fechaCobro', 'ReportesController@fechaCobro')->name ('fechaCobro');
+
 Route::get('InicioReportes', 'ReportesController@index')->name ('InicioReportes');
 
 Route::get('catalogos', 'MarcaVehiculoController@index')->name('catalogos');

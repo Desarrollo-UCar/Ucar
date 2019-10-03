@@ -319,11 +319,11 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     $pago_reserva->id_reserva = $reservacion->id;
     $pago_reserva->paypal_datos = 'por rellenar';
     $pago_reserva->mostrador_datos = 'por rellenar en mostrador';
-    $pago_reserva->garantia_datos = 'por rellenar en mostrador';
+    //$pago_reserva->garantia_datos = 'por rellenar en mostrador';
     $pago_reserva->fecha = date('Y\-m\-d H\:i\:s');
     $pago_reserva->total = $reservacion->total;
     $pago_reserva->estatus = 'pendiente';
-    $pago_reserva->reservacion = 0;
+    //$pago_reserva->reservacion = 0;
     $pago_reserva->save();
  // listo tenemos el pago de la rserva creado falata que el cliente pague
 // buscamos el vehiculo para proceder a crear el alquiler con todos los datos

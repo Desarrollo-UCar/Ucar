@@ -18,14 +18,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>0</h3>
+              <h3> <br> </h3>
 
-              <p>Reservaciones</p>
+              <b>Reservaciones</b></p>
             </div>
             <div class="icon">
               <i class="	fa fa-clipboard"></i>
             </div>
-            <a href="#" class="small-box-footer">Ver mas <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('reservacion.index')}}" class="small-box-footer">Ver mas <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -33,14 +33,14 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Bounce Rate</p>
+              {{-- <h3>53<sup style="font-size: 20px">%</sup></h3> --}}
+              <h3><br></h3>
+              <p><b>Reportes</b></p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('InicioReportes','HOLA')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
