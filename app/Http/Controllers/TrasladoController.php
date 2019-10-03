@@ -187,18 +187,72 @@ public function vehiculos_por_sucursal(Request $reserva){
 
 
 public function guardar_confirmacion_traslado(Request $reserva){
-    //guardamos los datos en las tablas correspondientes
-
-    //---------------------------
     $solicitud_traslado = App\traslado_temp::findOrFail($reserva['id_sol_traslado']);
     $vehiculo           = App\Vehiculo::findOrFail($solicitud_traslado->id_vehiculo);
-    return $solicitud_traslado;
+    //return $solicitud_traslado;
+    //calculamos los datos necesarios
+        $llegada = new DateTime($solicitud_traslado->fecha_llegada_solicitada);
+        $llegada->add(new DateInterval('PT'. substr($solicitud_traslado->hora_llegada,0,2) .'H'));
+
+        $salida = new DateTime($solicitud_traslado->fecha_salida);
+        $salida->add(new DateInterval('PT'. substr($solicitud_traslado->hora_salida,0,2) .'H'));
+        //return $llegada->format('Y-m-d H:i') . "\n"; 
+        // el costo del puerto punto de origen seria por kiometraje
+        //kilometraje por la gasolina
+        $diferencia = $salida->diff($llegada);
+        //$dias = $diferencia->format('%Y años %m meses %d days %H horas %i minutos %s segundos');
+        $dias = $diferencia->format('%d');
+        $horas = $diferencia->format('%H');
+        if($solicitud_traslado->viaje_redondo == 1){
+            $dias = $dias * 2;
+            $horas = $horas * 2;
+        }
+        if($horas > 8 ){
+            $subtotal = ($dias+ 1) * $vehiculo->precio;
+        }else{
+            $subtotal = $dias * $vehiculo->precio + (($vehiculo->precio/24) * $horas);
+        } 
+        ///-----
+        $total_previos = $solicitud_traslado->km / $vehiculo->rendimiento * $solicitud_traslado->gasolina + $solicitud_traslado->otros_gastos * 2;
+        $total_sueldo_chofer = $solicitud_traslado->n_choferes * $solicitud_traslado->sueldo_chofer * $dias;
+        $subtotal =   $total_previos + $total_sueldo_chofer + $subtotal;
+        $total = $subtotal - ($subtotal / 100 * $solicitud_traslado->descuento) ;
+
+    //guardamos los datos en las tablas correspondientes
+    //tabla reserva
+        $reservacion = new App\Reservacion;
+        $reservacion->id_cliente = 1;
+        $reservacion->fecha_reservacion = date('Y\-m\-d H\:i\:s');
+        $reservacion->motivo_visita = 'por rellenar';
+        $reservacion->comentarios = 'por rellenar';
+        $reservacion->total = $total;
+        $reservacion->saldo = 0.0;
+        $reservacion->save();
+    //tabla alquiler
+        $alquiler = new App\Alquiler;
+        $alquiler->id_reservacion = $reservacion->id;
+        $alquiler->lugar_recogida = $solicitud_traslado->lugar_salida;
+        $alquiler->fecha_recogida = $solicitud_traslado->fecha_salida;
+        $alquiler->hora_recogida = $solicitud_traslado->hora_salida;
+        $alquiler->lugar_devolucion =  $solicitud_traslado->lugar_llegada;
+        $alquiler->fecha_devolucion =  $solicitud_traslado->fecha_llegada_solicitada;
+        $alquiler->hora_devolucion = $solicitud_traslado->hora_llegada;
+        $alquiler->id_vehiculo = $solicitud_traslado->id_vehiculo;
+        $alquiler->km_salida = $vehiculo->kilometraje;
+        $alquiler->km_regresa = $vehiculo->kilometraje;
+        $alquiler->nombreConductor = 'por rellenar';
+        $alquiler->num_licencia = 'por rellenar';
+        $alquiler->expedicion_licencia = 'por rellenar';
+        $alquiler->expiracion_licencia = 'por rellenar';
+        $alquiler->estatus = 'pendiente_recogida';
+        $alquiler->save();
+    //---------------------------
+   return "ya esta";
     //////-------------------------
-    Mail::send('mails.confirmacion_traslado',compact('solicitud_traslado','reserva','vehiculo'), function ($message) use ($solicitud_traslado,$vehiculo){
+    Mail::send('mails.confirmacion_traslado',compact('solicitud_traslado','reserva','vehiculo','subtotal','total_sueldo_chofer','total', 'dias', 'horas'), function ($message) use ($solicitud_traslado,$vehiculo){
         $message->from('ucardesarollo@gmail.com', 'Ucar');
         $message->to($solicitud_traslado->email)->subject('Confirmacion de Reserva de Traslado');
         $message->attach($vehiculo->foto);
-        
     });
     /////////-------------------------
     return "mensaje enviado";

@@ -54,13 +54,13 @@
                                 <li>Renta del automovil</dt>
                                 <dd>{{$vehiculo->precio}}</dd>
                                 <li>Servicio de chofer:</dt>
-                                <dd>{{$solicitud_traslado->n_choferes}} ? Choferes por viaje por ?? dias</dd>
+                                <dd>{{$solicitud_traslado->n_choferes}} ? Choferes por viaje por {{$dias}} dias</dd>
                                 <li>Subtotal</dt>
-                                <dd>--MXN</dd>
+                                <dd>{{$subtotal}}--MXN</dd>
                                 <li>Descuento de:</dt>
-                                <dd>--MXN</dd>
+                                <dd>{{$solicitud_traslado->descuento * $subtotal }}--MXN</dd>
                                 <li>Total a pagar:</dt>
-                                <dd>--MXN</dd>
+                                <dd>{{$total}}--MXN</dd>
                                 </ul> 
                             </div>
                         </div>
