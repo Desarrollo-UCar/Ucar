@@ -410,7 +410,7 @@
  <!-- Select2 -->
  <script src= "{{asset("assets/$theme/bower_components/select2/dist/js/select2.full.min.js")}}"></script>
 
-{{--script para municpios--}}
+{{--script para visualizar fotos--}}
 <script>
   document.getElementById("foto").onchange = function(e) {
    // Creamos el objeto de la clase FileReader

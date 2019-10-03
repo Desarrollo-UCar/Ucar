@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Route;
+
 Auth::routes(); 
   
 Auth::routes(['verify' => true]);
@@ -20,9 +23,10 @@ Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')-
 Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo') ;//solicitud del cliente
 //generar la cotizacion del lado del adminitrador
 Route::get('vista_generar_cotizacion_traslado','SoloVistasController@vista_generar_cotizacion_traslado')->name('vista_generar_cotizacion_traslado');//cargar la vista inicial de administrador para cotizar el traslado
-Route::post('vehiculos_disponibles', 'TrasladoController@vehiculos_disponibles')-> name('vehiculos_disponibles');//elegir vehiculo disponible para traslado
 Route::get('calculo_costos_traslado',  'TrasladoController@calculo_costos_traslado')->name('calculo_costos_traslado') ;
-Route::post('crear_reservacion_traslado', 'TrasladoController@crear_reservacion_traslado')-> name('crear_reservacion_traslado');
+Route::post('vehiculos_por_sucursal', 'TrasladoController@vehiculos_por_sucursal')-> name('vehiculos_por_sucursal');
+Route::get('vehiculos_por_sucursal', 'TrasladoController@vehiculos_por_sucursal')-> name('vehiculos_por_sucursal');
+Route::get('guardar_confirmacion_traslado', 'TrasladoController@guardar_confirmacion_traslado')-> name('guardar_confirmacion_traslado');
 //Route::post('CreateImage','TrasladoController@store');
 
 //
@@ -135,3 +139,5 @@ Route::get('catalogos', 'MarcaVehiculoController@index')->name('catalogos');
 Route::get('registrarMarca','MarcaVehiculoController@store')->name('registrarMarca');
 Route::get('registrarModelo','ModeloVehiculoController@store')->name('registrarModelo');
 Route::resource('marca', 'MarcaVehiculoController');
+ //Route::resource('marcamodelo', 'MarcaModeloController');
+Route::post('marcasmodelos','VehiculoController@Consultar')->name('marcasmodelos');
