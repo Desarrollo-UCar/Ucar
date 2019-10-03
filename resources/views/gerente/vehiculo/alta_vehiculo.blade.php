@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Alta vehiculo</title>
   <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.9.0/d3.min.js"></script>
  
@@ -64,9 +65,16 @@
 
                         {{-- FORMULARIO DE MARCA DEL VEHICULO --}}
                         
-                        <div class="col-md-6 form-group">
-                          <label>Marca</label>
-                          <input type="text" name="marca" id="marca" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                     
+                           
+                          <div class="form-group col-md-6">
+                            <label>Marca</label>                            
+                            <select class="form-control" name="marca" id="marca" onchange="consulta()">
+                              @foreach ($marca as $marca)
+                              <option>{{$marca->nombre}}</option>
+                              @endforeach                             
+                            </select>
+                        
 
                           
                             <span id="errormarca" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -77,7 +85,9 @@
                           
                         <div class="col-md-6 form-group">
                             <label>Modelo</label>
-                            <input type="text" name="modelo" id="modelo" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                            <select class="form-control" name="modelo" id="modelo" onchange="consulta()">
+                              <option value="">Ninguno</option>                           
+                            </select>
 
                             
                             <span id="errormodelo" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -679,6 +689,52 @@ document.getElementById("foto").onchange = function(e) {
   
   });
   </script>
+
+
+<script>
+$(document).ready(function(){
+  
+  consulta();
+
+
+
+});
+  </script>
+
+<script>
+function consulta(){
+  // console.log(dato);
+  var opcion= document.getElementById("marca");
+  var dato = opcion.options[opcion.selectedIndex].text;
+var formData = new FormData();
+formData.append("text",dato)
+  // event.preventDefault();
+  $.ajax({ 
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
+     url:"{{ route('marcasmodelos') }}",
+     type: "POST",
+     data:formData,
+     dataType:'JSON',
+     contentType: false,
+     cache: false,
+     processData: false,
+     success:function(data)
+     {      
+       var mensaje=data.success;     
+        var select = document.getElementById("modelo");
+        select.options.length = 0;
+        mensaje.forEach(function(item){
+          var arr = item.nombre;
+          select.options[select.options.length] = new Option(arr, arr);
+        // console.log(item.nombre);
+        });
+     },
+     error: function (data) {
+
+     }
+  });
+}
+</script>
 
 @endsection
 

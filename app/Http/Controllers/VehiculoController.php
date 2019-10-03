@@ -7,7 +7,10 @@ use App\Vehiculo;
 use App\Sucursal;
 use App\Modelo;
 use App\VehiculoSucursales;
+use App\MarcaVehiculo;
+use App\MarcaModelo;
 use Illuminate\Http\Request;
+
 use phpDocumentor\Reflection\Types\Nullable;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
@@ -52,12 +55,13 @@ class VehiculoController extends Controller
             $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
             ->where('status','=','activo')->first();
             $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
-
-            return view('gerente.vehiculo.alta_vehiculo',compact('sucursal'));
+            $marca= MarcaVehiculo::all();
+            return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca'));
         }
 
         $sucursal=Sucursal::all();
-        return view('gerente.vehiculo.alta_vehiculo',compact('sucursal'));
+        $marca= MarcaVehiculo::all();
+        return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca'));
     }
 
     
@@ -352,5 +356,22 @@ class VehiculoController extends Controller
             ]);
             return response()->json(['success'=>'EXITO']);
     }
+
+    public function Consultar(Request $request){
+
+            $marca = MarcaVehiculo::
+            //  join('marca_modelos','id','=','marca_modelos.idMarca')
+            // ->join('modelo_vehiculos','marca_modelos.idModelo','=','modelo_vehiculos.id')
+            // ->select('modelo_vehiculos.*')
+            where('nombre',$request['text'])
+            ->first();
+
+             $marcamodelo = MarcaModelo::join('modelo_vehiculos','idModelo','=','modelo_vehiculos.id')
+             ->select('modelo_vehiculos.*')
+             ->where('idMarca',$marca['id'])->get();
+
+            return response()->json(['success'=>$marcamodelo]);
+    }
     
 }
+
