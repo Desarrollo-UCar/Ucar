@@ -11,8 +11,7 @@ class CreateTrasladoTempsTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up(){
         Schema::create('traslado_temps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->datetime('fecha_hora_reserva');//fecha y hora de creacion de la reserva de un traslado
@@ -31,6 +30,19 @@ class CreateTrasladoTempsTable extends Migration
             $table->string('email');
             $table->boolean('viaje_redondo')->nullable();
             $table->integer('dias_espera')->nullable();
+            //datos que se anexaran a la hora que el administrador realice la cotizacion
+            $table->integer('sucursal')->nullable();
+            $table->date('fecha_salida_de_sucursal')->nullable();
+            $table->time('hora_salida_de_sucursal')->nullable();
+            $table->integer('km_sucursal_origen')->nullable();
+            $table->float('gasolina')->nullable();
+            $table->float('otros_gastos')->nullable();
+
+            $table->integer('id_vehiculo')->nullable();
+
+            $table->integer('n_choferes')->nullable();
+            $table->float('sueldo_chofer')->nullable();
+            $table->integer('descuento')->nullable();
             //los datos personales 
             $table->timestamps();
         });

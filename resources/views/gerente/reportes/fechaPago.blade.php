@@ -8,7 +8,7 @@
 @section('contenido')
 <section class="content-header">
     <h1>
-      Fecha en que se realizaron las reservaciones
+      Fecha en que se realizaron los cobros
       <small>Graficas</small>
     </h1>
 </section>
@@ -22,7 +22,7 @@
                   <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
                     
-                    <h3 class="box-title">Reservaciones realizadas en la ultima semana</h3>
+                    <h3 class="box-title">Cobros realizadas en la ultima semana</h3>
     
                   </div>
                   <div class="box-body">
@@ -45,7 +45,7 @@
               <div class="box-header with-border">
                 <i class="fa fa-bar-chart-o"></i>
   
-              <h3 class="box-title">Reservaciones realizadas en el año {{date('Y')}}</h3>
+              <h3 class="box-title">Cobros realizados en el año {{date('Y')}}</h3>
 
               </div>
               <div class="box-body">
@@ -61,7 +61,7 @@
   <div class="box">
       <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
-        <h3 class="box-title">Reservaciones realizadas en los ultimos años</h3>
+        <h3 class="box-title">Cobros realizados en los ultimos años</h3>
 
       </div>
       <div class="box-body chart-responsive">
@@ -108,7 +108,7 @@
       barColors: ['#4AB0FC'],
       xkey: 'DIA',
       ykeys: ['CANTIDAD'],
-      labels: ['Reservaciones'],
+      labels: ['Total'],
       hideHover: 'auto',
       fillOpacity: 100
     });
@@ -122,7 +122,7 @@
       barColors: ['#A3D169'],
       xkey: 'anio',
       ykeys: ['total'],
-      labels: ['Reservaciones'],
+      labels: ['Total'],
       hideHover: 'auto',
       fillOpacity: 100
     });
@@ -136,7 +136,7 @@
       barColors: ['#E7B343'],
       xkey: 'mes',
       ykeys: ['cantidad'],
-      labels: ['Reservaciones'],
+      labels: ['Total'],
       hideHover: 'auto',
       fillOpacity: 100
     });

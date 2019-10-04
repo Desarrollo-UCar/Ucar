@@ -50,3 +50,4 @@ class Empleado extends Seeder
 
     }
 }
+

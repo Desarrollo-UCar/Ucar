@@ -109,6 +109,7 @@ class ReservacionController extends Controller
         $disponibles = DB::select('SELECT * FROM vehiculos 
         INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
         WHERE vehiculosucursales.sucursal=?
+        AND vehiculos.estatus ="disponible"
         AND vehiculos.idvehiculo NOT IN (
         SELECT vehiculos.idvehiculo FROM vehiculos  
         INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo

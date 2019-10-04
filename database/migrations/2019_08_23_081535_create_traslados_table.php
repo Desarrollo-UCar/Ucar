@@ -15,27 +15,35 @@ class CreateTrasladosTable extends Migration
     {
         Schema::create('traslados', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->datetime('fecha_hora_reserva');//fecha y hora de creacion de la reserva de un traslado
            
             $table->string('lugar_salida');
-            $table->date('fecha_salida');
-            $table->time('hora_salida');
+            $table->date('fecha_salida')->nullable();
+            $table->time('hora_salida')->nullable();
             $table->string('lugar_llegada');
-            $table->date('fecha_llegada_estimada');//estimacion de fecha segun tiempo estimado
-            $table->time('hora_llegada_estimada');//estimacion de hora segun tiempo estimado
-           
-            $table->integer('metros_recorridos');//dado en metros
-            $table->integer('tiempo_estimado'); //dado en segundos
-            $table->integer('id_vehiculo');
+            $table->date('fecha_llegada_solicitada');//estimacion de fecha segun tiempo estimado
+            $table->time('hora_llegada');
+            $table->integer('n_pasajeros');
+            $table->string('nombres');
+            $table->string('primer_apellido');
+            $table->string('segundo_apellido');
+            $table->string('telefono');
+            $table->string('email');
+            $table->boolean('viaje_redondo')->nullable();
+            $table->integer('dias_espera')->nullable();
+            //datos que se anexaran a la hora que el administrador realice la cotizacion
+            $table->integer('sucursal')->nullable();
+            $table->date('fecha_salida_de_sucursal')->nullable();
+            $table->time('hora_salida_de_sucursal')->nullable();
+            $table->integer('km_sucursal_origen')->nullable();
+            $table->float('gasolina')->nullable();
+            $table->float('otros_gastos')->nullable();
 
-            $table->decimal('precio_litro_gasolina');
-            $table->integer('litros_gasolina');
-            $table->decimal('monto_gasolina');
-            $table->decimal('monto_casetas');
+            $table->integer('id_vehiculo')->nullable();
 
-            $table->integer('num_choferes');
-            $table->decimal('sueldo_chofer');
-            $table->decimal('total');
-
+            $table->integer('n_choferes')->nullable();
+            $table->float('sueldo_chofer')->nullable();
+            $table->integer('descuento')->nullable();
             //los datos personales 
             $table->timestamps();
         });
