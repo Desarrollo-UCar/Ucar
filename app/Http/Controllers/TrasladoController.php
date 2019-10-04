@@ -93,6 +93,8 @@ public function vehiculos_por_sucursal(Request $reserva){
                     $solicitud_traslado->dias_espera   = 0;
                 }
                 $solicitud_traslado->fecha_llegada_solicitada = date("Y\-m\-d", strtotime($reserva['fecha_llegada_solicitada']));
+    //fechas en formato 
+    
     //calculamos la fecha de llegada a la sucursal en base a la fecha de llegada a destino 
     //consultamos los vehiculos disponibles en las fechas acordadas con el cliente por parte del administrador
     $vehiculos_disp = DB::select(' SELECT vehiculos.idvehiculo, vehiculos.marca, vehiculos.modelo, vehiculos.transmicion,

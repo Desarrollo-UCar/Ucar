@@ -205,10 +205,11 @@
                                 <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                                 </div>
                                 @if(!$solicitud_traslado->fecha_salida == null)
-                                <input id = 'fecha_salida' name = 'fecha_salida' class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida" value="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_salida))}}" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY"  required>
+                                <input id = 'fecha_salida' name = 'fecha_salida' class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida" value="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_salida))}}" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY" onchange="validar_fecha();" required>
                                 @else
-                                <input id = 'fecha_salida' name = 'fecha_salida' class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida"  pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY"  required>
+                                <input id = 'fecha_salida' name = 'fecha_salida' class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida"  pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY" onchange="validar_fecha();" required>
                                 @endif
+                                <input id = 'fecha_salida_formato' name = 'fecha_salida_formato' class="form-control" value="{{$solicitud_traslado->fecha_salida}}" type="hidden" >
                             </div>
                         </div>
                         <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -254,10 +255,11 @@
                                   <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                                   </div>
                                   @if(!$solicitud_traslado->fecha_llegada_solicitada == null)
-                                  <input id = 'fecha_llegada_solicitada' name = 'fecha_llegada_solicitada' class="form-control" type="text" value ="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_llegada_solicitada))}}" autocomplete="off" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY"  required>
+                                  <input id = 'fecha_llegada_solicitada' name = 'fecha_llegada_solicitada' class="form-control" type="text" value ="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_llegada_solicitada))}}" autocomplete="off" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY" onchange="validar_fecha();" required>
                                   @else
-                                  <input id = 'fecha_llegada_solicitada' name = 'fecha_llegada_solicitada' class="form-control" type="text"  autocomplete="off"  placeholder="Fecha de llegada" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY"  required>
+                                  <input id = 'fecha_llegada_solicitada' name = 'fecha_llegada_solicitada' class="form-control" type="text"  autocomplete="off"  placeholder="Fecha de llegada" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Formato: DD-MM-YYYY" onchange="validar_fecha();" required>
                                   @endif
+                                  <input id = 'fecha_llegada_formato' name = 'fecha_llegada_formato' class="form-control"  value = "{{$solicitud_traslado->fecha_llegada_solicitada}}" type="hidden" >
 
 
                               </div>
@@ -358,10 +360,11 @@
                   <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                   </div>
                   @if(!$solicitud_traslado->fecha_salida_de_sucursal == null)
-                  <input id = "fecha_salida_sucursal" name = "fecha_salida_sucursal" class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Fecha de salida de la sucursal en Formato: DD-MM-YYYY" value ="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_salida_de_sucursal))}}" required>
+                  <input id = "fecha_salida_sucursal" name = "fecha_salida_sucursal" class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Fecha de salida de la sucursal en Formato: DD-MM-YYYY" value ="{{date("d\-m\-Y", strtotime($solicitud_traslado->fecha_salida_de_sucursal))}}" onchange="validar_fecha();" required>
                   @else
-                  <input id = "fecha_salida_sucursal" name = "fecha_salida_sucursal" class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida de sucursal" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Fecha de salida de la sucursal en Formato: DD-MM-YYYY" required>
+                  <input id = "fecha_salida_sucursal" name = "fecha_salida_sucursal" class="form-control" type="text" autocomplete="off" placeholder="Fecha de salida de sucursal" pattern="[0-3][0-9]-[0-1][0-9]-2[0-9][0-9][0-9]" minlength = "10" maxlength="10" title="Fecha de salida de la sucursal en Formato: DD-MM-YYYY" onchange="validar_fecha();" required>
                   @endif 
+                  <input id = 'fecha_salida_sucursal_formato' name = 'fecha_salida_sucursal_formato' class="form-control" value = "{{$solicitud_traslado->fecha_salida_de_sucursal}}" type="hidden" >
               </div>
           </div>
           <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
@@ -774,6 +777,8 @@
     "minDate": new Date()
 }, function(start, end, label) {
   document.getElementById('fecha_salida_sucursal').value = end.format('DD-MM-YYYY');
+  document.getElementById('fecha_salida_sucursal_formato').value = end.format('YYYY,MM,DD');
+  validar_fecha();
 });
 $('#fecha_llegada_solicitada').daterangepicker({
       "autoApply": true,
@@ -785,6 +790,8 @@ $('#fecha_llegada_solicitada').daterangepicker({
       "minDate": new Date()
   }, function(start, end, label) {
     document.getElementById('fecha_llegada_solicitada').value = end.format('DD-MM-YYYY');
+    document.getElementById('fecha_llegada_formato').value = end.format('YYYY,MM,DD');
+    validar_fecha();
   });
   $('#fecha_salida').daterangepicker({
       "autoApply": true,
@@ -796,6 +803,8 @@ $('#fecha_llegada_solicitada').daterangepicker({
       "minDate": new Date()
   }, function(start, end, label) {
     document.getElementById('fecha_salida').value = end.format('DD-MM-YYYY');
+    document.getElementById('fecha_salida_formato').value = end.format('YYYY,MM,DD');
+  validar_fecha();
   });
 </script>
 <script>
@@ -840,6 +849,7 @@ $('#fecha_llegada_solicitada').daterangepicker({
   </script>
   <script>
       function total_sueldo_choferes(){
+        @if($dias != null)
           var n_choferes = document.getElementById("n_choferes").value;
           var sueldo_chofer = document.getElementById("sueldo_chofer").value;
           if(n_choferes != "" & sueldo_chofer != ""){
@@ -851,6 +861,7 @@ $('#fecha_llegada_solicitada').daterangepicker({
             obtener_subtotal();
             costo_total();
           }
+          @endif
         };
         //
         function total_gastos_previos(){
@@ -890,12 +901,44 @@ $('#fecha_llegada_solicitada').daterangepicker({
         };
         // 
         function costo_total(){
-          var subtotal = document.getElementById("subtotal").value;
-          var descuento = document.getElementById("descuento").value;
-          
-            document.getElementById("total").value = subtotal - (parseInt( subtotal) / 100 * parseInt( descuento)) ;
-          
+          @if($subtotal != null)
+            var subtotal = document.getElementById("subtotal").value;
+            var descuento = document.getElementById("descuento").value;
+                document.getElementById("total").value = subtotal - (parseInt( subtotal) / 100 * parseInt( descuento)) ;
+          @endif
         };
+
+        function validar_fecha(){
+          var fecha_salida = document.getElementById("fecha_salida").value;
+          var fecha_llegada = document.getElementById("fecha_llegada_solicitada").value;
+          var fecha_salida_sucursal = document.getElementById("fecha_salida_sucursal").value;
+
+          var fecha_salida_formato = document.getElementById("fecha_salida_formato").value;
+          var fecha_llegada_formato = document.getElementById("fecha_llegada_formato").value;
+          var fecha_salida_sucursal_formato = document.getElementById("fecha_salida_sucursal_formato").value;
+         
+          if(fecha_salida != "" & fecha_llegada != ""){
+            var salida  = new Date(fecha_salida_formato);
+            var llegada = new Date(fecha_llegada_formato);
+            var salida_sucursal  = new Date(fecha_salida_sucursal_formato);
+            //--------------
+            console.log(salida);
+            console.log(llegada);
+            console.log(salida_sucursal);
+            if(salida > llegada ){
+                alert("Fecha invalida!! La fecha de salida no puede ser mayor a la de llegada");
+                document.getElementById("fecha_salida").value = "";
+            }
+            if(salida_sucursal > salida ){
+              alert("Fecha invalida!! La fecha de salida de la sucursal no puede ser mayor a la de salida del cliente");
+                document.getElementById("fecha_salida_sucursal").value = "";
+            }
+            
+
+          }
+                    
+        };
+
       </script>
 </body>
 </html>
