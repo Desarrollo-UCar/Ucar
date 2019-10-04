@@ -256,8 +256,8 @@
                     <label>Número de licencia</label>
                     <input type="number" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia">
 
-                    <span id="errornumlicencia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                    <span id="validonumlicencia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                    <span id="errornumLicencia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                    <span id="validonumLicencia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                 </div>
                 
                 {{-- FORMULARIO DE FECHA DE EXPEDICION --}}
@@ -278,11 +278,22 @@
                 <span id="errorlicenciaFechaExpiracion" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validolicenciaFechaExpiracion" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
             </div>
-                          
-                  
 
+            <div class="form-group col-md-4" style="display: none;" id="contrasenia">
+              <label>Contraseña</label>
+              <input type="password" class="form-control" name="contra" id="contra"  placeholder="Introduzca su contraseña">
 
+              <span id="errorcontra" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+              <span id="validocontra" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+          </div>
 
+          <div class="form-group col-md-4" style="display: none;" id="confcontrasenia">
+            <label>Confirmar Contraseña</label>
+            <input type="password" class="form-control" name="confcontra" id="confcontra"  placeholder="Introduzca su contraseña">
+
+            <span id="errorconfcontra" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+            <span id="validoconfcontra" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+        </div>
 
               <div class="row">
                 <div class="col-md-12">
@@ -437,6 +448,13 @@
 
 {{--script para municpios--}}
 <script src="{{URL::asset('/js/heroku.js')}}"></script>
+
+<script>
+$(document).ready(function(){
+  Tipo();
+});
+</script>
+
 <script >
 function Tipo(){
     var opcion= document.getElementById("tipo");
@@ -447,17 +465,28 @@ function Tipo(){
     var lice = document.getElementById("licencia");
     var expe = document.getElementById("expedicion");
     var venc = document.getElementById("vencimiento");
+    var contra = document.getElementById("contrasenia");
+    var confcontra = document.getElementById("confcontrasenia");
     
     if (texto=='CHOFER') {
       row.style.display='block';
       lice.style.display='block';      
       expe.style.display='block';
       venc.style.display='block';
+      contra.style.display='none';
+        confcontra.style.display='none';
     }else{
       row.style.display='none';
       lice.style.display='none';     
       expe.style.display='none';
       venc.style.display='none';
+      if(texto=='ADMINISTRADOR'){
+        contra.style.display='block';
+        confcontra.style.display='block';
+      }else{
+        contra.style.display='none';
+        confcontra.style.display='none';
+      }
       }
   }
 </script>
@@ -496,7 +525,7 @@ function Tipo(){
      {
       
        var mensaje=data.success;
-       console.log('hola');
+       console.log(mensaje);
        if(mensaje=='EXITO'){
       $('.btn-info').click();
        }
@@ -509,7 +538,17 @@ function Tipo(){
                jQuery('#errorfechaNacimiento').show();          
               $( '#fechaNacimiento' ).css('borderColor', 'red');
        }
-       
+       if(mensaje=='ERRORCONTRA'){     
+              jQuery('#validocontra').hide(); 
+            jQuery('#errorcontra').show();          
+           $( '#contra' ).css('borderColor', 'red');               
+      
+              jQuery('#validoconfcontra').hide(); 
+            jQuery('#errorconfcontra').show();          
+           $( '#confcontra' ).css('borderColor', 'red');
+            //console.log(nombre);
+         
+       }
      },
      error: function (data) {
          var err = JSON.parse(data.responseText);
@@ -540,7 +579,8 @@ function Tipo(){
              var licenciaFechaExpedicion = arreglo.licenciaFechaExpedicion;
              var licenciaFechaExpiracion = arreglo.licenciaFechaExpiracion;
              var foto = arreglo.foto;
-             
+             var contra = arreglo.contra;
+             var confcontra = arreglo.confcontra;
              
              if (foto == undefined){  
               
@@ -779,6 +819,28 @@ function Tipo(){
               jQuery('#validocolonia').hide(); 
             jQuery('#errorcolonia').show();          
            $( '#colonia' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }
+
+          
+          if ( contra== undefined){  
+            $( '#contra' ).css('borderColor', 'green');         
+            jQuery('#validocontra').show(); 
+            jQuery('#errorcontra').hide(); 
+            }else{
+              jQuery('#validocontra').hide(); 
+            jQuery('#errorcontra').show();          
+           $( '#contra' ).css('borderColor', 'red');
+            //console.log(nombre);
+          }          
+          if (confcontra == undefined){  
+            $( '#confcontra' ).css('borderColor', 'green');         
+            jQuery('#validoconfcontra').show(); 
+            jQuery('#errorconfcontra').hide(); 
+            }else{
+              jQuery('#validoconfcontra').hide(); 
+            jQuery('#errorconfcontra').show();          
+           $( '#confcontra' ).css('borderColor', 'red');
             //console.log(nombre);
           }
      }

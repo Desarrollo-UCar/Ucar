@@ -46,7 +46,6 @@ class Empleado extends Seeder
         \DB::table('role_user')->insert(array(
             'role_id' => '3',
             'user_id' => '1',
-            //'password'=> Hash::make('12345678'),
         ));
 
     }

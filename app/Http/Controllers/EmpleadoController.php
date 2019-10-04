@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Empleado;
 use App\Sucursal;
 use App\EmpleadoSucursal;
+use App\User;
+use App\Role;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Nullable;
 use Illuminate\Support\Facades\Storage;
@@ -87,6 +90,45 @@ class EmpleadoController extends Controller
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
             }else{
+
+                if($request['tipo']=='ADMINISTRADOR'){
+                    $request->validate([
+                       'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                       'ine' => 'required|regex:/[0-9]{13}/m',
+                       'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                        'primerApellido' =>'required',
+                        'segundoApellido' =>'required',
+                        'fechaNacimiento' =>'required|date',
+                        'nacionalidad' =>'required',
+                        'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                        'estado' =>'required',
+                        'municipio' =>'required',
+                        'colonia' =>'required',
+                        'calle' =>'required',
+                        'correo' =>'required|email',
+                        'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                        'tipo' => 'required',
+                        'genero' => 'required',
+                        'sucursal' => 'required',
+                        'numero' => 'required',
+                        'status'=> 'required',
+                        'contra'=> 'required',
+                        'confcontra'=> 'required',
+                    ]);
+
+                    if($request['contra']!=$request['confcontra']){
+                        return response()->json(['success'=>'ERRORCONTRA']);
+                    }
+
+                    // $user = User::create([
+                    //     'name' => 'HOLA',
+                    //     'email' => 'hola@gmai.com',
+                    //     'password' => Hash::make('hola'),
+                    // ]);
+             
+                //    $user->roles()->attach(Role::where('name', 'user')->first());
+
+                }else{
                 $request->validate([
                     'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                     'ine' => 'required|regex:/[0-9]{13}/m',
@@ -108,7 +150,8 @@ class EmpleadoController extends Controller
                     'numero' => 'required',
                     'status'=> 'required',
                 ]);
-            }      
+            } 
+        }     
                 
       /*return response()->json([
        'message'   => 'Image Upload Successfully',
@@ -169,6 +212,18 @@ class EmpleadoController extends Controller
                         'created_at'=>$date,
                         'updated_at'=>$date
                         ]);
+
+    if($request['tipo']=='ADMINISTRADOR'){
+        $user = User::create([
+            'name' => $request['nombres'],
+            'email' => $request['correo'],
+            'password' => Hash::make($request['contra']),
+        ]);
+ 
+       $user->roles()->attach(Role::where('name', 'admin')->first());
+    }
+
+            
            
                         return response()->json(['success'=>'EXITO']);
     
