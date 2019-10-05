@@ -121,6 +121,7 @@ Route::get('/customeer', 'ReservacionController@cambia_Vehiculo')->name('cambia_
 Route::get('/reservacion/{reservacion}', 'ReservacionController@garantia')->name('garantia');
 
 Route::get('/detalle/{reservacion}', 'ReservacionController@show')->name('reservacion');
+Route::get('/traslados', 'ReservacionController@indexTraslado')->name('taslados');
 Route::get('/conductor','ReservacionController@registra_conductor')->name('conductor');
 Route::get('/recibir','ReservacionController@recibe_vehiculo')->name('recibir');
 Route::get('/reservacionesFecha','ReservacionController@fechaRecogida')->name('porFecha');
