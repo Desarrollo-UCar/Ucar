@@ -15,25 +15,21 @@ class TrasladoController extends Controller{
     //parte de la reserva de un traslado
     public function renta_traslado_vehiculo(Request $request){ 
         //return $request; 
-        if($request->fecha_salida=='0' || $request->fecha_solicitada =='0')
-            return back()->with('mensaje', 'Seleccione fechas!');
          // Creamos el objeto traslado_temp
          $traslado_temp = new App\traslado_temp;
          // Seteamos las propiedades de la tabla traslado_temp
          $traslado_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
         
          $traslado_temp->lugar_salida = $request->lugar_salida;
-         $traslado_temp->fecha_salida = $request->fecha_salida;
          $traslado_temp->lugar_llegada = $request->lugar_llegada;
          $traslado_temp->fecha_llegada_solicitada = date("Y\-m\-d", strtotime($request->fecha_solicitada));
          $traslado_temp->hora_llegada = $request->hora_llegada;
          $traslado_temp->n_pasajeros = intval($request->n_pasajeros);
 
-         $traslado_temp->nombres = $request->nombres;
-         $traslado_temp->primer_apellido = $request->primerApellido;
-         $traslado_temp->segundo_apellido = $request->segundoApellido;
-         $traslado_temp->telefono = $request->telefono;
-         $traslado_temp->email = $request->email;
+         $correo   = auth()->user()->email;
+         $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+
+         $traslado_temp->id_cliente = $cliente->idCliente;
          $traslado_temp->viaje_redondo = intval($request->viaje_redondo);
          if(intval($request->viaje_redondo) != 0)
          $traslado_temp->dias_espera = $request->dias_espera;
