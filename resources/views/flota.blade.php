@@ -100,20 +100,18 @@
                         <!-- <img src=//$vehiculo->foto}} style="width:100%"/>    recuerda poner las llaves -->
                         <div class="flexslider">
                           <ul class="slides">
+                            
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto}}  alt="" />
+                              <img src={{$vehiculo->foto_derecha}}  alt="" />
                             </li>
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto_derecha}}  alt="" />
+                              <img src={{$vehiculo->foto_izquierda}}  alt="" />
                             </li>
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto_izquierda}}  alt="" />
+                              <img src={{$vehiculo->foto_frente}}  alt="" />
                             </li>
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto_frente}}  alt="" />
-                            </li>
-                            <li>
-                              <img src={{'/images/'.$vehiculo->foto_trasera}}  alt="" />
+                              <img src={{$vehiculo->foto_trasera}}  alt="" />
                             </li>
                           </ul>
                         </div>

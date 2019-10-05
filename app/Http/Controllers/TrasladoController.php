@@ -62,6 +62,7 @@ public function calculo_costos_traslado(Request $reserva){
     }
     
 public function vehiculos_por_sucursal(Request $reserva){
+    //return $reserva['viaje_redondo'];
     $solicitud_traslado = App\traslado_temp::findOrFail($reserva['id_sol_traslado']);
     $solicitud_traslado->id_vehiculo = null;
     $solicitud_traslado->save();
@@ -85,7 +86,7 @@ public function vehiculos_por_sucursal(Request $reserva){
                 $solicitud_traslado->fecha_llegada_solicitada =$reserva['fecha_llegada_solicitada'];
                 $solicitud_traslado->hora_llegada  = $reserva['hora_llegada'];
                 $solicitud_traslado->n_pasajeros   = $reserva['n_pasajeros'];
-                if($reserva['viaje_redondo'] == "0" | $reserva['viaje_redondo'] == "on"){
+                if($reserva['viaje_redondo'] == "1" | $reserva['viaje_redondo'] == "on"){
                     $solicitud_traslado->viaje_redondo = 1;
                     $solicitud_traslado->dias_espera   = $reserva['dias_espera'];
                 }else{
