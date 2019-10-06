@@ -1,5 +1,5 @@
  <!-- Left side column. contains the sidebar -->
- <aside class="main-sidebar" style="position: fixed;height: 100%;width:245px;overflow-y: scroll;" >
+ <aside class="main-sidebar" style="position: fixed;height: 100%;width: 245px;overflow-y: scroll;" >
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
@@ -59,6 +59,7 @@
             <li><a href="{{ route('reservacion.index')}}"><i class="fa fa-circle-o"></i>Ver todas las reservaciones</a></li>
             <li><a href="#reservacionFechas" data-toggle="modal" data-target="#reservacionFechas"><i class="fa fa-circle-o"></i>Ver reservaciones por fecha</a></li>
             <li><a href="#reservacionFechas" data-toggle="modal" data-target="#reservacionesCliente"><i class="fa fa-circle-o"></i>Ver reservaciones por cliente</a></li>
+            <li><a href="{{ route('taslados') }}"><i class="fa fa-circle-o"></i>Solicitudes Traslado</a></li>
           </ul>
         </li>
         

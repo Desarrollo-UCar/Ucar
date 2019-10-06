@@ -20,7 +20,7 @@ Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->    
 Route::get('despues_de_pago',         'PagesController@despues_de_pago')->         name('despues_de_pago')->middleware(['auth', 'verified']);
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
 ///routes para traslado controller
-Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo') ;//solicitud del cliente
+Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo')->middleware(['auth', 'verified']) ;//solicitud del cliente
 //generar la cotizacion del lado del adminitrador
 Route::get('vista_generar_cotizacion_traslado','SoloVistasController@vista_generar_cotizacion_traslado')->name('vista_generar_cotizacion_traslado');//cargar la vista inicial de administrador para cotizar el traslado
 Route::get('calculo_costos_traslado',  'TrasladoController@calculo_costos_traslado')->name('calculo_costos_traslado') ;
@@ -121,6 +121,7 @@ Route::get('/customeer', 'ReservacionController@cambia_Vehiculo')->name('cambia_
 Route::get('/reservacion/{reservacion}', 'ReservacionController@garantia')->name('garantia');
 
 Route::get('/detalle/{reservacion}', 'ReservacionController@show')->name('reservacion');
+Route::get('/traslados', 'ReservacionController@indexTraslado')->name('taslados');
 Route::get('/conductor','ReservacionController@registra_conductor')->name('conductor');
 Route::get('/recibir','ReservacionController@recibe_vehiculo')->name('recibir');
 Route::get('/reservacionesFecha','ReservacionController@fechaRecogida')->name('porFecha');

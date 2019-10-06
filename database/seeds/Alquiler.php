@@ -25,7 +25,7 @@ class Alquiler extends Seeder
                'hora_recogida' => $hora,
                'lugar_devolucion' => $lugar,
                'fecha_devolucion' =>  $faker->dateTimeBetween('-1 year', '+18 days'),
-               'hora_devolucion' => $hora,
+               'hora_devolucion' => $faker->dateTimeBetween('-8 hour','+8 hour'),
                'id_vehiculo' => $faker->numberBetween(1,10),
                 'km_salida' => $faker->numberBetween(10000, 10100),
                 'km_regresa' => $faker->numberBetween(10150, 10200),

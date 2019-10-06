@@ -17,7 +17,7 @@
       <div class="box box-primary">
             <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs pull-right">
-                            <li><a href="#tab_3-2" data-toggle="tab">Categorias</a></li>
+                            <li><a href="#tab_3-2" data-toggle="tab">Tipo</a></li>
                             <li><a href="#tab_2-2" data-toggle="tab">Modelos</a></li>
                       <li class="active"><a href="#tab_1-1" data-toggle="tab">Marcas</a></li>
 

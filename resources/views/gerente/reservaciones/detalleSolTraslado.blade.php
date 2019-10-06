@@ -1,127 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends("theme.$theme.layout")
+
+@section('styles')
+
+<style type="text/css">
+    input:valid {
+      border: 1px solid green;
+    }
+    input:invalid {
+      border: 1px solid red;
+    }
+  </style>
+@endsection
+
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <title>Ü-car Renta de vehículos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="css/bootstrap.css" rel="stylesheet" />
-    <link href="css/flexslider.css" rel="stylesheet" />
-    <link href="css/prettyPhoto.css" rel="stylesheet" />
-    <link href="css/camera.css" rel="stylesheet" />
-    <link href="css/jquery.bxslider.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <link href="css/shortcodes.css" rel="stylesheet" />
-    
-    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
-    <!-- Theme skin -->
-    <link href="color/blue.css" rel="stylesheet" />
-    <!-- iconos de materialice -->
-    <style type="text/css">
-      
+  <title>Reservaciones</title>
+</head>
 
-      input:valid {
-        border: 1px solid green;
-      }
-      input:invalid {
-        border: 1px solid red;
-      }
-    </style>
-  </head>
-  <body>
+<body>
+  
+@section('contenido')
 
-    <div id="wrapper">
-    <!-- INICIA header -->
-     <header>
-     <div class="bg-white">
-      </div>
-    <div class="container">
-        <div class="row nomargin">
-        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="logo">
-                <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:25%"/></a>
-            </div>
-        </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
-            <div class="navbar">
-              <div class="navigation">
-                <nav>
-                  <ul class="nav ">
-                    <li class="dropdown active">
-                      <a href="{{ route('index') }}"> Inicio</a>
-                    </li>
 
-                    <li class="dropdown">
-                      <a href="#">Reservación <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown"><a href="#">Reservar<i class="icon-angle-right"></i></a>
-                          <ul class="dropdown-menu sub-menu-level1">
-                            <li><a href="{{ route('index') }}">Automovil</a></li>
-                            <li><a href="{{ route('renta_traslado') }}">Traslado</a></li>
-                            <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="#">Sucursales <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido</a></li>
-                        <li><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto Ixtepec</a></li>
-                        <li><a href="{{ route('sucursal_Istmo') }}">Istmo</a></li>
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="{{ route('flota') }}">Flota</a>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="{{ route('servicios') }}">Servicios</a>
-                    </li>
-                    @if(!(Auth::user()))
-                    <li class="dropdown">
-                      <a href="{{ route('login')}}">Iniciar Sesión </a>
-                    </li>
-                    @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                    @endif
-                  </ul>
-                </nav>
-              </div>
-              <!-- end navigation -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- end header -->
-
-    
-
-    <section id="formulario">
+<section id="formulario">
     <div class="container">
         <div class="row">
 
@@ -516,7 +417,7 @@
                 <dd>Costo por dia:</dd>
                 <dd><h4><strong><span class="colored"> $ {{number_format($vehiculo->precio,2)}} MXN</span></strong></h4></dd>
                 <dd>Incluye IVA</dd>
-                <dd><a href="{{ route('vehiculos_por_sucursal',[
+                <dd><a a href="{{ route('vehiculos_por_sucursal',[
                                         'id_vehiculo'    =>$vehiculo->idvehiculo,
                                         'id_sol_traslado'=> $solicitud_traslado->id,
                                         
@@ -660,286 +561,215 @@
     </div>
     </div>
     </section>
-<!-- Footer -->
-<footer class=" font-small bg-dark text-white">
-<!-- Footer Links -->
-<div class="container">
-<!-- Footer links -->
-<div class="row">
-<!-- Grid column -->
-<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-<a href="{{ route('index') }}"><img src="img/logo.png" alt="Logo ucar" style="width:90%"/></a>
-</div>  
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
-    <p>Somos una empresa dedicada al servicio de renta de automóviles, traslados, especializados en flotillas</p>
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
-    <p><a href="{{ route('index') }}">Iniciar una reservación</a></p>
-    <p><a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservación</a></p>
-  
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
-    <p><a href="{{ route('flota') }}">Toda la flota</a></p>
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Promociones</h6>
-    <p><a href="{{ route('en_construccion') }}">Promociones</a></p>
-    <p><a href="{{ route('en_construccion') }}">Acerca de las promociones</a></p>
-</div>
-<!-- Grid column -->
+    @endsection
 
-<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-    <h6 class="text-uppercase font-weight-bold">Servicios al cliente</h6>
-    <p><a href="{{ route('en_construccion') }}">Aviso de privacidad  </a></p>
-    <p><a href="{{ route('en_construccion') }}">Politicas de renta</a></p>
-    <p><a href="{{ route('en_construccion') }}">Protecciones</a></p>
-    <p><a href="{{ route('en_construccion') }}">Preguntas Frecuentes</a></p>
-    <p><a href="{{ route('en_construccion') }}">Contacto</a></p>
-</div>
-<!-- Grid column -->
-<div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
-    <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
-    <p><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
-    <p><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto, Ixtepec, Oaxaca, +52 954 149 0304 </a></p>
-    <p><a href="{{ route('sucursal_Istmo') }}">Istmo, Oaxaca, +52 954 149 0304 </a></p>
-</div>
-                <!-- Grid column -->
-</div>
-<!-- Footer links -->
-<!-- Grid row -->
-</div>
-  <div id="sub-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-          <div class="copyright">
-            <p><span>&copy;2019 Ü-CAR. Todos los derechos reservados.</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Footer Links -->
-</footer>
-</div>
-<!-- Footer -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+  @section('scripts')
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
 
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- javascript================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/bootstrap.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- javascript================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/bootstrap.js"></script>
 
-  <script src="js/modernizr.custom.js"></script>
-  <script src="js/toucheffects.js"></script>
-  <script src="js/google-code-prettify/prettify.js"></script>
-  <script src="js/jquery.bxslider.min.js"></script>
-  <script src="js/camera/camera.js"></script>
-  <script src="js/camera/setting.js"></script>
+<script src="js/modernizr.custom.js"></script>
+<script src="js/toucheffects.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+<script src="js/jquery.bxslider.min.js"></script>
+<script src="js/camera/camera.js"></script>
+<script src="js/camera/setting.js"></script>
 
-  <script src="js/jquery.prettyPhoto.js"></script>
-  <script src="js/portfolio/jquery.quicksand.js"></script>
-  <script src="js/portfolio/setting.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
+<script src="js/portfolio/jquery.quicksand.js"></script>
+<script src="js/portfolio/setting.js"></script>
 
-  <script src="js/jquery.flexslider.js"></script>
-  <script src="js/animate.js"></script>
-  <script src="js/inview.js"></script>
-  <script src="js/daterangepicker.js"></script>
-  <script src="js/custom.js"></script>
+<script src="js/jquery.flexslider.js"></script>
+<script src="js/animate.js"></script>
+<script src="js/inview.js"></script>
+<script src="js/daterangepicker.js"></script>
+<script src="js/custom.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
 <script>
-    $('#fecha_salida_sucursal').daterangepicker({
-    "autoApply": true,
-    "linkedCalendars": false,
-    "autoUpdateInput": false,
-    "showCustomRangeLabel": false,
-    "singleDatePicker": true,
-    "startDate": new Date(),
-    "minDate": new Date()
+$('#fecha_salida_sucursal').daterangepicker({
+"autoApply": true,
+"linkedCalendars": false,
+"autoUpdateInput": false,
+"showCustomRangeLabel": false,
+"singleDatePicker": true,
+"startDate": new Date(),
+"minDate": new Date()
 }, function(start, end, label) {
-  document.getElementById('fecha_salida_sucursal').value = end.format('DD-MM-YYYY');
-  document.getElementById('fecha_salida_sucursal_formato').value = end.format('YYYY,MM,DD');
-  validar_fecha();
+document.getElementById('fecha_salida_sucursal').value = end.format('DD-MM-YYYY');
+document.getElementById('fecha_salida_sucursal_formato').value = end.format('YYYY,MM,DD');
+validar_fecha();
 });
 $('#fecha_llegada_solicitada').daterangepicker({
-      "autoApply": true,
-      "linkedCalendars": false,
-      "autoUpdateInput": false,
-      "showCustomRangeLabel": false,
-      "singleDatePicker": true,
-      "startDate": new Date(),
-      "minDate": new Date()
-  }, function(start, end, label) {
-    document.getElementById('fecha_llegada_solicitada').value = end.format('DD-MM-YYYY');
-    document.getElementById('fecha_llegada_formato').value = end.format('YYYY,MM,DD');
-    validar_fecha();
-  });
-  $('#fecha_salida').daterangepicker({
-      "autoApply": true,
-      "linkedCalendars": false,
-      "autoUpdateInput": false,
-      "showCustomRangeLabel": false,
-      "singleDatePicker": true,
-      "startDate": new Date(),
-      "minDate": new Date()
-  }, function(start, end, label) {
-    document.getElementById('fecha_salida').value = end.format('DD-MM-YYYY');
-    document.getElementById('fecha_salida_formato').value = end.format('YYYY,MM,DD');
-  validar_fecha();
-  });
+  "autoApply": true,
+  "linkedCalendars": false,
+  "autoUpdateInput": false,
+  "showCustomRangeLabel": false,
+  "singleDatePicker": true,
+  "startDate": new Date(),
+  "minDate": new Date()
+}, function(start, end, label) {
+document.getElementById('fecha_llegada_solicitada').value = end.format('DD-MM-YYYY');
+document.getElementById('fecha_llegada_formato').value = end.format('YYYY,MM,DD');
+validar_fecha();
+});
+$('#fecha_salida').daterangepicker({
+  "autoApply": true,
+  "linkedCalendars": false,
+  "autoUpdateInput": false,
+  "showCustomRangeLabel": false,
+  "singleDatePicker": true,
+  "startDate": new Date(),
+  "minDate": new Date()
+}, function(start, end, label) {
+document.getElementById('fecha_salida').value = end.format('DD-MM-YYYY');
+document.getElementById('fecha_salida_formato').value = end.format('YYYY,MM,DD');
+validar_fecha();
+});
 </script>
 <script>
-  var checkbox = document.getElementById('viaje_redondo');
-  checkbox.addEventListener("change", validaCheckbox, true);
-  
-  function validaCheckbox(){
-    var checked = checkbox.checked;
-    var tiempo_espera= document.getElementById("tiempo_espera");
-    if(checked){
-      tiempo_espera.style.display = 'block';
-      document.getElementById("dias_espera").required = true;
-      console.log("1");
-    }
-    else{
-      tiempo_espera.style.display = 'none';
-      document.getElementById("dias_espera").required = false;
-      console.log("2");
-    }
+var checkbox = document.getElementById('viaje_redondo');
+checkbox.addEventListener("change", validaCheckbox, true);
+
+function validaCheckbox(){
+var checked = checkbox.checked;
+var tiempo_espera= document.getElementById("tiempo_espera");
+if(checked){
+  tiempo_espera.style.display = 'block';
+  document.getElementById("dias_espera").required = true;
+  console.log("1");
+}
+else{
+  tiempo_espera.style.display = 'none';
+  document.getElementById("dias_espera").required = false;
+  console.log("2");
+}
+}
+</script>
+<script>
+$(document).ready(function() {
+  var tiempo_espera= document.getElementById("tiempo_espera");    
+  if(document.getElementById('viaje_redondo').checked == true){
+  tiempo_espera.style.display = 'block';
+  document.getElementById("dias_espera").required = true;
+  //console.log("3");
   }
-  </script>
-  <script>
-    $(document).ready(function() {
-      var tiempo_espera= document.getElementById("tiempo_espera");    
-      if(document.getElementById('viaje_redondo').checked == true){
-      tiempo_espera.style.display = 'block';
-      document.getElementById("dias_espera").required = true;
-      //console.log("3");
+else{
+  tiempo_espera.style.display = 'none';
+  document.getElementById("dias_espera").required = false;
+  //console.log("4");
+}
+});
+</script>
+<script>
+$(document).ready(function(){
+  total_gastos_previos();
+  costo_total();
+});
+</script>
+<script>
+  function total_sueldo_choferes(){
+    @if($dias != null)
+      var n_choferes = document.getElementById("n_choferes").value;
+      var sueldo_chofer = document.getElementById("sueldo_chofer").value;
+      if(n_choferes != "" & sueldo_chofer != ""){
+        document.getElementById("total_sueldo_chofer").value = n_choferes * sueldo_chofer * {{$dias}};
+        obtener_subtotal();
+        costo_total();
+      }else{
+        document.getElementById("total_sueldo_chofer").value = null;
+        obtener_subtotal();
+        costo_total();
       }
-    else{
-      tiempo_espera.style.display = 'none';
-      document.getElementById("dias_espera").required = false;
-      //console.log("4");
-    }
-    });
+      @endif
+    };
+    //
+    function total_gastos_previos(){
+      var km = document.getElementById("km").value;
+      var gasolina = document.getElementById("gasolina").value;
+      var otros_gastos = document.getElementById("otros_gastos").value
+      @if($vehiculos_disponibles != null & $solicitud_traslado->id_vehiculo != null)
+      if(km != "" & gasolina != ""){
+        if(otros_gastos != ""){
+          document.getElementById("total_previos").value = ((parseInt(km) / parseInt({{$vehiculo_elegido->rendimiento}})) * parseInt(gasolina) + parseInt(otros_gastos) * 2);
+          obtener_subtotal();
+        }else{
+          document.getElementById("total_previos").value = ( (parseInt(km) / parseInt({{$vehiculo_elegido->rendimiento}})) * parseInt(gasolina) * 2) ;
+          obtener_subtotal();
+        }
+      }else{
+        document.getElementById("total_previos").value = null;
+        obtener_subtotal();
+      }
+      @endif
+    };
+    //
+    function obtener_subtotal(){
+      var total_previos = document.getElementById("total_previos").value;
+      var total_sueldo_chofer = document.getElementById("total_sueldo_chofer").value;
+      var otros_gastos = document.getElementById("otros_gastos").value;
+      //preguntar antes por los nullos
+      if(total_previos != "" & total_sueldo_chofer != ""){
+        document.getElementById("subtotal").value =   parseInt(total_previos) + parseInt(total_sueldo_chofer) + parseInt({{$subtotal}});
+        document.getElementById("total").value =   parseInt(total_previos) + parseInt(total_sueldo_chofer) + parseInt({{$subtotal}});
+        costo_total();
+      }else{
+        document.getElementById("subtotal").value =  null;
+        document.getElementById("total").value =  null;
+        costo_total();
+      }
+    };
+    // 
+    function costo_total(){
+      @if($subtotal != null)
+        var subtotal = document.getElementById("subtotal").value;
+        var descuento = document.getElementById("descuento").value;
+            document.getElementById("total").value = subtotal - (parseInt( subtotal) / 100 * parseInt( descuento)) ;
+      @endif
+    };
+
+    function validar_fecha(){
+      var fecha_salida = document.getElementById("fecha_salida").value;
+      var fecha_llegada = document.getElementById("fecha_llegada_solicitada").value;
+      var fecha_salida_sucursal = document.getElementById("fecha_salida_sucursal").value;
+
+      var fecha_salida_formato = document.getElementById("fecha_salida_formato").value;
+      var fecha_llegada_formato = document.getElementById("fecha_llegada_formato").value;
+      var fecha_salida_sucursal_formato = document.getElementById("fecha_salida_sucursal_formato").value;
+     
+      if(fecha_salida != "" & fecha_llegada != ""){
+        var salida  = new Date(fecha_salida_formato);
+        var llegada = new Date(fecha_llegada_formato);
+        var salida_sucursal  = new Date(fecha_salida_sucursal_formato);
+        //--------------
+        console.log(salida);
+        console.log(llegada);
+        console.log(salida_sucursal);
+        if(salida > llegada ){
+            alert("Fecha invalida!! La fecha de salida no puede ser mayor a la de llegada");
+            document.getElementById("fecha_salida").value = "";
+        }
+        if(salida_sucursal > salida ){
+          alert("Fecha invalida!! La fecha de salida de la sucursal no puede ser mayor a la de salida del cliente");
+            document.getElementById("fecha_salida_sucursal").value = "";
+        }
+        
+
+      }
+                
+    };
+
   </script>
-  <script>
-  $(document).ready(function(){
-      total_gastos_previos();
-      costo_total();
-  });
-  </script>
-  <script>
-      function total_sueldo_choferes(){
-        @if($dias != null)
-          var n_choferes = document.getElementById("n_choferes").value;
-          var sueldo_chofer = document.getElementById("sueldo_chofer").value;
-          if(n_choferes != "" & sueldo_chofer != ""){
-            document.getElementById("total_sueldo_chofer").value = n_choferes * sueldo_chofer * {{$dias}};
-            obtener_subtotal();
-            costo_total();
-          }else{
-            document.getElementById("total_sueldo_chofer").value = null;
-            obtener_subtotal();
-            costo_total();
-          }
-          @endif
-        };
-        //
-        function total_gastos_previos(){
-          var km = document.getElementById("km").value;
-          var gasolina = document.getElementById("gasolina").value;
-          var otros_gastos = document.getElementById("otros_gastos").value
-          @if($vehiculos_disponibles != null & $solicitud_traslado->id_vehiculo != null)
-          if(km != "" & gasolina != ""){
-            if(otros_gastos != ""){
-              document.getElementById("total_previos").value = ((parseInt(km) / parseInt({{$vehiculo_elegido->rendimiento}})) * parseInt(gasolina) + parseInt(otros_gastos) * 2);
-              obtener_subtotal();
-            }else{
-              document.getElementById("total_previos").value = ( (parseInt(km) / parseInt({{$vehiculo_elegido->rendimiento}})) * parseInt(gasolina) * 2) ;
-              obtener_subtotal();
-            }
-          }else{
-            document.getElementById("total_previos").value = null;
-            obtener_subtotal();
-          }
-          @endif
-        };
-        //
-        function obtener_subtotal(){
-          var total_previos = document.getElementById("total_previos").value;
-          var total_sueldo_chofer = document.getElementById("total_sueldo_chofer").value;
-          var otros_gastos = document.getElementById("otros_gastos").value;
-          //preguntar antes por los nullos
-          if(total_previos != "" & total_sueldo_chofer != ""){
-            document.getElementById("subtotal").value =   parseInt(total_previos) + parseInt(total_sueldo_chofer) + parseInt({{$subtotal}});
-            document.getElementById("total").value =   parseInt(total_previos) + parseInt(total_sueldo_chofer) + parseInt({{$subtotal}});
-            costo_total();
-          }else{
-            document.getElementById("subtotal").value =  null;
-            document.getElementById("total").value =  null;
-            costo_total();
-          }
-        };
-        // 
-        function costo_total(){
-          @if($subtotal != null)
-            var subtotal = document.getElementById("subtotal").value;
-            var descuento = document.getElementById("descuento").value;
-                document.getElementById("total").value = subtotal - (parseInt( subtotal) / 100 * parseInt( descuento)) ;
-          @endif
-        };
-
-        function validar_fecha(){
-          var fecha_salida = document.getElementById("fecha_salida").value;
-          var fecha_llegada = document.getElementById("fecha_llegada_solicitada").value;
-          var fecha_salida_sucursal = document.getElementById("fecha_salida_sucursal").value;
-
-          var fecha_salida_formato = document.getElementById("fecha_salida_formato").value;
-          var fecha_llegada_formato = document.getElementById("fecha_llegada_formato").value;
-          var fecha_salida_sucursal_formato = document.getElementById("fecha_salida_sucursal_formato").value;
-         
-          if(fecha_salida != "" & fecha_llegada != ""){
-            var salida  = new Date(fecha_salida_formato);
-            var llegada = new Date(fecha_llegada_formato);
-            var salida_sucursal  = new Date(fecha_salida_sucursal_formato);
-            //--------------
-            console.log(salida);
-            console.log(llegada);
-            console.log(salida_sucursal);
-            if(salida > llegada ){
-                alert("Fecha invalida!! La fecha de salida no puede ser mayor a la de llegada");
-                document.getElementById("fecha_salida").value = "";
-            }
-            if(salida_sucursal > salida ){
-              alert("Fecha invalida!! La fecha de salida de la sucursal no puede ser mayor a la de salida del cliente");
-                document.getElementById("fecha_salida_sucursal").value = "";
-            }
-            
-
-          }
-                    
-        };
-
-      </script>
-</body>
-</html>
-
+@endsection

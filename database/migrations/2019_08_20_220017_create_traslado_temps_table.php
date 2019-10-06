@@ -23,11 +23,9 @@ class CreateTrasladoTempsTable extends Migration
             $table->date('fecha_llegada_solicitada');//estimacion de fecha segun tiempo estimado
             $table->time('hora_llegada');
             $table->integer('n_pasajeros');
-            $table->string('nombres');
-            $table->string('primer_apellido');
-            $table->string('segundo_apellido');
-            $table->string('telefono');
-            $table->string('email');
+            
+            $table->integer('id_cliente');
+
             $table->boolean('viaje_redondo')->nullable();
             $table->integer('dias_espera')->nullable();
             //datos que se anexaran a la hora que el administrador realice la cotizacion

@@ -14,6 +14,7 @@ use mpdf;
 use App;
 use DB;
 use App\VehiculoSucursales;
+use App\traslado_temp;
 
 use App\Sucursal;
 
@@ -677,5 +678,19 @@ class ReservacionController extends Controller
 
         
     }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexTraslado(request $request)
+    {
+        //return response()->json($request);
+        $traslados = traslado_temp::get();
+
+        return view('gerente.reservaciones.inicioTraslado', compact ('traslados'));
+    }
+
 
     }
