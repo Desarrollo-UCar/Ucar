@@ -308,9 +308,21 @@
                 <span id="validolicenciaFechaExpiracion" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
             </div>
                           
-                  
+            <div class="form-group col-md-4" style="display: none;" id="contrasenia">
+              <label>Contraseña</label>
+            <input type="password" class="form-control" name="contra" id="contra"  placeholder="Introduzca su contraseña"<?php if($emp->tipo== 'ADMINISTRADOR'){ ?> value="{{$usuario->password}}" <?php } ?>>
 
+              <span id="errorcontra" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+              <span id="validocontra" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+          </div>
 
+          <div class="form-group col-md-4" style="display: none;" id="confcontrasenia">
+            <label>Confirmar Contraseña</label>
+            <input type="password" class="form-control" name="confcontra" id="confcontra"  placeholder="Introduzca su contraseña"<?php if($emp->tipo== 'ADMINISTRADOR'){ ?> value="{{$usuario->password}}" <?php } ?>>
+
+            <span id="errorconfcontra" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+            <span id="validoconfcontra" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+        </div>
 
 
               <div class="row">
@@ -546,6 +558,13 @@
     
 });
 </script>
+
+<script>
+  $(document).ready(function(){
+    Tipo();
+  });
+  </script>
+
 <script >
 function Tipo(){
     var opcion= document.getElementById("tipo");
@@ -556,17 +575,28 @@ function Tipo(){
     var lice = document.getElementById("licencia");
     var expe = document.getElementById("expedicion");
     var venc = document.getElementById("vencimiento");
+    var contra = document.getElementById("contrasenia");
+    var confcontra = document.getElementById("confcontrasenia");
     
     if (texto=='CHOFER') {
       row.style.display='block';
       lice.style.display='block';      
       expe.style.display='block';
       venc.style.display='block';
+      contra.style.display='none';
+        confcontra.style.display='none';
     }else{
       row.style.display='none';
       lice.style.display='none';     
       expe.style.display='none';
       venc.style.display='none';
+      if(texto=='ADMINISTRADOR'){
+        contra.style.display='block';
+        confcontra.style.display='block';
+      }else{
+        contra.style.display='none';
+        confcontra.style.display='none';
+      }
       }
   }
 </script>
@@ -605,15 +635,28 @@ function Tipo(){
      {
       
        var mensaje=data.success;
-       console.log(mensaje);
+      console.log(mensaje);
        if(mensaje=='EXITO'){
       $('.btn-info').click();
        }
+       
        if(mensaje=='ERROR2'){
       $('#rango1').click();
       jQuery('#validofechaNacimiento').hide(); 
                jQuery('#errorfechaNacimiento').show();          
               $( '#fechaNacimiento' ).css('borderColor', 'red');
+       }
+
+       if(mensaje=='ERRORCONTRA'){     
+              jQuery('#validocontra').hide(); 
+            jQuery('#errorcontra').show();          
+           $( '#contra' ).css('borderColor', 'red');               
+      
+              jQuery('#validoconfcontra').hide(); 
+            jQuery('#errorconfcontra').show();          
+           $( '#confcontra' ).css('borderColor', 'red');
+            //console.log(nombre);
+         
        }
      },
      error: function (data) {
@@ -622,7 +665,7 @@ function Tipo(){
          /*jQuery.each(arreglo, function(key, value){
             console.log(arreglo);
                       });*/
-                      console.log(arreglo);
+                    
           var ine = arreglo.ine;
           var codigo = arreglo.codigopostal;
           var estado = arreglo.estado;

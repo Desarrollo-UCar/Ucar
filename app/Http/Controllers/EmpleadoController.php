@@ -120,14 +120,6 @@ class EmpleadoController extends Controller
                         return response()->json(['success'=>'ERRORCONTRA']);
                     }
 
-                    // $user = User::create([
-                    //     'name' => 'HOLA',
-                    //     'email' => 'hola@gmai.com',
-                    //     'password' => Hash::make('hola'),
-                    // ]);
-             
-                //    $user->roles()->attach(Role::where('name', 'user')->first());
-
                 }else{
                 $request->validate([
                     'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
@@ -153,11 +145,7 @@ class EmpleadoController extends Controller
             } 
         }     
                 
-      /*return response()->json([
-       'message'   => 'Image Upload Successfully',
-       'uploaded_image' => '<img src="/images/'.$new_name.'" class="img-thumbnail" width="300" />',
-       'class_name'  => 'alert-success'
-      ]);*/
+     
       
       $todo=Empleado::all();
       if(count($todo)>0){        
@@ -258,16 +246,17 @@ class EmpleadoController extends Controller
             $sucursal=Sucursal::where('idsucursal','=',$foranea->idsucursal);
             $empleadosucursal = EmpleadoSucursal::where('sucursal',$foranea['idsucursal'])->first();
 
-
         return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal'));
 
     }
-
-
+    $usuario=null;
+    if($emp['tipo']=='ADMINISTRADOR'){
+        $usuario=User::where('email',$emp['correo'])->first();
+    }
         $sucursal=Sucursal::all();
         $empleadosucursal = EmpleadoSucursal::where('sucursal',$foranea['idsucursal'])->first();
 
-        return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal'));
+        return view('gerente.usuarios.empleados.administradores.editar_empleado',compact('foranea','emp','sucursal','empleadosucursal','usuario'));
 
     }
 
@@ -308,6 +297,35 @@ class EmpleadoController extends Controller
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
             }else{
+                if($request['tipo']=='ADMINISTRADOR'){
+                    $request->validate([
+                       'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                       'ine' => 'required|regex:/[0-9]{13}/m',
+                       'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                        'primerApellido' =>'required',
+                        'segundoApellido' =>'required',
+                        'fechaNacimiento' =>'required|date',
+                        'nacionalidad' =>'required',
+                        'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                        'estado' =>'required',
+                        'municipio' =>'required',
+                        'colonia' =>'required',
+                        'calle' =>'required',
+                        'correo' =>'required|email',
+                        'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                        'tipo' => 'required',
+                        'genero' => 'required',
+                        'sucursal' => 'required',
+                        'numero' => 'required',
+                        'status'=> 'required',
+                        'contra'=> 'required',
+                        'confcontra'=> 'required',
+                    ]);
+                    
+                    if($request['contra']!=$request['confcontra']){
+                        return response()->json(['success'=>'ERRORCONTRA']);
+                    }
+                }else{
                 $request->validate([
                     'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                     'ine' => 'required|regex:/[0-9]{13}/m',
@@ -329,15 +347,8 @@ class EmpleadoController extends Controller
                     'numero' => 'required',
                     'status'=> 'required',
                 ]);
-            }      
-                
-      /*return response()->json([
-       'message'   => 'Image Upload Successfully',
-       'uploaded_image' => '<img src="/images/'.$new_name.'" class="img-thumbnail" width="300" />',
-       'class_name'  => 'alert-success'
-      ]);*/
-      
-      
+            }  
+        }
         
         $empleado = Empleado::where('ine',$request['ine'])->first();
          $diff = $date->diffInYears($request['fechaNacimiento']); 
@@ -387,7 +398,16 @@ class EmpleadoController extends Controller
                         'created_at'=>$date,
                         'updated_at'=>$date
                         ]);
-           
+                        
+                        
+                        if($request['tipo']=='ADMINISTRADOR'){
+
+                            $user = User::where('email',$request['correo'])->first();
+                          $user->update([
+                            'name' => $request['nombres'],
+                            'password' => Hash::make($request['contra']),
+                          ]);
+                        }
                         return response()->json(['success'=>'EXITO']);
         }else{
             if($request['tipo']=='CHOFER'){
@@ -414,6 +434,36 @@ class EmpleadoController extends Controller
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
             }else{
+                if($request['tipo']=='ADMINISTRADOR'){
+                    // return response()->json(['success'=>'ERROR2']);
+                    $request->validate([
+                        // 'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'ine' => 'required|regex:/[0-9]{13}/m',
+                        'nombres' =>'required|regex:/^[\pL\s]+$/u',
+                         'primerApellido' =>'required',
+                         'segundoApellido' =>'required',
+                         'fechaNacimiento' =>'required|date',
+                         'nacionalidad' =>'required',
+                         'codigopostal' => 'required|regex:/[0-9]{5}/m',
+                         'estado' =>'required',
+                         'municipio' =>'required',
+                         'colonia' =>'required',
+                         'calle' =>'required',
+                         'correo' =>'required|email',
+                         'telefono' =>'required|regex:/[1-9][0-9]{9}/m',
+                         'tipo' => 'required',
+                         'genero' => 'required',
+                         'sucursal' => 'required',
+                         'numero' => 'required',
+                         'status'=> 'required',
+                         'contra'=> 'required',
+                         'confcontra'=> 'required',
+                     ]);
+                     
+                     if($request['contra']!=$request['confcontra']){
+                         return response()->json(['success'=>'ERRORCONTRA']);
+                     }
+                  }
                 $request->validate([
                     'ine' => 'required|regex:/[0-9]{13}/m',
                     'nombres' =>'required|regex:/^[\pL\s]+$/u',
@@ -482,7 +532,16 @@ class EmpleadoController extends Controller
                         'created_at'=>$date,
                         'updated_at'=>$date
                         ]);
-           
+
+
+            if($request['tipo']=='ADMINISTRADOR'){
+
+        $user = User::where('email',$request['correo'])->first();
+      $user->update([
+        'name' => $request['nombres'],
+        'password' => Hash::make($request['contra']),
+      ]);
+    }
                         return response()->json(['success'=>'EXITO']);
 
         }

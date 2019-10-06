@@ -1,5 +1,5 @@
  <!-- Left side column. contains the sidebar -->
- <aside class="main-sidebar" style="position: fixed;height: 100%;width: auto;overflow-y: scroll;" >
+ <aside class="main-sidebar" style="position: fixed;height: 100%;width:245px;overflow-y: scroll;" >
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
@@ -88,7 +88,6 @@
             @endif
             <li><a href="{{ route('vehiculo.create')}}"><i class="fa fa-circle-o"></i>Nuevo</a></li>
             <li><a href="{{ route('vehiculo.index') }}"><i class="fa fa-circle-o"></i>Ver vehiculos</a></li>
-            <li><a href="{{ route('modelovehiculo') }}"><i class="fa fa-circle-o"></i>Agregar Modelo</a></li>
           </ul>
         </li>
         <li class="treeview">

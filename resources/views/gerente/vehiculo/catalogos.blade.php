@@ -140,13 +140,50 @@
                       </div>
                       <!-- /.tab-pane -->
                       <div class="tab-pane" id="tab_3-2">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                        It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                        like Aldus PageMaker including versions of Lorem Ipsum.
+                        <form id="upload_categoria" {{--action="{{ route('registrarMarca') }}"--}} method="POST">
+                          @csrf
+                            <div class="row">
+                               <div class="col-md-12">
+                                 <div class="col-md-8 col-md-offset-4">
+                                   <label>-- Nueva marca de vehiculo -- </label>
+                                 </div>
+                               </div>  
+                             </div>
+                            <div class="form-group col-md-4">
+                             <label>Nombre de la categoría</label>
+                             <input type="text" class="form-control" placeholder="Nombre de la categoría" name="categoria"  autofocus required onkeyup="javascript:this.value=this.value.toUpperCase();" id="categoria">
+
+                             <span id="errorcategoria" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                             <span id="validocategoria" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                         </div>
+
+                         <div class="row">
+                             <div class="col-md-8">
+                                 <div class="form-group col-md-2" style="float: right">
+                                     <button type="submit" class="btn btn-primary">Agregar</button>
+                                   </div>                 
+                               </div>                    
+                           </div>
+                     </form>
+
+                     <table id="example" class="display nowrap " style="width:100%">
+                             <thead>
+                                 <tr>
+                                     <th style="text-align: center">Número</th>
+                                     <th >Nombre Categoría</th>
+                                     
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                  @foreach ($marcas as $marca)                      
+                       <tr>
+                               <td style="text-align: center">{{$marca->id}}</td>
+                               <td >{{$marca->nombre}}</td>
+                             </tr> 
+                       @endforeach
+                             
+                             </tbody>
+                         </table>
                       </div>
                       <!-- /.tab-pane -->
                     </div>
