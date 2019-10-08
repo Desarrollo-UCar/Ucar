@@ -94,7 +94,7 @@
 
 
                 @if($reservacion->saldo==0)
-                  <h3>Se pago el total de la reservación</h3>
+                  <h3>Se pagó el total de la reservación</h3>
                   @endif 
                 <div class="col-md-6 form-group">
                     <label>Saldo</label>
@@ -193,7 +193,7 @@
 
                         
                   <div class="col-md-6 form-group">
-                      <label>Numero Licencia</label>
+                      <label>Número Licencia</label>
                       @if($alquiler->num_licencia!=null)
                   <input type="text" name="numero" id="" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
                   @else
@@ -246,7 +246,7 @@
                                      <body>
 
                                       <th>Nombre</th>
-                                       <th>Descripcion</th>
+                                       <th>Descripción</th>
                                        
                                             @if($servicios->count())  
                                             @foreach($servicios as $servicio) 
@@ -257,7 +257,7 @@
                                       @endforeach
                                       @else
                                       <tr>
-                                      <td>No har extras reservados!</td>
+                                      <td>No hay extras reservados!</td>
                                       </tr>
                                       @endif
                                      </body>
@@ -312,7 +312,7 @@
                        <h4 class="modal-title"> <span class="glyphicon glyphicon-alert"></span> <b> {{' Esta seguro de cancelar la reservacion'}}  {{$reservacion->id}}</b> </h4>
                     </div>
                 <div class="modal-body">
-                  <p><b>{{'La reservacion del servicio de alquiler y sus servicios extra seran cancelados'}} </b>&hellip;</p>
+                  <p><b>{{'La reservación del servicio de alquiler y sus servicios extra serán cancelados'}} </b>&hellip;</p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-outline pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span><b>{{'  Cerrar'}}</b></button>
@@ -341,7 +341,7 @@
                       <form method="POST" action="{{ route('pagoReservacion') }}"  role="form" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
-                    <p><b>{{'Se registrara un nuevo cobro'}} </b>&hellip;</p>
+                    <p><b>{{'Se registrará un nuevo cobro'}} </b>&hellip;</p>
 
                     <div class="row">
                         <div class="col-md-3">
@@ -396,10 +396,10 @@
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Cobro de saldo pendiente por reservacion'}}  {{$reservacion->id}}</b> </h4>
+                      <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Cobro de saldo pendiente por reservación'}}  {{$reservacion->id}}</b> </h4>
                     </div>
                     <div class="modal-body">
-                      <p><b>{{'Se registrara un pago por '}} {{$reservacion->saldo}} {{' de saldo pendeiente, de la reservacion'}} {{      $reservacion->id}} </b>&hellip;</p>
+                      <p><b>{{'Se registrará un pago por '}} {{$reservacion->saldo}} {{' de saldo pendiente, de la reservación'}} {{      $reservacion->id}} </b>&hellip;</p>
                     </div>
                     <div class="modal-footer">
                         <form method="GET" action="{{route('garantia',$reservacion)}}"  role="form">
@@ -421,7 +421,7 @@
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Cambio de vehiculo para la reservacion '}}  {{$reservacion->id}}</b> </h4>
+                      <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Cambio de vehículo para la reservación '}}  {{$reservacion->id}}</b> </h4>
                     </div>
                     <div class="modal-body">
 
@@ -429,7 +429,7 @@
                             <div class="row">
                               <div class="col-md-12 ">
                                 <div class="form-group">
-                                  <label> Atencion un vehiculo no debe de cambiarse de una reservacion a menos que sea por motivo de siniestro o fallo para llevar a mantenimiento<br> <br><br>A continuacion se enlistan los vehiculos disponibles en la sucursal para el periodo de renta </label>
+                                  <label> Atención un vehículo no debe de cambiarse de una reservación a menos que sea por motivo de siniestro o fallo para llevar a mantenimiento<br> <br><br>A continuación se enlistan los vehículos disponibles en la sucursal para el periodo de renta </label>
                                 <form action="{{route('cambia_Vehiculo')}}" method="" enctype="multipart/form-data">
                                     <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
                                   <select name= "vehiculo" id="vehiculo" class="form-control select2" style="width: 100%;">
@@ -439,7 +439,7 @@
                                         <option value = {{$disponibles[$i]->idvehiculo}}>{{$disponibles[$i]->marca}} {{$disponibles[$i]->modelo}} Placas: {{$disponibles[$i]->matricula}}</option>
                                         @endfor
                                       @else
-                                      <option value=""> No hay vehiculos disponibles</option>
+                                      <option value=""> No hay vehículos disponibles</option>
 
                                        @endif
                                   </select>
@@ -450,13 +450,13 @@
                             </div>
                           </div>
                             
-                      <p><b>{{'Se cambiara el vehiculo de la reservacion '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
+                      <p><b>{{'Se cambiará el vehículo de la reservación '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
                     </div>
                     <div class="modal-footer">
                         @if(count($disponibles)>0)
-                        <button class="btn btn-primary" type="submit">Cambiar vehiculo</button>
+                        <button class="btn btn-primary" type="submit">Cambiar vehículo</button>
                         @else
-                        <button class="btn btn-primary" type="" disabled>Cambiar vehiculo</button>
+                        <button class="btn btn-primary" type="" disabled>Cambiar vehículo</button>
                         @endif
                     </div>
                     </form>
@@ -474,7 +474,7 @@
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Cobros por la reservacion'}}  {{$reservacion->id}}</b> </h4>
+                        <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Cobros por la reservación'}}  {{$reservacion->id}}</b> </h4>
                       </div>
                       <div class="modal-body">
   
@@ -485,7 +485,7 @@
 
                               
                                     <table border="1">
-                                      <th>Numero</th>
+                                      <th>Número</th>
                                       <th>Datos del pago</th>
                                       <th>Motivo</th>
                                       <th>Fecha</th>
@@ -537,7 +537,7 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Terminar renta de vehiculo de reservacion'}}  {{$reservacion->id}}</b> </h4>
+                          <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Terminar renta de vehículo de reservación'}}  {{$reservacion->id}}</b> </h4>
                         </div>
                         <div class="modal-body">
     
@@ -564,7 +564,7 @@
                                 </div>
                               </div>
                                 
-                          <p><b>{{'Se recibira el vehiculo rentado de la reservacion  '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
+                          <p><b>{{'Se recibirá el vehículo rentado de la reservación  '}} {{$reservacion->id}} {{' '}} </b>&hellip;</p>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{'Terminar'}}</button>
