@@ -21,7 +21,6 @@ Route::get('despues_de_pago',         'PagesController@despues_de_pago')->      
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
 ///routes para traslado controller
 Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo');//solicitud del cliente
-Route::get('validar_logeo',            'TrasladoController@validar_logeo')->           name('validar_logeo')->middleware(['auth', 'verified']);
 Route::get('validar_sin_logeo',            'TrasladoController@validar_sin_logeo')->           name('validar_sin_logeo');
 //generar la cotizacion del lado del adminitrador
 Route::get('vista_generar_cotizacion_traslado','SoloVistasController@vista_generar_cotizacion_traslado')->name('vista_generar_cotizacion_traslado');//cargar la vista inicial de administrador para cotizar el traslado

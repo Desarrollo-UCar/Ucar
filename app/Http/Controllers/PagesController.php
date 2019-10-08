@@ -401,9 +401,7 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
         $message->from('ucardesarollo@gmail.com', 'Ucar');
         $message->to($correo)->subject($asunto);
-        foreach($reservacion as $reserva){
-            $message->attach($reserva->foto);
-        }
+   
     });
 /////////-------------------------
     return view('pago',compact('monto','alquiler'));
