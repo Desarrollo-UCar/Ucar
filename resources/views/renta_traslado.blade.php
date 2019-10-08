@@ -121,7 +121,7 @@
 
     <section id="formulario">
         <div class="bg-white" id='formulario_reserva_vehiculo'>
-            <h5 class="text-center"><strong>Solicita la cotizacion de </strong>tu viaje de la manera mas rápida</h5>
+            <h5 class="text-center"><strong>Solicita la cotizacion de tu viaje de la manera mas rápida</strong></h5>
         </div>
     <div class="container">
         <div class="row">
@@ -133,6 +133,48 @@
                     <!-- inicio Formulario reserva-->
                     <form action="{{ route('renta_traslado_vehiculo')}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @if(!(Auth::user()))
+                        <div class="form-row">
+                          <div class="form-group col-md-12 col-sm-12">
+                              <h6><strong>Información de contacto:</strong></h6>  
+                          </div>
+                          {{-- FORMULARIO DE NOMBRES --}}                     
+                          <div class="form-group col-md-4 col-sm-4">
+                                  <label>Nombres</label>
+                                  <input id="nombres" type="text" class="form-control"  placeholder="nombres" name="nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                                  <span id="errornombres" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;" aria-hidden="true"></span>
+                                  <span id="validonombres" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;" aria-hidden="true"></span>
+                              </div> 
+                          {{-- FOMULARIO DEL PRIMER APELLIDO --}}
+                          <div class="form-group col-md-4 col-sm-4">
+                          <label>Primer Apellido </label>
+                          <input type="text" class="form-control" placeholder="primer apellido" name="primerApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="primerApellido" required>
+                          <span id="errorprimerApellido" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                          <span id="validoprimerApellido" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                          </div> 
+                          {{-- FORMULARIO DEL SEGUNDO APELLIDO --}}
+                          <div class="form-group col-md-4 col-sm-4">
+                          <label>Segundo Apellido</label>
+                          <input type="text" class="form-control" placeholder="segundo apellido" name="segundoApellido" onkeyup="javascript:this.value=this.value.toUpperCase();" id="segundoApellido" required>
+
+                          <span id="errorsegundoApellido" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                          <span id="validosegundoApellido" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                          </div>
+                          {{--DATOS PARA EL TELEFONO--}}
+                          <div class="form-group col-md-4 col-sm-4">
+                              <label>Teléfono</label>
+                          <input type="text" class="form-control" placeholder="Teléfono" name="telefono" id="telefono" pattern="[0-9]*" minlength = "10" maxlength="10" title="Número a 10 digitos" required>
+                          </div> 
+                          {{--FORMULARIO DE CORREO EMAIL--}}
+                          <div class="form-group col-md-4 col-sm-4">
+                                  <label>Email</label>
+                                  <input type="email" class="form-control" placeholder="Correo Eléctronico" name="email" id="email" required>
+
+                                  <span id="erroremail" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                                  <span id="validoemail" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                              </div>
+                    </div>
+                    @endif
                     <div class="form-row">
                             <div class="form-group col-md-12 col-sm-12">
                                     <h6><strong>Información de su cotización de viaje:</strong></h6>  
@@ -214,39 +256,30 @@
                                   </div>
                               </div> 
       </div>
+
+      <div class="form-row">
+          <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+              <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value="." style="margin-top: 0%;" required>
+              <a class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}"  style="margin-top: -7%; margin-left: 0%;">HE LEÍDO Y ACEPTO TÉRMINOS Y CONDICIONES</a> 
+        </div>
+      </div>
+      
                     @if(!(Auth::user()))
                     <div class="form-row">
-                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                            <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value="." style="margin-top: 4%;" required>
-                            <label class="form-check-label" for="terminos_condiciones" style="margin-top: 4%; margin-left: 0%;">HE LEÍDO Y ACEPTO </label>
-                      </div>
-                      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <a class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" style="margin-top: 0%; margin-left: -15%;">TÉRMINOS Y CONDICIONES</a> 
-                      </div>
-                        <div class="form-group col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                             <button class="btn btn-primary" type="submit">Continuar</button>
-                        </div>    
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <a class="nav-link text-success" data-toggle="modal" data-target=".bd-example-modal-lg" style="cursor:pointer">No tengo una cuenta.</a> 
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                        </div>     
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
                             <h5 class = "text-danger"><strong>¡¡¡IMPORTANTE!!!</strong></h5>
                             <h6>De no cumplir con los documentos solicitados, no se realizará el traslado solicitado.</h6>
                       </div>
                     </div>     
                     @else
                     <div class="form-row">
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <input type="checkbox" id="terminos_condiciones" name="terminos_condiciones" value="." style="margin-top: 4%;" required>
-                            <label class="form-check-label" for="terminos_condiciones" style="margin-bottom: 0%; margin-left: 0%;">HE LEÍDO Y ACEPTO </label>
-                      </div>
-                      <div class="col-sm-7 col-md-4 col-lg-4 col-xl-4">
-                            <a class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" style="margin-top: 0%; margin-rihgt: 20%;">TÉRMINOS Y CONDICIONES</a> 
-                      </div>
-                        <div class="form-group col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                             <button class="btn btn-primary" type="submit">Continuar</button>
                         </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                        <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
                             <h5 class = "text-danger"><strong>¡¡¡IMPORTANTE!!!</strong></h5>
                             <h6>De no cumplir con los documentos solicitados, no se realizará el traslado solicitado.</h6>
                       </div>
@@ -454,7 +487,39 @@
       </div>
     </div>
    {{-- AQUI TERMINA EL MODAL  --}}
-
+   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sele" style="display: none" id="sele1">    </button>
+<div class="modal fade"  id="sele">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header" >
+              <h5 class="modal-title">Solicitud de Traslado</h5>
+              <span aria-hidden="true" style="color: red;">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">  
+            <div class="row">
+              <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                  <h5 class = "text-danger"><strong>¡¡¡BIENVENIDO!!!</strong></h5>
+                  <h6>¿Como deseas realizar tu solicitud de cotización?</h6>
+              </div>
+              <div class="modal-footer col-md-12">
+                  <form action="{{ route('validar_logeo')}}" method="GET" enctype="multipart/form-data">
+                    @csrf 
+                      <input type="submit" name="con_cuenta" id="con_cuenta" class="btn btn-primary" value="Continuar con mi cuenta">
+                  </form>
+                  <form action="{{ route('validar_sin_logeo')}}" method="GET" enctype="multipart/form-data">
+                    @csrf 
+                      <input type="submit" name="sin_cuenta" id="sin_cuenta" class="btn btn-primary" value="Continuar sin cuenta">
+                  </form>
+                      <a class="nav-link text-success" data-toggle="modal" data-target=".bd-example-modal-lg" style="cursor:pointer">No tengo una cuenta.</a> 
+              </div>
+            </div> {{-- aqui termina el div row --}}        
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+    <!-- /.modal ---->
     {{-- MODAL PARA NOTIFICAR QUE NO SE PUEDE AGREGAR UN CLIENTE MENOR DE 18 AÑOS --}}
 
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rango" style="display: none" id="rango1">Cancelar</button>
@@ -706,8 +771,18 @@ function validaCheckbox(){
 </script>
   
   <script>
+  $(document).ready(function(){
 
-        $(document).ready(function(){
+    @if(!(Auth::user()))
+    if({{$estado == 'sin' | $estado == "inicio"}}){
+      var m = '1';
+      if(m=='1'){
+        $('#sele1').click();
+        console.log(m);
+        }
+    }
+     @endif   
+ 
   
   $('#upload_form').on('submit', function(event){
           event.preventDefault();      
