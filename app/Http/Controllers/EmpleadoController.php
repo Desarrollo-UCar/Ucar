@@ -206,6 +206,7 @@ class EmpleadoController extends Controller
             'name' => $request['nombres'],
             'email' => $request['correo'],
             'password' => Hash::make($request['contra']),
+            'email_verified_at'=>$date,
         ]);
  
        $user->roles()->attach(Role::where('name', 'admin')->first());

@@ -42,7 +42,7 @@
                             @if ($emp->foto == null)
                             <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;border-radius: 50%;">
                             @else
-                            <img src="{{ '/images/'.$emp->foto }}" style="width: 200px;height:200px;border-radius: 50%;">
+                            <img src="{{'/images/'.$emp->foto}}" style="width: 200px;height:200px;border-radius: 50%;">
                             @endif
                         
                           </div>
