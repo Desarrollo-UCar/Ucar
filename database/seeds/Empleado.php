@@ -30,7 +30,7 @@ class Empleado extends Seeder
             'colonia' => 'Guadalupe Victoria',
             'calle' => 'Independencia',
             'numero' => '5',
-            'foto'  => 'foto',
+            'foto'  => 'predeterminado.png',
             'correo' => 'gerente@ucar.com',
             'telefono'=> '9514786952',
             'tipo' => 'gerente',

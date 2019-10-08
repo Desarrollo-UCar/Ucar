@@ -31,8 +31,8 @@ class Alquiler extends Seeder
                 'km_regresa' => $faker->numberBetween(10150, 10200),
                'nombreConductor' => $faker->firstName,
                 'num_licencia' => 'xxxx-xx-xx',
-               'expedicion_licencia' => $faker->dateTime, 
-                'expiracion_licencia' => $faker->dateTime, 
+               'expedicion_licencia' => $faker->date, 
+                'expiracion_licencia' => $faker->date, 
                 'estatus' => 'espera',
             ));
         }
