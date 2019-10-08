@@ -24,13 +24,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-           <!--   <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="user-image" alt="User Image"> -->
-              <span class="hidden-xs"><b> {{auth::user()->rol()}} </b></span>
+           <img src="{{auth::user()->foto()}}" class="user-image" alt="User Image">
+              <span class="hidden-xs"><b>{{auth::user()->rol()}} </b></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-              <!--  <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image"> -->
+           <img src="{{auth::user()->foto()}}" class="img-circle" alt="User Image"> 
                 <p>
                     {{auth::user()->rol()}} 
                 <!--  <small>Member since Nov. 2012</small> -->
@@ -39,6 +39,7 @@
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
+                  
                   <div class="col-xs-4 text-center">
                     <a href="#"></a>
                   </div>
