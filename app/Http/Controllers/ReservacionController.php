@@ -503,6 +503,8 @@ class ReservacionController extends Controller
 
     public function registra_conductor(Request $request){
    
+           
+        
             $alquiler = Alquiler::where('id','=',$request['alquiler'])->first();
 
             $alquiler->num_licencia = $request['numero'];
@@ -524,8 +526,7 @@ class ReservacionController extends Controller
             $edad = $carbon->parse( $newDate)->age; // 1990-10-25
             //dump($edad);
             //$reservacion = Reservacion::where('id','=',$id)->first();
-        ///return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));
-    
+        ///return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));    
             
             $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
             $sucursal = $sucur->sucursal;
