@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Alquiler;
 use Illuminate\Http\Request;
+use App\EmpleadoSucursal;
+use  App\Empleado;
+use App\Sucursal;
 
 
 use App\Cliente;
@@ -17,20 +20,24 @@ class AdminController extends Controller
     public function inicioGerente(Request $request){  
         
         if(!$request->user()->hasRole('gerente')){
+ 
         $email = $request->user()->email;
         $empleado = Empleado::where('correo','=',$email)->first();
+        //return $empleado;
         $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
         ->where('status','=','activo')->first();
         $sucursals=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
 
         $reservaciones = Alquiler::
+        select('*','alquilers.estatus AS estatus_alquiler')-> 
         join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
         join('clientes','idCliente','=','reservacions.id_cliente')->
         join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
         join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
         where('vehiculosucursales.sucursal','=',$sucursale->sucursal)->
-        where('vehiculosucursales.status','=','ACTIVO')->get();
-
+        where('vehiculosucursales.status','=','ACTIVO')->
+        where('alquilers.fecha_recogida','>=',date('Y').'-01-01')->get();
+          //  return $reservaciones;
         return view('gerente.inicio', compact ('reservaciones'));
 
     }
@@ -44,7 +51,7 @@ class AdminController extends Controller
     where('alquilers.fecha_recogida','>=',date('Y').'-01-01')->
     get();
 
-    //  return ($reservaciones);
+    // return ($reservaciones);
     	return view ('gerente.inicio',compact ('reservaciones'));
     }
 

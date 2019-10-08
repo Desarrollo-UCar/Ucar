@@ -108,6 +108,9 @@
 <!-- fullCalendar -->
 <script src="{{asset("assets/$theme/bower_components/moment/moment.js")}}"></script>
 <script src="{{asset("assets/$theme/bower_components/fullcalendar/dist/fullcalendar.min.js")}}"></script>
+
+{{-- <script src="{{asset("assets/$theme/bower_components/fullcalendar/dist/fullcalendar.js")}}"></script> --}}
+<script src="{{asset("assets/$theme/bower_components/fullcalendar/dist/locale/es.js")}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset("assets/$theme/bower_components/jquery-ui/jquery-ui.min.js")}}"></script>
 
@@ -115,13 +118,6 @@
 <script>
   $(function () {
     @json($reservaciones);
-    var arr = [];
-arr[0] = "Oranges";
-console.log(arr); 
-
-var obj; 
-obj ={hola:1};
-console.log(obj); 
     /* initialize the external events
      -----------------------------------------------------------------*/
     function init_events(ele) {
@@ -156,6 +152,7 @@ console.log(obj);
         m    = date.getMonth(),
         y    = date.getFullYear()
     $('#calendar').fullCalendar({
+      lang: 'es',
       header    : {
         left  : 'prev,next today',
         center: 'title',
@@ -177,7 +174,8 @@ console.log(obj);
                     title : 'Reservacion {{$reservacion->id}}',
                     start : '{{$reservacion->fecha_recogida}}T{{$reservacion->hora_recogida}}',
                     backgroundColor:  '#0073b7', //blue
-                    borderColor    :  '#0073b7' //bluesw
+                    borderColor    :  '#0073b7', //bluesw
+             url: 'http://ucar.test/detalle/{{$reservacion->id}}'
                 @endif
 
                 @if($reservacion->estatus_alquiler =='terminado')
