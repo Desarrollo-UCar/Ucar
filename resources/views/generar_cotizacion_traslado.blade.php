@@ -169,8 +169,8 @@
                             <div class="form-group col-md-3 col-sm-3">
                                     <label>Email</label>
                                     <input type="email" class="form-control" value ="{{$solicitud_traslado->email}}" placeholder="Correo Eléctronico" name="email" id="email" readonly = "readonly" required>
-
-                                </div>
+                            </div>
+                         
 
                     <div class="form-row">
                             <div class="form-group col-md-12 col-sm-12">

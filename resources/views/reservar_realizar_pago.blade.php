@@ -279,9 +279,7 @@
                             {{-- {{ csrf_field() }} --}}
                             @csrf
                       <div class="row">
-                            
-                           
-                                               
+             
                                     {{-- FORMULARIO DE NOMBRES --}}
                                   
                                        <div class="form-group col-md-4 col-sm-4">

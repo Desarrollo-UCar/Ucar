@@ -33,7 +33,7 @@
                {{ csrf_field() }}
           
                 <div class="col-md-6 col-md-offset-4  file-loading">
-                    <div class="alert" id="message" style="display: none"></div>
+                    <div class="alert col-md-7" id="message" style="display: none"></div>
                   <div id="preview" >
                    
                     <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;border-radius: 50%;">                

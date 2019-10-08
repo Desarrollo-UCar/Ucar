@@ -516,7 +516,7 @@
                 <dd>Costo por dia:</dd>
                 <dd><h4><strong><span class="colored"> $ {{number_format($vehiculo->precio,2)}} MXN</span></strong></h4></dd>
                 <dd>Incluye IVA</dd>
-                <dd><a a href="{{ route('vehiculos_por_sucursal',[
+                <dd><a href="{{ route('vehiculos_por_sucursal',[
                                         'id_vehiculo'    =>$vehiculo->idvehiculo,
                                         'id_sol_traslado'=> $solicitud_traslado->id,
                                         

@@ -15,25 +15,21 @@ class TrasladoController extends Controller{
     //parte de la reserva de un traslado
     public function renta_traslado_vehiculo(Request $request){ 
         //return $request; 
-        if($request->fecha_salida=='0' || $request->fecha_solicitada =='0')
-            return back()->with('mensaje', 'Seleccione fechas!');
          // Creamos el objeto traslado_temp
          $traslado_temp = new App\traslado_temp;
          // Seteamos las propiedades de la tabla traslado_temp
          $traslado_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');
         
          $traslado_temp->lugar_salida = $request->lugar_salida;
-         $traslado_temp->fecha_salida = $request->fecha_salida;
          $traslado_temp->lugar_llegada = $request->lugar_llegada;
          $traslado_temp->fecha_llegada_solicitada = date("Y\-m\-d", strtotime($request->fecha_solicitada));
          $traslado_temp->hora_llegada = $request->hora_llegada;
          $traslado_temp->n_pasajeros = intval($request->n_pasajeros);
 
-         $traslado_temp->nombres = $request->nombres;
-         $traslado_temp->primer_apellido = $request->primerApellido;
-         $traslado_temp->segundo_apellido = $request->segundoApellido;
-         $traslado_temp->telefono = $request->telefono;
-         $traslado_temp->email = $request->email;
+         $correo   = auth()->user()->email;
+         $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+
+         $traslado_temp->id_cliente = $cliente->idCliente;
          $traslado_temp->viaje_redondo = intval($request->viaje_redondo);
          if(intval($request->viaje_redondo) != 0)
          $traslado_temp->dias_espera = $request->dias_espera;
@@ -62,6 +58,7 @@ public function calculo_costos_traslado(Request $reserva){
     }
     
 public function vehiculos_por_sucursal(Request $reserva){
+    //return $reserva['viaje_redondo'];
     $solicitud_traslado = App\traslado_temp::findOrFail($reserva['id_sol_traslado']);
     $solicitud_traslado->id_vehiculo = null;
     $solicitud_traslado->save();
@@ -85,7 +82,7 @@ public function vehiculos_por_sucursal(Request $reserva){
                 $solicitud_traslado->fecha_llegada_solicitada =$reserva['fecha_llegada_solicitada'];
                 $solicitud_traslado->hora_llegada  = $reserva['hora_llegada'];
                 $solicitud_traslado->n_pasajeros   = $reserva['n_pasajeros'];
-                if($reserva['viaje_redondo'] == "0" | $reserva['viaje_redondo'] == "on"){
+                if($reserva['viaje_redondo'] == "1" | $reserva['viaje_redondo'] == "on"){
                     $solicitud_traslado->viaje_redondo = 1;
                     $solicitud_traslado->dias_espera   = $reserva['dias_espera'];
                 }else{
