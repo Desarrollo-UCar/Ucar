@@ -70,22 +70,40 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>0</h3>
+              <h3> <br> </h3>
 
-              <p>Visitas a la página</p>
+              <p>Mantenimientos</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-gear-b"></i>
             </div>
-            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('mantenimiento.index') }}" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
     </div>
 
     <div class="row">
+        <div class="col-md-2">
+            <div class="box box-solid">
+              <div class="box-header with-border">
+                <h4 class="box-title">Estatus</h4>
+              </div>
+              <div class="box-body">
+                <!-- the events -->
+                <div id="external-events">
+                  <div class="external-event bg-green">Terminadas</div>
+                  <div class="external-event bg-yellow">En curso</div>
+                  <div class="external-event bg-light-blue">Proximas</div>
+                  <div class="external-event bg-red">Canceladas</div>
+                  <div class="checkbox">
 
-        <div class="col-md-1"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+          </div>
         <div class="col-md-10">
           <div class="box box-primary">
             <div class="box-body ">

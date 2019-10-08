@@ -24,17 +24,15 @@
 
 <section id="formulario">
     <div class="container">
+        <div class="box box-primary">
         <div class="row">
-
-                <!-- inicio card reserva -->
-                <div class="card bg-light">
-                <!--Card content-->
-                <div class="card-body">
-                    
+        <!-- inicio card reserva -->
+        <div class="card bg-light">
+        <!--Card content-->
+        <div class="card-body">
       <div class="row">
 {{--calculo de datos para el traslado  --}}
-
-<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+<div class=" col-sm-12 col-md-12 col-lg-12 col-xl-12">
     <form id="reserva_traslado" action="{{ route('vehiculos_por_sucursal')}}" method="post" enctype="multipart/form-data">
       @csrf
        <div class="row">
@@ -560,6 +558,7 @@
 </div> 
     </div>
     </div>
+  </div>
     </section>
     @endsection
 

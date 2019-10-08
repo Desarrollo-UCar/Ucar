@@ -222,7 +222,7 @@
                                                     <label class="form-check-label" for="terminos_condiciones">HE LEÍDO Y ACEPTO </label>
                                                 </div>
                                                 <div>
-                                                    <a class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}" >TÉRMINOS Y CONDICIONES</a> 
+                                                    <a class="nav-link text-danger" target="_blank" href="{{asset('pdf/terminos_condiciones/Terminos-y-Condiciones-de-renta.pdf')}}">TÉRMINOS Y CONDICIONES</a> 
                                                 </div>
                                             </div>     
                                             @else

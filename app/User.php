@@ -93,6 +93,12 @@ public function rol(){
  
  }
 
+ public function foto(){
+    $empleado = Empleado::where('correo','=',$this->email)->first();
+    return '/images/'.$empleado->foto;
+
+ }
+
 }
 
 //solo para commit

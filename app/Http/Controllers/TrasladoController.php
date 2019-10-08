@@ -12,6 +12,17 @@ use Mail;
 use App\Http\Controllers\Controller;
 
 class TrasladoController extends Controller{
+
+    public function validar_logeo(Request $reserva){
+       // echo "con logeo";
+       $estado = "con";
+        return view('renta_traslado', compact('estado'));
+    }
+    public function validar_sin_logeo(Request $reserva){
+        // echo "sin logeo";
+        $estado = "sin";
+        return view('renta_traslado',compact('estado'));
+    }
     //parte de la reserva de un traslado
     public function renta_traslado_vehiculo(Request $request){ 
         //return $request; 
@@ -26,10 +37,24 @@ class TrasladoController extends Controller{
          $traslado_temp->hora_llegada = $request->hora_llegada;
          $traslado_temp->n_pasajeros = intval($request->n_pasajeros);
 
+         if($request->nombres == null){
          $correo   = auth()->user()->email;
          $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
-
          $traslado_temp->id_cliente = $cliente->idCliente;
+         //guardamos los datos en la temporal para no tener problemas despues
+             $traslado_temp->nombres = $cliente->nombre;
+            $traslado_temp->primer_apellido = $cliente->primer_apellido;
+            $traslado_temp->segundo_apellido = $cliente->segundo_apellido;
+            $traslado_temp->telefono = $cliente->telefono;
+            $traslado_temp->email = $cliente->correo;
+         }else{
+            $traslado_temp->nombres = $request->nombres;
+            $traslado_temp->primer_apellido = $request->primerApellido;
+            $traslado_temp->segundo_apellido = $request->segundoApellido;
+            $traslado_temp->telefono = $request->telefono;
+            $traslado_temp->email = $request->email;
+         }
+
          $traslado_temp->viaje_redondo = intval($request->viaje_redondo);
          if(intval($request->viaje_redondo) != 0)
          $traslado_temp->dias_espera = $request->dias_espera;
@@ -246,15 +271,19 @@ public function guardar_confirmacion_traslado(Request $reserva){
         $alquiler->estatus = 'pendiente_recogida';
         $alquiler->save();
     //---------------------------
-   return "ya esta";
+   
     //////-------------------------
     Mail::send('mails.confirmacion_traslado',compact('solicitud_traslado','reserva','vehiculo','subtotal','total_sueldo_chofer','total', 'dias', 'horas'), function ($message) use ($solicitud_traslado,$vehiculo){
         $message->from('ucardesarollo@gmail.com', 'Ucar');
         $message->to($solicitud_traslado->email)->subject('Confirmacion de Reserva de Traslado');
         $message->attach($vehiculo->foto);
     });
+    $solicitud_traslado->estatus = 1;
+    $solicitud_traslado->save();
+    $traslados = App\traslado_temp::all();
+
     /////////-------------------------
-    return "mensaje enviado";
+    return view ('gerente.reservaciones.inicioTraslado',compact('traslados'));
 }
 
 

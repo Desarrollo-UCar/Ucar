@@ -24,7 +24,12 @@ class CreateTrasladoTempsTable extends Migration
             $table->time('hora_llegada');
             $table->integer('n_pasajeros');
             
-            $table->integer('id_cliente');
+            $table->integer('id_cliente')->nullable();
+            $table->string('nombres')->nullable();
+            $table->string('primer_apellido')->nullable();
+            $table->string('segundo_apellido')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('email')->nullable();
 
             $table->boolean('viaje_redondo')->nullable();
             $table->integer('dias_espera')->nullable();
@@ -41,6 +46,7 @@ class CreateTrasladoTempsTable extends Migration
             $table->integer('n_choferes')->nullable();
             $table->float('sueldo_chofer')->nullable();
             $table->integer('descuento')->nullable();
+            $table->boolean('estatus')->nullable();
             //los datos personales 
             $table->timestamps();
         });
