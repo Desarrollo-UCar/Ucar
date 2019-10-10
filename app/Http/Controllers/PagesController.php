@@ -23,7 +23,7 @@ class PagesController extends Controller{
         if($R == date('Y\-m\-d') & $hora_de_recogida <= $hora_actual)
             return redirect()->back()->with('mensaje', 'Hora de recogida expiradal!');
         if($R == $D & $hora_de_recogida == $hora_de_devolucion)
-            return redirect()->back()->with('mensaje', 'Dias y Horas Iguales!');
+            return redirect()->back()->with('mensaje', 'En dias iguales, la fecha de devolucion no puede ser menor a la de recogida.');
 // buscamos el id de sucursal que hace referencia el lugar de recogida
         $sucursales = App\Sucursal::all();
         $sucursal = 1;
@@ -401,7 +401,6 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
     Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
         $message->from('ucardesarollo@gmail.com', 'Ucar');
         $message->to($correo)->subject($asunto);
-   
     });
 /////////-------------------------
     return view('pago',compact('monto','alquiler'));

@@ -213,21 +213,21 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'horaRecogida' class="form-control" value = "{{ old('horaRecogida') }}" required>
-                                      <option>08:00</option><option>08:30</option>
-                                      <option>09:00</option><option>09:30</option>
-                                      <option>10:00</option><option>10:30</option>
-                                      <option>11:00</option><option>11:30</option>
-                                      <option>12:00</option><option>12:30</option>
-                                      <option>13:00</option><option>13:30</option>
-                                      <option>14:00</option><option>14:30</option>
-                                      <option>15:00</option><option>15:30</option>
-                                      <option>16:00</option><option>16:30</option>
-                                      <option>17:00</option><option>17:30</option>
-                                      <option>18:00</option><option>18:30</option>
-                                      <option>19:00</option><option>19:30</option>
-                                      <option>20:00</option><option>20:30</option>
-                                      <option>21:00</option>
+                                  <select name = 'horaRecogida' id ='horaRecogida' class="form-control" required onchange="checar_horas();">
+                                      <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
+                                      <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
+                                      <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
+                                      <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
+                                      <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
+                                      <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
+                                      <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
+                                      <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
+                                      <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
+                                      <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
+                                      <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
+                                      <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
+                                      <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
+                                      <option value = "21:00">21:00</option>
                                   </select>
                               </div> 
                           </div>
@@ -237,29 +237,45 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
-                                  <select name = 'horaDevolucion'  class="form-control" value = "{{ old('horaDevolucion') }}" required>
-                                      <option>08:00</option><option>08:30</option>
-                                      <option>09:00</option><option>09:30</option>
-                                      <option>10:00</option><option>10:30</option>
-                                      <option>11:00</option><option>11:30</option>
-                                      <option>12:00</option><option>12:30</option>
-                                      <option>13:00</option><option>13:30</option>
-                                      <option>14:00</option><option>14:30</option>
-                                      <option>15:00</option><option>15:30</option>
-                                      <option>16:00</option><option>16:30</option>
-                                      <option>17:00</option><option>17:30</option>
-                                      <option>18:00</option><option>18:30</option>
-                                      <option>19:00</option><option>19:30</option>
-                                      <option>20:00</option><option>20:30</option>
-                                      <option>21:00</option>
+                                  <select name = 'horaDevolucion' id = 'horaDevolucion' class="form-control" required onchange="checar_horas();">
+                                    <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
+                                    <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
+                                    <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
+                                    <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
+                                    <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
+                                    <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
+                                    <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
+                                    <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
+                                    <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
+                                    <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
+                                    <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
+                                    <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
+                                    <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
+                                    <option value = "21:00">21:00</option>
                                   </select>
                               </div>
                           </div>
                       </div>
                       <div class="form-row">
                           <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                              <button class="btn btn-primary" type="submit" style="margin-top: 12%;">Consulta Vehiculos Disponibles</button>
+                              <button class="btn btn-primary" type="submit" style="margin-top: 0%;">Consulta Vehiculos Disponibles</button>
                           </div> 
+                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                            <h6 class = "text-danger"><strong>* NOTA:</strong></h6>
+                            <h6><small>El vehículo debe ser entregado en la misma sucursal.</small></h6>
+                          </div>
+                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="hora_extra">
+                            <h6 class = "text-success"><strong>* NOTA:</strong></h6>
+                            <h6><small>Una hora menos, un dia mas barato.</small></h6>
+                          </div>
+                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="dias_iguales">
+                            <h6 class = "text-danger"><strong>* Error:</strong></h6>
+                            <h6><small>En dias iguales, la fecha de devolucion no puede ser menor a la de recogida.</small></h6>
+                          </div>
+                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="hora_menor">
+                            <h6 class = "text-danger"><strong>* Error:</strong></h6>
+                            <h6><small>Para reservas del dia de hoy, no puede seleccionar una hora menor a la actual.</small></h6>
+                          </div>
                           @if(session('mensaje'))
                           <div class="alert aler-danger">
                               <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
@@ -624,12 +640,78 @@
     "startDate": new Date(),
     "minDate": new Date()
 }, function(start, end, label) {
-  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-  document.getElementById('fechas').value = 'Rec: ' + start.format('DD-MM-YYYY') + '  Dev: ' + end.format('DD-MM-YYYY');
+  //console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+  document.getElementById('fechas').value = 'Del ' + start.format('DD-MM-YYYY') + '  al ' + end.format('DD-MM-YYYY');
   document.getElementById('fechaRecogida').value = start.format('YYYY-MM-DD');
   document.getElementById('fechaDevolucion').value = end.format('YYYY-MM-DD');
+  checar_horas();
 });
 </script> 
+<script>
+function checar_horas(){
+  //accedemos a los valores de los elementos horarecogida y hora devolucion
+    var horaRecogida    = document.getElementById("horaRecogida");
+    var horaDevolucion  = document.getElementById("horaDevolucion");
+    var diaRecogida     = document.getElementById("fechaRecogida").value;
+    var diaDevolucion   = document.getElementById("fechaDevolucion").value;
+    var hora_extra      = document.getElementById("hora_extra");
+    var dias_iguales    = document.getElementById("dias_iguales");
+    var hora_menor      = document.getElementById("hora_menor");
+    recogida = horaRecogida.options[horaRecogida.selectedIndex].value;
+    devolucion = horaDevolucion.options[horaDevolucion.selectedIndex].value;
+   //hacemos los calculos para validar horas y checar si se pasa mas de dos horas
+   //validar que si selecciona el dia de hoy como salida, no se pueda seleccionar horas menores a la actual en un rango de una hora 
+
+   //si selecciona el mismo dia de salida y llegada, checar que la hora de devolucion no sea menor a la de recogida
+
+   //enviar mensaje de advertencia si selecciona dos horas mas de la hora de recogida en cualquier otro dia para decirle que si se pasa dos horas se le cobrara el dia completo
+    var expresionRegular = /\s*:\s*/;
+    var recogidaD = recogida.split(expresionRegular);
+    var devolucionD = devolucion.split(expresionRegular);
+    reco = new Date(0,0,0,recogidaD[0],recogidaD[1],0,0);
+    devo = new Date(0,0,0,devolucionD[0],devolucionD[1],0,0);
+
+    hoy = new Date();
+    var dia = parseInt(hoy.getDate()) ;
+    var mes = (parseInt(hoy.getMonth()) + 1) ;
+    var hora = parseInt(hoy.getHours());
+    var minutos = hoy.getMinutes();
+    hoyy = hoy.getFullYear() +'-'+ ((mes < 10) ? '0'+mes : mes) +'-'+  ((dia < 10) ? '0'+dia : dia) ;
+    hora_actual = ((hora < 10) ? '0'+hora : hora) +':'+  ((minutos < 10) ? '0'+minutos : minutos) ;
+    hora_actual_1 = ((hora+1 < 10) ? '0'+hora : hora) +':'+  ((minutos > 30) ? '0'+minutos : minutos) ;
+
+    console.log(horaRecogida.value);
+    console.log(hora_actual);
+   
+    //////////////////////
+    if(diaRecogida == diaDevolucion){
+      if(devo <= reco){
+          dias_iguales.style.display = 'block';
+          document.getElementById("horaRecogida").value = hora_actual;
+          document.getElementById("horaDevolucion").value = '0';
+      }else{
+        dias_iguales.style.display = 'none';
+      }
+      if(diaRecogida == hoyy){
+      console.log("iguales fechas de recogida");
+      if(hora_actual >= horaRecogida.value){
+        console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
+          hora_menor.style.display = 'block';
+          document.getElementById("horaRecogida").value = '0';
+      }else{
+        hora_menor.style.display = 'none';
+      }
+    }
+    }else{
+      if(devo - reco >= 7200000){
+          hora_extra.style.display = 'block';
+      }else{
+        hora_extra.style.display = 'none';
+      }
+    }
+  
+  }
+  </script>
 </body>
 </html>
 
