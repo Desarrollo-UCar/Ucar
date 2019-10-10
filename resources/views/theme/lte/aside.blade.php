@@ -1,5 +1,5 @@
  <!-- Left side column. contains the sidebar -->
- <aside class="main-sidebar" style="position: fixed;height: 100%;width: 245px;overflow-y: scroll;" >
+ <aside class="main-sidebar" style="position: fixed;> <!-- style="position: fixed;height: 100%;width: 245px;overflow-y: scroll;" -->
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->

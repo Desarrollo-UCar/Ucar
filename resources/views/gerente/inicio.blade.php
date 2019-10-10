@@ -17,25 +17,29 @@
     </h1>
 </section>
 <section class="content">
+
+  
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
+      
+        <div class="col-md-3 col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <div class="small-box bg-light-blue-gradient">
             <div class="inner">
               <h3> <br> </h3>
 
-              <b>Reservaciones</b></p>
+             <p> <b>Reservaciones</b></p>
             </div>
             <div class="icon">
-              <i class="	fa fa-clipboard"></i>
+              <i class="ion ion-clipboard"></i>
             </div>
             <a href="{{ route('reservacion.index')}}" class="small-box-footer">Ver mas <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
+        </div>  
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        
+        <div class="col-md-3 col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-green">
+          <div class="small-box bg-aqua-gradient">
             <div class="inner">
               {{-- <h3>53<sup style="font-size: 20px">%</sup></h3> --}}
               <h3><br></h3>
@@ -48,9 +52,10 @@
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+
+        <div class="col-md-3 col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow">
+          <div class="small-box bg-maroon-gradient">
             <div class="inner">
 
                 <?php $content = DB::table('clientes')->get(); ?>
@@ -65,47 +70,58 @@
             <a href="{{ route('cliente.index')}}" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3> <br> </h3>
 
-              <p>Mantenimientos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-gear-b"></i>
-            </div>
-            <a href="{{ route('mantenimiento.index') }}" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
         <!-- ./col -->
+
+        <div class="col-md-3 col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-purple-gradient">
+              <div class="inner">
+                <h3> <br> </h3>
+  
+                <p>Mantenimientos</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-gear-b"></i>
+              </div>
+              <a href="{{ route('mantenimiento.index') }}" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+          <!-- ./col -->
+
     </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <div class="box box-solid">
-              <div class="box-header with-border">
-                <h4 class="box-title">Estatus</h4>
-              </div>
-              <div class="box-body">
-                <!-- the events -->
-                <div id="external-events">
-                  <div class="external-event bg-green">Terminadas</div>
-                  <div class="external-event bg-yellow">En curso</div>
-                  <div class="external-event bg-light-blue">Proximas</div>
-                  <div class="external-event bg-red">Canceladas</div>
-                  <div class="checkbox">
+    
 
-                  </div>
-                </div>
-              </div>
-              <!-- /.box-body -->
-            </div>
-          </div>
-        <div class="col-md-10">
+    <div class="row">
+          
+        <div class="col-md-12">
           <div class="box box-primary">
+
+                  <div class="box-header with-border">
+                      <center><h3><b>RESERVACIONES: </b></h3></center>
+                  </div>
+                  <div class="box-body">
+                    <!-- the events -->
+                    <div id="external-events">
+                        <div class="col-md-3">
+                      <div class="bg-green"><center><b>Terminadas</b></center></div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="bg-yellow"><center><b>En curso</b></center></div>
+                    </div>
+  
+                    <div class="col-md-3">
+                      <div class="bg-light-blue"><center><b> Proximas</b></center></div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="bg-red"> <center> <b>Canceladas</b> </center></div>
+                    </div>
+                    </div>
+                    </div>
+             
+
             <div class="box-body ">
               <!-- THE CALENDAR -->
               <div id="calendar"></div>
@@ -114,7 +130,10 @@
           </div>
           <!-- /. box -->
         </div>
+
         
+      </div>
+
       </div>
 
 
@@ -200,21 +219,24 @@
                     title : 'Reservacion {{$reservacion->id}}',
                     start : '{{$reservacion->fecha_recogida}}T{{$reservacion->hora_recogida}}',
                     backgroundColor:  '#00a65a', //green
-                    borderColor    :  '#00a65a' //red
+                    borderColor    :  '#00a65a', //red
+                    url: 'http://ucar.test/detalle/{{$reservacion->id}}'
                 @endif
 
                 @if($reservacion->estatus_alquiler =='cancelado')
                     title : 'Reservacion {{$reservacion->id}}',
                     start : '{{$reservacion->fecha_recogida}}T{{$reservacion->hora_recogida}}',
                     backgroundColor:  '#f56954', //green
-                    borderColor    :  '#f39c12' //red
+                    borderColor    :  '#f39c12', //red
+                    url: 'http://ucar.test/detalle/{{$reservacion->id}}'
                 @endif
 
                 @if($reservacion->estatus_alquiler =='en curso')
                     title : 'Reservacion {{$reservacion->id}}',
                     start : '{{$reservacion->fecha_devolucion}}T{{$reservacion->hora_devolucion}}',
                     backgroundColor:  '#FFC100', //green
-                    borderColor    :  '#f39c12' //red
+                    borderColor    :  '#f39c12', //red
+                    url: 'http://ucar.test/detalle/{{$reservacion->id}}'
                 @endif
                 },
         
