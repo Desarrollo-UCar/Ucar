@@ -207,7 +207,7 @@
         @foreach($reservaciones as $reservacion)
         
                 {
-                 @if($reservacion->estatus_alquiler =='espera')
+                 @if($reservacion->estatus_alquiler =='pendiente_recogida')
                     title : 'Reservacion {{$reservacion->id}}',
                     start : '{{$reservacion->fecha_recogida}}T{{$reservacion->hora_recogida}}',
                     backgroundColor:  '#0073b7', //blue

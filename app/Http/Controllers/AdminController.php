@@ -51,7 +51,7 @@ class AdminController extends Controller
     where('alquilers.fecha_recogida','>=',date('Y').'-01-01')->
     get();
 
-    // return ($reservaciones);
+     //return ($reservaciones);
     	return view ('gerente.inicio',compact ('reservaciones'));
     }
 

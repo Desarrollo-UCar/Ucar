@@ -113,17 +113,22 @@
     <div class="container">
         <div class="row">
             <div class="content">
-                    <h1>Compra de Prueba</h1>
-                    <h3>US$ 19.99</h3>
-                    <form action="{{ route('crear_pago_stripe')}}" method="POST">
+                    <h1>Pago de reservación</h1>
+            <h3>${{$monto}}</h3>
+                    <form action="{{ route('crear_pago_stripe')}}" method="POST">  
                             @csrf
+                            <input id='id_reserva_temp' name='id_reserva_temp' type="hidden" value='{{$datos_reserva->id}}'>
+                            <input id='monto' name='monto' type="hidden" value='{{$monto * 100}}'>
+                            <input type="hidden" id = "btnAccion" name = "btnAccion" value= "pago_total">
+
                         <script
                             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                             data-key="{{ config('services.stripe.key') }}"
-                            data-amount="1990"
-                            data-name="Compra"
-                            data-description="Prueba compra"
+                            data-amount="{{$monto * 100}}"
+                            data-name="Pago reservación"
+                            data-description="Pago por reserva"
                             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                            data-currency="mxn"
                             data-locale="auto">
                         </script>
                     </form>

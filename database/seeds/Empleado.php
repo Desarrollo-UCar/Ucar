@@ -40,6 +40,7 @@ class Empleado extends Seeder
         \DB::table('users')->insert(array(
             'name' => 'Adriana',
             'email' => 'gerente@ucar.com',
+            'email_verified_at' => '2019-10-10',
             'password'=> Hash::make('12345678'),
         ));
 
