@@ -95,10 +95,35 @@ class ServiciosExtraController extends Controller
                 ]);
 
     $todo =   Serviciosextras::all();
-    if(count($todo)>0){
-        $servicio =  Serviciosextras::where('nombre',$request['nombre']);
-    if(!empty($servicio)){
-        return response()->json(['success'=>'ERROR1']);
+    if(!empty($todo)){
+    //     $servicio =  Serviciosextras::where('nombre',$request['nombre']);
+    $nombre = str_replace(' ', '', $request['nombre']);
+    // if(empty($servicio)){
+    //     return response()->json(['success'=>'ERROR1']);
+    // }
+
+    foreach($todo as $comp){
+        $nom=str_replace(' ', '', $comp['nombre']);//trim($comparar['nombre'],'\r');      
+        if($nom == $nombre){
+            $extra = servicioextrasucursales::where('serviciosextra',$comp['idserviciosextra'])->get();
+            $sucursal = Sucursal::where('nombre',$request['sucursal'])->first();
+            foreach($extra as $serext){
+                if($serext['sucursal']==$sucursal['idsucursal']){
+                    return response()->json(['success'=>'ERROR1']);
+                }
+            }           
+                servicioextrasucursales::insert([
+                    'sucursal'=>$sucursal['idsucursal'],
+                    'serviciosextra' => $comp['idserviciosextra'],
+                    'descripcion'=>$request['descripcion'],
+                    'cantidad' => $request['cantidad'],
+                    'created_at'=>$date,
+                    'updated_at'=>$date
+                ]);
+
+                return response()->json(['success'=>'EXITO']);
+          
+        }
     }
     }
 
