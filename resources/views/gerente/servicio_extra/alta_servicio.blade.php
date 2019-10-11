@@ -216,6 +216,7 @@ document.getElementById("foto").onchange = function(e) {
      success:function(data)
      {    
       var mensaje=data.success;
+      console.log(mensaje);
       if(mensaje=='ERROR1'){
       $('#existe1').click();
        }
