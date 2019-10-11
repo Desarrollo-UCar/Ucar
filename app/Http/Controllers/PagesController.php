@@ -51,6 +51,33 @@ class PagesController extends Controller{
 // consulta a los vehiculos disponibles
     $fecha_i = $request->fechaRecogida;
     $fecha_f = $request->fechaDevolucion;
+
+    //----------------------------------------------!MODIFICACION¡
+    // $devolucion = new DateTime($fecha_f);
+    // $salida     = new DateTime($fecha_i);
+    // $diferencia = $salida->diff($devolucion);
+    // $dias = $diferencia->format('%a');
+
+    // $fecha_ii = $fecha_i;
+    // $fecha_fF = $fecha_f;
+
+    // if($dias > 1){
+    //    $fecha_ii = date("Y-m-d",strtotime($fecha_i."+ 1 day"));//fecha de inicio dentro del rango
+    //    $fecha_ff = date("Y-m-d",strtotime($fecha_f."- 1 day"));//fecha de fin dentro del rango
+    //    //return $fecha_ii;
+    // }
+
+    // $hora_r =new DateTime($request->horaRecogida);
+    // $hora_r->modify('-1 hours');
+    // $hora_r->format('H:i:s');
+
+    // $hora_d =new DateTime($request->horaDevolucion);
+    // $hora_d->modify('+1 hours');
+    // $hora_d->format('H:i:s');
+
+
+
+    //-------------------------------------------------!FIN MODIFICACION¡
     $vehiculos_disp = DB::select('SELECT * FROM vehiculos 
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
     WHERE vehiculosucursales.sucursal=?
@@ -59,7 +86,7 @@ class PagesController extends Controller{
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
     INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
     WHERE vehiculosucursales.sucursal=?
-    AND vehiculos.estatus ="disponible"
+    AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
     AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
     OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
@@ -68,18 +95,18 @@ class PagesController extends Controller{
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
     INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
     WHERE vehiculosucursales.sucursal=?
-    AND vehiculos.estatus ="disponible"
+    AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
-    AND  alquilers.fecha_recogida <= ?
-    AND alquilers.fecha_devolucion >= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
-                                        [$sucursal,$sucursal,$sucursal,$fecha_i,$fecha_f,$fecha_i,$fecha_f]);
+    AND  alquilers.fecha_recogida >= ?
+    AND alquilers.fecha_devolucion <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
+                                        [$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //obtener solo un vehiculo por marca y modelo
         $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
-
+        $vehiculos_disponibles = [];
         if(!empty($vehiculos_disp)){
         $v_anterior = "h";
-        $vehiculos_disponibles = [];
+
         foreach($vehiculos_disp as $v){
             if($v_anterior != "h"){
                 //echo $v_anterior->marca . $v_anterior->modelo;
@@ -104,6 +131,7 @@ class PagesController extends Controller{
             }
         }
     }
+    //return $vehiculos_disp;
        //return $datos_reserva; colocar un if en la vista para cuando el arreglo este vacio y mandar un mensaje de que no hay disponibilidad
        return view('reservar_auto',compact('vehiculos_disponibles', 'datos_reserva','sucursal'));         
     }

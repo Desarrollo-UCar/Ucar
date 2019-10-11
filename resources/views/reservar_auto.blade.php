@@ -32,6 +32,7 @@
             </aside>
           </div>
           <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
+              @if(empty($vehiculos_disponibles)==false)
 @foreach($vehiculos_disponibles as $vehiculo)
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -81,6 +82,11 @@
             </div>
         </div>
 @endforeach
+@else
+<div class='col-md-6'>
+<h1> <b>  LO SENTIMOS </b> <br> NINGUN VEHICULO DISPONIBLE.</h1>
+</div>
+@endif
             </div>
         </div>
     </div>

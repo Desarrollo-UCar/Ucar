@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
 
        // $this->call(UsersTableSeeder::class);
-        // $this->call(RoleTableSeeder::class);
+        $this->call(RoleTableSeeder::class);
         // $this->call(tallerservicios::class);
         // $this->call(sucursal::class);
         //  $this->call(Vehiculo::class);
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         //  $this->call(Alquiler::class);
         //  $this->call(Reservacion::class);
          $this->call(nacionalidades::class);
-        //  $this->call(Empleado::class);
+         $this->call(Empleado::class);
     // $this->call(pagos::class);
     }
 }
