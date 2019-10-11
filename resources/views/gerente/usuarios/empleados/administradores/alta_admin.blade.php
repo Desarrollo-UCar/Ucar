@@ -203,7 +203,9 @@
                     <div class="form-group col-md-4">
                         <label>Tipo de empleado </label>
                         <select class="form-control" id="tipo" name="tipo" onchange="Tipo();">
+                          @if(Auth::user()->rol()=='gerente')
                           <option>ADMINISTRADOR</option>
+                          @endif
                           <option>CHOFER</option>
                           <option>EMPLEADO</option>
                         </select>

@@ -43,7 +43,7 @@ class ReservacionController extends Controller
             join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
             join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
             where('vehiculosucursales.sucursal','=',$sucursale->sucursal)->
-            where('vehiculosucursales.status','=','ACTIVO')->get();
+            where('vehiculosucursales.status','=','disponible')->get();
 
             return view('gerente.reservaciones.inicio', compact ('reservaciones'));
 
@@ -664,16 +664,17 @@ class ReservacionController extends Controller
     { 
 
      
-          $reservaciones = Alquiler::join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+          $reservaciones = Alquiler::
+        join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
         join('vehiculos','idvehiculo','=','alquilers.id_vehiculo')->
         join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
         join('clientes','idCliente','=','reservacions.id_cliente')->
-        where('vehiculosucursales.status','=','ACTIVO')->
+        // where('vehiculosucursales.status','=','disponible')->
         where('vehiculos.idvehiculo','=',$request['vehiculo'])->get();
        
 
 
-        //return response()->json($reservaciones);
+        //return response()->json($reservaciones); 
 
         return view('gerente.reservaciones.inicio', compact ('reservaciones'));
 

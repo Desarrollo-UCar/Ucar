@@ -444,8 +444,6 @@
                                                 <span id="validonumero" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                                             </div>
     
-                                        
-    
                         {{--FORMULARIO DE CORREO EMAIL--}}
                         <div class="form-group col-md-4 col-sm-4">
                                 <label>Email</label>

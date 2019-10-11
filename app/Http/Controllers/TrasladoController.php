@@ -13,12 +13,12 @@ use App\Http\Controllers\Controller;
 
 class TrasladoController extends Controller{
 
-    public function validar_logeo(Request $reserva){
+    public function validar_logeo_traslado(Request $reserva){
        // echo "con logeo";
        $estado = "con";
         return view('renta_traslado', compact('estado'));
     }
-    public function validar_sin_logeo(Request $reserva){
+    public function validar_sin_logeo_traslado(Request $reserva){
         // echo "sin logeo";
         $estado = "sin";
         return view('renta_traslado',compact('estado'));
@@ -26,7 +26,6 @@ class TrasladoController extends Controller{
     //parte de la reserva de un traslado
     public function renta_traslado_vehiculo(Request $request){ 
         //return $request; 
-         // Creamos el objeto traslado_temp
          $traslado_temp = new App\traslado_temp;
          // Seteamos las propiedades de la tabla traslado_temp
          $traslado_temp->fecha_hora_reserva = date('Y\-m\-d H\:i\:s');

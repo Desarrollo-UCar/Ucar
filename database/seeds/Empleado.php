@@ -30,7 +30,7 @@ class Empleado extends Seeder
             'colonia' => 'Guadalupe Victoria',
             'calle' => 'Independencia',
             'numero' => '5',
-            'foto'  => 'foto',
+            'foto'  => 'predeterminado.png',
             'correo' => 'gerente@ucar.com',
             'telefono'=> '9514786952',
             'tipo' => 'gerente',
@@ -40,6 +40,7 @@ class Empleado extends Seeder
         \DB::table('users')->insert(array(
             'name' => 'Adriana',
             'email' => 'gerente@ucar.com',
+            'email_verified_at' => '2019-10-10',
             'password'=> Hash::make('12345678'),
         ));
 

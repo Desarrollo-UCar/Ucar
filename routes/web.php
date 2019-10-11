@@ -21,8 +21,8 @@ Route::get('despues_de_pago',         'PagesController@despues_de_pago')->      
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
 ///routes para traslado controller
 Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo');//solicitud del cliente
-Route::get('validar_logeo',            'TrasladoController@validar_logeo')->           name('validar_logeo')->middleware(['auth', 'verified']);
-Route::get('validar_sin_logeo',            'TrasladoController@validar_sin_logeo')->           name('validar_sin_logeo');
+Route::get('validar_logeo_traslado',            'TrasladoController@validar_logeo_traslado')->           name('validar_logeo_traslado')->middleware(['auth', 'verified']);
+Route::get('validar_sin_logeo_traslado',        'TrasladoController@validar_sin_logeo_traslado')->       name('validar_sin_logeo_traslado');
 //generar la cotizacion del lado del adminitrador
 Route::get('vista_generar_cotizacion_traslado','SoloVistasController@vista_generar_cotizacion_traslado')->name('vista_generar_cotizacion_traslado');//cargar la vista inicial de administrador para cotizar el traslado
 Route::get('calculo_costos_traslado',  'TrasladoController@calculo_costos_traslado')->name('calculo_costos_traslado') ;
@@ -30,6 +30,8 @@ Route::post('vehiculos_por_sucursal', 'TrasladoController@vehiculos_por_sucursal
 Route::get('vehiculos_por_sucursal', 'TrasladoController@vehiculos_por_sucursal')-> name('vehiculos_por_sucursal');
 Route::get('guardar_confirmacion_traslado', 'TrasladoController@guardar_confirmacion_traslado')-> name('guardar_confirmacion_traslado');
 //Route::post('CreateImage','TrasladoController@store');
+//routes para el pago de stripe 
+Route::post('crear_pago_stripe', 'PagosStripeController@crear_pago_stripe')-> name('crear_pago_stripe');
 
 //
 //routes para SoloVistasController

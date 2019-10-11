@@ -49,6 +49,10 @@
         </form>
     </div>
 </div>
+
+<script>
+    window.history.forward(1);
+    </script> 
 </section>
 @endsection
 

@@ -35,7 +35,7 @@ class AdminController extends Controller
         join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
         join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->
         where('vehiculosucursales.sucursal','=',$sucursale->sucursal)->
-        where('vehiculosucursales.status','=','ACTIVO')->
+        // where('vehiculosucursales.status','=','ACTIVO')->
         where('alquilers.fecha_recogida','>=',date('Y').'-01-01')->get();
           //  return $reservaciones;
         return view('gerente.inicio', compact ('reservaciones'));
@@ -51,7 +51,7 @@ class AdminController extends Controller
     where('alquilers.fecha_recogida','>=',date('Y').'-01-01')->
     get();
 
-    // return ($reservaciones);
+     //return ($reservaciones);
     	return view ('gerente.inicio',compact ('reservaciones'));
     }
 
