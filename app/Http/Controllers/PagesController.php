@@ -53,31 +53,34 @@ class PagesController extends Controller{
     $fecha_f = $request->fechaDevolucion;
 
     //----------------------------------------------!MODIFICACION¡
-    // $devolucion = new DateTime($fecha_f);
-    // $salida     = new DateTime($fecha_i);
-    // $diferencia = $salida->diff($devolucion);
-    // $dias = $diferencia->format('%a');
+    $devolucion = new DateTime($fecha_f);
+    $salida     = new DateTime($fecha_i);
+    $diferencia = $salida->diff($devolucion);
+    $dias = $diferencia->format('%a');
 
-    // $fecha_ii = $fecha_i;
-    // $fecha_fF = $fecha_f;
+    $fecha_ii = $fecha_i;
+    $fecha_ff = $fecha_f;
 
-    // if($dias > 1){
-    //    $fecha_ii = date("Y-m-d",strtotime($fecha_i."+ 1 day"));//fecha de inicio dentro del rango
-    //    $fecha_ff = date("Y-m-d",strtotime($fecha_f."- 1 day"));//fecha de fin dentro del rango
-    //    //return $fecha_ii;
-    // }
+    if($dias > 1){
+       $fecha_ii = date("Y-m-d",strtotime($fecha_i."+ 1 day"));//fecha de inicio dentro del rango
+       $fecha_ff = date("Y-m-d",strtotime($fecha_f."- 1 day"));//fecha de fin dentro del rango
+       //return $fecha_ii;
+    }
 
-    // $hora_r =new DateTime($request->horaRecogida);
-    // $hora_r->modify('-1 hours');
-    // $hora_r->format('H:i:s');
+    $hora_r =new DateTime($request->horaRecogida);
+    $hora_r->modify('-1 hours');
+    $hora_r->format('H:i:s');
 
-    // $hora_d =new DateTime($request->horaDevolucion);
-    // $hora_d->modify('+1 hours');
-    // $hora_d->format('H:i:s');
+    $hora_d =new DateTime($request->horaDevolucion);
+    $hora_d->modify('+1 hours');
+    $hora_d->format('H:i:s');
+
+    $hora_dd = (string)$hora_d->format('H:i:s');//conversion de horas
+    $hora_rr = (string)$hora_r->format('H:i:s');
 
 
+    //return $hora_dd;
 
-    //-------------------------------------------------!FIN MODIFICACION¡
     $vehiculos_disp = DB::select('SELECT * FROM vehiculos 
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
     WHERE vehiculosucursales.sucursal=?
@@ -89,7 +92,7 @@ class PagesController extends Controller{
     AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
     AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-    OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    OR ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
     UNION
     SELECT vehiculos.idvehiculo FROM vehiculos  
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
@@ -98,8 +101,55 @@ class PagesController extends Controller{
     AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
     AND  alquilers.fecha_recogida >= ?
-    AND alquilers.fecha_devolucion <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
-                                        [$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+    AND alquilers.fecha_devolucion <= ?
+    UNION
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND  alquilers.fecha_devolucion = ?
+    AND alquilers.hora_devolucion >= ?
+	UNION
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND  alquilers.fecha_recogida = ?
+    AND alquilers.hora_recogida <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
+                                        [$sucursal,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_i,$hora_rr,$sucursal,$fecha_f,$hora_dd]);
+
+
+    //-------------------------------------------------!FIN MODIFICACION¡
+
+    //CONSULTA ANTERIOR
+    // $vehiculos_disp = DB::select('SELECT * FROM vehiculos 
+    // INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    // WHERE vehiculosucursales.sucursal=?
+    // AND vehiculos.idvehiculo NOT IN (
+    // SELECT vehiculos.idvehiculo FROM vehiculos  
+    // INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    // INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    // WHERE vehiculosucursales.sucursal=?
+    // AND vehiculos.estatus ="ACTIVO"
+    // AND vehiculosucursales.status ="ACTIVO"
+    // AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    // OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    // UNION
+    // SELECT vehiculos.idvehiculo FROM vehiculos  
+    // INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    // INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    // WHERE vehiculosucursales.sucursal=?
+    // AND vehiculos.estatus ="ACTIVO"
+    // AND vehiculosucursales.status ="ACTIVO"
+    // AND  alquilers.fecha_recogida >= ?
+    // AND alquilers.fecha_devolucion <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
+    //                                     [$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
+    //FIN CONSULTA ANTERIOR
+
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //obtener solo un vehiculo por marca y modelo
         $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
