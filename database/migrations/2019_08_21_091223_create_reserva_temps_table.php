@@ -28,6 +28,7 @@ class CreateReservaTempsTable extends Migration
             $table->integer('id_cliente');//se agrego
             $table->string('servicios_extra');// agregar campo a la tabla reservacion
             $table->decimal('total');
+            $table->String('status');
             $table->timestamps();
         });
     }
