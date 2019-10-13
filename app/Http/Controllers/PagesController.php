@@ -46,6 +46,7 @@ class PagesController extends Controller{
         $reserva_temp->total = 0;
         $reserva_temp->servicios_extra = 'ee';
         $reserva_temp->id_cliente = 0;
+        $reserva_temp->status = 'consulta_disponibles';
 // Guardamos en la base de datos (equivalente al flush de Doctrine)
         $reserva_temp->save();
 // consulta a los vehiculos disponibles
