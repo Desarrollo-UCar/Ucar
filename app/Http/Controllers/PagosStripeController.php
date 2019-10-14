@@ -129,10 +129,10 @@ class PagosStripeController extends Controller{
                 $serv_extra = $serv_extra_correo;
                 $asunto = 'Confirmacion de Reserva';
                 //enviar correo
-            //     Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
-            //     $message->from('ucardesarollo@gmail.com', 'Ucar');
-            //     $message->to($correo)->subject($asunto);
-            // }); 
+                Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
+                $message->from('ucardesarollo@gmail.com', 'Ucar');
+                $message->to($correo)->subject($asunto);
+            }); 
                 return view('reservacion_exitosa',compact('cliente','vehiculo','reservacion'));
         } catch (\Exception $ex) {
             return $ex->getMessage();
