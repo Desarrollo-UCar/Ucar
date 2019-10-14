@@ -125,11 +125,10 @@
 
                     <div class="col-md-6">
                         <div id="preview" style="margin-top: 5%;">
-                                <img src="{{ asset('storage').'/'.$vehiculo->foto}}" style="width: 100%; height: 100%;" >  
+                                <img src="{{ '/images/'.$vehiculo->foto }}"  style="width: 100%; height: 100%;" >  
                         </div>                
                   </div>    
-                  
-                  
+                                    
                   <div class="modal" id="modal-warning">
                       <div class="modal-dialog" >
                         <div class="modal-content">
