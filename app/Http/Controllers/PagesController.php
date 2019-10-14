@@ -46,7 +46,7 @@ class PagesController extends Controller{
         $reserva_temp->total = 0;
         $reserva_temp->servicios_extra = 'ee';
         $reserva_temp->id_cliente = 0;
-        $reserva_temp->status = 'consulta_disponibles';
+        $reserva_temp->estatus = 'consulta_disponibles';
 // Guardamos en la base de datos (equivalente al flush de Doctrine)
         $reserva_temp->save();
 // consulta a los vehiculos disponibles
@@ -256,7 +256,7 @@ class PagesController extends Controller{
 
         $vehiculo       = App\Vehiculo::findOrFail($id_vehiculo);
         $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
-        $datos_reserva->status = 'reserva_servcios_extra';
+        $datos_reserva->estatus = 'reserva_servcios_extra';
         $datos_reserva->save();
         //consulta para saber los servicios extra ocupados en la fecha indicada y en dicha sucursal
         $cantidad_servicios_extra_ocupados = DB::select('SELECT idserviciosextra AS servicioExtra, COUNT(*) AS cantidad FROM(
@@ -369,7 +369,7 @@ class PagesController extends Controller{
         }
     }
     $datos_reserva->servicios_extra = $cadena_serv_extra;
-    $datos_reserva->status = 'antes_de_pago';
+    $datos_reserva->estatus = 'antes_de_pago';
     $datos_reserva->save();
     $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
         return view('reservar_realizar_pago',compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total','sucursal'));

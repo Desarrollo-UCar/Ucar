@@ -15,6 +15,24 @@ class PagosStripeController extends Controller{
     public function crear_pago_stripe(Request $request){
         //return $request;
        $datos_reserva  = App\reserva_temp::findOrFail($request->id_reserva_temp);
+       $correo   = auth()->user()->email;
+            //el cliente no se esta creando al momento del registro
+       $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+       $vehiculo       = App\Vehiculo::findOrFail($datos_reserva->id_vehiculo);
+
+       if($datos_reserva->status != 'reserva_finalizada'){
+//checar cuanto se va a pagar en base a la opcion seleccionada
+        if($request->btnAccion == 'pago_total'){
+            $pago_realizar = $datos_reserva->total;
+        }else{//volvemos a calcular los dias para SACAR EL ANTICIPO
+            $devolucion = new DateTime($datos_reserva->fecha_devolucion);
+            $salida     = new DateTime($datos_reserva->fecha_recogida);
+            $diferencia = $salida->diff($devolucion);
+            $dias = $diferencia->format('%a');
+            if($dias == 0)
+                $dias = 1;
+            $pago_realizar = $datos_reserva->total / $dias;
+        }
        //return $datos_reserva;
         try {
             Stripe::setApiKey(config('services.stripe.secret'));
@@ -24,16 +42,12 @@ class PagosStripeController extends Controller{
             ));
         $charge = Charge::create(array(
                 'customer' => $customer->id,
-                'amount' =>  intval($datos_reserva->total),
+                'amount' =>  intval($pago_realizar * 100),
                 'currency' => 'mxn'
             ));
             //---------------
-            $correo   = auth()->user()->email;
-            //el cliente no se esta creando al momento del registro
-                $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
-                $datos_reserva  = App\reserva_temp::findOrFail($request->id_reserva_temp);
                 $datos_reserva->id_cliente = $cliente->idCliente;//guardo el cliente en la temporal por si acaso
-                $datos_reserva->status = 'reserva_finalizada';
+                $datos_reserva->estatus = 'reserva_finalizada';
                 $datos_reserva->save();
                 // Creamos el objeto para Reservacion
                 $reservacion = new App\Reservacion;
@@ -48,17 +62,16 @@ class PagosStripeController extends Controller{
                 // Creamos el objeto para Pago_reservacion
                 $pago_reserva = new App\Pago_reservacion;
                 $pago_reserva->id_reserva = $reservacion->id;
-                $pago_reserva->paypal_datos = 'por rellenar';
+                $pago_reserva->paypal_datos = $request->stripeToken;
                 $pago_reserva->mostrador_datos = 'por rellenar en mostrador';
                 //$pago_reserva->garantia_datos = 'por rellenar en mostrador';
                 $pago_reserva->fecha = date('Y\-m\-d H\:i\:s');
                 $pago_reserva->total = $reservacion->total;
-                $pago_reserva->estatus = 'pendiente';
+                $pago_reserva->estatus = 'pagado';
                 //$pago_reserva->reservacion = 0;
                 $pago_reserva->save();
              // listo tenemos el pago de la rserva creado falata que el cliente pague
             // buscamos el vehiculo para proceder a crear el alquiler con todos los datos
-                $vehiculo       = App\Vehiculo::findOrFail($datos_reserva->id_vehiculo);
                 // Creamos el objeto para Pago_reservacion
                 $alquiler = new App\Alquiler;
                 $alquiler->id_reservacion = $reservacion->id;
@@ -90,7 +103,6 @@ class PagosStripeController extends Controller{
                 }
             //listo tenemos el alquler
                 if($request->btnAccion == 'pago_total'){
-                    $monto = $pago_reserva->total;
                     $reservacion->saldo = 0.0;
                     $reservacion->save();
                 }else{//volvemos a calcular los dias para SACAR EL ANTICIPO
@@ -98,10 +110,9 @@ class PagosStripeController extends Controller{
                     $salida     = new DateTime($alquiler->fecha_recogida);
                     $diferencia = $salida->diff($devolucion);
                     $dias = $diferencia->format('%a');
-                    $total = $pago_reserva->total;
                     if($dias == 0)
                         $dias = 1;
-                    $monto = $total / $dias;
+                    $monto = $pago_reserva->total / $dias;
                     $reservacion->saldo = $pago_reserva->total - $monto;
                 }
                 $reservacion->save();
@@ -137,7 +148,10 @@ class PagosStripeController extends Controller{
         } catch (\Exception $ex) {
             return $ex->getMessage();
         }
-     }
+        }else{//fin del if para validar que no se vuelva a realizar la reserva
+            return view('reserva_ya_realizada');
+        }
+     }//fin de la funcion del pago y de genearar la reserva
 
 
     
