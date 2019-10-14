@@ -33,6 +33,7 @@ class PagosStripeController extends Controller{
                 $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
                 $datos_reserva  = App\reserva_temp::findOrFail($request->id_reserva_temp);
                 $datos_reserva->id_cliente = $cliente->idCliente;//guardo el cliente en la temporal por si acaso
+                $datos_reserva->status = 'reserva_finalizada';
                 $datos_reserva->save();
                 // Creamos el objeto para Reservacion
                 $reservacion = new App\Reservacion;
@@ -104,6 +105,34 @@ class PagosStripeController extends Controller{
                     $reservacion->saldo = $pago_reserva->total - $monto;
                 }
                 $reservacion->save();
+
+                $reserva_correo = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
+                reservacions.saldo, sucursals.nombre, alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
+                IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+                vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,
+                vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,vehiculos.foto
+                FROM reservacions
+                INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
+                inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
+                inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
+                INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
+                where reservacions.id = ?',[$reservacion->id]);
+                //obtenemos los datos de los servicios extra
+                $serv_extra_correo = DB::select('SELECT alquiler,serviciosextras.idserviciosextra,serviciosextras.nombre,serviciosextras.precio
+                FROM alquilerserviciosextras
+                INNER JOIN serviciosextras ON serviciosextras.idserviciosextra = alquilerserviciosextras.servicioExtra
+                INNER JOIN alquilers ON alquilerserviciosextras.alquiler = alquilers.id
+                INNER JOIN reservacions ON reservacions.id = alquilers.id_reservacion
+                INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE reservacions.id = ?',[$reservacion->id]);
+                //Mail::to($correo)->send(new App\Mail\Enviar($reserva_correo,$serv_extra_correo));
+                $reservacion = $reserva_correo;
+                $serv_extra = $serv_extra_correo;
+                $asunto = 'Confirmacion de Reserva';
+                //enviar correo
+            //     Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
+            //     $message->from('ucardesarollo@gmail.com', 'Ucar');
+            //     $message->to($correo)->subject($asunto);
+            // }); 
                 return view('reservacion_exitosa',compact('cliente','vehiculo','reservacion'));
         } catch (\Exception $ex) {
             return $ex->getMessage();
