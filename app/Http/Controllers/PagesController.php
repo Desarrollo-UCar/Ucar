@@ -120,8 +120,55 @@ class PagesController extends Controller{
     AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
     AND  alquilers.fecha_recogida = ?
-    AND alquilers.hora_recogida <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
-                                        [$sucursal,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_i,$hora_rr,$sucursal,$fecha_f,$hora_dd]);
+    AND alquilers.hora_recogida <= ?
+    UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+    AND  reserva_temps.estatus != "cancelada"
+    AND ( ? BETWEEN reserva_temps.fecha_recogida AND reserva_temps.fecha_devolucion
+    OR ? BETWEEN reserva_temps.fecha_recogida AND reserva_temps.fecha_devolucion)
+    UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+   AND reserva_temps.estatus != "cancelada"
+    AND  reserva_temps.fecha_recogida >= ?
+    AND reserva_temps.fecha_devolucion <= ?
+    UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+   AND reserva_temps.estatus != "cancelada"
+    AND  reserva_temps.fecha_devolucion = ?
+    AND reserva_temps.hora_devolucion >= ?
+	UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+   AND reserva_temps.estatus != "cancelada"
+    AND  reserva_temps.fecha_recogida = ?
+    AND reserva_temps.hora_recogida <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
+                                        [$sucursal,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_i,$hora_rr,$sucursal,$fecha_f,$hora_dd,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff]);
+
+
+                                        // return $vehiculos_disp;
     //-------------------------------------------------!FIN MODIFICACION¡
 
     //CONSULTA ANTERIOR
@@ -150,10 +197,12 @@ class PagesController extends Controller{
     //FIN CONSULTA ANTERIOR
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //obtener solo un vehiculo por marca y modelo
+
         $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
         $vehiculos_disponibles = [];
         if(!empty($vehiculos_disp)){
         $v_anterior = "h";
+
 
         foreach($vehiculos_disp as $v){
             if($v_anterior != "h"){
@@ -261,7 +310,7 @@ class PagesController extends Controller{
         $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
     if($datos_reserva->estatus != 'reserva_finalizada'){
         $datos_reserva->estatus = 'reserva_servcios_extra';
-        }
+        $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
         $datos_reserva->save();
         //consulta para saber los servicios extra ocupados en la fecha indicada y en dicha sucursal
         $cantidad_servicios_extra_ocupados = DB::select('SELECT idserviciosextra AS servicioExtra, COUNT(*) AS cantidad FROM(
@@ -355,7 +404,7 @@ class PagesController extends Controller{
         $totalf = $alquiler + $total_serv_extra;
         $total = number_format($totalf,2);
         //actualizar tabla temporal de la reserva
-    $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
+    // $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
     $datos_reserva->total = $totalf;
     //convertir a cadena para poder alamcenar los datos FORMATO id_servicio-cantidad, id_servicio-cantidad,... 
     $cadena_serv_extra = "";

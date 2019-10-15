@@ -282,18 +282,18 @@
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#" disabled>
                                 <b>Cancelar</b>
                               </button>
-                              <a  disabled class="btn btn-success" disabled><b>Contrato</b></a>
+                              <a  disabled class="btn btn-success" disabled><b>Entregar</b></a>
 
                               </div>
                               @else
 
-                              @if($reservacion->estatus!='en curso')
+                              {{-- @if($reservacion->estatus!='en curso')
                               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
                                   <b>Cancelar</b>
                                 </button>
-                                @endif
+                                @endif --}}
                                 @if($alquiler->nombreConductor!=null&&$alquiler->expedicion_licencia!=null&&$alquiler->num_licencia!=null&&$alquiler->expiracion_licencia!=null&&$alquiler->estatus!='en curso')
-                                <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Contrato</b></a>
+                                <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
                                 @endif
 
                                 @endif
