@@ -20,7 +20,7 @@ class PagosStripeController extends Controller{
        $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
        $vehiculo       = App\Vehiculo::findOrFail($datos_reserva->id_vehiculo);
 
-       if($datos_reserva->status != 'reserva_finalizada'){
+       if($datos_reserva->estatus != 'reserva_finalizada'){
 //checar cuanto se va a pagar en base a la opcion seleccionada
         if($request->btnAccion == 'pago_total'){
             $pago_realizar = $datos_reserva->total;
