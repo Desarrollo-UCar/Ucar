@@ -92,8 +92,9 @@ class PagesController extends Controller{
     WHERE vehiculosucursales.sucursal=?
     AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
-    AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-    OR ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    AND alquilers.estatus != "cancelado"
+    AND (? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    OR ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion)
     UNION
     SELECT vehiculos.idvehiculo FROM vehiculos  
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
@@ -101,6 +102,7 @@ class PagesController extends Controller{
     WHERE vehiculosucursales.sucursal=?
     AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
+    AND alquilers.estatus != "cancelado"
     AND  alquilers.fecha_recogida >= ?
     AND alquilers.fecha_devolucion <= ?
     UNION
@@ -110,6 +112,7 @@ class PagesController extends Controller{
     WHERE vehiculosucursales.sucursal=?
     AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
+    AND alquilers.estatus != "cancelado"
     AND  alquilers.fecha_devolucion = ?
     AND alquilers.hora_devolucion >= ?
 	UNION
@@ -119,6 +122,7 @@ class PagesController extends Controller{
     WHERE vehiculosucursales.sucursal=?
     AND vehiculos.estatus ="ACTIVO"
     AND vehiculosucursales.status ="ACTIVO"
+    AND alquilers.estatus != "cancelado"
     AND  alquilers.fecha_recogida = ?
     AND alquilers.hora_recogida <= ?
     UNION
