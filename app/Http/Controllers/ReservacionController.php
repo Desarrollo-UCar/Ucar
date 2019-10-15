@@ -17,6 +17,8 @@ use App\VehiculoSucursales;
 use App\traslado_temp;
 
 use App\Sucursal;
+use Illuminate\Foundation\Console\Presets\Bootstrap;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 
 class ReservacionController extends Controller
@@ -247,7 +249,7 @@ class ReservacionController extends Controller
      */
     public function printPDF(reservacion $reservacion)
     {
-;
+
         //return response()->json(date('Y\-m\-d H\:i\:s'));
         //$pdf = PDF::loadView('index', $reservacion);  
         //return $pdf->stream(' contrato.pdf');
@@ -259,7 +261,48 @@ class ReservacionController extends Controller
        $alquiler->save();
 
        $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
+       $vehiculo = Vehiculo::where('idVehiculo','=',$alquiler->id_vehiculo)->first();
 
+//GENERAR WORD
+$templateWord = new TemplateProcessor(storage_path('plantilla.docx'));
+ 
+$nombre = $cliente->nombre.' '.$cliente->primer_apellido.' '.$cliente->segundo_apellido;
+$direccion = $cliente->ciudad.' '.$cliente->colonia.' '.$cliente->calle.' '.$cliente->numero.'  Estado: '.$cliente->estado.'   Pais: '.$cliente->pais;
+$fecha_nacimiento = $cliente->fecha_nacimiento;
+$telefono = $cliente->telefono;
+$correo = $cliente->correo;
+$licencia = $alquiler->num_licencia;
+$reservacion = $alquiler->id_reservacion;
+
+
+// --- Asignamos valores a la plantilla
+$templateWord->setValue('Reservacion',$reservacion);
+$templateWord->setValue('nombre',$nombre);
+$templateWord->setValue('direccion',$direccion);
+$templateWord->setValue('correo',$correo);
+$templateWord->setValue('licencia',$licencia);
+// $templateWord->setValue('cp_empresa',$cp);
+$templateWord->setValue('tel',$telefono);
+$templateWord->setValue('fecha_nacimiento',$fecha_nacimiento);
+//DATOS DEL ALQUILER
+$templateWord->setValue('entrega',$alquiler->fecha_recogida);
+$templateWord->setValue('hora_entrega',$alquiler->hora_recogida);
+$templateWord->setValue('devolucion',$alquiler->fecha_devolucion);
+$templateWord->setValue('hora_devolucion',$alquiler->hora_devolucion);
+//DATOS DEL VEHICULO
+$templateWord->setValue('vin',$vehiculo->vin);
+$templateWord->setValue('tipo',$vehiculo->tipo);
+$templateWord->setValue('matricula',$vehiculo->matricula);
+$templateWord->setValue('modelo',$vehiculo->modelo.' ',$vehiculo->anio);
+$templateWord->setValue('marca',$vehiculo->marca);
+$templateWord->setValue('color',$vehiculo->color);
+
+
+$templateWord->saveAs(storage_path('Documento01.docx'));
+
+return response()->download(storage_path('Documento01.docx'));
+
+//FIN GENERAR WORD
 
         //return response()->json($r);
        // This  $data array will be passed to our PDF blade
