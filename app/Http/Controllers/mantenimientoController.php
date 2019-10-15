@@ -85,9 +85,11 @@ class mantenimientoController extends Controller
         if($request['fecha_ingresa']<$hoy){
             return back()->with('mensaje','INTRODUZCA LA FECHA DE SALIDA CORRECTAMENTE :)');
         }
+        if($request['fecha_salida']!=null){
         if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
             return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
         }
+    }
 
         if($request['fecha_ingresa']==null){
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
@@ -106,13 +108,22 @@ class mantenimientoController extends Controller
 
             $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])
                 ->first();
+
            if($request['fecha_salida']==null||$request['fecha_salida']>$hoy){
+
             $vehiculosucursal->update(
                    [
                     'status'=> 'MANTENIMIENTO',
                     'updated_at'=>$date
                    ]
                );
+               
+               $vehiculo->update(
+                [
+                 'estatus'=> 'MANTENIMIENTO',
+                 'updated_at'=>$date
+                ]
+            );
            }else{
             $vehiculosucursal->update(
                 [
@@ -122,12 +133,20 @@ class mantenimientoController extends Controller
             );
            }
 
-           if($request['fecha_salida']==null){
+           if($request['fecha_salida']==null||$request['fecha_salida']>$hoy){
                 $status = 'ACTIVO';
             }else{
                 $status = 'INACTIVO';
             }
            //return $vehiculo;
+           $mantenimiento = mantenimientos::where('vehiculo',$vehiculo['idvehiculo'])
+            ->where('fecha_ingresa',$request['fecha_ingresa'])
+            ->get(); 
+
+            if(count($mantenimiento)>0){
+                return back()->with('mensaje','EL MANTENIMIENTO YA SE ENCUENTRA REGISTRADO');
+            }
+
             mantenimientos::insert([
                 'fecha_ingresa' => $request['fecha_ingresa'],
                 'fecha_salida' => $request['fecha_salida'],
