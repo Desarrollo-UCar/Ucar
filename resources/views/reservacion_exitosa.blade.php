@@ -26,7 +26,6 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-12 col-sm-12">
                                         <h6><strong>Ver mis reservaciones:</strong></h6>  
-                                        <input type="hidden" id='id' name="id" value={{$reservacion->id}}>
                                         </div>
                                         <div class="form-group col-md-12 col-sm-12">
                                                 <button class="btn btn-primary" type="submit" style="margin-top: 0%;">Continuar</button>
