@@ -34,7 +34,15 @@
                 </button>
               </div>
               @endif 
-                       
+              @if (session()->has('curso'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#encurso" id="<?php 
+                echo "botoncurso";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif           
 
               <div class="box-body">
                   <table id="example" class="display nowrap">
@@ -58,7 +66,7 @@
                               <th style="text-align: center;background: lightblue">Descripción</th>
                               <th style="text-align: center;background: lightblue">Modificar</th>
                               <th style="text-align: center;background: lightblue">Mantenimiento</th>
-                              <th style="text-align: center;background: lightblue">Eliminar</th>
+                              <th style="text-align: center;background: lightblue">Historial</th>
                               <th style="text-align: center;background: lightblue">Reservaciones</th>
                           </tr>
                       </thead>
@@ -89,7 +97,7 @@
 
                         <td style="text-align: center"> 
                           <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>
-                            @if ($vehiculo->status=='MANTENIMIENTO')
+                            @if ($vehiculo->estatus=='MANTENIMIENTO')
                             <td style="text-align: center"> 
                                 <a href="{{ route('mantenimiento.index') }}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver mantenimiento"></span></td>
                             @else
@@ -99,7 +107,7 @@
                             
 
                             <td style="text-align: center">
-                                <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}" title="Eliminar"> <span class="fa fa-trash-o fa-2x" style="color:red;"></span>
+                                <a href="{{ route('historialmantenimiento',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}" title="Eliminar"> <span class="fa fa-cogs fa-2x" style="color:orange;"></span>
                       </td>
 
                       <td style="text-align: center">
@@ -137,6 +145,28 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
+
+        <div class="modal modal-warning fade" id="encurso">
+          <div class="modal-dialog" >
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">EL VEHÍCULO SE ENCUENTRA EN RENTA</b> </h4>
+              </div>
+              <div class="modal-body">
+                <p>Para mandar un vehículo a mantenimiento es necesario cancelar su renta.&hellip;</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                {{-- <a href="{{ URL::previous() }}" class="btn btn-success pull-left">Regresar</a> --}}
+              {{-- <a href="{{route('vehiculo.create')}}" class="btn btn-primary">Continuar</a> --}}
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
 @endsection    
      @section('scripts')
      
@@ -148,6 +178,13 @@
          obj.click();
          } );
         </script>
+          <script>           
+            $(document).ready(function() {
+    
+             var obj= document.getElementById("botoncurso");
+             obj.click();
+             } );
+            </script>
 
          <script>           
         var table = $(document).ready(function() {

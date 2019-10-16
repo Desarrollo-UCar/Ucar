@@ -125,7 +125,7 @@
 
                     <div class="col-md-6">
                         <div id="preview" style="margin-top: 5%;">
-                                <img src="{{ asset('storage').'/'.$mantenimiento->foto}}" style="width: 100%; height: 100%;" >  
+                                <img src="{{ '/images/'.$mantenimiento->foto}}" style="width: 100%; height: 100%;" >  
                         </div>                
                   </div>    
                   

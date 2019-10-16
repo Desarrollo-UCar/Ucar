@@ -370,27 +370,6 @@
   <!-- /.modal-dialog -->
 </div>
 
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#existe" style="display: none" id="existe1">Cancelar</button>
-<div class="modal modal-danger fade" id="existe">
-    <div class="modal-dialog" >
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Error al guardar datos</b> </h4>
-        </div>
-        <div class="modal-body">
-          <p>Verifique los campos necesarios para rellenar&hellip;</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
-        
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rango" style="display: none" id="rango1">Cancelar</button>
   <div class="modal modal-danger fade" id="rango">
       <div class="modal-dialog" >
@@ -438,6 +417,31 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal ---->
+
+
+
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error" style="display: none" id="error1">Cancelar</button>
+<div class="modal modal-warning fade" id="error">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">No se pudo modificar </b> </h4>
+        </div>
+        <div class="modal-body">
+          <p>Verifique los campos necesarios&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+        
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
 
 @endsection   
 
@@ -929,7 +933,8 @@ function Tipo(){
             //console.log(nombre);
           }
 
-          $('#existe1').click();
+          // $('#existe1').click();
+          $('#error1').click();
      }
     })
    });

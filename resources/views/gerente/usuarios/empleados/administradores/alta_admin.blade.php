@@ -203,7 +203,7 @@
                     <div class="form-group col-md-4">
                         <label>Tipo de empleado </label>
                         <select class="form-control" id="tipo" name="tipo" onchange="Tipo();">
-                          @if(Auth::user()->rol()=='gerente')
+                          @if(Auth::user()->rol()=='gerente'||Auth::user()->rol()=='Gerente')
                           <option>ADMINISTRADOR</option>
                           @endif
                           <option>CHOFER</option>
@@ -405,6 +405,30 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal ---->
+
+
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error" style="display: none" id="error1">Cancelar</button>
+<div class="modal modal-warning fade" id="error">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">No se pudo agregar </b> </h4>
+        </div>
+        <div class="modal-body">
+          <p>Verifique los campos necesarios&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+        
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
 
 @endsection   
 
@@ -845,6 +869,7 @@ function Tipo(){
            $( '#confcontra' ).css('borderColor', 'red');
             //console.log(nombre);
           }
+          $('#error1').click();
      }
     })
    });

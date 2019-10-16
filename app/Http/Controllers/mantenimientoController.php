@@ -10,6 +10,7 @@ use App\vehiculosucursales;
 use App\Empleado;
 use App\Sucursal;
 use App\EmpleadoSucursal;
+use App\Alquiler;
 use Illuminate\Http\Request;
 
 class mantenimientoController extends Controller
@@ -35,7 +36,6 @@ class mantenimientoController extends Controller
             join('vehiculosucursales','vehiculosucursales.vehiculo','=','mantenimientos.vehiculo')
             ->where('vehiculosucursales.sucursal','=',$sucursale->sucursal)
             ->select('mantenimientos.*','vehiculos.*','mantenimientos.tipo as servicio')
-
             ->get();
 
         }
@@ -56,10 +56,21 @@ class mantenimientoController extends Controller
     public function create(Request $request)
     {
         //
-       $taller=Tallerservicios::all();
         $vehiculo = Vehiculo::join('vehiculosucursales','vehiculo','=','idvehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
         ->where('vehiculos.vin',$request['vehiculo'])->first();
+        $alquileres = Alquiler::where('id_vehiculo','=',$vehiculo['idvehiculo'])
+                            ->where('estatus','like','%curso')
+                            //   ->where('id_vehiculo','=',$vehiculo['idvehiculo'])
+                            ->get();
+        if(count($alquileres)>0){
+            return back()->with('curso','El VEHÍCULO SE ENCUENTRA EN RENTA :)');
+        
+        }                            
+        return $alquileres;
+
+       $taller=Tallerservicios::all();
+    
         //return $vehiculo;
         return view('gerente.mantenimiento.alta_mantenimiento', compact('vehiculo','taller')) ;
     }
@@ -191,18 +202,22 @@ class mantenimientoController extends Controller
      */
     public function mostrar(Request $mantenimientos)
     {
-        //
-        $mantenimiento = mantenimientos::join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')
+        //  return $mantenimientos['mantenimiento'];
+        $mantenimiento = mantenimientos::
+         join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')
         ->join('vehiculosucursales','idvehiculo','=','mantenimientos.vehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
         ->select('mantenimientos.*','vehiculos.*','sucursals.*')
+        // ->select('mantenimientos.*','vehiculos.*')
+        ->where('idmantenimiento',$mantenimientos['mantenimiento'])
         ->first();
 
         $taller = Tallerservicios::all();
 
-        //return $mantenimiento;
+        //  return $mantenimiento;
         return view('gerente.mantenimiento.editar_mantenimiento',compact('mantenimiento','taller'));
     }
+
 
     public function show(Request $mantenimientos)
     {
@@ -225,11 +240,13 @@ class mantenimientoController extends Controller
         ->join('vehiculosucursales','idvehiculo','=','mantenimientos.vehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
         ->select('mantenimientos.*','vehiculos.*','sucursals.*','mantenimientos.tipo as serv')
+        ->where('idmantenimiento',$mantenimientos['mantenimiento'])
         ->first();
 
         $servicios = mantenimientos::join('detalletallerservicios','idmantenimiento','detalletallerservicios.mantenimiento')
         ->join('tallerservicios','idserviciotaller','=','detalletallerservicios.tallerservicio')
         ->select('mantenimientos.*','detalletallerservicios.*','tallerservicios.*','detalletallerservicios.created_at as fecha')
+        ->where('idmantenimiento',$mantenimientos['mantenimiento'])
         ->get();
 
        // return $servicios;
@@ -250,6 +267,7 @@ class mantenimientoController extends Controller
      */
     public function update(Request $request)
     {
+        // return $request;
         $servicios =$request['servicios'];
         
         $vehiculo = Vehiculo::where('vin',$request['vin'])->first();
@@ -265,9 +283,9 @@ class mantenimientoController extends Controller
         $hoy =$date->format('Y-m-d');
         //return $request['fecha_ingresa'];
         //return $hoy;
-        if($request['fecha_ingresa']<$hoy){
-            return back()->with('mensaje','INTRODUZCA LA FECHA DE SALIDA CORRECTAMENTE :)');
-        }
+        // if($request['fecha_ingresa']<$hoy){
+        //     return back()->with('mensaje','INTRODUZCA LA FECHA DE SALIDA CORRECTAMENTE :)');
+        // }
         if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
             return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
         }
@@ -357,6 +375,18 @@ class mantenimientoController extends Controller
        
         return $servicios;
         //
+    }
+
+    public function Historial(Request $request)
+    {
+        $vehiculo=Vehiculo::join('vehiculosucursales','idvehiculo','=','vehiculosucursales.vehiculo')
+                            ->join('sucursals','vehiculosucursales.sucursal','=','sucursals.idsucursal')
+                            ->select('vehiculos.*','sucursals.nombre as sucursal')
+                            ->where('idvehiculo',$request['vehiculo'])->first();
+        $mantenimientos= mantenimientos::where('mantenimientos.vehiculo',$request['vehiculo'])
+        ->get();
+
+        return view('gerente.mantenimiento.historial_mantenimiento',compact('vehiculo','mantenimientos'));
     }
 
     /**

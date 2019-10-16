@@ -41,67 +41,35 @@
 
                         <div class="col-md-6 form-group">
                             <label>Sucursal</label>
-                                <input type="text" name="sucursal" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->nombre}}" readonly>
+                                <input type="text" name="sucursal" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->sucursal}}" readonly>
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label>Año</label>
-                                <input type="text" name="anio" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->anio}}" readonly>
+                                <input type="text" name="anio" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->anio}}" readonly>
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label>Marca vehículo</label>
-                                <input type="text" name="marca" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->marca}}" readonly>
+                                <input type="text" name="marca" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->marca}}" readonly>
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label>Servicio</label>
-                                <input type="text" name="vin" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->vin}}" readonly>
+                                <input type="text" name="vin" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->vin}}" readonly>
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label>Modelo</label>
-                                <input type="text" name="nombre" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->modelo}}" readonly>
+                                <input type="text" name="nombre" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->modelo}}" readonly>
                         </div>
 
                         
                         <div class="col-md-6 form-group">
                             <label>Placas</label>
-                                <input type="text" name="matricula" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->matricula}}" readonly>
+                                <input type="text" name="matricula" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->matricula}}" readonly>
                             </div>
                             <hr width="90%"/>
-
-
-                        <div class="form-group col-md-6">
-                          <label>Tipo de servicio</label>
-                          <select class="form-control"  name="tipo" disabled> 
-                            <option>{{$mantenimiento->serv}}</option>
-                                                                                  
-                          </select>
-                      </div> 
-
-                        <div class="col-md-6 form-group">
-                          <label>Fecha salida</label>
-                        <input type="date" name="fecha_ingresa" class="form-control" required value="{{$mantenimiento->fecha_ingresa}}" readonly>
-                        </div>
-
-                        <div class="col-md-6 form-group">
-                                <label>Fecha Regreso</label>
-                                <input type="date" name="fecha_salida" class="form-control" value="{{$mantenimiento->fecha_salida}}" readonly>
-                              </div>
-
-                        <div class="col-md-6 form-group">
-                                <label>Kilometraje</label>
-                                <input type="number" step="0.00" name="kilometraje" id="" min="0.00" class="form-control" value="{{$mantenimiento->kilometraje}}"  required readonly>
-                        </div>
-
-                         
-                        
-                        <div class="col-md-6 form-group">
-                          <label>Costo</label>
-                          <input type="number" step="0.01" name="costo" class="form-control" min="0.00" placeholder="0.00" value="{{$mantenimiento->costo_total}}" required readonly>
-                        </div>
-
                                   
                     </div>
 
@@ -109,7 +77,7 @@
 
                     <div class="col-md-6">
                         <div id="preview" style="margin-top: 5%;">
-                                <img src="{{'/images/'.$mantenimiento->foto}}" style="width: 100%; height: 100%;" >  
+                                <img src="{{'/images/'.$vehiculo->foto}}" style="width: 100%; height: 100%;" >  
                         </div>                
                   </div>    
                   
@@ -120,7 +88,7 @@
                 <div class="row">
                         <div class="col-md-12">
                           <div class="col-md-6 col-md-offset-4">
-                           <label>--Lista de servicios realizados al vehículo--<label>
+                           <label>--Lista de mantenimientos realizados al vehículo--<label>
                           </div>
                         </div>  
                       </div>
@@ -130,33 +98,47 @@
                             <thead>
                                 <tr>
                                     <th style="text-align: center">Número</th>
-                                    <th >Servicios</th>
-                                    <th >Descripción</th>
-                                    <th >Fecha Alta</th>
-                                    
+                                    <th >Tipo</th>
+                                    <th >Costo</th>
+                                    <th >Fecha salida</th>
+                                    <th >Fecha regreso</th>
+                                    <th >Estatus</th>
+                                    <th >Modificar</th>
+                                    <th >Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
                               <?php 
                                    $i = 0;
                                 ?>
-                                 @foreach ($servicios as $ser)
+                                 @foreach ($mantenimientos as $mante)
                                  
                       <tr>
                               <td style="text-align: center"><?php 
                                 echo $i=$i+1;
                               ?></td>
-                              <td >{{$ser->nombreservicio}}</td>
-                              @if ($ser->descripcion==null)
+                              <td >{{$mante->tipo}}</td>
+                              @if ($mante->costo==null)
                               <td style="text-align: center;" >----------------</td>
                               @else
-                              <td >{{$ser->descripcion}}</td>
+                              <td>{{$mante->costo}}</td>
                               @endif
-                              @if ($ser->fecha==null)
+                              @if ($mante->fecha_ingresa==null)
                               <td style="text-align: center;">----------------</td>
                               @else
-                              <td >{{$ser->fecha}}</td>
-                              @endif                        
+                              <td >{{$mante->fecha_ingresa}}</td>
+                              @endif 
+                              @if ($mante->fecha_salida==null)
+                              <td style="text-align: center;">----------------</td>
+                              @else
+                              <td >{{$mante->fecha_salida}}</td>
+                              @endif
+                              <td >{{$mante->status}}</td>
+
+                              <td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar"></span></td>
+
+                              <td style="text-align: center"> <a href="{{ route('modificarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver detalles"></span></td> 
+                                
                             </tr> 
                       @endforeach
                             
