@@ -51,7 +51,6 @@
                           <ul class="dropdown-menu sub-menu-level1">
                             <li><a href="{{ route('index') }}">Automovil</a></li>
                             <li><a href="{{ route('renta_traslado') }}">Traslado</a></li>
-                            <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
                           </ul>
                         </li>
                         <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
@@ -661,9 +660,7 @@ function checar_horas(){
     devolucion = horaDevolucion.options[horaDevolucion.selectedIndex].value;
    //hacemos los calculos para validar horas y checar si se pasa mas de dos horas
    //validar que si selecciona el dia de hoy como salida, no se pueda seleccionar horas menores a la actual en un rango de una hora 
-
    //si selecciona el mismo dia de salida y llegada, checar que la hora de devolucion no sea menor a la de recogida
-
    //enviar mensaje de advertencia si selecciona dos horas mas de la hora de recogida en cualquier otro dia para decirle que si se pasa dos horas se le cobrara el dia completo
     var expresionRegular = /\s*:\s*/;
     var recogidaD = recogida.split(expresionRegular);
@@ -675,32 +672,65 @@ function checar_horas(){
     var dia = parseInt(hoy.getDate()) ;
     var mes = (parseInt(hoy.getMonth()) + 1) ;
     var hora = parseInt(hoy.getHours());
+    var hora_1 = parseInt(hoy.getHours()) +1;
+    var hora_2 = parseInt(hoy.getHours()) +2;
+
     var minutos = hoy.getMinutes();
     hoyy = hoy.getFullYear() +'-'+ ((mes < 10) ? '0'+mes : mes) +'-'+  ((dia < 10) ? '0'+dia : dia) ;
-    hora_actual = ((hora < 10) ? '0'+hora : hora) +':'+  ((minutos < 10) ? '0'+minutos : minutos) ;
-    hora_actual_1 = ((hora+1 < 10) ? '0'+hora : hora) +':'+  ((minutos > 30) ? '0'+minutos : minutos) ;
+    hora_actual   = ((hora < 10) ? '0'+hora : hora) +':'+  ((minutos < 10) ? '0'+minutos : minutos) ;
+    hora_actual_1 = ((hora_1 < 10) ? '0'+hora_1 : hora_1) +':'+  ((minutos < 30) ? '00': '30') ;
+    hora_actual_2 = ((hora_2 < 10) ? '0'+hora_2 : hora_2) +':'+  ((minutos < 30) ? '00': '30') ;
 
     console.log(horaRecogida.value);
-    console.log(hora_actual);
+    console.log(hora_actual_1);
    
     //////////////////////
+    if(diaRecogida == hoyy){
+      console.log("recogida hoy");
+      if(hora_actual >= horaRecogida.value){
+        console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
+         // hora_menor.style.display = 'block';
+          document.getElementById("horaRecogida").value = hora_actual_1;
+      }else{
+        //hora_menor.style.display = 'none';
+      }
+    }
+    //----
+    if(diaDevolucion == hoyy){
+      console.log("Devolucion hoy");
+      if(hora_actual >= horaDevolucion.value){
+        console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
+          //hora_menor.style.display = 'block';
+          document.getElementById("horaDevolucion").value = hora_actual_2;
+      }else{
+       // hora_menor.style.display = 'none';
+      }
+    }
+    ///
     if(diaRecogida == diaDevolucion){
       if(devo <= reco){
           dias_iguales.style.display = 'block';
           document.getElementById("horaRecogida").value = hora_actual;
-          document.getElementById("horaDevolucion").value = '0';
-      }else{
-        dias_iguales.style.display = 'none';
-      }
+          document.getElementById("horaDevolucion").value = hora_actual_2;
+        }else{
+            dias_iguales.style.display = 'none';
+        }
       if(diaRecogida == hoyy){
-      console.log("iguales fechas de recogida");
-      if(hora_actual >= horaRecogida.value){
-        console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
-          hora_menor.style.display = 'block';
-          document.getElementById("horaRecogida").value = '0';
-      }else{
-        hora_menor.style.display = 'none';
-      }
+        console.log("iguales fechas de recogida");
+        if(hora_actual >= horaRecogida.value){
+            console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
+            hora_menor.style.display = 'block';
+            document.getElementById("horaRecogida").value = hora_actual_1;
+        }else{
+            hora_menor.style.display = 'none';
+        }
+        if(hora_actual >= horaDevolucion.value){
+            console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
+            hora_menor.style.display = 'block';
+            document.getElementById("horaDevolucion").value = hora_actual_2;
+        }else{
+            hora_menor.style.display = 'none';
+        }
     }
     }else{
       if(devo - reco >= 7200000){

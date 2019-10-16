@@ -8,7 +8,16 @@ use Mail;
 class PagesController extends Controller{
     public function inicio(){//SE RELLENA EL SELECT DE SUCURSALES
         $sucursales = App\Sucursal::all();
-        return view('index',compact('sucursales'));
+
+        $hora_actual_1 =new DateTime();
+        $hora_actual_3 =new DateTime();
+        $hora_actual_1->modify('+1 hours');
+        $hora_actual_3->modify('+2 hours');
+
+        $hora_actual_1 = date_format($hora_actual_1, 'H:00');
+        $hora_actual_3 = date_format($hora_actual_3, 'H:00');
+
+        return view('index',compact('sucursales','hora_actual_1','hora_actual_3'));
     }
     public function postFormularioindex(Request $request){ 
         $hora_actual = strtotime(date('H\:i'));
@@ -374,7 +383,7 @@ class PagesController extends Controller{
         // cierre de consulta de servicios extra en las fechas indicadas
         return view('reservar_servicios_extra',compact('vehiculo','datos_reserva','servicios_extra','sucursal'));
     }
-
+}
     public function reservar_realizar_pago(Request $reserva){
         $id_vehiculo     = $reserva['id_vehiculo'];
         $id_reserva      = $reserva['id_reserva'];
@@ -422,6 +431,7 @@ class PagesController extends Controller{
     $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
         return view('reservar_realizar_pago',compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total','sucursal'));
     }
+    
 
     public function validar_logeo(Request $reserva){
         $r     = $reserva['id_reserva'];
