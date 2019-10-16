@@ -14,7 +14,7 @@ class CreateReservaTempsTable extends Migration
     public function up()
     {
         Schema::create('reserva_temps', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->datetime('fecha_hora_reserva');
             $table->integer('lugar_recogida');
             $table->date('fecha_recogida');
