@@ -85,6 +85,7 @@ class PagesController extends Controller{
     $vehiculos_disp = DB::select('SELECT * FROM vehiculos 
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
     WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
     AND vehiculos.idvehiculo NOT IN (
     SELECT vehiculos.idvehiculo FROM vehiculos  
     INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo

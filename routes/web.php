@@ -145,3 +145,5 @@ Route::get('registrarModelo','ModeloVehiculoController@store')->name('registrarM
 Route::resource('marca', 'MarcaVehiculoController');
  //Route::resource('marcamodelo', 'MarcaModeloController');
 Route::post('marcasmodelos','VehiculoController@Consultar')->name('marcasmodelos');
+
+Route::get('indexAndroid','ReservacionController@indexAndroid')->name('indexAndroid');
