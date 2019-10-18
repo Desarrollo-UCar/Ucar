@@ -11,6 +11,7 @@ use App\Role;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use DB; 
+use App;
 use Illuminate\Foundation\Auth\RegistersUsers;
 class ClienteController extends Controller
 {
@@ -265,28 +266,30 @@ class ClienteController extends Controller
       // return response()->json(['success'=>'EXITO']);
 
       $user->roles()->attach(Role::where('name', 'user')->first());
-
-
-       
-          
-       
-       
-       // $credenciales= validate($request(),[
-          //   'email' =>'required|email',
-          //   'password'=> 'required',
-          // ]);
-          
-
-
           if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']])){
             return response()->json(['success'=>'EXITO']);
           }    else{
             return response()->json(['success'=>'NO SE PUDO CONECTAR']);
           }      
-        
-      
-        
     }
 
-    
+    public function cliente_modificar(Request $request){
+        $correo   = auth()->user()->email;
+        $cliente = Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+          $cliente->telefono = $request['telefono'];
+          $cliente->calle = $request['calle'];
+          $cliente->numero = $request['numero'];
+          $cliente->colonia = $request['colonia'];
+          $cliente->ciudad = $request['ciudad'];
+          $cliente->estado = $request['estado'];
+          $cliente->pais = $request['pais'];
+        //    return $request['idCliente'];
+          $cliente->save();
+         $oko = 1;
+          return view('mi_perfil',compact('cliente','oko'));
+    }
+
 }

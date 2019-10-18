@@ -6,6 +6,7 @@
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="inner-heading">
               <h2>Autos disponibles a precios accesibles</h2>
+              {{ $vehiculos_disp->links() }}
             </div>
           </div>
         </div>
@@ -38,7 +39,7 @@
                     </div>
                     <div class="grid item-thumbs graphic form-check-inline">
                       <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio" id="cilindros" value="cilindros">Cilindros
+                        <input type="radio" class="form-check-input" name="optradio" id="cilindros" value="cilindros">Pasajeros
                       </label>
                     </div>
                   </form>
@@ -54,11 +55,11 @@
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="row nomargin">
 @foreach($flota as $vehiculo)
-    <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->idvehiculo}} data-type= {{$vehiculo->tipo}} data-precio = {{$vehiculo->precio}} data-rendimiento = {{$vehiculo->rendimiento}} data-cilindros = {{$vehiculo->cilindros}}>
+    <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->idvehiculo}} data-type= {{$vehiculo->tipo}} data-precio = {{$vehiculo->precio}} data-rendimiento = {{$vehiculo->rendimiento}} data-pasajeros = {{$vehiculo->pasajeros}}>
     <div class="pricing-box-wrap special animated-fast flyIn">
             <div class="pricing-heading">
                 <h4 style="color: #fffffe;"><strong>{{$vehiculo->marca}}</strong> {{$vehiculo->modelo}}</h4>
-                <h5><strong>MXN {{number_format($vehiculo->precio,2)}}</strong></h5>
+                <h5><strong>MXN {{number_format($vehiculo->precio,2)}} por dia</strong></h5>
                 <h6><strong><i class="fa fa-car"  style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->cilindros}} Cilindros
                             <i class="fa fa-bolt" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->rendimiento}} Km/L
                             <i class="fa fa-male" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->pasajeros}} Pasajeros</strong>
@@ -81,6 +82,7 @@
 @endforeach
             </div>
           </div>
+          
         </div>
       </div>
     </section>

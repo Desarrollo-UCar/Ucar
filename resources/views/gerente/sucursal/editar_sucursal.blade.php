@@ -189,7 +189,28 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal ---->
-      
+
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error" style="display: none" id="error1">Cancelar</button>
+<div class="modal modal-warning fade" id="error">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Error </b> </h4>
+        </div>
+        <div class="modal-body">
+          <p>Verifique los campos necesarios&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+        
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 
 @endsection    
        @section('scripts')
@@ -396,7 +417,9 @@
              jQuery('#errorcolonia').show();          
             $( '#colonia' ).css('borderColor', 'red');
            }
+
               $('#enviar').html('guardar cambios');
+              $('#error1').click();
           }
       });
     });

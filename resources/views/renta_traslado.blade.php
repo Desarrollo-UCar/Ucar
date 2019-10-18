@@ -253,8 +253,10 @@
                                       <span class="input-group-text"><i class="fa fa-pencil-square"aria-hidden="true"></i></span>
                                       </div>
                                       <input name = 'dias_espera' id="dias_espera" class="form-control form-control-lg" type="number" placeholder="Dias de Espera" pattern="[0-9]*" min = "1" max="40" title="Mínimo: 1. Máximo: 40" >
-                                  </div>
+                                      <input name = 'mostrar_modal' id="mostrar_modal" value = "{{$estado}}" type="hidden"  >
+                                    </div>
                               </div> 
+                              
       </div>
 
       <div class="form-row">
@@ -485,7 +487,7 @@
       </div>
     </div>
    {{-- AQUI TERMINA EL MODAL  --}}
-   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sele" style="display: none" id="sele1">    </button>
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#sele" style="display: none" id="sele1">    </button>
 <div class="modal fade"  id="sele">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -501,11 +503,11 @@
                   <h6>¿Como deseas realizar tu solicitud de cotización?</h6>
               </div>
               <div class="modal-footer col-md-12">
-                  <form action="{{ route('validar_logeo')}}" method="GET" enctype="multipart/form-data">
+                  <form action="{{ route('validar_logeo_traslado')}}" method="GET" enctype="multipart/form-data">
                     @csrf 
                       <input type="submit" name="con_cuenta" id="con_cuenta" class="btn btn-primary" value="Continuar con mi cuenta">
                   </form>
-                  <form action="{{ route('validar_sin_logeo')}}" method="GET" enctype="multipart/form-data">
+                  <form action="{{ route('validar_sin_logeo_traslado')}}" method="GET" enctype="multipart/form-data">
                     @csrf 
                       <input type="submit" name="sin_cuenta" id="sin_cuenta" class="btn btn-primary" value="Continuar sin cuenta">
                   </form>
@@ -750,8 +752,7 @@ function validaCheckbox(){
       pas.style.display='block';
     }
   }
-  </script>
-
+</script>
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -760,28 +761,18 @@ function validaCheckbox(){
     $("#example2").inputmask("Regex");
   })
 </script>
-
-
 <script>
   function recargar(){
     location.reload(); 
   }
 </script>
-  
-  <script>
+<script>
   $(document).ready(function(){
-
-    @if(!(Auth::user()))
-    if({{$estado == 'sin' | $estado == "inicio"}}){
-      var m = '1';
-      if(m=='1'){
-        $('#sele1').click();
-        console.log(m);
-        }
-    }
-     @endif   
+    var mostrar= document.getElementById("mostrar_modal").value;
+    if(mostrar  == "inicio")
+        $('#sele1').click(); 
+    console.log(mostrar);
  
-  
   $('#upload_form').on('submit', function(event){
           event.preventDefault();      
 
@@ -836,9 +827,7 @@ function validaCheckbox(){
         // console.log(data);
            var err = JSON.parse(data.responseText);
            var arreglo = err.errors;
-           /*jQuery.each(arreglo, function(key, value){
-              console.log(arreglo);
-                        });*/
+
            console.log(arreglo);
             var nombres = arreglo.nombres;
             var primerApellido = arreglo.primerApellido;
@@ -857,7 +846,6 @@ function validaCheckbox(){
             var email = arreglo.email;
             var password = arreglo.password;
             var passwordconfirm = arreglo.passwordconfirm;
-          
              
                if (nombres == undefined){  
                  $( '#nombres' ).css('borderColor', 'green');         
@@ -913,18 +901,7 @@ function validaCheckbox(){
                 $( '#nacionalidad' ).css('borderColor', 'red');
                  //console.log(nombre);
                }
-  
-              /* if (genero == undefined){  
-                 $( '#genero' ).css('borderColor', 'green');         
-                 jQuery('#validogenero').show(); 
-                 jQuery('#errorgenero').hide(); 
-                 }else{
-                   jQuery('#validogenero').hide(); 
-                 jQuery('#errorgenero').show();          
-                $( '#genero' ).css('borderColor', 'red');
-                 //console.log(nombre);
-               }*/
-  
+
                if (email == undefined){  
                  $( '#email' ).css('borderColor', 'green');         
                  jQuery('#validoemail').show(); 
@@ -946,9 +923,6 @@ function validaCheckbox(){
                 $( '#pasaporte' ).css('borderColor', 'red');
                  //console.log(nombre);
                }
-  
-  
-  
   
             if (ine == undefined){  
                  $( '#ine' ).css('borderColor', 'green');         

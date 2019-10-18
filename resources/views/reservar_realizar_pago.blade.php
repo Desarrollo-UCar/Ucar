@@ -161,7 +161,7 @@
                             <dt>- Licencia de conducir vigente</dt>
                             <dt>- Tarjeta de crédito</dt>
                             <dt>- Pago de garantia</dt>
-                            <dd>De la tarjeta de crédito se retendrán 20,000.00MX como garantia en caso de cualquier siniestro o percanse.</dd>  
+                            <dd>De la tarjeta de crédito se retendrán 20,000.00 MXN como garantia en caso de cualquier siniestro o percance.</dd>  
                             <dt>- Pago total de la renta</dt>
                             <dd>El pago total de la renta se liquida en el momento de la entrega el vehiculo.</dd>
                             <dt>- En caso de dudas</dt>

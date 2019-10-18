@@ -14,11 +14,11 @@ Route::post('postFormularioindex',    'PagesController@postFormularioindex')->  
 Route::get('reservar_servicios_extra','PagesController@reservar_servicios_extra')->name('reservar_servicios_extra') ;
 Route::post('reservar_realizar_pago', 'PagesController@reservar_realizar_pago')->  name('reservar_realizar_pago') ;
 Route::get('validar_logeo',           'PagesController@validar_logeo')->           name('validar_logeo')->middleware(['auth', 'verified']);
-Route::post('pago_paypal',            'PagesController@pago_paypal')->             name('pago_paypal')->middleware(['auth', 'verified']);
 Route::post('correo_reserva',         'PagesController@correo_reserva')->          name('correo_reserva')->middleware(['auth', 'verified']);
 Route::get('dashboard_cliente',       'PagesController@dashboard_cliente')->       name('dashboard_cliente')->middleware(['auth', 'verified']);
-Route::get('despues_de_pago',         'PagesController@despues_de_pago')->         name('despues_de_pago')->middleware(['auth', 'verified']);
+Route::get('mi_perfil',               'PagesController@mi_perfil')->               name('mi_perfil')->middleware(['auth', 'verified']);
 Route::get('terminos_y_condiciones',  'PagesController@terminos_y_condiciones')->  name('terminos_y_condiciones') ;
+Route::POST('cliente_modificar',      'ClienteController@cliente_modificar')->     name('cliente_modificar');
 ///routes para traslado controller
 Route::post('renta_traslado_vehiculo', 'TrasladoController@renta_traslado_vehiculo')-> name('renta_traslado_vehiculo');//solicitud del cliente
 Route::get('validar_logeo_traslado',            'TrasladoController@validar_logeo_traslado')->           name('validar_logeo_traslado')->middleware(['auth', 'verified']);
@@ -91,6 +91,7 @@ Route::resource('tallerservicio', 'TallerServicioController');
 Route::resource('cliente', 'ClienteController');
 Route::get('mostrarmantenimiento', 'MantenimientoController@mostrar')->name('mostrarmantenimiento');
 Route::get('editarmantenimieto', 'MantenimientoController@modificar')->name('modificarmantenimiento');
+Route::get('historialmantenimieto', 'MantenimientoController@Historial')->name('historialmantenimiento');
 Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado');
 Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehiculo');
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
@@ -107,7 +108,6 @@ Route::post('servicioModificar','ServiciosExtraController@ModificarDatos')->name
 
 
 //Route::post('login','UsuariosController@login');
-
 
 //Auth::routes();
 

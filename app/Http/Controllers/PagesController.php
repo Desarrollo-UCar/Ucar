@@ -46,7 +46,9 @@ class PagesController extends Controller{
         $reserva_temp->total = 0;
         $reserva_temp->servicios_extra = 'ee';
         $reserva_temp->id_cliente = 0;
+    if($reserva_temp->estatus != 'reserva_finalizada'){
         $reserva_temp->estatus = 'consulta_disponibles';
+     }
 // Guardamos en la base de datos (equivalente al flush de Doctrine)
         $reserva_temp->save();
 // consulta a los vehiculos disponibles
@@ -78,8 +80,6 @@ class PagesController extends Controller{
 
     $hora_dd = (string)$hora_d->format('H:i:s');//conversion de horas
     $hora_rr = (string)$hora_r->format('H:i:s');
-
-
     //return $hora_dd;
 
     $vehiculos_disp = DB::select('SELECT * FROM vehiculos 
@@ -200,7 +200,6 @@ class PagesController extends Controller{
     // AND alquilers.fecha_devolucion <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
     //                                     [$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
     //FIN CONSULTA ANTERIOR
-
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //obtener solo un vehiculo por marca y modelo
 
@@ -240,8 +239,9 @@ class PagesController extends Controller{
     }
     
     public function pflota(){
-        $vehiculos_disp = DB::select('SELECT *  FROM vehiculos ORDER BY precio,marca,modelo');
-
+    $vehiculos_disp = App\Vehiculo::orderBy('precio','desc','marca','desc','modelo','desc')->distinct('marca','modelo')->paginate(8);
+    //return $vehiculos_disp;
+    //$vehiculos_disp->orderBy('precio', 'marca', 'modelo','desc');
         if(!empty($vehiculos_disp)){
             $v_anterior = "h";
             $flota = [];
@@ -269,8 +269,8 @@ class PagesController extends Controller{
                 }
             }
         }
-
-        return view('flota',compact('flota'));
+        $flota = $vehiculos_disp;
+        return view('flota',compact('flota','vehiculos_disp'));
     }
 
     public function dashboard_cliente(){
@@ -279,7 +279,8 @@ class PagesController extends Controller{
     $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
         //pasarle los datos del cliente para proyectarlos arriba
         //obtener los datos de todas las reservaciones del cliente
-        $reservas_cliente = DB::select('SELECT reservacions.id, reservacions.fecha_reservacion, reservacions.total, reservacions.saldo, sucursals.nombre,alquilers.id as id_alquiler,
+        $reservas_cliente = DB::select('SELECT reservacions.id, reservacions.fecha_reservacion, reservacions.total, reservacions.saldo,
+        sucursals.nombre,sucursals.telefono,alquilers.id as id_alquiler,
         alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
         IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
         vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,
@@ -290,16 +291,23 @@ class PagesController extends Controller{
         inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
         inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
         INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
-        where id_cliente = ?',[$cliente->idCliente]);
+        where id_cliente = ? ORDER BY reservacions.id desc',[$cliente->idCliente]);
         //obtenemos los datos de los servicios extra
         $cliente_serv_extra = DB::select('SELECT alquiler,serviciosextras.idserviciosextra,serviciosextras.nombre,serviciosextras.precio
         FROM alquilerserviciosextras
         INNER JOIN serviciosextras ON serviciosextras.idserviciosextra = alquilerserviciosextras.servicioExtra
         INNER JOIN alquilers ON alquilerserviciosextras.alquiler = alquilers.id
         INNER JOIN reservacions ON reservacions.id = alquilers.id_reservacion
-        INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE id_cliente = ?',[$cliente->idCliente]);
+        INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE id_cliente = ? ORDER BY reservacions.id desc',[$cliente->idCliente]);
  
         return view('dashboard_cliente',compact('cliente','reservas_cliente','cliente_serv_extra'));
+    }
+
+    public function mi_perfil(){
+        $correo  = auth()->user()->email;
+        $cliente = App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+        $oko = 0;
+        return view('mi_perfil',compact('cliente','oko'));
     }
 
     public function reservar_servicios_extra(Request $reserva){
@@ -308,6 +316,7 @@ class PagesController extends Controller{
 
         $vehiculo       = App\Vehiculo::findOrFail($id_vehiculo);
         $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
+    if($datos_reserva->estatus != 'reserva_finalizada'){
         $datos_reserva->estatus = 'reserva_servcios_extra';
         $datos_reserva->id_vehiculo = $vehiculo->idvehiculo;
         $datos_reserva->save();
@@ -336,7 +345,6 @@ class PagesController extends Controller{
         //como ya tenemos la cantidad y el id del servicio extra que esta ocupados en la sucursal,
             //obtener los qye estan ocupadoos id y cantidad por sucursal
             // filtrar los que estan disponibles segun la tabla servicios extra sucursal
-           // $total_s_e_por_sucursal  = App\servicioextrasucursales::all();
             $servicios_extra_antes = [];
             if(empty($cantidad_servicios_extra_ocupados)){
                 $servicios_extra_antes = $cantidad_servicios_extra_totales;
@@ -344,17 +352,14 @@ class PagesController extends Controller{
                 foreach ($cantidad_servicios_extra_totales as $servicio_total) {
                     $encontrado = 0;
                     foreach($cantidad_servicios_extra_ocupados as $servicio_ocupado){
-
                        // echo('Total '.$servicio_total->serviciosextra.' Ocupado: '. $servicio_ocupado->servicioExtra);
                         if($servicio_total->serviciosextra == $servicio_ocupado->servicioExtra){ // ya filtramos solo los servicios perteneciientes a a la s=ucursal
                             if($servicio_total->cantidad > $servicio_ocupado->cantidad){
                                 array_push($servicios_extra_antes, $servicio_total);  //falta obtener los datos a proyectar de la tabla serviciosextra
-
                             }
                             $encontrado = 1;
                             //echo('encontrado'); 
                         }
-
                     }
                     //dd('----'.$encontrado); 
                         if($encontrado == 0)
@@ -362,10 +367,6 @@ class PagesController extends Controller{
                 }
             }
             //--------------------------------------------
-
-   
-
-
             //return $servicios_extra_antes;
             $servicios_e  = App\serviciosextras::all();
             $servicios_extra = [];
@@ -381,7 +382,7 @@ class PagesController extends Controller{
         // cierre de consulta de servicios extra en las fechas indicadas
         return view('reservar_servicios_extra',compact('vehiculo','datos_reserva','servicios_extra','sucursal'));
     }
-
+}
     public function reservar_realizar_pago(Request $reserva){
         $id_vehiculo     = $reserva['id_vehiculo'];
         $id_reserva      = $reserva['id_reserva'];
@@ -422,38 +423,14 @@ class PagesController extends Controller{
         }
     }
     $datos_reserva->servicios_extra = $cadena_serv_extra;
-    $datos_reserva->estatus = 'antes_de_pago';
+    if($datos_reserva->estatus != 'reserva_finalizada'){
+        $datos_reserva->estatus = 'antes_de_pago';
+    }
     $datos_reserva->save();
     $sucursal         = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
         return view('reservar_realizar_pago',compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total','sucursal'));
     }
-
-public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta logeado
-    $correo   = auth()->user()->email;
-//el cliente no se esta creando al momento del registro
-    $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
-    $datos_reserva  = App\reserva_temp::findOrFail($reserva->id_reserva);
-    $datos_reserva->id_cliente = $cliente->idCliente;//guardo el cliente en la temporal por si acaso
-    $datos_reserva->save();
     
-    
-//listo tenemos el alquler
-    if($reserva->btnAccion == 'pago_total'){
-        $monto = $datos_reserva->total;
-    }else{//volvemos a calcular los dias para SACAR EL ANTICIPO
-        $devolucion = new DateTime($datos_reserva->fecha_devolucion);
-        $salida     = new DateTime($datos_reserva->fecha_recogida);
-        $diferencia = $salida->diff($devolucion);
-        $dias = $diferencia->format('%a');
-        $total = $datos_reserva->total;
-        if($dias == 0)
-            $dias = 1;
-        $monto = $total / $dias;
-    }
-
-/////////-------------------------
-    return view('pago',compact('monto','datos_reserva'));
-    }
 
     public function validar_logeo(Request $reserva){
         $r     = $reserva['id_reserva'];
@@ -468,11 +445,4 @@ public function pago_paypal(Request $reserva){//suponemos que el cliente ya esta
         return view('seleccionar_forma_de_pago',compact('datos_reserva','anticipo'));
     }
 
-    public function despues_de_pago(Request $pago){
-        $respuesta = $pago['nacionalidad'];
-        return $respuesta;
-                return response()->json(['success'=>'EXITO']);
-        return 'hola r';
-        return view('bienvenida');
-    }
 }
