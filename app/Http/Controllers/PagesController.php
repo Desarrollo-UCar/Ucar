@@ -8,16 +8,7 @@ use Mail;
 class PagesController extends Controller{
     public function inicio(){//SE RELLENA EL SELECT DE SUCURSALES
         $sucursales = App\Sucursal::all();
-
-        $hora_actual_1 =new DateTime();
-        $hora_actual_3 =new DateTime();
-        $hora_actual_1->modify('+1 hours');
-        $hora_actual_3->modify('+2 hours');
-
-        $hora_actual_1 = date_format($hora_actual_1, 'H:00');
-        $hora_actual_3 = date_format($hora_actual_3, 'H:00');
-
-        return view('index',compact('sucursales','hora_actual_1','hora_actual_3'));
+        return view('index',compact('sucursales'));
     }
     public function postFormularioindex(Request $request){ 
         $hora_actual = strtotime(date('H\:i'));
@@ -243,7 +234,9 @@ class PagesController extends Controller{
     }
     
     public function pflota(){
-        $vehiculos_disp = DB::select('SELECT *  FROM vehiculos ORDER BY precio,marca,modelo');
+    $vehiculos_disp = App\Vehiculo::orderBy('precio','desc','marca','desc','modelo','desc')->distinct('marca','modelo')->paginate(8);
+    //return $vehiculos_disp;
+    //$vehiculos_disp->orderBy('precio', 'marca', 'modelo','desc');
         if(!empty($vehiculos_disp)){
             $v_anterior = "h";
             $flota = [];
@@ -271,7 +264,8 @@ class PagesController extends Controller{
                 }
             }
         }
-        return view('flota',compact('flota'));
+        $flota = $vehiculos_disp;
+        return view('flota',compact('flota','vehiculos_disp'));
     }
 
     public function dashboard_cliente(){

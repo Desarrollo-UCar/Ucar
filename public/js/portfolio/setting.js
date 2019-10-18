@@ -15,9 +15,9 @@ if($seleccionado == 'rendimiento'){
 	$despues.sort(function (a, b){
 	return (b.dataset.rendimiento - a.dataset.rendimiento)
 })}
-if($seleccionado == 'cilindros'){
+if($seleccionado == 'pasajeros'){
 	$despues.sort(function (a, b){
-	return (a.dataset.cilindros - b.dataset.cilindros)
+	return (b.dataset.pasajeros - a.dataset.pasajeros)
 })}
 	// fin de los ordenamientos
 		$(".portfolio,.team").quicksand($despues, {
@@ -49,9 +49,9 @@ if($seleccionado == 'rendimiento'){
 	$filteredData.sort(function (a, b){
 	return (b.dataset.rendimiento - a.dataset.rendimiento)
 })}
-if($seleccionado == 'cilindros'){
+if($seleccionado == 'pasajeros'){
 	$filteredData.sort(function (a, b){
-	return (a.dataset.cilindros - b.dataset.cilindros)
+	return (b.dataset.pasajeros - a.dataset.pasajeros)
 })}
 	$despues = $filteredData;
 // fin de los ordenamientos

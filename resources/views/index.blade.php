@@ -265,7 +265,7 @@
                           </div>
                           <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="hora_extra">
                             <h6 class = "text-success"><strong>* NOTA:</strong></h6>
-                            <h6><small>Una hora menos, un dia mas barato.</small></h6>
+                            <h6><small>Si se pasa <strong>dos</strong> horas en la hora de <strong>devolucion</strong> de la hora de <strong>recogida</strong> se cobrará el dia completo.</small></h6>
                           </div>
                           <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="dias_iguales">
                             <h6 class = "text-danger"><strong>* Error:</strong></h6>
@@ -678,8 +678,8 @@ function checar_horas(){
     var minutos = hoy.getMinutes();
     hoyy = hoy.getFullYear() +'-'+ ((mes < 10) ? '0'+mes : mes) +'-'+  ((dia < 10) ? '0'+dia : dia) ;
     hora_actual   = ((hora < 10) ? '0'+hora : hora) +':'+  ((minutos < 10) ? '0'+minutos : minutos) ;
-    hora_actual_1 = ((hora_1 < 10) ? '0'+hora_1 : hora_1) +':'+  ((minutos < 30) ? '00': '30') ;
-    hora_actual_2 = ((hora_2 < 10) ? '0'+hora_2 : hora_2) +':'+  ((minutos < 30) ? '00': '30') ;
+    hora_actual_1 = ((hora_1 < 10) ? '0'+hora_1 : hora_1) +':'+  ((minutos <= 30) ? '00': '30') ;
+    hora_actual_2 = ((hora_2 < 10) ? '0'+hora_2 : hora_2) +':'+  ((minutos <= 30) ? '00': '30') ;
 
     console.log(horaRecogida.value);
     console.log(hora_actual_1);
