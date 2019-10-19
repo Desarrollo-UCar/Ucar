@@ -33,9 +33,10 @@ class EmailController extends Controller{
                 INNER JOIN alquilers ON alquilerserviciosextras.alquiler = alquilers.id
                 INNER JOIN reservacions ON reservacions.id = alquilers.id_reservacion
                 INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE id_cliente = ? ORDER BY reservacions.id desc',[$cliente->idCliente]);
+          $sucursales = App\Sucursal::all();
          //enviar correo
          //PagosStripeController::correo_confirmacion_reserva($reservacion,$correo);
-                return view('dashboard_cliente',compact('cliente','reservas_cliente','cliente_serv_extra'));
+                return view('dashboard_cliente',compact('cliente','reservas_cliente','cliente_serv_extra','sucursales'));
    }
 
 

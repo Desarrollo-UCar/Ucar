@@ -35,12 +35,9 @@ Route::post('crear_pago_stripe', 'PagosStripeController@crear_pago_stripe')-> na
 //routes para envio de correos 
 Route::post('correo_confirmacion_reserva', 'EmailController@correo_confirmacion_reserva')-> name('correo_confirmacion_reserva');
 //routes para SoloVistasController
-Route::get('Reservacion',             'SoloVistasController@reservacion')->         name('reservacion') ;
+Route::get('Reservacion',             'SoloVistasController@reservacion')->          name('reservacion') ;
 Route::get('servicios',               'SoloVistasController@servicios')->            name('servicios') ;
-Route::get('sucursales',              'SoloVistasController@sucursales')->           name('sucursales') ;
-Route::get('sucursal_P_Escondido',    'SoloVistasController@sucursal_P_Escondido')->name('sucursal_P_Escondido') ;
-Route::get('sucursal_Ixtepec',        'SoloVistasController@sucursal_Ixtepec')->     name('sucursal_Ixtepec') ;
-Route::get('sucursal_Istmo',          'SoloVistasController@sucursal_Istmo')->       name('sucursal_Istmo') ;
+Route::get('sucursal_info/{id}',      'SoloVistasController@sucursal_info')->        name('sucursal_info') ;
 Route::get('renta_flotilla',          'SoloVistasController@renta_flotilla')->       name('renta_flotilla') ;
 Route::get('en_construccion',         'SoloVistasController@en_construccion')->      name('en_construccion');//ruta para todas las que aun no estan
 Route::get('renta_traslado',          'SoloVistasController@renta_traslado')->       name('renta_traslado') ;

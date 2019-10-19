@@ -1,21 +1,23 @@
 @extends('plantilla')
 @section('seccion')
-    <section id="inner-headline">
-      <div class="container">
-        <div class="row nomargin">
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="inner-heading">
-              <h2>Autos disponibles a precios accesibles</h2>
-              {{ $vehiculos_disp->links() }}
+<section id="inner-headline">
+    <div class="inner-heading">
+        <div class="container">
+            <div class="row nomargin">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
+                    <h2>Autos disponibles a precios accesibles</h2>
+                </div>
+                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                    {{ $flota->links() }}
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
   <section id="content">
       <div class="container">
         <div class="row nomargin">
-          <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
               <ul class="portfolio-categ filter">
                 <li class="all active"><a href="#">Todos</a></li>
                 <li class="compacto"><a href="#" title="">Compactos</a></li>
@@ -24,7 +26,7 @@
                 <li class="motoneta"><a href="#" title="">Motonetas</a></li>
               </ul>
           </div>
-          <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+          <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <ul class="portfolio-categ filter">
                   <form name="formulario" id="formulario" method="POST">
                     <div class="grid item-thumbs graphic form-check-inline">
@@ -55,7 +57,7 @@
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="row nomargin">
 @foreach($flota as $vehiculo)
-    <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->idvehiculo}} data-type= {{$vehiculo->tipo}} data-precio = {{$vehiculo->precio}} data-rendimiento = {{$vehiculo->rendimiento}} data-pasajeros = {{$vehiculo->pasajeros}}>
+    <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->modelo}} data-type= {{$vehiculo->tipo}} data-precio = {{$vehiculo->precio}} data-rendimiento = {{$vehiculo->rendimiento}} data-pasajeros = {{$vehiculo->pasajeros}}>
     <div class="pricing-box-wrap special animated-fast flyIn">
             <div class="pricing-heading">
                 <h4 style="color: #fffffe;"><strong>{{$vehiculo->marca}}</strong> {{$vehiculo->modelo}}</h4>
@@ -72,7 +74,7 @@
             <div class="pricing-action">
                 <!-- Button trigger modal -->
                 
-                    <button type="button" class="btn btn-medium btn-theme" data-toggle="modal" data-target="#vehiculo{{$vehiculo->idvehiculo}}"><i class="icon-chevron-down"></i>
+                    <button type="button" class="btn btn-medium btn-theme" data-toggle="modal" data-target="#vehiculo{{$vehiculo->modelo}}"><i class="icon-chevron-down"></i>
                     Detalles
                     </button>
                 <!-- Button trigger modal -->
@@ -91,7 +93,7 @@
 <section id="modales">
 <!-- Modal -->
 @foreach($flota as $vehiculo)
-<div class="modal" data-backdrop=”static” data-keyboard=”false”  id="vehiculo{{$vehiculo->idvehiculo}}" tabindex="-1" role="dialog" aria-labelledby="detalle_vehiculoTitle" aria-hidden="true">
+<div class="modal" data-backdrop=”static” data-keyboard=”false”  id="vehiculo{{$vehiculo->modelo}}" tabindex="-1" role="dialog" aria-labelledby="detalle_vehiculoTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             
