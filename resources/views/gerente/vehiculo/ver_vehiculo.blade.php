@@ -34,7 +34,7 @@
                 </button>
               </div>
               @endif 
-              @if (session()->has('curso'))
+              @if (session()->has('mensaje'))
               <div style="display: none;">
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#encurso" id="<?php 
                 echo "botoncurso";
@@ -42,86 +42,66 @@
                     Cancelar
                   </button>
                 </div>             
-              @endif           
+              @endif   
+              @if (session()->has('curso'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#espera" id="<?php 
+                echo "botonespera";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif      
+              <div class="box-body ">
+                <table id="example" class="display nowrap " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">Placas</th>
+                            <th style="text-align: center">Marca</th>
+                            <th style="text-align: center">Modelo</th>
+                            <th style="text-align: center">Color</th>
+                            <th style="text-align: center">Estatus</th>
+                            <th style="text-align: center">Modificar</th>
+                            <th style="text-align: center">Mantenimiento</th>
+                            <th style="text-align: center">Historial</th>
+                            <th style="text-align: center">Reservaciones</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($vehiculo as $vehiculo)                      
+              <tr>
+                <td >{{$vehiculo->matricula}}</td>
+                <td >{{$vehiculo->marca}}</td>
+                <td >{{$vehiculo->modelo}}</td>
+                <td >{{$vehiculo->color}}</td>
+                <td >{{$vehiculo->estatus}}</td>
+                <td style="text-align: center"> 
+                  <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>
+                   
+                    @if ($vehiculo->estatus=='MANTENIMIENTO')
+                    <td style="text-align: center"> 
+                        <a href="{{ route('mantenimiento.index') }}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver mantenimiento"></span></td>
+                    @else
+                    <td style="text-align: center"> 
+                        <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span></td>
+                    @endif
 
-              <div class="box-body">
-                  <table id="example" class="display nowrap">
-                      <thead>
-                          <tr>
-                              <th style="text-align: center;background: lightblue">Vin</th>
-                              <th style="text-align: center;background: lightblue">Placas</th>
-                              <th style="text-align: center;background: lightblue">fecha Alta</th>
-                              <th style="text-align: center;background: lightblue">Marca</th>
-                              <th style="text-align: center;background: lightblue">Modelo</th>
-                              <th style="text-align: center;background: lightblue">Año</th>
-                              <th style="text-align: center;background: lightblue">Precio</th>
-                              <th style="text-align: center;background: lightblue">Costo</th>
-                              <th style="text-align: center;background: lightblue">No. Pasajeros</th>
-                              <th style="text-align: center;background: lightblue">Color</th>
-                              <th style="text-align: center;background: lightblue">Cilindros</th>
-                              <th style="text-align: center;background: lightblue">Kilometraje</th>
-                              <th style="text-align: center;background: lightblue">Tipo</th>
-                              <th style="text-align: center;background: lightblue">Sucursal</th>
-                              <th style="text-align: center;background: lightblue">Estatus</th>
-                              <th style="text-align: center;background: lightblue">Descripción</th>
-                              <th style="text-align: center;background: lightblue">Modificar</th>
-                              <th style="text-align: center;background: lightblue">Mantenimiento</th>
-                              <th style="text-align: center;background: lightblue">Historial</th>
-                              <th style="text-align: center;background: lightblue">Reservaciones</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                           @foreach ($vehiculo as $vehiculo)                      
-                <tr>
-                        <td style="text-align: center">{{$vehiculo->vin}}</td>
-                        <td style="text-align: center">{{$vehiculo->matricula}}</td>
-                        <td style="text-align: center">{{$vehiculo->created_at}}</td>
-                        <td style="text-align: center">{{$vehiculo->marca}}</td>
-                        <td style="text-align: center">{{$vehiculo->modelo}}</td>
-                        <td style="text-align: center">{{$vehiculo->anio}}</td>
-                        <td style="text-align: center">{{$vehiculo->precio}}</td>
-                        <td style="text-align: center">{{$vehiculo->costo}}</td>                       
-                        <td style="text-align: center">{{$vehiculo->pasajeros}}</td>
-                        <td style="text-align: center">{{$vehiculo->color}}</td>
-                        <td style="text-align: center">{{$vehiculo->cilindros}}</td>
-                        <td style="text-align: center">{{$vehiculo->kilometraje}}</td>
-                        <td style="text-align: center">{{$vehiculo->tipo}}</td>
-                        <td style="text-align: center">{{$vehiculo->nombre}}</td>
-                        <td style="text-align: center">{{$vehiculo->estatus}}</td>
-                          @if ($vehiculo->descripcion==null)
-                          <td style="text-align: center">------------</td>
-                          @else
-                          <td style="text-align: center">{{$vehiculo->descripcion}}</td>
-                          @endif
-                        
+                    <td style="text-align: center">
+                      <a href="{{ route('historialmantenimiento',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}" title="Eliminar"> <span class="fa fa-cogs fa-2x" style="color:orange;"></span>
+            </td>
 
-                        <td style="text-align: center"> 
-                          <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>
-                            @if ($vehiculo->estatus=='MANTENIMIENTO')
-                            <td style="text-align: center"> 
-                                <a href="{{ route('mantenimiento.index') }}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver mantenimiento"></span></td>
-                            @else
-                            <td style="text-align: center"> 
-                                <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span></td>
-                            @endif
-                            
-
-                            <td style="text-align: center">
-                                <a href="{{ route('historialmantenimiento',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}" title="Eliminar"> <span class="fa fa-cogs fa-2x" style="color:orange;"></span>
-                      </td>
-
-                      <td style="text-align: center">
-                          <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
-                </td>
-                      </tr>
-                @endforeach
-                      </tbody>
-                  </table>
-              </div>
-              <div class="form-group">
-                <a href="{{ route('empleado.create')}}" class="btn  float-left btn-primary" style="float: right">Nuevo</a>
-              </div>
-                
+            
+            <td style="text-align: center">
+              <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
+    </td>  
+                    </tr> 
+              @endforeach
+                    
+                    </tbody>
+                </table>
+            </div>
+            
       </section>
 
       <div class="modal modal-warning fade" id="modal-warning">
@@ -161,8 +141,57 @@
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
                 {{-- <a href="{{ URL::previous() }}" class="btn btn-success pull-left">Regresar</a> --}}
               {{-- <a href="{{route('vehiculo.create')}}" class="btn btn-primary">Continuar</a> --}}
+              
               </div>
             </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+
+        <div class="modal modal-success fade" id="espera">
+          <div class="modal-dialog" >
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">EL VEHÍCULO TIENE RESERVAS PROXIMAS</b> </h4>
+              </div>
+              <div class="modal-body">
+                <p>Para mandar un vehículo a mantenimiento es necesario verificar sus proximas reservas.&hellip;</p>
+                @if (session()->has('curso'))
+                
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">No reserva</th>
+      <th scope="col">Fecha Entrega</th>
+      <th scope="col">Fecha Devolución</th>
+      <th scope="col">Conductor</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (Session::get('curso') as $alquiler)
+    <tr>
+    <th>{{$alquiler->id_reservacion}}</th>
+    <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_recogida))}}</td>
+    <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_devolucion))}}</td>
+    <td>{{$alquiler->nombreConductor}}</td>
+    </tr>
+    @endforeach 
+  </tbody>
+</table>
+                </div>                                    
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <a href="{{ route('confmante',['vehiculo'=>$alquiler->id_vehiculo]) }}" class="btn btn-primary" >
+                  Continuar</a>
+              </div>
+            </div>
+            @endif 
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
@@ -185,26 +214,29 @@
              obj.click();
              } );
             </script>
+            <script>           
+              $(document).ready(function() {
+      
+               var obj= document.getElementById("botonespera");
+               obj.click();
+               } );
+              </script>
 
-         <script>           
-        var table = $(document).ready(function() {
-              $('#example').DataTable( {
-                "scrollX": "400px",
-                "responsive": true,               
-                "language": {
-                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                },
-                fixedColumns:   {
-                 leftColumns: 1
-                }                
-                
-              } );
-              new $.fn.dataTable.FixedHeader( table );
-          } );
-         </script>
+<script>
+  $(document).ready(function() {
+       $('#example').DataTable( {
+         "scrollY":"400px",
+         "scrollX": true,
+         "language": {
+           "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+         }
+         
+       } );
+   } );
+  </script>
          <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
          <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-         <script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
+      
          <script>
            </script>
      @endsection

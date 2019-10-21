@@ -63,12 +63,21 @@ class mantenimientoController extends Controller
                             ->where('estatus','like','%curso')
                             //   ->where('id_vehiculo','=',$vehiculo['idvehiculo'])
                             ->get();
+                            $carbon = new \Carbon\Carbon();
+                            $date = $carbon->now();
+        $reservas = Alquiler::where('id_vehiculo',$vehiculo->idvehiculo)
+        ->where('fecha_recogida','>=',$date)->get();
+        //  return $reservas;
         if(count($alquileres)>0){
-            return back()->with('curso','El VEHÍCULO SE ENCUENTRA EN RENTA :)');
+            return back()->with('mensaje','EN CURSO');
         
-        }                            
-        return $alquileres;
-
+        } 
+        if(count($reservas)>0){
+            return back()->with('curso',$reservas);
+        
+        }                         
+        // return $alquileres;
+        
        $taller=Tallerservicios::all();
     
         //return $vehiculo;
@@ -398,5 +407,18 @@ class mantenimientoController extends Controller
     public function destroy(mantenimientos $mantenimientos)
     {
         //
+    }
+
+    public function Confmante(Request $request)
+    {
+        // return $request;
+        $vehiculo = Vehiculo::join('vehiculosucursales','vehiculo','=','idvehiculo')
+        ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
+        ->where('vehiculos.idvehiculo',$request['vehiculo'])->first();
+        $taller=Tallerservicios::all();
+    
+        //return $vehiculo;
+        return view('gerente.mantenimiento.alta_mantenimiento', compact('vehiculo','taller')) ;
+        return $vehiculo;
     }
 }
