@@ -10,6 +10,7 @@
   <section class="content-header">
     <h1>
       Panel de administración | <small>Reservaciones</small>
+
     </h1>
   </section>
 
@@ -130,24 +131,24 @@
                     <h4 ><br>Datos del <a href="">vehículo </a></h4> 
 
 
-                  <div class="col-md-6 form-group">
-                    <label>Vin</label>
-                    <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->vin}}">
-                  </div>
-
                    <div class="col-md-6 form-group">
                      <label>Tipo</label>
                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->tipo}}">
                    </div>
 
                    <div class="col-md-6 form-group">
-                      <label>Vehículo</label>
+                      <label>Modelo</label>
                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}">
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Transmisión</label>
-                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->transmicion}}">
+                      <label>Vin</label>
+                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->vin}}">
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label>Placas</label>
+                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->matricula}}">
                       </div>
 
                     <div class="col-md-6 form-group">
@@ -272,33 +273,23 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div class="box-footer" style="float: right">
-                        @if($alquiler->estatus == 'en curso')
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#recibir">
-                            <b>Recibir</b>
-                          </button>
-                          @endif
 
-                            @if($alquiler->estatus=='cancelado'||$reservacion->estatus=='en curso'||$alquiler->estatus=='terminado')
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#" disabled>
-                                <b>Cancelar</b>
-                              </button>
-                              <a  disabled class="btn btn-success" disabled><b>Entregar</b></a>
-
-                              </div>
-                              @else
-
-                              {{-- @if($reservacion->estatus!='en curso')
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
-                                  <b>Cancelar</b>
-                                </button>
-                                @endif --}}
-                                @if($alquiler->nombreConductor!=null&&$alquiler->expedicion_licencia!=null&&$alquiler->num_licencia!=null&&$alquiler->expiracion_licencia!=null&&$alquiler->estatus!='en curso')
-                                <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
-                                @endif
-
-                                @endif
+                      @if($alquiler->estatus=="pendiente_recogida")
+                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
+                        <b>Cancelar</b>
+                      </button>
+                      @if($alquiler->nombreConductor!="por rellenar"&&$alquiler->expedicion_licencia!="por rellenar"&&$alquiler->num_licencia!="por rellenar"&&$alquiler->expiracion_licencia!="por rellenar"&&$alquiler->estatus!='en curso'&&date("Y-m-d")>=$alquiler->fecha_recogida)
+                      <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
+                      @endif
+                      @elseif($alquiler->estatus=="en curso")
+                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#recibir">
+                        <b>Recibir</b>
+                      </button>
+                      @endif
                         </div>                       
-                    </div>                    
+                    </div>  
+                  </div>  
+
              
    
 
@@ -492,7 +483,9 @@
                                       <th>Monto</th>
                                       <th>Comentario</th>
                                       @if($pagos->count())  
-                                      @foreach($pagos as $pago)  
+                                      {{$total = 0.0}}
+                                      @foreach($pagos as $pago)
+                                      {{$total+=$pago->total}}  
                                       <tr>
                                       <td>{{$pago->id}}</td>
                                   
@@ -511,7 +504,7 @@
                                       @endif
 
                                     </table>
-                                  
+                                  <h3>Total cobrado = {{$total}}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -519,6 +512,7 @@
                               
                       </div>
                       <div class="modal-footer">
+
 
                       </div>
                       </form>

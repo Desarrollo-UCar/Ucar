@@ -56,9 +56,9 @@
                     <li class="dropdown">
                       <a href="#">Sucursales <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido</a></li>
-                        <li><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto Ixtepec</a></li>
-                        <li><a href="{{ route('sucursal_Istmo') }}">Istmo</a></li>
+                      @foreach($sucursales as $sucursal)
+                            <li><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}</a></li>
+                        @endforeach
                       </ul>
                     </li>
 
@@ -142,7 +142,7 @@
                         <div id="lista_itinerario">
                             <h6><strong>Datos Generales:</strong></h6>    
                             <dl>
-                            <dt>Lugar de Recogida y Devolución</dt>
+                            <dt>Lugar de Entrega y Devolución</dt>
                             <dd>{{$sucursal->nombre}}</dd>
                             <dt>Fecha / Hora de recolección:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>
@@ -160,10 +160,11 @@
                             <dd>En el caso de nacionales se solicita INE y para extranjeros pasaporte.</dd>
                             <dt>- Licencia de conducir vigente</dt>
                             <dt>- Tarjeta de crédito</dt>
-                            <dt>- Pago de garantia</dt>
-                            <dd>De la tarjeta de crédito se retendrán 20,000.00MX como garantia en caso de cualquier siniestro o percanse.</dd>  
+                            <dt>- Pago de garantía</dt>
+                            <dd>De la tarjeta de crédito se retendrán $20,000.00 MXN como garantía en caso de cualquier siniestro o percance.</dd>  
                             <dt>- Pago total de la renta</dt>
-                            <dd>El pago total de la renta se liquida en el momento de la entrega el vehiculo.</dd>
+                            <dd>El pago total de la renta se liquida en el momento de la entrega del vehículo.</dd>
+                            <dd>Se requiere el pago mínimo de un día para realizar la reservación.</dd>
                             <dt>- En caso de dudas</dt>
                             <dd>Consultar los términos y condiciones del servicio.</dd>
                             </dl> 
@@ -252,7 +253,7 @@
                                             <div id="lista_itinerario">
                                                 
                                                 <dt class = "text-danger"><strong>¡¡¡IMPORTANTE!!!</strong></dt>
-                                                <dd>De no cumplir con los documentos aqui mostrados, no se le podrá hacer entrega del vehículo, ni de su pago de reserva.</dd>
+                                                <dd>De no cumplir con los documentos aquí mostrados, no se le podrá hacer entrega del vehículo, ni devolución de su pago de reserva.</dd>
                                                 </dl> 
                                             </div>
                                         </div>
@@ -583,9 +584,9 @@
 <!-- Grid column -->
 <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
     <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
-    <p><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
-    <p><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto, Ixtepec, Oaxaca, +52 954 149 0304 </a></p>
-    <p><a href="{{ route('sucursal_Istmo') }}">Istmo, Oaxaca, +52 954 149 0304 </a></p>
+    @foreach($sucursales as $sucursal)
+    <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, {{$sucursal->telefono}} </a></p>
+    @endforeach
 </div>
                 <!-- Grid column -->
 </div>

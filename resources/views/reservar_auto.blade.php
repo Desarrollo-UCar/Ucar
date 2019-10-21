@@ -20,7 +20,7 @@
                     <div id="lista_itinerario">
                         <h6><strong>Datos Generales:</strong></h6>    
                         <dl>
-                            <dt>Lugar de Recogida y Devolución</dt>
+                            <dt>Lugar de Entrega y Devolución</dt>
                             <dd>{{$sucursal->nombre}}</dd>
                             <dt>Fecha / Hora de recolección:</dt>
                             <dd>{{date("d\-m\-Y", strtotime($datos_reserva->fecha_recogida))}} a las {{$datos_reserva->hora_recogida}} hrs</dd>

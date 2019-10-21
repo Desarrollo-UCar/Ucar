@@ -144,12 +144,14 @@ class PagosStripeController extends Controller{
                 $message->from('ucardesarollo@gmail.com', 'Ucar');
                 $message->to($correo)->subject($asunto);
             }); 
-                return view('reservacion_exitosa',compact('cliente','vehiculo','reservacion'));
+            $sucursales = App\Sucursal::all();
+                return view('reservacion_exitosa',compact('cliente','vehiculo','reservacion','sucursales'));
         } catch (\Exception $ex) {
             return $ex->getMessage();
         }
         }else{//fin del if para validar que no se vuelva a realizar la reserva
-            return view('reserva_ya_realizada');
+            $sucursales = App\Sucursal::all();
+            return view('reserva_ya_realizada',compact('sucursales'));
         }
      }//fin de la funcion del pago y de genearar la reserva
 

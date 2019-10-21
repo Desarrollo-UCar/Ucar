@@ -60,9 +60,9 @@
                     <li class="dropdown">
                       <a href="#">Sucursales <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido</a></li>
-                        <li><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto Ixtepec</a></li>
-                        <li><a href="{{ route('sucursal_Istmo') }}">Istmo</a></li>
+                        @foreach($sucursales as $sucursal)
+                            <li><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}</a></li>
+                        @endforeach
                       </ul>
                     </li>
 
@@ -207,7 +207,7 @@
                               </div>
                           </div>
                           <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                              <label for="horaRecogida">HORA DE RECOGIDA</label>
+                              <label for="horaRecogida">HORA DE ENTREGA</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
@@ -265,15 +265,15 @@
                           </div>
                           <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="hora_extra">
                             <h6 class = "text-success"><strong>* NOTA:</strong></h6>
-                            <h6><small>Una hora menos, un dia mas barato.</small></h6>
+                            <h6><small>Si se pasa <strong>dos</strong> horas en la hora de <strong>devolución</strong> de la hora de <strong>recogida</strong> se cobrará el dia completo.</small></h6>
                           </div>
                           <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="dias_iguales">
                             <h6 class = "text-danger"><strong>* Error:</strong></h6>
-                            <h6><small>En dias iguales, la fecha de devolucion no puede ser menor a la de recogida.</small></h6>
+                            <h6><small>En días iguales, la fecha de devolución no puede ser menor a la de entrega.</small></h6>
                           </div>
                           <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="hora_menor">
                             <h6 class = "text-danger"><strong>* Error:</strong></h6>
-                            <h6><small>Para reservas del dia de hoy, no puede seleccionar una hora menor a la actual.</small></h6>
+                            <h6><small>Para reservas del día de hoy, no puede seleccionar una hora menor a la actual.</small></h6>
                           </div>
                           @if(session('mensaje'))
                           <div class="alert aler-danger">
@@ -326,9 +326,9 @@
                   <i class="ico icon-circled icon-bgdark icon-laptop active icon-3x"></i>
                 </div>
                 <div class="text">
-                  <h4>Reserva <strong>En linea</strong></h4>
+                  <h4>Reserva <strong>En línea</strong></h4>
                   <p>
-                    Te brindamos nuestros servicios a traves de reservaciones en linea.
+                    Te brindamos nuestros servicios a traves de reservaciones en línea.
                   </p>
                 </div>
               </div>
@@ -383,7 +383,7 @@
                     <h3>Auto<strong>+Chofer</strong></h3>
                   </div>
                   <div class="pricing-terms">
-                    <h6>Viaja comodamente con un chofer con amabilidad y experiencia</h6>
+                    <h6>Viaja cómodamente con un chofer con amabilidad y experiencia</h6>
                   </div>
                   <div class="pricing-action">
                     <a href="{{ route('index') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
@@ -570,9 +570,9 @@
 <!-- Grid column -->
 <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
     <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
-    <p><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
-    <p><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto, Ixtepec, Oaxaca, +52 954 149 0304 </a></p>
-    <p><a href="{{ route('sucursal_Istmo') }}">Istmo, Oaxaca, +52 954 149 0304 </a></p>
+    @foreach($sucursales as $sucursal)
+    <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, {{$sucursal->telefono}} </a></p>
+    @endforeach
 </div>
                 <!-- Grid column -->
 </div>
@@ -678,8 +678,8 @@ function checar_horas(){
     var minutos = hoy.getMinutes();
     hoyy = hoy.getFullYear() +'-'+ ((mes < 10) ? '0'+mes : mes) +'-'+  ((dia < 10) ? '0'+dia : dia) ;
     hora_actual   = ((hora < 10) ? '0'+hora : hora) +':'+  ((minutos < 10) ? '0'+minutos : minutos) ;
-    hora_actual_1 = ((hora_1 < 10) ? '0'+hora_1 : hora_1) +':'+  ((minutos < 30) ? '00': '30') ;
-    hora_actual_2 = ((hora_2 < 10) ? '0'+hora_2 : hora_2) +':'+  ((minutos < 30) ? '00': '30') ;
+    hora_actual_1 = ((hora_1 < 10) ? '0'+hora_1 : hora_1) +':'+  ((minutos <= 30) ? '00': '30') ;
+    hora_actual_2 = ((hora_2 < 10) ? '0'+hora_2 : hora_2) +':'+  ((minutos <= 30) ? '00': '30') ;
 
     console.log(horaRecogida.value);
     console.log(hora_actual_1);

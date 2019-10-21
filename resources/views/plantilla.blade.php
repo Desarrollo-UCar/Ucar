@@ -64,9 +64,9 @@
                     <li class="dropdown">
                       <a href="#">Sucursales <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido</a></li>
-                        <li><a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto Ixtepec</a></li>
-                        <li><a href="{{ route('sucursal_Istmo') }}">Istmo</a></li>
+                      @foreach($sucursales as $sucursal)
+                            <li><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal])}}">{{$sucursal->nombre}}</a></li>
+                        @endforeach
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -127,22 +127,22 @@
   <!-- Grid column -->
     <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
       <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
-      <p>Somos una empresa dedicada al servicio de renta de autos, traslados, especializados en flotillas</p>
+      <p>Somos una empresa dedicada al servicio de renta de autos, traslados. Especializados en flotillas</p>
     </div>
     <!-- Grid column -->
     <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
       <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
       <p>
-        <a href="{{ route('index') }}">Iniciar una reservaciĂłn</a>
+        <a href="{{ route('index') }}">Iniciar una reservación</a>
       </p>
       <p>
-        <a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservaciĂłn</a>
+        <a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservación</a>
       </p>
       
     </div>
     <!-- Grid column -->
     <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <h6 class="text-uppercase font-weight-bold">VehĂ­culos</h6>
+      <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
       <p>
         <a href="{{ route('flota') }}">Toda la flota</a>
       </p>
@@ -170,17 +170,14 @@
             <p>
               <a href="{{ route('en_construccion') }}">Preguntas Frecuentes</a></p>
             <p>
-              <a href="{{ route('en_construccion') }}">contacto</a></p>
+              <a href="{{ route('en_construccion') }}">Contacto</a></p>
           </div>
           <!-- Grid column -->
                     <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
                       <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
-                      <p>
-                        <a href="{{ route('sucursal_P_Escondido') }}">Puerto Escondido, Oaxaca, (954) 582-32-24 / + 52 954 149 0304 </a></p>
-                      <p>
-                        <a href="{{ route('sucursal_Ixtepec') }}">Aeropuerto, Ixtepec, Oaxaca, +52 954 149 0304 </a></p>
-                      <p>
-                        <a href="{{ route('sucursal_Istmo') }}">Istmo, Oaxaca, +52 954 149 0304 </a></p>
+                      @foreach($sucursales as $sucursal)
+                        <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, {{$sucursal->telefono}} </a></p>
+                      @endforeach
                     </div>
                     <!-- Grid column -->
   </div>
@@ -192,7 +189,7 @@
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
           <div class="copyright">
-            <p><span>&copy;2019 Ăś-CAR. Todos los derechos reservados.</span></p>
+            <p><span>&copy;2019 Ü-CAR. Todos los derechos reservados.</span></p>
           </div>
         </div>
       </div>

@@ -738,4 +738,18 @@ return response()->download(storage_path('Documento01.docx'));
     }
 
 
+    public function indexAndroid(request $request)
+     {
+        //return response()->json($request);
+
+        $reservaciones = Alquiler::  
+        join('reservacions','reservacions.id','=','alquilers.id_reservacion')->
+        join('clientes','idCliente','=','reservacions.id_cliente')->
+        join('vehiculosucursales','vehiculosucursales.vehiculo','=','alquilers.id_vehiculo')->
+        join('vehiculos','vehiculos.idvehiculo','=','alquilers.id_vehiculo')->get();
+
+        return $reservaciones;//view('gerente.reservaciones.inicio', compact ('reservaciones'));
+        }
+
+
     }
