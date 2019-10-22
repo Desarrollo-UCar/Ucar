@@ -156,10 +156,10 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">EL VEHÍCULO TIENE RESERVAS PROXIMAS</b> </h4>
+                <h4 class="modal-title">EL VEHÍCULO TIENE RESERVAS PRÓXIMAS</b> </h4>
               </div>
               <div class="modal-body">
-                <p>Para mandar un vehículo a mantenimiento es necesario verificar sus proximas reservas.&hellip;</p>
+                <p>Para mandar un vehículo a mantenimiento es necesario verificar sus próximas reservas.&hellip;</p>
                 @if (session()->has('curso'))
                 
 <table class="table">
@@ -179,7 +179,7 @@
     <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_devolucion))}}</td>
     <td>{{$alquiler->nombreConductor}}</td>
     </tr>
-    @endforeach 
+    @endforeach   
   </tbody>
 </table>
                 </div>                                    

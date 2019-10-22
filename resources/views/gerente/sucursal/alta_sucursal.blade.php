@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Alta Sucursal</title>
   <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.9.0/d3.min.js"></script>
-  
  </head>
 <body>
   
@@ -16,8 +15,7 @@
         <h1>
           Panel de administración |
           <small>Alta sucursal</small>
-        </h1>
-        
+        </h1>        
     </section>
 
     <section class="content"> 
