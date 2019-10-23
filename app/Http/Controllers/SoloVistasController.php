@@ -13,6 +13,7 @@ class SoloVistasController extends Controller{
         //$sucursal = App\Sucursal::findOrFail($id); 
         $sucursales = App\Sucursal::all();
         //return $sucursales;
+        //return $sucursal;
         return view('sucursal_informacion',compact('sucursales','sucursal'));
     }
 public function vista_generar_cotizacion_traslado(){

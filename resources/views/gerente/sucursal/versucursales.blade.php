@@ -66,14 +66,14 @@
                   <tbody>
                       @foreach ($sucursals as $sucursal)                      
                       <tr>
-                      <td style="text-align: center">{{$sucursal->nombre}}</td>
-                        <td style="text-align: center">{{$sucursal->codigopostal}}</td>
-                        <td style="text-align: center">{{$sucursal->estado}}</td>
-                        <td style="text-align: center">{{$sucursal->municipio}}</td>
-                        <td style="text-align: center">{{$sucursal->colonia}}</td>
-                        <td style="text-align: center">{{$sucursal->calle}}</td>
-                        <td style="text-align: center">{{$sucursal->numero}}</td>
-                        <td style="text-align: center">{{$sucursal->telefono}}</td>
+                      <td>{{$sucursal->nombre}}</td>
+                        <td>{{$sucursal->codigopostal}}</td>
+                        <td>{{$sucursal->estado}}</td>
+                        <td>{{$sucursal->municipio}}</td>
+                        <td>{{$sucursal->colonia}}</td>
+                        <td>{{$sucursal->calle}}</td>
+                        <td>{{$sucursal->numero}}</td>
+                        <td>{{$sucursal->telefono}}</td>
                         <td style="text-align: center;"> 
                           <a href="{{ route('modificarsucursal',['idsucursal'=>$sucursal->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>
                           </td>

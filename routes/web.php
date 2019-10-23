@@ -91,6 +91,7 @@ Route::resource('cliente', 'ClienteController');
 Route::get('mostrarmantenimiento', 'MantenimientoController@mostrar')->name('mostrarmantenimiento');
 Route::get('editarmantenimieto', 'MantenimientoController@modificar')->name('modificarmantenimiento');
 Route::get('historialmantenimieto', 'MantenimientoController@Historial')->name('historialmantenimiento');
+Route::get('confirmarmantenimieto', 'MantenimientoController@Confmante')->name('confmante');
 Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado');
 Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehiculo');
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
@@ -124,7 +125,7 @@ Route::get('/reservacion/{reservacion}', 'ReservacionController@garantia')->name
 
 Route::get('/detalle/{reservacion}', 'ReservacionController@show')->name('reservacion');
 Route::get('/traslados', 'ReservacionController@indexTraslado')->name('taslados');
-Route::get('/conductor','ReservacionController@registra_conductor')->name('conductor');
+Route::post('/conductor','ReservacionController@registra_conductor')->name('conductor');
 Route::get('/recibir','ReservacionController@recibe_vehiculo')->name('recibir');
 Route::get('/reservacionesFecha','ReservacionController@fechaRecogida')->name('porFecha');
 Route::get('/reservacionesCliente','ReservacionController@cliente')->name('porCliente');

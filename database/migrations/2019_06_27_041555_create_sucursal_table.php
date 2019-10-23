@@ -15,6 +15,9 @@ class CreateSucursalTable extends Migration
     {
         Schema::create('Sucursales', function (Blueprint $table) {
             $table->increments('idSucursal');
+            $table->string('foto');
+            $table->string('foto1');
+            $table->string('foto2');
             $table->integer('codigo_postal')->require;
             $table->string('estado')->require;
             $table->string('Municipio')->require;

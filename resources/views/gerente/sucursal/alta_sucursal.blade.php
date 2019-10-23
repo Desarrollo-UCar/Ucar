@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_token" content="{{ csrf_token() }}" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Alta Sucursal</title>
   <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.9.0/d3.min.js"></script>
-  
  </head>
 <body>
   
@@ -16,8 +16,7 @@
         <h1>
           Panel de administración |
           <small>Alta sucursal</small>
-        </h1>
-        
+        </h1>        
     </section>
 
     <section class="content"> 
@@ -31,12 +30,8 @@
 
 
                    
-            <form {{-- action="{{ route('sucursal.store') }}" --}}
-            id="datos">
-            
-              
-               @csrf
-                
+            <form method="POST" id="datos" enctype="multipart/form-data">            
+            {{ csrf_field() }}                
 
                  {{--NOMBRE DE LA SUCURSAL--}}  
                  <div class="form-group col-md-4">
@@ -125,23 +120,60 @@
                 </div>                             
                               
 
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-4">
+                      <div id="preview" style="margin-top: 5%;">
+                        <div class="alert col-md-7 col-md-offset-1" id="message" style="display: none"></div>
+                       <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 200px; height: 100px;" >
+                      </div>
+                      <hr>
+                      <div class="col-md-1 col-md-offset-2  file-loading">
+                      <span class="btn btn-warning btn-file">Subir Foto
+                      <input id="foto" type="file" name="foto"/>    </span>  
+                      </div>                       
+                </div>   
+                <div class="col-md-4">
+                  <div id="preview1" style="margin-top: 5%;">
+                    <div class="alert col-md-7 col-md-offset-1" id="message1" style="display: none"></div>
+                   <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 200px; height: 100px;" >
+                  </div>
+                  <hr>
+                  <div class="col-md-1 col-md-offset-2  file-loading">
+                  <span class="btn btn-warning btn-file">Subir Foto
+                  <input id="foto1" type="file" name="foto1"/>    </span>  
+                  </div>            
+            </div>  
+            <div class="col-md-4">
+              <div id="preview2" style="margin-top: 5%;">
+                <div class="alert col-md-7 col-md-offset-1" id="message2" style="display: none"></div>
+               <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 200px; height: 100px;" >
+              </div>
+              <hr>
+              <div class="col-md-1 col-md-offset-2  file-loading">
+              <span class="btn btn-warning btn-file">Subir Foto
+              <input id="foto2" type="file" name="foto2"/>    </span>  
+              </div>                       
+        </div> 
+                              
+                  </div>                    
+                </div>
+                
               <!-- /.box-body -->
               <div class="row">
                 <div class="col-md-12">
                     <div class="box-footer" style="float: right">
-                        <button type="submit" id="enviar" class="btn btn-primary">Agregar</button>
+                        <button type="submit" class="btn btn-primary">Agregar</button>
                       </div>
                     <div class="box-footer" style="float: right">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">Cancelar</button>
                       </div>                       
                   </div>                    
               </div>
-              
-
             </form>
-          </div>
-     
+          </div>    
      </div>
+
 </section> 
 
 <div class="modal modal-danger fade" id="modal-warning">
@@ -182,8 +214,7 @@
         <p>LOS DATOS FUERON AGREGADOS CORRECTAMENTE&hellip;</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="recargar()">Continuar</button>
-        
+        <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="recargar()">Continuar</button>        
       </div>
     </div>
     <!-- /.modal-content -->
@@ -251,6 +282,74 @@
 
 {{--script para municpios--}}
 <script src="{{URL::asset('/js/heroku.js')}}"></script>
+
+<script>
+  document.getElementById("foto").onchange = function(e) {
+   // Creamos el objeto de la clase FileReader
+   let reader = new FileReader();
+ 
+   // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+   reader.readAsDataURL(e.target.files[0]);
+ 
+   // Le decimos que cuando este listo ejecute el código interno
+   reader.onload = function(){
+     let preview = document.getElementById('preview'),
+             image = document.createElement('img');
+ 
+     image.src = reader.result;
+     image.getElementsByClassName('rounded-circle');
+     image.style.width="200px";
+     image.style.height="100px";
+     preview.innerHTML = '';
+     preview.append(image);
+   };
+ }
+  </script>
+<script>
+  document.getElementById("foto1").onchange = function(e) {
+   // Creamos el objeto de la clase FileReader
+   let reader = new FileReader();
+ 
+   // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+   reader.readAsDataURL(e.target.files[0]);
+ 
+   // Le decimos que cuando este listo ejecute el código interno
+   reader.onload = function(){
+     let preview = document.getElementById('preview1'),
+             image = document.createElement('img');
+ 
+     image.src = reader.result;
+     image.getElementsByClassName('rounded-circle');
+     image.style.width="200px";
+     image.style.height="100px";
+     preview.innerHTML = '';
+     preview.append(image);
+   };
+ }
+  </script>
+  <script>
+    document.getElementById("foto2").onchange = function(e) {
+     // Creamos el objeto de la clase FileReader
+     let reader = new FileReader();
+   
+     // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+     reader.readAsDataURL(e.target.files[0]);
+   
+     // Le decimos que cuando este listo ejecute el código interno
+     reader.onload = function(){
+       let preview = document.getElementById('preview2'),
+               image = document.createElement('img');
+   
+       image.src = reader.result;
+       image.getElementsByClassName('rounded-circle');
+       image.style.width="200px";
+       image.style.height="100px";
+       preview.innerHTML = '';
+       preview.append(image);
+     };
+   }
+    </script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -266,25 +365,20 @@
 </script>
 
 <script>
- $(function () {
-     
-     $.ajaxSetup({
-         headers: {
-             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         }
-   });
-     
-   $('#enviar').click(function (e) {
-       e.preventDefault();
+  $(document).ready(function(){
    
-       $.ajax({
-         data: $('#datos').serialize(),
+  $('#datos').on('submit', function(event){
+   event.preventDefault();
+       $.ajax({      
          url: "{{ route('sucursal.store') }}",
          type: "POST",
-         dataType: 'json',
+         data:new FormData(this),
+         dataType:'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
          success: function (data) {
           var mensaje=data.success;
-           console.log(data);
           if(mensaje=='EXISTE'){
       $('#existe1').click();
        }else{
@@ -294,10 +388,6 @@
          error: function (data) {
          var err = JSON.parse(data.responseText);
          var arreglo = err.errors;
-         /*jQuery.each(arreglo, function(key, value){
-            console.log(arreglo);
-                      });*/
-                      console.log(arreglo);
           var nombre = arreglo.nombre;
           var codigo = arreglo.codigopostal;
           var estado = arreglo.estado;
@@ -305,8 +395,29 @@
           var colonia = arreglo.colonia;
           var calle = arreglo.calle;
           var numero = arreglo.numero;
-          var telefonono = arreglo.telefono;
-
+          var telefono = arreglo.telefono;
+          var foto = arreglo.foto;
+          var foto1 = arreglo.foto1;
+          var foto2 = arreglo.foto2;
+  
+          if (foto == undefined){  
+              
+            }else{
+             $('#message').css({"display": "block", "color":"red"});
+           $('#message').html('AGREGA UNA FOTO');
+          }
+          if (foto1 == undefined){  
+              
+            }else{
+             $('#message1').css({"display": "block", "color":"red"});
+           $('#message1').html('AGREGA UNA FOTO');
+          }
+          if (foto2 == undefined){  
+              
+            }else{
+             $('#message2').css({"display": "block", "color":"red"});
+           $('#message2').html('AGREGA UNA FOTO');
+          }
           
           if (nombre == undefined){  
             $( '#nombre' ).css('borderColor', 'green');         
@@ -316,7 +427,6 @@
               jQuery('#validonombre').hide(); 
             jQuery('#errornombre').show();          
            $( '#nombre' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
 
           if (codigo == undefined){  
@@ -327,7 +437,6 @@
               jQuery('#validocodigopostal').hide(); 
             jQuery('#errorcodigopostal').show();          
            $( '#codigo_postal' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
           if (estado == undefined){  
             $( '#estado' ).css('borderColor', 'green');         
@@ -337,7 +446,6 @@
               jQuery('#validoestado').hide(); 
             jQuery('#errorestado').show();          
            $( '#estado' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
           if (municipio == undefined){  
             $( '#municipio' ).css('borderColor', 'green');         
@@ -347,7 +455,6 @@
               jQuery('#validomunicipio').hide(); 
             jQuery('#errormunicipio').show();          
            $( '#municipio' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
 
           if (calle == undefined){  
@@ -358,7 +465,6 @@
               jQuery('#validocalle').hide(); 
             jQuery('#errorcalle').show();          
            $( '#calle' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
           if (numero == undefined){  
             $( '#numero' ).css('borderColor', 'green');         
@@ -368,7 +474,6 @@
               jQuery('#validonumero').hide(); 
             jQuery('#errornumero').show();          
            $( '#numero' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
           if (telefono == undefined){  
             $( '#telefono' ).css('borderColor', 'green');         
@@ -378,7 +483,6 @@
               jQuery('#validotelefono').hide(); 
             jQuery('#errortelefono').show();          
            $( '#telefono' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
 
           if (colonia == undefined){  
@@ -389,16 +493,12 @@
               jQuery('#validocolonia').hide(); 
             jQuery('#errorcolonia').show();          
            $( '#colonia' ).css('borderColor', 'red');
-            //console.log(nombre);
           }
              $('#enviar').html('guardar cambios');
              $('#error1').click();
          }
      });
-   });
-   
-  
-    
+   });   
  });
  </script>
 @endsection  

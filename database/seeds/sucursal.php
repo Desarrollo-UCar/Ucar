@@ -14,6 +14,9 @@ class sucursal extends Seeder
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
         DB::table('sucursals')-> insert([
+            'foto' => 'foto',
+            'foto1' => 'fotoo',
+            'foto2' => 'fotooo',
             'nombre' => 'U-CAR PUERTO ESCONDIDO',
             'codigopostal' => '68000',
             'estado' => 'OAXACA',
@@ -27,6 +30,9 @@ class sucursal extends Seeder
         ]);
             
         DB::table('sucursals')-> insert([
+            'foto' => 'foto',
+            'foto1' => 'fotoo',
+            'foto2' => 'fotooo',
             'nombre' => 'U-CAR ISTMO',
             'codigopostal' => '68000',
             'estado' => 'OAXACA',
@@ -40,6 +46,9 @@ class sucursal extends Seeder
         ]);
 
         DB::table('sucursals')-> insert([
+            'foto' => 'foto',
+            'foto1' => 'fotoo',
+            'foto2' => 'fotooo',
             'nombre' => 'U-CAR AEROPUERTO IXTEPEC',
             'codigopostal' => '68000',
             'estado' => 'OAXACA',

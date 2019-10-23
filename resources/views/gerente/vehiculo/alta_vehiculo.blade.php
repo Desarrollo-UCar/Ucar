@@ -498,7 +498,7 @@ document.getElementById("foto").onchange = function(e) {
              var status = arreglo.status;
              var sucursal = arreglo.sucursal;
              var puertas = arreglo.puertas;
-                       
+             var foto = arreglo.foto;       
              
              if (foto == undefined){  
               

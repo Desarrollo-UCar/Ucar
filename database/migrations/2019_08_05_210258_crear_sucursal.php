@@ -15,6 +15,9 @@ class CrearSucursal extends Migration
     {
         Schema::create('sucursals', function (Blueprint $table) {
             $table->bigIncrements('idsucursal');
+            $table->string('foto');
+            $table->string('foto1');
+            $table->string('foto2');
             $table->string('nombre')->require;
             $table->integer('codigopostal')->require;
             $table->string('estado')->require;
