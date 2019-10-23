@@ -9,8 +9,36 @@
           <div class="camera_caption fadeFromLeft">
             <div class="container-fluid">
               <div class="row">
+
               <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                   <h2 class="animated fadeInDown text-white"><strong>LAS MEJORES <span class="colored">OFICINAS</span></strong></h2>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- slide 2 here -->
+        <div data-src="{{'/images/'.$sucursal->foto1}}">
+          <div class="camera_caption fadeFromLeft">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 text-center">
+                  <h2 class="animated fadeInDown text-white"><strong>EL MEJOR <span class="colored">PERSONAL</span></strong></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- slide 3 here -->
+        <div data-src="{{'/images/'.$sucursal->foto2}}">
+          <div class="camera_caption fadeFromLeft">
+            <div class="container-fluid">
+              <div class="row">
+                 <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 text-center">
+                  <h2 class="animated fadeInDown text-white"><strong>LOS MEJORES <span class="colored">DESTINOS TURÍSTICOS</span></strong></h2>
                 </div>
               </div>
             </div>
@@ -26,7 +54,6 @@
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
             <h4>Renta un automovil en <strong>{{$sucursal->nombre}}</strong> </h4>
-            <div><img src={{'/public/images/'.$sucursal->foto}} /></div>
             <p>
             Ü-CAR tiene la mejor flota de vehiculos para tus necesidades. Tenemos ofertas y promociones para ti.
             </p>
