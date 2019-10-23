@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class SoloVistasController extends Controller{
+    public function sucursal_info(Request $request){
+        $idsucursal = $request->idsucursal; 
+        $sucursal = App\Sucursal::where('idsucursal','=',$idsucursal)->first();
+        //$sucursal = App\Sucursal::findOrFail($id); 
+        $sucursales = App\Sucursal::all();
+        //return $sucursales;
+        return view('sucursal_informacion',compact('sucursales','sucursal'));
+    }
 public function vista_generar_cotizacion_traslado(){
     $solicitud_traslado = App\traslado_temp::findOrFail(31);
     return view('generar_cotizacion_traslado',compact('solicitud_traslado'));
@@ -16,14 +24,9 @@ public function reservacion(){
     return view('reservacion',compact('sucursales'));}
 public function servicios(){ 
     $sucursales = App\Sucursal::all();
-    return view('servicios',compact('sucursales'));}
-
-public function sucursal_info(Request $request){ 
-    $id = $request['id'];
-    $sucursal = App\Sucursal::findOrFail($id); 
-    $sucursales = App\Sucursal::all();
-    return view('sucursal_informacion',compact('sucursales'));
+    return view('servicios',compact('sucursales'));
 }
+
 public function renta_traslado(){
     $estado = "inicio";
     $sucursales = App\Sucursal::all();

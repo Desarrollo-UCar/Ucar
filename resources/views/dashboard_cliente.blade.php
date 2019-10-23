@@ -47,7 +47,10 @@
                 </dl> 
             </div>
         </div>
-        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"></div>
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+         <!--  boton para realizar cambio en la resreva 
+         <a href="{{ route('modificar_reserva',['id'=>$reserva->id]) }}" class="btn btn-warning btn-sm"><i class="fa fa-cog"></i> Modificar</a>  -->
+        </div>
 
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <div class="container">

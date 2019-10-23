@@ -47,6 +47,11 @@ class PagesController extends Controller{
         $reserva_temp->total = 0;
         $reserva_temp->servicios_extra = 'ee';
         $reserva_temp->id_cliente = 0;
+    if($request->reserva_anterior != null)
+        $reserva_temp->id_reserva_anterior = $request->reserva_anterior;
+    else
+        $reserva_temp->id_reserva_anterior = 0;
+
     if($reserva_temp->estatus != 'reserva_finalizada'){
         $reserva_temp->estatus = 'consulta_disponibles';
      }
@@ -173,34 +178,6 @@ class PagesController extends Controller{
     AND reserva_temps.hora_recogida <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
                                         [$sucursal,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_i,$hora_rr,$sucursal,$fecha_f,$hora_dd,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff]);
 
-
-                                        // return $vehiculos_disp;
-    //-------------------------------------------------!FIN MODIFICACION¡
-
-    //CONSULTA ANTERIOR
-    // $vehiculos_disp = DB::select('SELECT * FROM vehiculos 
-    // INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-    // WHERE vehiculosucursales.sucursal=?
-    // AND vehiculos.idvehiculo NOT IN (
-    // SELECT vehiculos.idvehiculo FROM vehiculos  
-    // INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-    // INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-    // WHERE vehiculosucursales.sucursal=?
-    // AND vehiculos.estatus ="ACTIVO"
-    // AND vehiculosucursales.status ="ACTIVO"
-    // AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-    // OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-    // UNION
-    // SELECT vehiculos.idvehiculo FROM vehiculos  
-    // INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-    // INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-    // WHERE vehiculosucursales.sucursal=?
-    // AND vehiculos.estatus ="ACTIVO"
-    // AND vehiculosucursales.status ="ACTIVO"
-    // AND  alquilers.fecha_recogida >= ?
-    // AND alquilers.fecha_devolucion <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
-    //                                     [$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
-    //FIN CONSULTA ANTERIOR
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //obtener solo un vehiculo por marca y modelo
 
@@ -361,12 +338,10 @@ class PagesController extends Controller{
     }
 }
     public function reservar_realizar_pago(Request $reserva){
-        $id_vehiculo     = $reserva['id_vehiculo'];
-        $id_reserva      = $reserva['id_reserva'];
         $servicios     = $reserva['id'];
 
-        $vehiculo       = App\Vehiculo::findOrFail($id_vehiculo);
-        $datos_reserva  = App\reserva_temp::findOrFail($id_reserva);
+        $vehiculo       = App\Vehiculo::findOrFail($reserva['id_vehiculo']);
+        $datos_reserva  = App\reserva_temp::findOrFail($reserva['id_reserva']);
         $devolucion = new DateTime($datos_reserva->fecha_devolucion);
         $salida     = new DateTime($datos_reserva->fecha_recogida);
         $diferencia = $salida->diff($devolucion);
@@ -409,7 +384,6 @@ class PagesController extends Controller{
         return view('reservar_realizar_pago',compact('vehiculo','datos_reserva','servicios_extra','dias','alquiler','subtotal','total','sucursal','sucursales'));
     }
     
-
     public function validar_logeo(Request $reserva){
         $r     = $reserva['id_reserva'];
         $sucursales = App\Sucursal::all();
@@ -421,7 +395,80 @@ class PagesController extends Controller{
         if($dias == 0)
             $dias = 1;
         $anticipo = $datos_reserva->total / $dias;
+        //ajustar los montos a cobrar en el caso que sea una modificacion de reserva
+        //return $datos_reserva;
+        //if($datos_reserva->id_reserva_anterior != 0){     
+          //  $this->actualizar_reserva( $anticipo,$r);
+           
+        //}else{
         return view('seleccionar_forma_de_pago',compact('datos_reserva','anticipo','sucursales'));
+        //}
     }
+
+    public function actualizar_reserva($anticipo, $id_temporal){
+        //consultar las dos reservas
+        $temporal_actual  = App\reserva_temp::findOrFail($id_temporal);//reservacion actual
+        $reservacion = App\Reservacion::findOrFail($temporal_actual->id_reserva_anterior);//reservacion pasada
+        $vehiculo       = App\Vehiculo::findOrFail($temporal_actual->id_vehiculo);
+        //obtenemos el anticipo pasado
+        $alquiler_pasado = App\Alquiler::where('id_reservacion', '=', $reservacion->id,'estatus', '!=', 'cancelado') ;//buscamos datos del cliente que ya esta logeado
+        //obtenemos el anticipo de la reserva pasada
+        
+        $devolucion = new DateTime($alquiler_pasado->fecha_devolucion);
+        $salida     = new DateTime($alquiler_pasado->fecha_recogida);
+        $diferencia = $salida->diff($devolucion);
+        $dias = $diferencia->format('%a');
+        if($dias == 0)
+            $dias = 1;
+        $anticipo_pasado = $resevacion->total / $dias;
+        //actualizar e3l registro de la reserva
+            if($anticipo_pasado > $anticipo){//comparamos si el anticipo que ya pago el cliente es mayor al modificado y en ese caso ya no se le cobra el anticipo
+                $reservacion->motivo_visita = 'por rellenar';
+                $reservacion->comentarios = 'reservacion actualizada por el cliente';
+                $reservacion->total = $temporal_actual->total;
+                $reservacion->saldo = $temporal_actual->total-$anticipo_pasado;
+                $reservacion->save();
+                // listo tenemos la reserva
+            // buscamos el vehiculo para proceder a crear el alquiler con todos los datos
+                // Creamos el objeto para Pago_reservacion
+                $alquiler = new App\Alquiler;
+                $alquiler->id_reservacion = $reservacion->id;
+                $alquiler->lugar_recogida = $temporal_actual->lugar_recogida;
+                $alquiler->fecha_recogida = $temporal_actual->fecha_recogida;
+                $alquiler->hora_recogida = $temporal_actual->hora_recogida;
+                $alquiler->lugar_devolucion = $temporal_actual->lugar_devolucion;
+                $alquiler->fecha_devolucion = $temporal_actual->fecha_devolucion;
+                $alquiler->hora_devolucion = $temporal_actual->hora_devolucion;
+                $alquiler->id_vehiculo = $temporal_actual->id_vehiculo;
+                $alquiler->km_salida = $vehiculo->kilometraje;
+                $alquiler->km_regresa = $vehiculo->kilometraje;
+                $alquiler->nombreConductor = 'por rellenar';
+                $alquiler->num_licencia = 'por rellenar';
+                $alquiler->expedicion_licencia = 'por rellenar';
+                $alquiler->expiracion_licencia = 'por rellenar';
+                $alquiler->estatus = 'pendiente_recogida';
+                $alquiler->save();
+                //cancelar el pasado alquiler
+                $alquiler_pasado = App\Alquiler::findOrFail($reservacion->id);
+                $alquiler_pasado->estatus = 'cancelado';
+                $alquiler_pasado->save();
+                //rellenamos la tabla de alquileresservicioextra para llevar un control de l    os servicios eextra que tiene cada alquiler y cada reserva
+                //tenemos uq hacer un foreach para rellenar en caso de que haya mas de un servicio extra
+                $porciones = str_split($temporal_actual->servicios_extra,1);
+                //echo $datos_reserva->servicios_extra;
+                //return $porciones;
+                foreach($porciones as $p){
+                    $alquiler_serv_extra = new App\alquilerserviciosextra;
+                    $alquiler_serv_extra->alquiler = $alquiler->id;
+                    $alquiler_serv_extra->servicioExtra = intval($p);
+                    $alquiler_serv_extra->save();
+                }
+                //----------------------
+            }else{
+                
+            }
+    }
+
+
 
 }

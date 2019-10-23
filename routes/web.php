@@ -34,10 +34,12 @@ Route::get('guardar_confirmacion_traslado', 'TrasladoController@guardar_confirma
 Route::post('crear_pago_stripe', 'PagosStripeController@crear_pago_stripe')-> name('crear_pago_stripe');
 //routes para envio de correos 
 Route::post('correo_confirmacion_reserva', 'EmailController@correo_confirmacion_reserva')-> name('correo_confirmacion_reserva');
+//routes para modificar reserva
+Route::get('modificar_reserva',           'ModificarReservaController@modificar_reserva')->      name('modificar_reserva') ;
 //routes para SoloVistasController
 Route::get('Reservacion',             'SoloVistasController@reservacion')->          name('reservacion') ;
 Route::get('servicios',               'SoloVistasController@servicios')->            name('servicios') ;
-Route::get('sucursal_info/{id}',      'SoloVistasController@sucursal_info')->        name('sucursal_info') ;
+Route::get('sucursal_info',           'SoloVistasController@sucursal_info')->      name('sucursal_info') ;
 Route::get('renta_flotilla',          'SoloVistasController@renta_flotilla')->       name('renta_flotilla') ;
 Route::get('en_construccion',         'SoloVistasController@en_construccion')->      name('en_construccion');//ruta para todas las que aun no estan
 Route::get('renta_traslado',          'SoloVistasController@renta_traslado')->       name('renta_traslado') ;

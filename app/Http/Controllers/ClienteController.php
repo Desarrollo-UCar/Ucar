@@ -289,7 +289,8 @@ class ClienteController extends Controller
         //    return $request['idCliente'];
           $cliente->save();
          $oko = 1;
-          return view('mi_perfil',compact('cliente','oko'));
+         $sucursales = App\Sucursal::all();
+          return view('mi_perfil',compact('cliente','oko','sucursales'));
     }
 
 }

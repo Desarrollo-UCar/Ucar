@@ -53,7 +53,7 @@
 <section id="mensaje-intermedio">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-            <h4>Renta un automovil en el Istmo: </h4>
+            <h4>Renta un automovil en <strong>{{$sucursal->nombre}}</strong> </h4>
             <p>
             Ü-CAR tiene la mejor flota de vehiculos para tus necesidades. Tenemos ofertas y promociones para ti.
             </p>
@@ -72,13 +72,13 @@
     </iframe>
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-        <h4>U-CAR <strong>Istmo</strong></h4>
+        <h4>U-CAR <strong>{{$sucursal->nombre}}</strong></h4>
             <p>
-            Guadalupe victoria esquina de los Maestros s/n
-            Centro, El espinal
-            Oaxaca, Oaxaca.
+            {{$sucursal->calle}}, NUMERO: {{$sucursal->numero}}<br><br>
+            {{$sucursal->colonia}},<br><br>
+            {{$sucursal->municipio}}, {{$sucursal->estado}}
             </p>
-            <h5>+52 954 149 0304</h5>
+            <h5>{{$sucursal->telefono}}</h5>
     </div>
 </div>
 <!--Google Maps-->

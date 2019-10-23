@@ -16,7 +16,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 16,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2018,
                 'precio' => 1095.00, 
                 'costo' => 150000.00, 
@@ -27,11 +27,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 4000,
                 'tipo' => 'compacto',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246592',
@@ -41,7 +41,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 20,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2016,
                 'precio' => 1200.00, 
                 'costo' => 170000.00, 
@@ -52,11 +52,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 8000,
                 'tipo' => 'compacto',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246593',
@@ -66,7 +66,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 12,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2018,
                 'precio' => 1500.00, 
                 'costo' => 200000.00, 
@@ -77,11 +77,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 10000,
                 'tipo' => 'camioneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246594',
@@ -91,7 +91,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 10,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2014,
                 'precio' => 2000.00, 
                 'costo' => 250000.00, 
@@ -102,11 +102,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'camioneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246595',
@@ -116,7 +116,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 10,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2013,
                 'precio' => 1800.00, 
                 'costo' => 230000.00, 
@@ -127,11 +127,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 5000,
                 'tipo' => 'camioneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246596',
@@ -141,7 +141,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 8,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2008,
                 'precio' => 1900.00, 
                 'costo' => 300000.00, 
@@ -152,11 +152,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 20350,
                 'tipo' => 'van',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246597',
@@ -166,7 +166,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 18,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2018,
                 'precio' => 1200.00, 
                 'costo' => 150000.00, 
@@ -177,11 +177,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 3000,
                 'tipo' => 'compacto',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246598',
@@ -191,7 +191,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'no aplica',//no aplica
                 'puertas' => 0,              //no aplica
                 'rendimiento' => 25,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2019,
                 'precio' => 900.00, 
                 'costo' => 15000.00, 
@@ -202,11 +202,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
 
             //carros duplicados
@@ -218,7 +218,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 18,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2018,
                 'precio' => 1200.00, 
                 'costo' => 150000.00, 
@@ -229,11 +229,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 3000,
                 'tipo' => 'compacto',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246600',
@@ -243,7 +243,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 18,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2018,
                 'precio' => 1200.00, 
                 'costo' => 150000.00, 
@@ -254,11 +254,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 3000,
                 'tipo' => 'compacto',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246601',
@@ -268,7 +268,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'no aplica',//no aplica
                 'puertas' => 0,              //no aplica
                 'rendimiento' => 25,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2019,
                 'precio' => 900.00, 
                 'costo' => 15000.00, 
@@ -279,11 +279,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246602',
@@ -293,7 +293,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'no aplica',//no aplica
                 'puertas' => 0,              //no aplica
                 'rendimiento' => 25,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2019,
                 'precio' => 900.00, 
                 'costo' => 15000.00, 
@@ -304,11 +304,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246603',
@@ -318,7 +318,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'no aplica',//no aplica
                 'puertas' => 0,              //no aplica
                 'rendimiento' => 25,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2019,
                 'precio' => 900.00, 
                 'costo' => 15000.00, 
@@ -329,11 +329,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246604',
@@ -343,7 +343,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'no aplica',//no aplica
                 'puertas' => 0,              //no aplica
                 'rendimiento' => 25,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2019,
                 'precio' => 900.00, 
                 'costo' => 15000.00, 
@@ -354,11 +354,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246605',
@@ -368,7 +368,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'no aplica',//no aplica
                 'puertas' => 0,              //no aplica
                 'rendimiento' => 25,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2019,
                 'precio' => 900.00, 
                 'costo' => 15000.00, 
@@ -379,11 +379,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246606',
@@ -393,7 +393,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'no aplica',//no aplica
                 'puertas' => 0,              //no aplica
                 'rendimiento' => 25,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2019,
                 'precio' => 900.00, 
                 'costo' => 15000.00, 
@@ -404,11 +404,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 15000,
                 'tipo' => 'motoneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
                 'vin' => '1GNCS13Z6M0246607',
@@ -418,7 +418,7 @@ class Vehiculo extends Seeder{
                 'transmicion' => 'standar',
                 'puertas' => 4,
                 'rendimiento' => 10,
-                'estatus' => 'disponible',
+                'estatus' => 'activo',
                 'anio' => 2013,
                 'precio' => 1800.00, 
                 'costo' => 230000.00, 
@@ -429,11 +429,11 @@ class Vehiculo extends Seeder{
                 'kilometraje' => 5000,
                 'tipo' => 'camioneta',
                 'descripcion' =>'Aire acondicionado, bolsas de aire',
-                'foto' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_derecha' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_izquierda' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_frente' => 'img/flota/Chevrolet-Aveo-2018.jpg',
-                'foto_trasera' => 'img/flota/Chevrolet-Aveo-2018.jpg'
+                'foto' => 'img/auto/1.jpg',
+                'foto_derecha' => 'img/auto/1.jpg',
+                'foto_izquierda' => 'img/auto/2.jpg',
+                'foto_frente' => 'img/auto/3.jpg',
+                'foto_trasera' => 'img/auto/4.jpg'
             ));
     }
 }

@@ -17,9 +17,9 @@ class PagosStripeController extends Controller{
        $datos_reserva  = App\reserva_temp::findOrFail($request->id_reserva_temp);
        $correo   = auth()->user()->email;
             //el cliente no se esta creando al momento del registro
-       $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
-       $vehiculo       = App\Vehiculo::findOrFail($datos_reserva->id_vehiculo);
-
+       $cliente  = App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+       $vehiculo = App\Vehiculo::findOrFail($datos_reserva->id_vehiculo);
+       $sucursal = App\Sucursal::findOrFail($datos_reserva->lugar_recogida);
        if($datos_reserva->estatus != 'reserva_finalizada'){
 //checar cuanto se va a pagar en base a la opcion seleccionada
         if($request->btnAccion == 'pago_total'){
@@ -45,7 +45,6 @@ class PagosStripeController extends Controller{
                 'amount' =>  intval($pago_realizar * 100),
                 'currency' => 'mxn'
             ));
-            //---------------
                 $datos_reserva->id_cliente = $cliente->idCliente;//guardo el cliente en la temporal por si acaso
                 $datos_reserva->estatus = 'reserva_finalizada';
                 $datos_reserva->save();
@@ -138,12 +137,20 @@ class PagosStripeController extends Controller{
                 //Mail::to($correo)->send(new App\Mail\Enviar($reserva_correo,$serv_extra_correo));
                 $reservacion = $reserva_correo;
                 $serv_extra = $serv_extra_correo;
+                $asunto = 'Confirmacion de pago reserva Ü-CAR';
+            //---------------enviar nota de pago al cliente
+            return $pago_reserva;
+            Mail::send('mails.confirmacion_pago',compact('reservacion','pago_reserva','sucursal'), function ($message) use ($asunto,$correo,$reservacion) {
+                $message->from('ucardesarollo@gmail.com', 'Ü-car');
+                $message->to($correo)->subject($asunto);
+                }); 
+            //-------
                 $asunto = 'Confirmacion de Reserva';
                 //enviar correo
                 Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
                 $message->from('ucardesarollo@gmail.com', 'Ucar');
                 $message->to($correo)->subject($asunto);
-            }); 
+                }); 
             $sucursales = App\Sucursal::all();
                 return view('reservacion_exitosa',compact('cliente','vehiculo','reservacion','sucursales'));
         } catch (\Exception $ex) {
