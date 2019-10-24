@@ -15,11 +15,15 @@ use App;
 use DB;
 use App\VehiculoSucursales;
 use App\traslado_temp;
-
+use DateTime;
 use App\Sucursal;
 use Illuminate\Foundation\Console\Presets\Bootstrap;
 use PhpOffice\PhpWord\TemplateProcessor;
+use App\reintegros;
 
+
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Settings;
 
 class ReservacionController extends Controller
 {
@@ -109,37 +113,136 @@ class ReservacionController extends Controller
         $sucursal = $sucur->sucursal;
         $fecha_i = $alquiler->fecha_recogida;
         $fecha_f = $alquiler->fecha_devolucion;
-        $disponibles = DB::select('SELECT * FROM vehiculos 
-        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-        WHERE vehiculosucursales.sucursal=?
-        AND vehiculos.estatus ="disponible"
-        AND vehiculos.idvehiculo NOT IN (
-        SELECT vehiculos.idvehiculo FROM vehiculos  
-        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-        WHERE vehiculosucursales.sucursal=?
-        AND vehiculos.estatus ="disponible"
-        AND vehiculosucursales.status ="ACTIVO"
-        AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-        OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-        UNION
-        SELECT vehiculos.idvehiculo FROM vehiculos  
-        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-        INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-        WHERE vehiculosucursales.sucursal=?
-        AND vehiculos.estatus ="disponible"
-        AND vehiculos.tipo = ?
-        AND vehiculosucursales.status ="ACTIVO"
-        AND  alquilers.fecha_recogida <= ?
-        AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$vehiculo->tipo, $fecha_i,$fecha_f]);
+    //----------------------------------------------!MODIFICACION¡
+    $devolucion = new DateTime($fecha_f);
+    $salida     = new DateTime($fecha_i);
+    $diferencia = $salida->diff($devolucion);
+    $dias = $diferencia->format('%a');
+
+    $fecha_ii = $fecha_i;
+    $fecha_ff = $fecha_f;
+
+    if($dias > 1){
+       $fecha_ii = date("Y-m-d",strtotime($fecha_i."+ 1 day"));//fecha de inicio dentro del rango
+       $fecha_ff = date("Y-m-d",strtotime($fecha_f."- 1 day"));//fecha de fin dentro del rango
+       //return $fecha_ii;
+    }
+
+    $hora_r =new DateTime($alquiler->hora_recogida);
+    $hora_r->modify('-1 hours');
+    $hora_r->format('H:i:s');
+
+    $hora_d =new DateTime($alquiler->hora_devolucion);
+    $hora_d->modify('+1 hours');
+    $hora_d->format('H:i:s');
+
+    $hora_dd = (string)$hora_d->format('H:i:s');//conversion de horas
+    $hora_rr = (string)$hora_r->format('H:i:s');
+    //return $hora_dd;
+
+    $disponibles = DB::select('SELECT * FROM vehiculos 
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculos.idvehiculo NOT IN (
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND alquilers.estatus != "cancelado"
+    AND (? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
+    OR ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion)
+    UNION
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND alquilers.estatus != "cancelado"
+    AND  alquilers.fecha_recogida >= ?
+    AND alquilers.fecha_devolucion <= ?
+    UNION
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND alquilers.estatus != "cancelado"
+    AND  alquilers.fecha_devolucion = ?
+    AND alquilers.hora_devolucion >= ?
+	UNION
+    SELECT vehiculos.idvehiculo FROM vehiculos  
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND alquilers.estatus != "cancelado"
+    AND  alquilers.fecha_recogida = ?
+    AND alquilers.hora_recogida <= ?
+    UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+    AND  reserva_temps.estatus != "cancelada"
+    AND ( ? BETWEEN reserva_temps.fecha_recogida AND reserva_temps.fecha_devolucion
+    OR ? BETWEEN reserva_temps.fecha_recogida AND reserva_temps.fecha_devolucion)
+    UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+   AND reserva_temps.estatus != "cancelada"
+    AND  reserva_temps.fecha_recogida >= ?
+    AND reserva_temps.fecha_devolucion <= ?
+    UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+   AND reserva_temps.estatus != "cancelada"
+    AND  reserva_temps.fecha_devolucion = ?
+    AND reserva_temps.hora_devolucion >= ?
+	UNION
+    SELECT reserva_temps.id_vehiculo FROM reserva_temps
+   INNER JOIN vehiculos ON vehiculos.idvehiculo = reserva_temps.id_vehiculo
+    INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
+    WHERE vehiculosucursales.sucursal=?
+    AND vehiculos.estatus ="ACTIVO"
+    AND vehiculosucursales.status ="ACTIVO"
+    AND reserva_temps.estatus != "reserva_finalizada"
+   AND reserva_temps.estatus != "cancelada"
+    AND  reserva_temps.fecha_recogida = ?
+    AND reserva_temps.hora_recogida <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
+                                        [$sucursal,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_i,$hora_rr,$sucursal,$fecha_f,$hora_dd,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff]);
+
+
+                                        // return $vehiculos_disp;
+    //-------------------------------------------------!FIN MODIFICACION¡
 
 
         $pagos = App\Pago_reservacion::where('id_reserva','=',$reservacion->id)->get();
 
+        $reembolsos = App\reintegros::where('id_reserva','=',$reservacion->id)->get();
+
         $servicios = App\alquilerserviciosextra::where('alquiler','=',$alquiler->id)->
         join('serviciosextras','idserviciosextra','=','alquilerserviciosextras.servicioExtra')->get();
 
-        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos','servicios'));
+        return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos','servicios','reembolsos'));
     }
 
     /**
@@ -300,6 +403,13 @@ $templateWord->setValue('color',$vehiculo->color);
 
 $templateWord->saveAs(storage_path('Documento01.docx'));
 
+Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
+// Any writable directory here. It will be ignored.
+Settings::setPdfRendererPath('.');
+
+$phpWord = IOFactory::load(storage_path('Documento01.docx'), 'Word2007');
+$phpWord->save(storage_path('result.pdf'), 'PDF');
+
 return response()->download(storage_path('Documento01.docx'));
 
 //FIN GENERAR WORD
@@ -319,6 +429,32 @@ return response()->download(storage_path('Documento01.docx'));
         $pdf = PDF::loadView('pdf_view', $data);  
         return $pdf->stream(' contrato.pdf');
     }
+
+            /**
+     * Display the specified resource.
+     *
+     * @param  \App\reservacion  $reservacion
+     * @return \Illuminate\Http\Response
+     */
+    public function reembolso_Reservacion(request $request){
+        $reservacion = Reservacion::where('id','=',$request['reservacion'])->first();
+        $carbon = new \Carbon\Carbon();
+        
+        $reintegro = new reintegros;
+        $reintegro->total = $request['monto'];
+        $reintegro->fecha =date('Y\-m\-d H\:i\:s');
+        //return response()->json($pago);
+        $reintegro->mostrador_Datos = $request['datos'];
+        $reintegro->id_reserva = $reservacion->id;
+        $reintegro->estatus= 'pagado';
+        $reintegro->motivo = $request['motivo'];
+        $reintegro->comentario = $request['comentario'];
+        $reintegro->save();
+
+        return back()->with('message','Operation Successful !');
+
+    }
+
 
             /**
      * Display the specified resource.
@@ -750,6 +886,4 @@ return response()->download(storage_path('Documento01.docx'));
 
         return $reservaciones;//view('gerente.reservaciones.inicio', compact ('reservaciones'));
         }
-
-
     }

@@ -117,6 +117,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //---------------------------------------------------------------------------mis rutas K
 //rutas reservacion
 Route::post('pago/', 'ReservacionController@pago_Reservacion')->name('pagoReservacion');
+Route::post('reembolso/', 'ReservacionController@reembolso_Reservacion')->name('reembolsoReservacion');
 Route::get('cancel/{id}', 'ReservacionController@cancela')->name('cancelaReservacion');
 Route::resource('reservacion', 'ReservacionController');
 Route::get('/customer/print-pdf/{reservacion}', 'ReservacionController@printPDF')->name('contrato');
