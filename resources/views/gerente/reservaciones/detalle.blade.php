@@ -136,15 +136,7 @@
                       </div>
                     </div>
                       
-                      
-                          <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#pagos">
-                              <b>Ver cobros </b>
-                            </button>
-
-
-          
-                    
-                   
+  
 
               <div class="row">
                 <div class="col-md-8">
