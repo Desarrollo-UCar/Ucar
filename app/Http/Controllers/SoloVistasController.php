@@ -7,22 +7,39 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class SoloVistasController extends Controller{
+    public function sucursal_info(Request $request){
+        $idsucursal = $request->idsucursal; 
+        $sucursal = App\Sucursal::where('idsucursal','=',$idsucursal)->first();
+        //$sucursal = App\Sucursal::findOrFail($id); 
+        $sucursales = App\Sucursal::all();
+        //return $sucursales;
+        //return $sucursal;
+        return view('sucursal_informacion',compact('sucursales','sucursal'));
+    }
 public function vista_generar_cotizacion_traslado(){
     $solicitud_traslado = App\traslado_temp::findOrFail(31);
     return view('generar_cotizacion_traslado',compact('solicitud_traslado'));
 }
-public function sucursal_P_Escondido(){return view('sucursal_Puerto_Escondido');} 
-public function sucursal_Ixtepec(){ return view('sucursal_Ixtepec');}
-public function reservacion(){      return view('reservacion');}
-public function servicios(){        return view('servicios');}
-public function sucursales(){       return view('sucursales');}
-public function sucursal_Istmo(){   return view('sucursal_Istmo');}
+public function reservacion(){   
+    $sucursales = App\Sucursal::all();
+    return view('reservacion',compact('sucursales'));}
+public function servicios(){ 
+    $sucursales = App\Sucursal::all();
+    return view('servicios',compact('sucursales'));
+}
 
 public function renta_traslado(){
     $estado = "inicio";
-       return view('renta_traslado', compact('estado'));
+    $sucursales = App\Sucursal::all();
+       return view('renta_traslado', compact('estado','sucursales'));
     }
-public function renta_flotilla(){   return view('renta_flotilla');}
-public function en_construccion(){  return view('en_construccion');}
-public function bienvenida(){       return view('bienvenida');}
+public function renta_flotilla(){  
+    $sucursales = App\Sucursal::all();
+     return view('renta_flotilla',compact('sucursales'));}
+public function en_construccion(){ 
+    $sucursales = App\Sucursal::all(); 
+    return view('en_construccion',compact('sucursales'));}
+public function bienvenida(){
+    $sucursales = App\Sucursal::all();
+    return view('bienvenida',compact('sucursales'));}
 }

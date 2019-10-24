@@ -1,7 +1,11 @@
 @extends("theme.$theme.layout")
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Reservaciones</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.9.0/d3.min.js"></script>
 </head>
 
 <body>
@@ -10,7 +14,6 @@
   <section class="content-header">
     <h1>
       Panel de administración | <small>Reservaciones</small>
-
     </h1>
   </section>
 
@@ -133,12 +136,10 @@
                       </div>
                     </div>
                       
-                        {{-- @if($alquiler->estatus!='terminado')
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning3">
-                            <b>Cobrar garantia </b>
-                          </button>
-                          
-                          @endif --}}
+                      
+                          <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#pagos">
+                              <b>Ver cobros </b>
+                            </button>
 
 
           
@@ -206,51 +207,47 @@
                     <div class="col-md-8">
                         <h4 ><br>Datos del conductor</h4>
 
-                        <form method="GET" action="{{ route('conductor') }}"  role="form">
-                            {{ csrf_field() }}
-                            <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
-                            <input name="alquiler" type="hidden" value= "{{$alquiler->id}}">
-
+                        <form id="datos" >
+                          @csrf
+                            <input type="text" name="reservacion"  style="display: none" value= "{{$reservacion->id}}">
+                            <input type="text" name="alquiler"  style="display: none" value= "{{$alquiler->id}}">
                         
                   <div class="col-md-6 form-group">
                       <label>Número Licencia</label>
-                      @if($alquiler->num_licencia!=null)
-                  <input type="text" name="numero" id="" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
-                  @else
-                  <input type="text" name="numero" id="" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
-                  @endif
+                  <input type="text" name="numero" id="numero" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
+
+                  <span id="errornumero" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                  <span id="validonumero" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                 
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Nombre conductor</label>
-                        @if($alquiler->nombreConductor!=null)
-                        <input type="text" name="nombre" id="" class="form-control"  value="{{$alquiler->nombreConductor}} " required>
-                        @else
-                        <input type="text" name="nombre" id="" class="form-control"  value="" required>
-                        @endif
+                        <label>Nombre conductor</label>                       
+                        <input type="text" name="nombre" id="nombre" class="form-control"  value="{{$alquiler->nombreConductor}} " required>                   
+
+                        <span id="errornombre" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                        <span id="validonombre" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                       </div>
 
                       
                     <div class="col-md-6 form-group">
-                        <label>Fecha expedición</label>
-                        @if($alquiler->expedicion_licecncia!=null)
-                        <input type="date" name="fecha_e" id="" class="form-control"  value="">
-                        @else
-                        <input type="date" name="fecha_e" id="" class="form-control"  value="{{date($alquiler->expedicion_licencia)}}">
-                        @endif
+                        <label>Fecha expedición</label>                        
+                        <input type="date" name="fecha_e" id="fecha_e" class="form-control"  value="{{date($alquiler->expedicion_licencia)}}">
+                      
+                        <span id="errorfecha_e" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                        <span id="validofecha_e" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                       </div>
 
                       
                     <div class="col-md-6 form-group">
                         <label>Fecha expiración</label>
-                        @if($alquiler->expedicion_licecncia1!=null)
-                        <input type="date" name="fecha_c" id="" class="form-control"  value="">
-                        @else
-                        <input type="date" name="fecha_c" id="" class="form-control"  value="{{date($alquiler->expiracion_licencia)}}">
-                        @endif
+                       
+                        <input type="date" name="fecha_c" id="fecha_c" class="form-control"  value="{{date($alquiler->expiracion_licencia)}}">
+                        <span id="errorfecha_c" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                        <span id="validofecha_c" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                  </div>
                  @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado')
-                 <button type="submit" class="btn btn-sucess"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar'}}</button>
+                 <button type="submit" id="enviar" class="btn btn-primary pull-right">Agregar</button>
                 @endif
                   </form>
                   </div>
@@ -724,77 +721,160 @@
       </div>
     </div>
   </div>
+
+
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error" style="display: none" id="error1">Cancelar</button>
+<div class="modal modal-danger fade" id="error">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Error al agregar datos del conductor</b> </h4>
+        </div>
+        <div class="modal-body">
+          <p>Verifique los campos necesarios&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+        
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info" style="display: none" >
+
+  </button>
+  <div class="modal modal-info fade" id="modal-info">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">DATOS DE LICENCIA</h4>
+        </div>
+        <div class="modal-body">
+          <p>LOS DATOS FUERON AGREGADOS CORRECTAMENTE&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-dismiss="modal">Continuar</button>
+          
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal ---->
+
     @endsection
 
   @section('scripts')
 
-  <!-- bootstrap datepicker -->
-<script src="{{asset("assets/$theme/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js")}}"></script>
-  <script>
+
+ 
+    <script>
       $(function () {
-        //Initialize Select2 Elements
-        $('.select2').select2()
-    
-        //Datemask dd/mm/yyyy
-        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-        //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-        //Money Euro
-        $('[data-mask]').inputmask()
-    
-        //Date range picker
-        $('#reservation').daterangepicker()
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-        //Date range as a button
-        $('#daterange-btn').daterangepicker(
-          {
-            ranges   : {
-              'Today'       : [moment(), moment()],
-              'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-              'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-              'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-              'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-              'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            },
-            startDate: moment().subtract(29, 'days'),
-            endDate  : moment()
-          },
-          function (start, end) {
-            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-          }
-        )
-    
-        //Date picker
-        $('#datepicker').datepicker({
-          autoclose: true
-        })
-    
-        //iCheck for checkbox and radio inputs
-        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-          checkboxClass: 'icheckbox_minimal-blue',
-          radioClass   : 'iradio_minimal-blue'
-        })
-        //Red color scheme for iCheck
-        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-          checkboxClass: 'icheckbox_minimal-red',
-          radioClass   : 'iradio_minimal-red'
-        })
-        //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-          checkboxClass: 'icheckbox_flat-green',
-          radioClass   : 'iradio_flat-green'
-        })
-    
-        //Colorpicker
-        $('.my-colorpicker1').colorpicker()
-        //color picker with addon
-        $('.my-colorpicker2').colorpicker()
-    
-        //Timepicker
-        $('.timepicker').timepicker({
-          showInputs: false
-        })
-      })
-    </script>
+          
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+        });
+        $(document).ready(function(){
+        $('#enviar').click(function (e) {
+       e.preventDefault();
+        
+            $.ajax({
+              url: "{{ route('conductor')}}",
+              data:$('#datos').serialize(),              
+              type: "POST",
+              dataType: 'json',
+              success: function (data) {
+               var mensaje=data.success;
+                // console.log(data);
+                if(mensaje=='FECHAS'){
+                $('#error1').click();
+                jQuery('#validofecha_e').hide(); 
+                 jQuery('#errorfecha_e').show();          
+                $( '#fecha_e' ).css('borderColor', 'red');
+                jQuery('#validofecha_c').hide(); 
+                 jQuery('#errorfecha_c').show();          
+                $( '#fecha_c' ).css('borderColor', 'red');
+                }
+                if(mensaje=='EXITO'){
+                  $('.btn-info').click();
+                }
+              },
+              error: function (data) {
+              var err = JSON.parse(data.responseText);
+              var arreglo = err.errors;
+              //  console.log(arreglo);
+               var numero = arreglo.numero;
+               var nombre = arreglo.nombre;
+               var fecha_e = arreglo.fecha_e;
+               var fecha_c = arreglo.fecha_c;
+             
+     
+               
+               if (numero == undefined){  
+                 $( '#numero' ).css('borderColor', 'green');         
+                 jQuery('#validonumero').show(); 
+                 jQuery('#errornumero').hide(); 
+                 }else{
+                   jQuery('#validonumero').hide(); 
+                 jQuery('#errornumero').show();          
+                $( '#numero' ).css('borderColor', 'red');
+                 
+               }
+     
+           
+               if (nombre == undefined){  
+                 $( '#nombre' ).css('borderColor', 'green');         
+                 jQuery('#validonombre').show(); 
+                 jQuery('#errornombre').hide(); 
+                 }else{
+                   jQuery('#validonombre').hide(); 
+                 jQuery('#errornombre').show();          
+                $( '#nombre' ).css('borderColor', 'red');
+                 
+               }
+
+
+               if (fecha_e == undefined){  
+                 $( '#fecha_e' ).css('borderColor', 'green');         
+                 jQuery('#validofecha_e').show(); 
+                 jQuery('#errorfecha_e').hide(); 
+                 }else{
+                   jQuery('#validofecha_e').hide(); 
+                 jQuery('#errorfecha_e').show();          
+                $( '#fecha_e' ).css('borderColor', 'red');
+                 
+               }
+     
+               if (fecha_c == undefined){  
+                 $( '#fecha_c' ).css('borderColor', 'green');         
+                 jQuery('#validofecha_c').show(); 
+                 jQuery('#errorfecha_c').hide(); 
+                 }else{
+                   jQuery('#validofecha_c').hide(); 
+                 jQuery('#errorfecha_c').show();          
+                $( '#fecha_c' ).css('borderColor', 'red');
+                 
+               }              
+                $('#enviar').html('guardar cambios');
+                   $('#error1').click();
+              }
+          });
+        });
+        
+       
+         
+      });
+           });
+      </script>
 @endsection

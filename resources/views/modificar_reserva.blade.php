@@ -105,67 +105,6 @@
         </div>
       </div>
     </header>
-    <!-- end header -->
-    <!-- section featured -->
-    <section id="featured">
-      <!-- slideshow start here -->
-      <div class="camera_wrap" id="camera-slide">
-        <!-- slide 1 here -->
-        <div data-src="img/inicio/Puerto-Escondido.jpg">
-          <div class="camera_caption fadeFromLeft">
-          <div class="container">
-              <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                  <h2 class="animated fadeInDown text-white text-center"><strong>   VE LOS VEHICULOS <br> <span class="colored"> QUE TENEMOS PARA TI!!!</span></strong></h2>
-                  <p class="animated fadeInUp text-white text-center">Reserva ahora mismo.</p>
-                  <a href="{{ route('flota') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Ver Flota</a>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <img src="img/inicio/aveo.png" alt="" class="animated bounceInDown delay1" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- slide 2 here -->
-        <div data-src="img/inicio/Puerto-Escondido2.jpg">
-          <div class="camera_caption fadeFromLeft">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <img src="img/inicio/Honda_Dio_2019_sf.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                    <h2 class="animated fadeInDown text-white"><strong>CREA<span class="colored"> UNA CUENTA </span></strong></h2>
-                    <p class="animated fadeInUp text-white">Se requiere tener una cuenta de cliente con nosotros para poder realizar una reservación .</p>
-                    <a href="{{ route('register') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Registrarme</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- slide 3 here -->
-        <div data-src="img/inicio/Puerto-Escondido.jpg">
-          <div class="camera_caption fadeFromLeft">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                    <h2 class="animated fadeInDown"><strong>ESTAMOS PARA ATENDERTE</strong></h2>
-                    <h2 class="animated fadeInDown"><strong><span class="colored">LOS 365 DIAS AL AÑO</span></strong></h2>
-                    <p class="animated fadeInUp text-white">Somos una empresa dedicada al servicio de renta de autos, especializados en flotillas.</p>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <img src="img/inicio/toyota-hilux.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- slideshow end here -->
-    </section>
-    <!-- /section featured -->
-    <!-- /inicio formulario para iniciar reservación -->
     <section id="formulario">
       <div class="bg-white" id='formulario_reserva_vehiculo'>
           <h5 class="text-center"><strong>Reserva </strong>tu vehículo en sencillos pasos</h5>
@@ -181,6 +120,7 @@
                   
                   <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
                       @csrf
+                      <input type="hidden" id='reserva_anterior' name="reserva_anterior" value="{{$alquiler->id_reservacion}}">
                       <div class="form-row">
                           <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
                               <label for="inputLugar">SUCURSAL DE RENTA</label>
@@ -190,7 +130,7 @@
                                   </div>
                                   <select id="lugarrecogida" name='lugarrecogida' class="form-control" value = "{{ old('lugarrecogida') }}" required>
                                   @foreach($sucursales as $sucursal)
-                                      <option>{{$sucursal->nombre}}</option>
+                                      <option <?php if($alquiler->lugar_recogida == $sucursal->idsucursal) echo "selected";?>>{{$sucursal->nombre}}</option>
                                   @endforeach
                               </select>
                               </div>
@@ -201,9 +141,9 @@
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
                                   </div>
-                                  <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" value="Selecciona tus fechas" required>
-                                  <input type="hidden" id='fechaRecogida' name="fechaRecogida" value="0">
-                                  <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
+                                  <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" value="Del {{$alquiler->fecha_recogida}} al {{$alquiler->fecha_devolucion}}" required>
+                                  <input type="hidden" id='fechaRecogida' name="fechaRecogida" value="{{$alquiler->fecha_recogida}}">
+                                  <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="{{$alquiler->fecha_devolucion}}">
                               </div>
                           </div>
                           <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -213,20 +153,34 @@
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
                                   <select name = 'horaRecogida' id ='horaRecogida' class="form-control" required onchange="checar_horas();">
-                                      <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
-                                      <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
-                                      <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
-                                      <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
-                                      <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
-                                      <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
-                                      <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
-                                      <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
-                                      <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
-                                      <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
-                                      <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
-                                      <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
-                                      <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
-                                      <option value = "21:00">21:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "00:00:00") echo "selected";?>>00:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "08:00:00") echo "selected";?>>08:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "08:30:00") echo "selected";?>>08:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "09:00:00") echo "selected";?>>09:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "09:30:00") echo "selected";?>>09:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "10:00:00") echo "selected";?>>10:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "10:30:00") echo "selected";?>>10:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "11:00:00") echo "selected";?>>11:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "11:30:00") echo "selected";?>>11:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "12:00:00") echo "selected";?>>12:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "12:30:00") echo "selected";?>>12:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "13:00:00") echo "selected";?>>13:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "13:30:00") echo "selected";?>>13:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "14:00:00") echo "selected";?>>14:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "14:30:00") echo "selected";?>>14:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "15:00:00") echo "selected";?>>15:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "15:30:00") echo "selected";?>>15:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "16:00:00") echo "selected";?>>16:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "16:30:00") echo "selected";?>>16:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "17:00:00") echo "selected";?>>17:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "17:30:00") echo "selected";?>>17:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "18:00:00") echo "selected";?>>18:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "18:30:00") echo "selected";?>>18:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "19:00:00") echo "selected";?>>19:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "19:30:00") echo "selected";?>>19:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "20:00:00") echo "selected";?>>20:00</option>
+                                  <option <?php if($alquiler->hora_recogida == "20:30:00") echo "selected";?>>20:30</option>
+                                  <option <?php if($alquiler->hora_recogida == "21:00:00") echo "selected";?>>21:00</option>
                                   </select>
                               </div> 
                           </div>
@@ -237,20 +191,33 @@
                                   <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                   </div>
                                   <select name = 'horaDevolucion' id = 'horaDevolucion' class="form-control" required onchange="checar_horas();">
-                                    <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
-                                    <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
-                                    <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
-                                    <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
-                                    <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
-                                    <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
-                                    <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
-                                    <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
-                                    <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
-                                    <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
-                                    <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
-                                    <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
-                                    <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
-                                    <option value = "21:00">21:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "08:00:00") echo "selected";?>>08:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "08:30:00") echo "selected";?>>08:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "09:00:00") echo "selected";?>>09:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "09:30:00") echo "selected";?>>09:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "10:00:00") echo "selected";?>>10:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "10:30:00") echo "selected";?>>10:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "11:00:00") echo "selected";?>>11:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "11:30:00") echo "selected";?>>11:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "12:00:00") echo "selected";?>>12:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "12:30:00") echo "selected";?>>12:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "13:00:00") echo "selected";?>>13:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "13:30:00") echo "selected";?>>13:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "14:00:00") echo "selected";?>>14:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "14:30:00") echo "selected";?>>14:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "15:00:00") echo "selected";?>>15:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "15:30:00") echo "selected";?>>15:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "16:00:00") echo "selected";?>>16:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "16:30:00") echo "selected";?>>16:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "17:00:00") echo "selected";?>>17:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "17:30:00") echo "selected";?>>17:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "18:00:00") echo "selected";?>>18:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "18:30:00") echo "selected";?>>18:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "19:00:00") echo "selected";?>>19:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "19:30:00") echo "selected";?>>19:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "20:00:00") echo "selected";?>>20:00</option>
+                                      <option <?php if($alquiler->hora_devolucion == "20:30:00") echo "selected";?>>20:30</option>
+                                      <option <?php if($alquiler->hora_devolucion == "21:00:00") echo "selected";?>>21:00</option>
                                   </select>
                               </div>
                           </div>
@@ -289,240 +256,6 @@
   </div>
 </div>
 <!-- fin del card reserva --> 
-</section>
-<section id="caracteristicas">
-<!-- inicio caracteristicas de la empresa -->
-    <div class="container">
-          <div class="row">
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-              <div class="box flyLeft">
-                <div class="icon">
-                  <i class="ico icon-circled icon-bgdark active icon-3x fas fa-car"></i>
-                </div>
-                <div class="text">
-                  <h4>Autos <strong>Nuevos</strong></h4>
-                  <p>
-                    Remodelamos nuestra flota continuamente para tu comodidad.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-              <div class="box flyIn">
-                <div class="icon">
-                  <i class="ico icon-circled icon-bgdark active icon-3x fa-3x fa fa-diamond"></i>
-                </div>
-                <div class="text">
-                  <h4>Atención <strong>De calidad</strong></h4>
-                  <p>
-                    Trabajamos siempre para brindarte un servicio de excelencia.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-              <div class="box flyRight">
-                <div class="icon">
-                  <i class="ico icon-circled icon-bgdark icon-laptop active icon-3x"></i>
-                </div>
-                <div class="text">
-                  <h4>Reserva <strong>En línea</strong></h4>
-                  <p>
-                    Te brindamos nuestros servicios a traves de reservaciones en línea.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="box flyRight">
-                    <div class="icon">
-                    <i class="ico icon-circled icon-bgdark active icon-3x fa-3x fa fa-rocket"></i>
-                    </div>
-                    <div class="text">
-                    <h4>Variedad <strong>De servicios</strong></h4>
-                    <p>
-                        Variedad de servicios para tus necesidades de movilidad.
-                    </p>
-                    </div>
-                </div>
-            </div>
-          </div>
-    </div>
-</section><!-- fin Reserva y caracteristicas de la empresa -->
-<!-- inicio descripcion de servicios-->
-<section id="content">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 aligncenter">
-            <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="aligncenter">
-                  <h3>Nuestros <strong>Servicios</strong></h3>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="pricing-box-wrap special animated-fast flyIn">
-                  <div class="pricing-heading">
-                    <h3><strong> Vehículo</strong></h3>
-                  </div>
-                  <div class="pricing-terms">
-                    <h6>Muévete libremente cuando viajas, sin problemas por transporte</h6>
-                  </div>
-                  <div class="pricing-action">
-                    <a href="{{ route('index') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="pricing-box-wrap animated-fast flyIn">
-                  <div class="pricing-heading">
-                    <h3>Auto<strong>+Chofer</strong></h3>
-                  </div>
-                  <div class="pricing-terms">
-                    <h6>Viaja cómodamente con un chofer con amabilidad y experiencia</h6>
-                  </div>
-                  <div class="pricing-action">
-                    <a href="{{ route('index') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="pricing-box-wrap animated-slow flyIn">
-                  <div class="pricing-heading">
-                    <h3><strong>Traslado</strong></h3>
-                  </div>
-                  <div class="pricing-terms">
-                    <h6>Solicita un traslado a cualquier parte del país a los mejores precios</h6>
-                  </div>
-                  <div class="pricing-action">
-                    <a href="{{ route('renta_traslado') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="pricing-box-wrap animated flyIn">
-                  <div class="pricing-heading">
-                    <h3><strong>Flotilla</strong></h3>
-                  </div>
-                  <div class="pricing-terms">
-                    <h6>Servicio especial para empresas, renta de flotilla para asuntos de negocios </h6>
-                  </div>
-                  <div class="pricing-action">
-                    <a href="{{ route('en_construccion') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 aligncenter ">
-            <h3 class="title">Nuestros<strong> vehículos</strong></h3>
-            <ul class="bxslider">
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Chevrolet-Aveo-2018.jpg" alt="" style="width:32%"/>
-                  <h4>Compactos</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Toyota-Hilux-2014.jpg" alt="" style="width:50%"/>
-                  <h4>Camionetas</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Honda-Dio-2019.jpg" alt="" style="width:38%"/>
-                  <h4>Motoneta</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <li>
-                    <div class="testimonial-autor">
-                    <img src="img/flota/Chevrolet-Suburban-2018.jpg" alt="" style="width:38%"/>
-                      <h4>Suburban</h4>
-                      <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                    </div>
-                  </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-</section>
-
-<section id="destinos_turisticos">
-    <div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <h4 class="title">Destinos turísticos <strong>  para visitar</strong></h4>
-        <div class="row">    
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="item">
-                <figure>
-                    <div><img src="img/destinos_turisticos/tehuana.jpg" alt="" /></div>
-                    <figcaption>
-                    <div>
-                        <span><a href="img/destinos_turisticos/big.png" data-pretty="prettyPhoto[gallery1]" title="Portfolio caption here"><i class="icon-plus icon-circled icon-bglight icon-2x"></i></a></span>
-                        <span><a href="#"><i class="icon-file icon-circled icon-bglight icon-2x"></i></a></span>
-                    </div>
-                    </figcaption>
-                </figure>
-                </div>
-            </div>
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="item">
-                <figure>
-                    <div><img src="img/destinos_turisticos/mazunte.jpg" alt="" /></div>
-                    <figcaption>
-                    <div>
-                        <span><a href="img/destinos_turisticos/big.png" data-pretty="prettyPhoto[gallery1]" title="Portfolio caption here"><i class="icon-plus icon-circled icon-bglight icon-2x"></i></a></span>
-                        <span><a href="#"><i class="icon-file icon-circled icon-bglight icon-2x"></i></a></span>
-                    </div>
-                    </figcaption>
-                </figure>
-                </div>
-            </div>
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="item">
-                <figure>
-                    <div><img src="img/destinos_turisticos/estacahuite.jpg" alt="" /></div>
-                    <figcaption>
-                    <div>
-                        <span><a href="img/destinos_turisticos/big.png" data-pretty="prettyPhoto[gallery1]" title="Portfolio caption here"><i class="icon-plus icon-circled icon-bglight icon-2x"></i></a></span>
-                        <span><a href="#"><i class="icon-file icon-circled icon-bglight icon-2x"></i></a></span>
-                    </div>
-                    </figcaption>
-                </figure>
-                </div>
-            </div>
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="item">
-                <figure>
-                    <div><img src="img/destinos_turisticos/tehuana.jpg" alt="" /></div>
-                    <figcaption>
-                        <div>
-                            <span><a href="img/destinos_turisticos/big.png" data-pretty="prettyPhoto[gallery1]" title="Portfolio caption here"><i class="icon-plus icon-circled icon-bglight icon-2x"></i></a></span>
-                            <span><a href="#"><i class="icon-file icon-circled icon-bglight icon-2x"></i></a></span>
-                        </div>
-                    </figcaption>
-                </figure>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    </div>
 </section>
 <!-- Footer -->
 <footer class=" font-small bg-dark text-white">
@@ -660,7 +393,7 @@ function checar_horas(){
     devolucion = horaDevolucion.options[horaDevolucion.selectedIndex].value;
    //hacemos los calculos para validar horas y checar si se pasa mas de dos horas
    //validar que si selecciona el dia de hoy como salida, no se pueda seleccionar horas menores a la actual en un rango de una hora 
-   //si selecciona el mismo dia de salida y llegada, checar que la hora de devolucion no sea menor a la de recogida
+   //si selecciona el mismo dia de salida y recogida, checar que la hora de devolucion no sea menor a la de recogida
    //enviar mensaje de advertencia si selecciona dos horas mas de la hora de recogida en cualquier otro dia para decirle que si se pasa dos horas se le cobrara el dia completo
     var expresionRegular = /\s*:\s*/;
     var recogidaD = recogida.split(expresionRegular);

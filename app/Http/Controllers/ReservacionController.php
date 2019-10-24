@@ -681,9 +681,22 @@ return response()->download(storage_path('Documento01.docx'));
     }
 
     public function registra_conductor(Request $request){
-   
-           
+
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+       $request->validate([
+            'reservacion'=>'required',
+            'alquiler'=>'required',
+            'numero'=>'required',
+            'nombre'=>'required',
+            'fecha_e'=>'required|date',
+            'fecha_c'=>'required|date',
+        ]);
         
+        if($request['fecha_e']>=$request['fecha_c']){
+            return response()->json(['success'=>'FECHAS']); 
+        }   
+
             $alquiler = Alquiler::where('id','=',$request['alquiler'])->first();
 
             $alquiler->num_licencia = $request['numero'];
@@ -691,59 +704,11 @@ return response()->download(storage_path('Documento01.docx'));
             $alquiler->expedicion_licencia = $request['fecha_e'];
             $alquiler->expiracion_licencia = $request['fecha_c'];
             $alquiler->save();
-            return back()->with('message','Operation Successful !');
-            $carbon = new \Carbon\Carbon();
-            //return response()->json($reservacion);
-            $reservacion = Reservacion::where('id','=',$request['reservacion']);
-            //    
-            $cliente = Cliente::where('idCliente','=',$reservacion->id_cliente)->first();
-            //return response()->json($cliente);
-            $alquiler = Alquiler::where('id_reservacion','=',$reservacion->id)->first();
-            //return response()->json($alquiler);
-            $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
-            $newDate = date("Y\-m\-d", strtotime($cliente->fecha_nacimiento));
-            $edad = $carbon->parse( $newDate)->age; // 1990-10-25
-            //dump($edad);
-            //$reservacion = Reservacion::where('id','=',$id)->first();
-        ///return (response()->json([$cliente, $reservacion, $alquiler, $vehiculo]));    
-            
-            $sucur = VehiculoSucursales::where('vehiculo','=',$alquiler->id_vehiculo)->first();
-            $sucursal = $sucur->sucursal;
-            $fecha_i = $alquiler->fecha_recogida;
-            $fecha_f = $alquiler->fecha_devolucion;
-            $disponibles = DB::select('SELECT * FROM vehiculos 
-            INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-            WHERE vehiculosucursales.sucursal=?
-            AND vehiculos.idvehiculo NOT IN (
-            SELECT vehiculos.idvehiculo FROM vehiculos  
-            INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-            INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-            WHERE vehiculosucursales.sucursal=?
-            AND vehiculos.estatus ="disponible"
-            AND vehiculosucursales.status ="ACTIVO"
-            AND ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-            OR  ? BETWEEN alquilers.fecha_recogida AND alquilers.fecha_devolucion
-            UNION
-            SELECT vehiculos.idvehiculo FROM vehiculos  
-            INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = vehiculos.idvehiculo
-            INNER JOIN alquilers ON alquilers.id_vehiculo = vehiculos.idvehiculo
-            WHERE vehiculosucursales.sucursal=?
-            AND vehiculos.estatus ="disponible"
-            AND vehiculosucursales.status ="ACTIVO"
-            AND  alquilers.fecha_recogida <= ?
-            AND alquilers.fecha_devolucion >= ?);',[$sucursal,$sucursal,$fecha_i,$fecha_f,$sucursal,$fecha_i,$fecha_f]);
-    
-    
-            $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get();
-    
-            $servicios = App\alquilerserviciosextra::where('alquiler','=',$alquiler->id)->
-            join('serviciosextras','idserviciosextra','=','alquilerserviciosextras.servicioExtra')->get();
-    
-            return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos','servicios'));
-
-          return response()->json($alquiler);
+            return response()->json(['success'=>'EXITO']);          
     }
  
+
+    
     public function recibe_vehiculo(Request $request){
         $alquiler = Alquiler::where('id','=',$request['alquiler'])->first();
         $alquiler->estatus = 'terminado';

@@ -34,13 +34,12 @@ Route::get('guardar_confirmacion_traslado', 'TrasladoController@guardar_confirma
 Route::post('crear_pago_stripe', 'PagosStripeController@crear_pago_stripe')-> name('crear_pago_stripe');
 //routes para envio de correos 
 Route::post('correo_confirmacion_reserva', 'EmailController@correo_confirmacion_reserva')-> name('correo_confirmacion_reserva');
+//routes para modificar reserva
+Route::get('modificar_reserva',           'ModificarReservaController@modificar_reserva')->      name('modificar_reserva') ;
 //routes para SoloVistasController
-Route::get('Reservacion',             'SoloVistasController@reservacion')->         name('reservacion') ;
+Route::get('Reservacion',             'SoloVistasController@reservacion')->          name('reservacion') ;
 Route::get('servicios',               'SoloVistasController@servicios')->            name('servicios') ;
-Route::get('sucursales',              'SoloVistasController@sucursales')->           name('sucursales') ;
-Route::get('sucursal_P_Escondido',    'SoloVistasController@sucursal_P_Escondido')->name('sucursal_P_Escondido') ;
-Route::get('sucursal_Ixtepec',        'SoloVistasController@sucursal_Ixtepec')->     name('sucursal_Ixtepec') ;
-Route::get('sucursal_Istmo',          'SoloVistasController@sucursal_Istmo')->       name('sucursal_Istmo') ;
+Route::get('sucursal_info',           'SoloVistasController@sucursal_info')->      name('sucursal_info') ;
 Route::get('renta_flotilla',          'SoloVistasController@renta_flotilla')->       name('renta_flotilla') ;
 Route::get('en_construccion',         'SoloVistasController@en_construccion')->      name('en_construccion');//ruta para todas las que aun no estan
 Route::get('renta_traslado',          'SoloVistasController@renta_traslado')->       name('renta_traslado') ;
@@ -92,6 +91,7 @@ Route::resource('cliente', 'ClienteController');
 Route::get('mostrarmantenimiento', 'MantenimientoController@mostrar')->name('mostrarmantenimiento');
 Route::get('editarmantenimieto', 'MantenimientoController@modificar')->name('modificarmantenimiento');
 Route::get('historialmantenimieto', 'MantenimientoController@Historial')->name('historialmantenimiento');
+Route::get('confirmarmantenimieto', 'MantenimientoController@Confmante')->name('confmante');
 Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado');
 Route::get('modivehiculo','VehiculoController@modificar')->name('modificarvehiculo');
 Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modificarservicio');
@@ -126,7 +126,7 @@ Route::get('/reservacion/{reservacion}', 'ReservacionController@garantia')->name
 
 Route::get('/detalle/{reservacion}', 'ReservacionController@show')->name('reservacion');
 Route::get('/traslados', 'ReservacionController@indexTraslado')->name('taslados');
-Route::get('/conductor','ReservacionController@registra_conductor')->name('conductor');
+Route::post('/conductor','ReservacionController@registra_conductor')->name('conductor');
 Route::get('/recibir','ReservacionController@recibe_vehiculo')->name('recibir');
 Route::get('/reservacionesFecha','ReservacionController@fechaRecogida')->name('porFecha');
 Route::get('/reservacionesCliente','ReservacionController@cliente')->name('porCliente');

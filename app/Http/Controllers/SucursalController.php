@@ -53,11 +53,14 @@ class SucursalController extends Controller
     {
         //
      //$dato=$this->validarLetra($request['nombre']);
-     
-       
+  
+    //  return response()->json(['success'=>'fsdfdghj']);
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
        $request->validate([
+        'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+        'foto1' => 'required|image|mimes:jpeg,png,jpg,gif',
+        'foto2' => 'required|image|mimes:jpeg,png,jpg,gif',
             'nombre'=>'required|regex:/^[\pL\s]+$/u',
             'codigopostal'=>'required|regex:/[0-9]{5}/m',
             'estado'=>'required',
@@ -70,19 +73,36 @@ class SucursalController extends Controller
 
         $contar = Sucursal::all();
         if(!empty($contar)){
-            $nombre = str_replace(' ', '', $request['nombre']);// trim($request['nombre'],"\t\n\r\0\x0B");
+            $nombre = str_replace(' ', '', $request['nombre']);
             $comparar = Sucursal::all();
             foreach($comparar as $comp){
-            $nom=str_replace(' ', '', $comp['nombre']);//trim($comparar['nombre'],'\r');
+            $nom=str_replace(' ', '', $comp['nombre']);
           
-            // return response()->json(['success'=>$nombre]);
             if($nom == $nombre){
                 return response()->json(['success'=>'EXISTE']);
             }
         }
         }
 
+        //SE AGREGA LA PRIMERA FOTO
+        $image = $request->file('foto');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $new_name);
+
+        //SE AGREGA LA PRIMERA FOTO
+        $image1 = $request->file('foto1');
+        $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+        $image1->move(public_path('images'), $new_name1);
+
+        //SE AGREGA LA PRIMERA FOTO
+        $image2 = $request->file('foto2');
+        $new_name2 = rand() . '.' . $image2->getClientOriginalExtension();
+        $image2->move(public_path('images'), $new_name2);
+        // return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
         Sucursal::create([
+            'foto'=>$new_name,
+            'foto1'=>$new_name1,
+            'foto2'=>$new_name2,
             'nombre'=> $request['nombre'],
             'codigopostal'=>$request['codigopostal'],
             'estado'=>$request['estado'],
@@ -95,8 +115,6 @@ class SucursalController extends Controller
             'created_at' => $date,
             'updated_at'=> $date
         ]);
-            
-    
 
         return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
     
