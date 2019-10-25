@@ -4,10 +4,10 @@
     <div class="inner-heading">
         <div class="container">
             <div class="row nomargin">
-                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
+                <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10">
                     <h2>Autos disponibles a precios accesibles</h2>
                 </div>
-                 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                 <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
                     {{ $flota->links() }}
                 </div>
             </div>
@@ -17,7 +17,7 @@
   <section id="content">
       <div class="container">
         <div class="row nomargin">
-          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+          <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
               <ul class="portfolio-categ filter">
                 <li class="all active"><a href="#">Todos</a></li>
                 <li class="compacto"><a href="#" title="">Compactos</a></li>
@@ -26,7 +26,7 @@
                 <li class="motoneta"><a href="#" title="">Motonetas</a></li>
               </ul>
           </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
               <ul class="portfolio-categ filter">
                   <form name="formulario" id="formulario" method="POST">
                     <div class="grid item-thumbs graphic form-check-inline">
@@ -57,7 +57,7 @@
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="row nomargin">
 @foreach($flota as $vehiculo)
-    <div class="grid item-thumbs graphic col-sm-4 col-md-4 col-lg-4 col-xl-4" data-id={{$vehiculo->modelo}} data-type= {{$vehiculo->tipo}} data-precio = {{$vehiculo->precio}} data-rendimiento = {{$vehiculo->rendimiento}} data-pasajeros = {{$vehiculo->pasajeros}}>
+    <div class="grid item-thumbs graphic col-sm-12 col-md-6 col-lg-4 col-xl-4" data-id={{$vehiculo->modelo}} data-type= {{$vehiculo->tipo}} data-precio = {{$vehiculo->precio}} data-rendimiento = {{$vehiculo->rendimiento}} data-pasajeros = {{$vehiculo->pasajeros}}>
     <div class="pricing-box-wrap special animated-fast flyIn">
             <div class="pricing-heading">
                 <h4 style="color: #fffffe;"><strong>{{$vehiculo->marca}}</strong> {{$vehiculo->modelo}}</h4>

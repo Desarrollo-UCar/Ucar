@@ -3,35 +3,23 @@
     <section id="content">
       <div class="container">
         <div class="row">
-          <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <aside class="left-sidebar">
               <div class="widget">
                 <div class="tabs">
                   <ul class="nav nav-tabs">
                     <li class="active"><a href="#one" data-toggle="tab"><i class="icon-star"></i> Popular</a></li>
-                    <li><a href="#two" data-toggle="tab">Recent</a></li>
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane active" id="one">
                       <ul class="popular">
                         <li>
-                          <img src="img/flota/Chevrolet-Aveo-2018.jpg" alt="" class="thumbnail pull-left" />
-                          <p><a href="#">Chevrolet Aveo</a></p>
-                          <span>Junio, 2019</span>
+                        @foreach($popular as $popu)
+                          <img src="{{'/images/'.$popu->foto}}" alt="" class="thumbnail pull-left" />
+                          <p>{{$popu->marca}} {{$popu->modelo}} {{$popu->anio}}</p>
+                          <p>{{$mes}}, {{$anio}}</p>
+                        @endforeach
                         </li>
-                        <li>
-                          <img src="img/flota/Honda-Dio-2019.jpg" alt="" class="thumbnail pull-left" />
-                          <p><a href="#">Motoneta Honda</a></p>
-                          <span>Julio, 2019</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="tab-pane" id="two">
-                      <ul class="recent">
-                        <li>
-                          <p><a href="#">Toyota rentada recientemente</a></p>
-                        </li>
-                        
                       </ul>
                     </div>
                   </div>
@@ -49,7 +37,7 @@
             </aside>
           </div>
 
-          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+          <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
 
           <article>
               <div class="row">

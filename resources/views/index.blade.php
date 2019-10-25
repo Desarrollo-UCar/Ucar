@@ -182,7 +182,7 @@
                   <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
                       @csrf
                       <div class="form-row">
-                          <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                          <div class="form-group col-sm-4 col-md-6 col-lg-4 col-xl-4">
                               <label for="inputLugar">SUCURSAL DE RENTA</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
@@ -195,7 +195,7 @@
                               </select>
                               </div>
                           </div>
-                          <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                          <div class="form-group col-sm-4 col-md-6 col-lg-4 col-xl-4">
                               <label for="fecha">SELECCIONA TUS FECHAS</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
@@ -206,7 +206,7 @@
                                   <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
                               </div>
                           </div>
-                          <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                          <div class="form-group col-sm-2 col-md-6 col-lg-2 col-xl-2">
                               <label for="horaRecogida">HORA DE ENTREGA</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
@@ -230,7 +230,7 @@
                                   </select>
                               </div> 
                           </div>
-                          <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                          <div class="form-group col-sm-2 col-md-6 col-lg-2 col-xl-2">
                               <label for="horaDevolucion">HORA DE DEVOLUCIÓN</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
@@ -256,22 +256,22 @@
                           </div>
                       </div>
                       <div class="form-row">
-                          <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                          <div class="form-group col-sm-12 col-md-6 col-lg-3 col-xl-3">
                               <button class="btn btn-primary" type="submit" style="margin-top: 0%;">Consulta Vehiculos Disponibles</button>
                           </div> 
-                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                             <h6 class = "text-danger"><strong>* NOTA:</strong></h6>
                             <h6><small>El vehículo debe ser entregado en la misma sucursal.</small></h6>
                           </div>
-                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="hora_extra">
+                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3" style="display: none;" id="hora_extra">
                             <h6 class = "text-success"><strong>* NOTA:</strong></h6>
                             <h6><small>Si se pasa <strong>dos</strong> horas en la hora de <strong>devolución</strong> de la hora de <strong>recogida</strong> se cobrará el dia completo.</small></h6>
                           </div>
-                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="dias_iguales">
+                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3" style="display: none;" id="dias_iguales">
                             <h6 class = "text-danger"><strong>* Error:</strong></h6>
                             <h6><small>En días iguales, la fecha de devolución no puede ser menor a la de entrega.</small></h6>
                           </div>
-                          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="display: none;" id="hora_menor">
+                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3" style="display: none;" id="hora_menor">
                             <h6 class = "text-danger"><strong>* Error:</strong></h6>
                             <h6><small>Para reservas del día de hoy, no puede seleccionar una hora menor a la actual.</small></h6>
                           </div>
@@ -294,7 +294,7 @@
 <!-- inicio caracteristicas de la empresa -->
     <div class="container">
           <div class="row">
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <div class="box flyLeft">
                 <div class="icon">
                   <i class="ico icon-circled icon-bgdark active icon-3x fas fa-car"></i>
@@ -307,7 +307,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <div class="box flyIn">
                 <div class="icon">
                   <i class="ico icon-circled icon-bgdark active icon-3x fa-3x fa fa-diamond"></i>
@@ -320,7 +320,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <div class="box flyRight">
                 <div class="icon">
                   <i class="ico icon-circled icon-bgdark icon-laptop active icon-3x"></i>
@@ -333,7 +333,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="box flyRight">
                     <div class="icon">
                     <i class="ico icon-circled icon-bgdark active icon-3x fa-3x fa fa-rocket"></i>
@@ -363,7 +363,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="pricing-box-wrap special animated-fast flyIn">
                   <div class="pricing-heading">
                     <h3><strong> Vehículo</strong></h3>
@@ -377,7 +377,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="pricing-box-wrap animated-fast flyIn">
                   <div class="pricing-heading">
                     <h3>Auto<strong>+Chofer</strong></h3>
@@ -391,7 +391,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="pricing-box-wrap animated-slow flyIn">
                   <div class="pricing-heading">
                     <h3><strong>Traslado</strong></h3>
@@ -405,7 +405,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="pricing-box-wrap animated flyIn">
                   <div class="pricing-heading">
                     <h3><strong>Flotilla</strong></h3>
@@ -467,7 +467,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <h4 class="title">Destinos turísticos <strong>  para visitar</strong></h4>
         <div class="row">    
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="grid cs-style-5 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="item">
                 <figure>
                     <div><img src="img/destinos_turisticos/tehuana.jpg" alt="" /></div>
@@ -480,7 +480,7 @@
                 </figure>
                 </div>
             </div>
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="grid cs-style-5 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="item">
                 <figure>
                     <div><img src="img/destinos_turisticos/mazunte.jpg" alt="" /></div>
@@ -493,7 +493,7 @@
                 </figure>
                 </div>
             </div>
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="grid cs-style-5 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="item">
                 <figure>
                     <div><img src="img/destinos_turisticos/estacahuite.jpg" alt="" /></div>
@@ -506,7 +506,7 @@
                 </figure>
                 </div>
             </div>
-            <div class="grid cs-style-5 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="grid cs-style-5 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="item">
                 <figure>
                     <div><img src="img/destinos_turisticos/tehuana.jpg" alt="" /></div>

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 use App;
 use DB;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 class SoloVistasController extends Controller{
     public function sucursal_info(Request $request){
         $idsucursal = $request->idsucursal; 
@@ -23,9 +23,32 @@ public function vista_generar_cotizacion_traslado(){
 public function reservacion(){   
     $sucursales = App\Sucursal::all();
     return view('reservacion',compact('sucursales'));}
+
 public function servicios(){ 
-    $sucursales = App\Sucursal::all();
-    return view('servicios',compact('sucursales'));
+    //---------VEHICULO MAS RENTADO EN EL MES ANTERIOR
+        $anio = date("Y",strtotime(date("Y-m-d")."- 1 month"));
+        $mes = date("m",strtotime(date("Y-m-d")."- 1 month"));
+
+        $consulta_popular= DB::select('SELECT vehiculos.idvehiculo,
+        COUNT(*) as cantidad FROM alquilers 
+        INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo
+        WHERE YEAR(alquilers.fecha_recogida) = ?
+        AND MONTH(alquilers.fecha_recogida) = ?
+        GROUP BY id_vehiculo ORDER BY cantidad DESC LIMIT ?',[$anio,$mes,1]);
+
+        try{
+            $idpopular = $consulta_popular['0']->idvehiculo;
+        }catch (\Exception $ex) {
+            $idpopular = 1;
+        }
+        
+        $popular = app\Vehiculo::where('idvehiculo','=',$idpopular)->get();
+        $sucursales = App\Sucursal::all();
+    //return $popular;
+    setlocale(LC_TIME, 'es_ES');
+    $fecha = DateTime::createFromFormat('!m', $mes);
+    $mes = strftime("%B", $fecha->getTimestamp());
+    return view('servicios',compact('sucursales','popular','anio','mes'));
 }
 
 public function renta_traslado(){
@@ -42,6 +65,10 @@ public function en_construccion(){
 public function bienvenida(){
     $sucursales = App\Sucursal::all();
     return view('bienvenida',compact('sucursales'));}
+
+
+
+
     //impresion de correos electronicos
 public function correo_confirmacion_pago(){
     $reservacion = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
@@ -61,5 +88,13 @@ public function correo_confirmacion_pago(){
     //return $reservacion;   
     return view('mails.confirmacion_pago',compact('reservacion','pago_reserva','sucursal'));
     }
+    public function disenio_reserva_finalizada(){
+        $sucursales = App\Sucursal::all();
+        $correo   = auth()->user()->email;
+        $cliente= App\Cliente::where('correo','=',$correo)->first();//buscamos datos del cliente que ya esta logeado
+        $vehiculo       = App\Vehiculo::findOrFail(2);
+        //return $reservacion;   
+        return view('reservacion_exitosa',compact('sucursales','cliente','vehiculo'));
+        }
 }
 

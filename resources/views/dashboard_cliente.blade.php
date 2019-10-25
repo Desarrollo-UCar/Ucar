@@ -91,7 +91,7 @@
                 <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <div class="container">
                         <div class="row">
-                                <img src="{{$reserva->foto}}" style="width:80%" />
+                                <img src="{{$reserva->foto}}" style="width:100%" />
                                 <h6><i class="ico icon-circled active icon-1x fa-1x fa fa-window-close text-danger" ></i><strong> Cancelar:</strong> Favor de ponerse en contacto con la sucursal al número: {{$reserva->telefono}}</h6>       
                         </div>
                     </div>
