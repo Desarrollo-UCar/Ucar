@@ -80,6 +80,7 @@ return array(
     'App\\Vehiculo' => $baseDir . '/app/Vehiculo.php',
     'App\\alquilerserviciosextra' => $baseDir . '/app/alquilerserviciosextra.php',
     'App\\mantenimientos' => $baseDir . '/app/mantenimientos.php',
+    'App\\reintegros' => $baseDir . '/app/reintegros.php',
     'App\\reserva_temp' => $baseDir . '/app/reserva_temp.php',
     'App\\servicioextrasucursales' => $baseDir . '/app/servicioextrasucursales.php',
     'App\\serviciosextras' => $baseDir . '/app/serviciosextras.php',

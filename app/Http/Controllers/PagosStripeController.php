@@ -136,22 +136,26 @@ class PagosStripeController extends Controller{
                 INNER JOIN clientes ON clientes.idCliente = reservacions.id_cliente WHERE reservacions.id = ?',[$reservacion->id]);
                 //Mail::to($correo)->send(new App\Mail\Enviar($reserva_correo,$serv_extra_correo));
                 $reservacion = $reserva_correo;
-                $serv_extra = $serv_extra_correo;
-                $asunto = 'Confirmacion de pago reserva Ü-CAR';
+                $sucursales = App\Sucursal::all();
             //---------------enviar nota de pago al cliente
-            return $pago_reserva;
-            Mail::send('mails.confirmacion_pago',compact('reservacion','pago_reserva','sucursal'), function ($message) use ($asunto,$correo,$reservacion) {
-                $message->from('ucardesarollo@gmail.com', 'Ü-car');
-                $message->to($correo)->subject($asunto);
-                }); 
-            //-------
-                $asunto = 'Confirmacion de Reserva';
+            //return $pago_reserva;
+            try{
+                $serv_extra = $serv_extra_correo;
+            $asunto = 'Confirmacion de pago reserva Ü-CAR';
+                Mail::send('mails.confirmacion_pago',compact('reservacion','pago_reserva','sucursal'), function ($message) use ($asunto,$correo,$reservacion) {
+                    $message->from('ucardesarollo@gmail.com', 'Ü-car');
+                    $message->to($correo)->subject($asunto);
+                    }); 
+                //-------
+            $asunto = 'Confirmacion de Reserva';
                 //enviar correo
                 Mail::send('mails.correo_reserva',compact('reservacion','serv_extra'), function ($message) use ($asunto,$correo,$reservacion) {
                 $message->from('ucardesarollo@gmail.com', 'Ucar');
                 $message->to($correo)->subject($asunto);
                 }); 
-            $sucursales = App\Sucursal::all();
+            }catch (\Exception $ex) {
+                return view('reservacion_exitosa',compact('cliente','vehiculo','reservacion','sucursales'));
+            }
                 return view('reservacion_exitosa',compact('cliente','vehiculo','reservacion','sucursales'));
         } catch (\Exception $ex) {
             return $ex->getMessage();

@@ -5,41 +5,53 @@
     <meta charset="utf-8">
     <title>Ü-car Renta de vehículos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-    </style>
+    <style type="text/css">
+        .grid {
+            display: grid;
+            grid-template-areas: "head head"
+                                "menu main"
+                                "foot foot";
+            }
+
+            .a { grid-area: head; background: blue }
+            .b { grid-area: menu; background: red }
+            .c { grid-area: main; background: green }
+            .d { grid-area: foot; background: orange }
+      </style>
 </head>
 <body>
 <section id="content">
-<div class="container">
+<div >
+<table class="table">
+<tbody>
+    <tr><td><h2 style="color:dodgerblue"> Ü-Car </h2></td>      <td>RECIBO DE PAGO</td>                                           <td></td></tr>
+    <tr><td></td>                                                 <td>{{$sucursal->nombre}}</td>                                    <td>Telefono:{{$sucursal->telefono}}</td></tr>
+    <tr><td></td>                                                 <td><p>{{$sucursal->calle}},{{$sucursal->numero}}<br>    
+                                                                         {{$sucursal->colonia}},<br>
+                                                                         {{$sucursal->municipio}}, {{$sucursal->estado}}</p></td>   <td></td></tr>
+</tbody>
+</table>
+<table class="table">
+<tbody>    
+    <tr><td>................</td> <td><strong>Número de pago:</strong></td>           <td>{{$pago_reserva->id}}</td>            <td>Fecha:{{$pago_reserva->fecha}}</td></tr>
+    <tr><td></td>                 <td><strong>Importe:</strong></td>                  <td>$ {{$pago_reserva->total}}</td>       <td></td></tr>
+    <tr><td></td>                 <td><strong>Concepto:</strong></td>                 <td>{{$pago_reserva->motivo}}</td>        <td></td></tr>
+    <tr><td></td>                 <td><strong>Cadena de confirmación:</strong></td>   <td>{{$pago_reserva->paypal_Datos}}</td>  <td></td></tr>
+</tbody>
+</table>
+<br>
+<table class="table">
+<tbody>    
     @foreach($reservacion as $reserva)
-            <div class="row border border-primary">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"> <b style="color: dodgerblue">Ü-Car</b></div>
-                    <div  style="float:left;">
-                        <div id="lista_itinerario">
-                            <h4><strong>{{$sucursal->nombre}}</strong></h4>
-                            <p>
-                            {{$sucursal->calle}}, NUMERO: {{$sucursal->numero}}<br><br>
-                            {{$sucursal->colonia}},<br><br>
-                            {{$sucursal->municipio}}, {{$sucursal->estado}},
-                            {{$sucursal->telefono}}
-                            </p>
-                            <table class="table table-sm">
-                            <tbody>
-                                <tr><td>Pago:</td> <td>{{$pago_reserva->id}}</td> <td>{{$pago_reserva->fecha}}</td></tr>
-                                <tr><td><strong>Subtotal MXN {{$reserva->dias}} Dia(s)</strong></td> <td><strong>${{number_format($reserva->precio*$reserva->dias,2)}}</strong></td></tr>
-                                @foreach($serv_extra as $servicio)
-                                @if($servicio->alquiler == $reserva->id_alquiler)
-                                <tr><td>{{$servicio->nombre}}</td>                   <td>${{$servicio->precio*$reserva->dias}}.00</td></tr>
-                                @endif
-                                @endforeach
-                                <tr><td><strong>Total</strong></td>                  <td><strong>${{number_format($reserva->total,2)}}</strong></td></tr>
-                            </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+    <tr><td>................</td>  <td>Datos sobre su reserva contratada en Ü-CAR</td>                                                                                                     </tr> 
+    <tr><td>                </td>  <td>Vehículo:</td>             <td>{{$reserva->marca}} {{$reserva->modelo}}</td>                                                                        </tr>
+    <tr><td>                </td>  <td>Fecha de Recogida:</td>    <td>{{$reserva->fecha_recogida}}</td>              <td>Hora de Recolección:</td> <td> {{$reserva->hora_recogida}} hrs</td></tr>
+    <tr><td>                </td>  <td>Fecha de Devolucion:</td>  <td>{{$reserva->fecha_devolucion}}</td>            <td>Hora de Devolución:</td>  <td> {{$reserva->hora_devolucion}} hrs</td></tr>
+
     @endforeach
-    </div>
-    </section>
+</tbody>
+</table>
+</div>
+</section>
 </body>
 </html>

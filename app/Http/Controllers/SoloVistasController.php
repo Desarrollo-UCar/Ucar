@@ -42,4 +42,24 @@ public function en_construccion(){
 public function bienvenida(){
     $sucursales = App\Sucursal::all();
     return view('bienvenida',compact('sucursales'));}
+    //impresion de correos electronicos
+public function correo_confirmacion_pago(){
+    $reservacion = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
+            reservacions.saldo, sucursals.nombre, alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
+            IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+            vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,
+            vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,vehiculos.foto
+            FROM reservacions
+            INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
+            inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
+            inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
+            INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
+            where reservacions.id = ?',[1]);
+ //return $reservacion;
+    $pago_reserva = App\Pago_reservacion::findOrFail(1);
+    $sucursal = App\Sucursal::findOrFail(1);
+    //return $reservacion;   
+    return view('mails.confirmacion_pago',compact('reservacion','pago_reserva','sucursal'));
+    }
 }
+
