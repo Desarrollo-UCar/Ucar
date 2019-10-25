@@ -30,10 +30,8 @@
                 <!-- form start -->
 
 
-                       
-                <form id="datos">
-                 
-                  @csrf          
+                  <form method="POST" id="datos" enctype="multipart/form-data">            
+                       {{csrf_field()}}          
                      {{-- FORMULARIO DIRECCION--}}
                      <div class="col-md-4 form-group" style="display: none">
                      
@@ -125,20 +123,69 @@
                         <span id="errortelefono" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                     <span id="validotelefono" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>                      
                     </div>                             
-                                  
+                    
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="col-md-4">
+                          <div id="preview" style="margin-top: 5%;">
+                            <div class="alert col-md-7 col-md-offset-1" id="message" style="display: none"></div>
+                            @if ($sucursal->foto == null)
+                            <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px; height: 100px;">
+                            @else
+                            <img src="{{'/images/'.$sucursal->foto}}" style="width: 200px;height:100px;">
+                            @endif
+                          </div>
+                          <hr>
+                          <div class="col-md-1 col-md-offset-2  file-loading">
+                          <span class="btn btn-warning btn-file">Subir Foto
+                          <input id="foto" type="file" name="foto"  value="{{$sucursal->foto}}"/>    </span>  
+                          </div>                       
+                    </div>   
+                    <div class="col-md-4">
+                      <div id="preview1" style="margin-top: 5%;">
+                        <div class="alert col-md-7 col-md-offset-1" id="message1" style="display: none"></div>
+                        @if ($sucursal->foto1 == null)
+                        <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px; height: 100px;">
+                        @else
+                        <img src="{{'/images/'.$sucursal->foto1}}" style="width: 200px;height:100px;">
+                        @endif
+                      </div>
+                      <hr>
+                      <div class="col-md-1 col-md-offset-2  file-loading">
+                      <span class="btn btn-warning btn-file">Subir Foto
+                      <input id="foto1" type="file" name="foto1" value="{{$sucursal->foto1}}"/>    </span>  
+                      </div>            
+                </div>  
+                <div class="col-md-4">
+                  <div id="preview2" style="margin-top: 5%;">
+                    <div class="alert col-md-7 col-md-offset-1" id="message2" style="display: none"></div>
+                    @if ($sucursal->foto2 == null)
+                    <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px; height: 100px;">
+                    @else
+                    <img src="{{'/images/'.$sucursal->foto2}}" style="width: 200px;height:100px;">
+                    @endif
+                  </div>
+                  <hr>
+                  <div class="col-md-1 col-md-offset-2  file-loading">
+                  <span class="btn btn-warning btn-file">Subir Foto
+                  <input id="foto2" type="file" name="foto2" value="{{$sucursal->foto2}}"/></span>  
+                  </div>                       
+            </div>                                   
+                      </div>                    
+                    </div>
+
 
                   <!-- /.box-body -->
                   <div class="row">
                     <div class="col-md-12">
                         <div class="box-footer" style="float: right">
-                            <button type="submit" class="btn btn-primary" id="enviar">Modificar</button>
+                          <button type="submit" class="btn btn-primary">Modificar</button>
                           </div>
                         <div class="box-footer" style="float: right">
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">Cancelar</button>
                           </div>                       
                       </div>                    
-                  </div>
-                  
+                  </div>                 
 
                 </form>
               </div>
@@ -191,7 +238,7 @@
       <!-- /.modal ---->
 
       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error" style="display: none" id="error1">Cancelar</button>
-<div class="modal modal-warning fade" id="error">
+    <div class="modal modal-warning fade" id="error">
     <div class="modal-dialog" >
       <div class="modal-content">
         <div class="modal-header">
@@ -221,6 +268,73 @@
    
         <!-- Select2 -->
         <script src= "{{asset("assets/$theme/bower_components/select2/dist/js/select2.full.min.js")}}"></script>
+
+        <script>
+          document.getElementById("foto").onchange = function(e) {
+           // Creamos el objeto de la clase FileReader
+           let reader = new FileReader();
+         
+           // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+           reader.readAsDataURL(e.target.files[0]);
+         
+           // Le decimos que cuando este listo ejecute el código interno
+           reader.onload = function(){
+             let preview = document.getElementById('preview'),
+                     image = document.createElement('img');
+         
+             image.src = reader.result;
+             image.getElementsByClassName('rounded-circle');
+             image.style.width="200px";
+             image.style.height="100px";
+             preview.innerHTML = '';
+             preview.append(image);
+           };
+         }
+          </script>
+        <script>
+          document.getElementById("foto1").onchange = function(e) {
+           // Creamos el objeto de la clase FileReader
+           let reader = new FileReader();
+         
+           // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+           reader.readAsDataURL(e.target.files[0]);
+         
+           // Le decimos que cuando este listo ejecute el código interno
+           reader.onload = function(){
+             let preview = document.getElementById('preview1'),
+                     image = document.createElement('img');
+         
+             image.src = reader.result;
+             image.getElementsByClassName('rounded-circle');
+             image.style.width="200px";
+             image.style.height="100px";
+             preview.innerHTML = '';
+             preview.append(image);
+           };
+         }
+          </script>
+          <script>
+            document.getElementById("foto2").onchange = function(e) {
+             // Creamos el objeto de la clase FileReader
+             let reader = new FileReader();
+           
+             // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+             reader.readAsDataURL(e.target.files[0]);
+           
+             // Le decimos que cuando este listo ejecute el código interno
+             reader.onload = function(){
+               let preview = document.getElementById('preview2'),
+                       image = document.createElement('img');
+           
+               image.src = reader.result;
+               image.getElementsByClassName('rounded-circle');
+               image.style.width="200px";
+               image.style.height="100px";
+               preview.innerHTML = '';
+               preview.append(image);
+             };
+           }
+            </script>
 
 
         <script>
@@ -307,132 +421,149 @@
        </script>
 
 <script>
-  $(function () {
-      
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-    });
+  function recargar(){
+    location.reload(); 
+  }
+</script>
 
-           
-    $('#enviar').click(function (e) {
-  
-        e.preventDefault();
-    
-        $.ajax({
-          data: $('#datos').serialize(),
-          url: "{{ route('modificardatos') }}",
-          type: "POST",
-          dataType: 'json',
-          success: function (data) {
-           $('.btn-info').click();
-           jQuery('modal-info').show();          
-          },
-          error: function (data) {
-          var err = JSON.parse(data.responseText);
-          var arreglo = err.errors;
-          
-           var nombre = arreglo.nombre;
-           var codigo = arreglo.codigopostal;
-           var estado = arreglo.estado;
-           var municipio = arreglo.municipio;
-           var colonia = arreglo.colonia;
-           var calle = arreglo.calle;
-           var numero = arreglo.numero;
-           var telefonono = arreglo.telefono;
- 
-           if (nombre == undefined){  
-             $( '#nombre' ).css('borderColor', 'green');         
-             jQuery('#validonombre').show(); 
-             jQuery('#errornombre').hide(); 
-             }else{
-               jQuery('#validonombre').hide(); 
-             jQuery('#errornombre').show();          
-            $( '#nombre' ).css('borderColor', 'red');
-           }
- 
-           if (codigo == undefined){  
-             $( '#codigo_postal' ).css('borderColor', 'green');         
-             jQuery('#validocodigopostal').show(); 
-             jQuery('#errorcodigopostal').hide(); 
-             }else{
-               jQuery('#validocodigopostal').hide(); 
-             jQuery('#errorcodigopostal').show();          
-            $( '#codigo_postal' ).css('borderColor', 'red');
-           }
-           if (estado == undefined){  
-             $( '#estado' ).css('borderColor', 'green');         
-             jQuery('#validoestado').show(); 
-             jQuery('#errorestado').hide(); 
-             }else{
-               jQuery('#validoestado').hide(); 
-             jQuery('#errorestado').show();          
-            $( '#estado' ).css('borderColor', 'red');
-           }
-           if (municipio == undefined){  
-             $( '#municipio' ).css('borderColor', 'green');         
-             jQuery('#validomunicipio').show(); 
-             jQuery('#errormunicipio').hide(); 
-             }else{
-               jQuery('#validomunicipio').hide(); 
-             jQuery('#errormunicipio').show();          
-            $( '#municipio' ).css('borderColor', 'red');
-           }
- 
-           if (calle == undefined){  
-             $( '#calle' ).css('borderColor', 'green');         
-             jQuery('#validocalle').show(); 
-             jQuery('#errorcalle').hide(); 
-             }else{
-               jQuery('#validocalle').hide(); 
-             jQuery('#errorcalle').show();          
-            $( '#calle' ).css('borderColor', 'red');
-           }
-           if (numero == undefined){  
-             $( '#numero' ).css('borderColor', 'green');         
-             jQuery('#validonumero').show(); 
-             jQuery('#errornumero').hide(); 
-             }else{
-               jQuery('#validonumero').hide(); 
-             jQuery('#errornumero').show();          
-            $( '#numero' ).css('borderColor', 'red');
-           }
-           if (telefono == undefined){  
-             $( '#telefono' ).css('borderColor', 'green');         
-             jQuery('#validotelefono').show(); 
-             jQuery('#errortelefono').hide(); 
-             }else{
-               jQuery('#validotelefono').hide(); 
-             jQuery('#errortelefono').show();          
-            $( '#telefono' ).css('borderColor', 'red');
-           }
- 
-           if (colonia == undefined){  
-             $( '#colonia' ).css('borderColor', 'green');         
-             jQuery('#validocolonia').show(); 
-             jQuery('#errorcolonia').hide(); 
-             }else{
-               jQuery('#validocolonia').hide(); 
-             jQuery('#errorcolonia').show();          
-            $( '#colonia' ).css('borderColor', 'red');
-           }
-
-              $('#enviar').html('guardar cambios');
-              $('#error1').click();
-          }
-      });
-    });
-    
+<script>
+  $(document).ready(function(){
    
-     
-  });
-  </script>
-  <script>
-    function recargar(){
-      location.reload(); 
-    }
-  </script>
+  $('#datos').on('submit', function(event){
+   event.preventDefault();
+       $.ajax({      
+         url: "{{ route('modificardatos') }}",
+         type: "POST",
+         data:new FormData(this),
+         dataType:'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+         success: function (data) {
+          var mensaje=data.success;
+          console.log(mensaje);
+          if(mensaje=='EXISTE'){
+      $('#existe1').click();
+       }else{
+          $('.btn-info').click();
+          }
+         },
+         error: function (data) {
+         var err = JSON.parse(data.responseText);
+         var arreglo = err.errors;
+          var nombre = arreglo.nombre;
+          var codigo = arreglo.codigopostal;
+          var estado = arreglo.estado;
+          var municipio = arreglo.municipio;
+          var colonia = arreglo.colonia;
+          var calle = arreglo.calle;
+          var numero = arreglo.numero;
+          var telefono = arreglo.telefono;
+          var foto = arreglo.foto;
+          var foto1 = arreglo.foto1;
+          var foto2 = arreglo.foto2;
+  
+          if (foto == undefined){  
+              
+            }else{
+             $('#message').css({"display": "block", "color":"red"});
+           $('#message').html('AGREGA UNA FOTO');
+          }
+          if (foto1 == undefined){  
+              
+            }else{
+             $('#message1').css({"display": "block", "color":"red"});
+           $('#message1').html('AGREGA UNA FOTO');
+          }
+          if (foto2 == undefined){  
+              
+            }else{
+             $('#message2').css({"display": "block", "color":"red"});
+           $('#message2').html('AGREGA UNA FOTO');
+          }
+          
+          if (nombre == undefined){  
+            $( '#nombre' ).css('borderColor', 'green');         
+            jQuery('#validonombre').show(); 
+            jQuery('#errornombre').hide(); 
+            }else{
+              jQuery('#validonombre').hide(); 
+            jQuery('#errornombre').show();          
+           $( '#nombre' ).css('borderColor', 'red');
+          }
+
+          if (codigo == undefined){  
+            $( '#codigo_postal' ).css('borderColor', 'green');         
+            jQuery('#validocodigopostal').show(); 
+            jQuery('#errorcodigopostal').hide(); 
+            }else{
+              jQuery('#validocodigopostal').hide(); 
+            jQuery('#errorcodigopostal').show();          
+           $( '#codigo_postal' ).css('borderColor', 'red');
+          }
+          if (estado == undefined){  
+            $( '#estado' ).css('borderColor', 'green');         
+            jQuery('#validoestado').show(); 
+            jQuery('#errorestado').hide(); 
+            }else{
+              jQuery('#validoestado').hide(); 
+            jQuery('#errorestado').show();          
+           $( '#estado' ).css('borderColor', 'red');
+          }
+          if (municipio == undefined){  
+            $( '#municipio' ).css('borderColor', 'green');         
+            jQuery('#validomunicipio').show(); 
+            jQuery('#errormunicipio').hide(); 
+            }else{
+              jQuery('#validomunicipio').hide(); 
+            jQuery('#errormunicipio').show();          
+           $( '#municipio' ).css('borderColor', 'red');
+          }
+
+          if (calle == undefined){  
+            $( '#calle' ).css('borderColor', 'green');         
+            jQuery('#validocalle').show(); 
+            jQuery('#errorcalle').hide(); 
+            }else{
+              jQuery('#validocalle').hide(); 
+            jQuery('#errorcalle').show();          
+           $( '#calle' ).css('borderColor', 'red');
+          }
+          if (numero == undefined){  
+            $( '#numero' ).css('borderColor', 'green');         
+            jQuery('#validonumero').show(); 
+            jQuery('#errornumero').hide(); 
+            }else{
+              jQuery('#validonumero').hide(); 
+            jQuery('#errornumero').show();          
+           $( '#numero' ).css('borderColor', 'red');
+          }
+          if (telefono == undefined){  
+            $( '#telefono' ).css('borderColor', 'green');         
+            jQuery('#validotelefono').show(); 
+            jQuery('#errortelefono').hide(); 
+            }else{
+              jQuery('#validotelefono').hide(); 
+            jQuery('#errortelefono').show();          
+           $( '#telefono' ).css('borderColor', 'red');
+          }
+
+          if (colonia == undefined){  
+            $( '#colonia' ).css('borderColor', 'green');         
+            jQuery('#validocolonia').show(); 
+            jQuery('#errorcolonia').hide(); 
+            }else{
+              jQuery('#validocolonia').hide(); 
+            jQuery('#errorcolonia').show();          
+           $( '#colonia' ).css('borderColor', 'red');
+          }
+             $('#enviar').html('guardar cambios');
+             $('#error1').click();
+         }
+     });
+   });   
+ });
+ </script>
        @endsection   
 </body>
 </html>
