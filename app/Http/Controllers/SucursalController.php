@@ -154,8 +154,14 @@ class SucursalController extends Controller
     }
 
    public function ModificarDatos(Request $request){
+
+
     $carbon = new \Carbon\Carbon();
     $date = $carbon->now();
+   
+    // NO SE MODIFICA NINGUNA IMAGEN
+    if($request['foto']==null && $request['foto1']==null && $request['foto2']==null){
+        
     $request->validate([
         'nombre'=>'required|regex:/^[\pL\s]+$/u',
         'codigopostal'=>'required|regex:/[0-9]{5}/m',
@@ -166,8 +172,10 @@ class SucursalController extends Controller
         'numero'=>'required',
         'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
         ]);
+
         $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
-          
+                 
+
         $sucursal->update([
             'nombre'=> $request['nombre'],
             'codigopostal'=>$request['codigopostal'],
@@ -181,6 +189,296 @@ class SucursalController extends Controller
             'updated_at'=> $date
         ]);
         return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+    }
+
+    // SE MODIFICA LA PRIMERA IMAGEN
+    if($request['foto']!=null && $request['foto1']==null && $request['foto2']==null){
+        
+        $request->validate([
+            'nombre'=>'required|regex:/^[\pL\s]+$/u',
+            'codigopostal'=>'required|regex:/[0-9]{5}/m',
+            'estado'=>'required',
+            'municipio'=>'required',
+            'colonia'=>'required',
+            'calle'=>'required',
+            'numero'=>'required',
+            'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
+            ]);
+    
+            $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
+            $image = $request->file('foto');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $new_name);   
+            
+    
+            $sucursal->update([
+                'foto'=>$new_name,
+                'nombre'=> $request['nombre'],
+                'codigopostal'=>$request['codigopostal'],
+                'estado'=>$request['estado'],
+                'municipio' =>$request['municipio'],
+                'colonia'=>$request['colonia'],
+                'calle' =>$request['calle'],
+                'numero'=>$request['numero'],
+                'telefono'=>$request['telefono'],
+                'status'=> 'ACTIVO',
+                'updated_at'=> $date
+            ]);
+            return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+        }
+    
+        // SE MODIFICA LA SEGUNDA IMAGEN 
+
+        if($request['foto']==null && $request['foto1']!=null && $request['foto2']==null){
+        
+            $request->validate([
+                'foto1' => 'required|image|mimes:jpeg,png,jpg,gif',
+                'nombre'=>'required|regex:/^[\pL\s]+$/u',
+                'codigopostal'=>'required|regex:/[0-9]{5}/m',
+                'estado'=>'required',
+                'municipio'=>'required',
+                'colonia'=>'required',
+                'calle'=>'required',
+                'numero'=>'required',
+                'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
+                ]);
+        
+                $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();        
+                $image1 = $request->file('foto1');
+                $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+                $image1->move(public_path('images'), $new_name1);
+        
+                
+        
+                $sucursal->update([
+                    'foto1'=>$new_name1,
+                    'nombre'=> $request['nombre'],
+                    'codigopostal'=>$request['codigopostal'],
+                    'estado'=>$request['estado'],
+                    'municipio' =>$request['municipio'],
+                    'colonia'=>$request['colonia'],
+                    'calle' =>$request['calle'],
+                    'numero'=>$request['numero'],
+                    'telefono'=>$request['telefono'],
+                    'status'=> 'ACTIVO',
+                    'updated_at'=> $date
+                ]);
+                return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+            }
+        
+        
+            //SE MODIFICA LA TERCERA IMAGEN
+
+            if($request['foto']==null && $request['foto1']==null && $request['foto2']!=null){
+        
+                $request->validate([
+                    'foto2' => 'required|image|mimes:jpeg,png,jpg,gif',
+                    'nombre'=>'required|regex:/^[\pL\s]+$/u',
+                    'codigopostal'=>'required|regex:/[0-9]{5}/m',
+                    'estado'=>'required',
+                    'municipio'=>'required',
+                    'colonia'=>'required',
+                    'calle'=>'required',
+                    'numero'=>'required',
+                    'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
+                    ]);
+            
+                    $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
+                
+                    $image2 = $request->file('foto2');
+                    $new_name2 = rand() . '.' . $image2->getClientOriginalExtension();
+                    $image2->move(public_path('images'), $new_name2);
+            
+                    
+            
+                    $sucursal->update([
+                        'foto2'=>$new_name2,
+                        'nombre'=> $request['nombre'],
+                        'codigopostal'=>$request['codigopostal'],
+                        'estado'=>$request['estado'],
+                        'municipio' =>$request['municipio'],
+                        'colonia'=>$request['colonia'],
+                        'calle' =>$request['calle'],
+                        'numero'=>$request['numero'],
+                        'telefono'=>$request['telefono'],
+                        'status'=> 'ACTIVO',
+                        'updated_at'=> $date
+                    ]);
+                    return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+                }
+            
+                //SE MODIFICA LAS TRES IMAGENES
+                if($request['foto']!=null && $request['foto1']!=null && $request['foto2']!=null){
+        
+                    $request->validate([
+                        'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'foto1' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'foto2' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'nombre'=>'required|regex:/^[\pL\s]+$/u',
+                        'codigopostal'=>'required|regex:/[0-9]{5}/m',
+                        'estado'=>'required',
+                        'municipio'=>'required',
+                        'colonia'=>'required',
+                        'calle'=>'required',
+                        'numero'=>'required',
+                        'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
+                        ]);
+                
+                        $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
+                        $image = $request->file('foto');
+                        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                        $image->move(public_path('images'), $new_name);
+                
+                        $image1 = $request->file('foto1');
+                        $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+                        $image1->move(public_path('images'), $new_name1);                
+                        
+                        $image2 = $request->file('foto2');
+                        $new_name2 = rand() . '.' . $image2->getClientOriginalExtension();
+                        $image2->move(public_path('images'), $new_name2);
+                        $sucursal->update([
+                            'foto'=>$new_name,
+                            'foto1'=>$new_name1,
+                            'foto2'=>$new_name2,
+                            'nombre'=> $request['nombre'],
+                            'codigopostal'=>$request['codigopostal'],
+                            'estado'=>$request['estado'],
+                            'municipio' =>$request['municipio'],
+                            'colonia'=>$request['colonia'],
+                            'calle' =>$request['calle'],
+                            'numero'=>$request['numero'],
+                            'telefono'=>$request['telefono'],
+                            'status'=> 'ACTIVO',
+                            'updated_at'=> $date
+                        ]);
+                        return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+                    }
+                
+                     //SE MODIFICA LAS DOS PRIMERAS IMAGENES
+                if($request['foto']!=null && $request['foto1']!=null && $request['foto2']==null){
+        
+                    $request->validate([
+                        'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'foto1' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'nombre'=>'required|regex:/^[\pL\s]+$/u',
+                        'codigopostal'=>'required|regex:/[0-9]{5}/m',
+                        'estado'=>'required',
+                        'municipio'=>'required',
+                        'colonia'=>'required',
+                        'calle'=>'required',
+                        'numero'=>'required',
+                        'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
+                        ]);
+                
+                        $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
+                        $image = $request->file('foto');
+                        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                        $image->move(public_path('images'), $new_name);
+                
+                        $image1 = $request->file('foto1');
+                        $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+                        $image1->move(public_path('images'), $new_name1);                
+                        
+                        $sucursal->update([
+                            'foto'=>$new_name,
+                            'foto1'=>$new_name1,
+                            'nombre'=> $request['nombre'],
+                            'codigopostal'=>$request['codigopostal'],
+                            'estado'=>$request['estado'],
+                            'municipio' =>$request['municipio'],
+                            'colonia'=>$request['colonia'],
+                            'calle' =>$request['calle'],
+                            'numero'=>$request['numero'],
+                            'telefono'=>$request['telefono'],
+                            'status'=> 'ACTIVO',
+                            'updated_at'=> $date
+                        ]);
+                        return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+                    }
+                
+                             //SE MODIFICA LAS DOS ULTIMAS IMAGENES
+                if($request['foto']==null && $request['foto1']!=null && $request['foto2']!=null){
+        
+                    $request->validate([
+                        'foto1' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'foto2' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'nombre'=>'required|regex:/^[\pL\s]+$/u',
+                        'codigopostal'=>'required|regex:/[0-9]{5}/m',
+                        'estado'=>'required',
+                        'municipio'=>'required',
+                        'colonia'=>'required',
+                        'calle'=>'required',
+                        'numero'=>'required',
+                        'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
+                        ]);
+                
+                        $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
+                        $image1 = $request->file('foto1');
+                        $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+                        $image1->move(public_path('images'), $new_name1);                
+                        
+                        $image2 = $request->file('foto2');
+                        $new_name2 = rand() . '.' . $image2->getClientOriginalExtension();
+                        $image2->move(public_path('images'), $new_name2);                
+                        
+                        $sucursal->update([
+                            'foto1'=>$new_name1,
+                            'foto2'=>$new_name2,
+                            'nombre'=> $request['nombre'],
+                            'codigopostal'=>$request['codigopostal'],
+                            'estado'=>$request['estado'],
+                            'municipio' =>$request['municipio'],
+                            'colonia'=>$request['colonia'],
+                            'calle' =>$request['calle'],
+                            'numero'=>$request['numero'],
+                            'telefono'=>$request['telefono'],
+                            'status'=> 'ACTIVO',
+                            'updated_at'=> $date
+                        ]);
+                        return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+                    }
+
+                                     //SE MODIFICA LAS DOS LATERALES DE IMAGENES
+                if($request['foto']!=null && $request['foto1']==null && $request['foto2']!=null){
+        
+                    $request->validate([
+                        'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'foto2' => 'required|image|mimes:jpeg,png,jpg,gif',
+                        'nombre'=>'required|regex:/^[\pL\s]+$/u',
+                        'codigopostal'=>'required|regex:/[0-9]{5}/m',
+                        'estado'=>'required',
+                        'municipio'=>'required',
+                        'colonia'=>'required',
+                        'calle'=>'required',
+                        'numero'=>'required',
+                        'telefono'=>'required|regex:/[1-9][0-9]{9}/m',
+                        ]);
+                
+                        $sucursal=Sucursal::where('idsucursal',$request['idsucursal'])->first();
+                        $image = $request->file('foto');
+                        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                        $image->move(public_path('images'), $new_name);                
+                        
+                        $image2 = $request->file('foto2');
+                        $new_name2 = rand() . '.' . $image2->getClientOriginalExtension();
+                        $image2->move(public_path('images'), $new_name2);                
+                        
+                        $sucursal->update([
+                            'foto'=>$new_name,
+                            'foto2'=>$new_name2,
+                            'nombre'=> $request['nombre'],
+                            'codigopostal'=>$request['codigopostal'],
+                            'estado'=>$request['estado'],
+                            'municipio' =>$request['municipio'],
+                            'colonia'=>$request['colonia'],
+                            'calle' =>$request['calle'],
+                            'numero'=>$request['numero'],
+                            'telefono'=>$request['telefono'],
+                            'status'=> 'ACTIVO',
+                            'updated_at'=> $date
+                        ]);
+                        return response()->json(['success'=>'DATOS AGREGADOS CORRECTAMENTE']);
+                    }
 
     }
 
