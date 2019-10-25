@@ -100,29 +100,43 @@
                 @if($reservacion->saldo==0)
                   <h3>Se pagó el total de la reservación</h3>
                   @endif 
+
                 <div class="col-md-6 form-group">
                     <label>Saldo</label>
                     <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->saldo}}">
                   </div>
+             
                   <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       @if($alquiler->estatus!='cancelado'&&$alquiler->estatus!='terminado')
                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning2">
                           <b>Registrar cobro </b>
                         </button>
                         @endif
                       </div>
+                      <div class="col-md-4">
+                        @if($alquiler->estatus!='cancelado'&&$alquiler->estatus!='terminado')
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#registrar_reintegro">
+                            <b>Registrar reembolso </b>
+                          </button>
+                          @endif
+                        </div>
+                      <div class="col-md-7">
+                      <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#pagos">
+                        <b>Ver cobros </b>
+                      </button>
                     </div>
-                      
-                      
-                          <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#pagos">
-                              <b>Ver cobros </b>
-                            </button>
 
+                    <div class="row">
 
-          
+                        <div class="col-md-4">
+                        <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#reembolsos">
+                          <b>Ver reembolso </b>
+                        </button>
                       </div>
                     </div>
+                      
+  
 
               <div class="row">
                 <div class="col-md-8">
@@ -312,6 +326,65 @@
             <!-- /.modal-dialog -->
           </div>
 
+          <div class="modal modal-warning fade" id="registrar_reintegro">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Registrar reembolso'}}</b> </h4>
+                </div>
+                <div class="modal-body">
+
+                  
+                    <form method="POST" action="{{ route('reembolsoReservacion') }}"  role="form" enctype="multipart/form-data">
+                      {{ csrf_field() }}
+                      <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
+                  <p><b>{{'Se registrará un nuevo reembolso'}} </b>&hellip;</p>
+
+                  <div class="row"> 
+                      <div class="col-md-3">
+                    <label>Motivo</label>
+                           <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
+                      <option value="otro">Otro</option>
+                      <option value="cambio de vehiculo">Cambio de vehiculo</option>
+
+
+                  </select>
+
+                </div>
+
+                <div class="col-md-3">
+                  <label>Datos</label>
+                  <input type="text" name="datos" id="" class="form-control"  value="">
+                </div>
+
+                  <div class="col-md-3">
+                  <label>Monto</label>
+                  <input type="number" name="monto" id="" class="form-control"  value="">
+                  </div>
+
+                <div class="col-md-9">
+                    <label>Comentario</label>
+                    <input type="text" name="comentario" id="" class="form-control"  value="">
+                  </div>
+
+
+                </div>
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{' Registrar reembolso'}}</button>
+            </form>
+  
+                </div>
+              </div>
+              
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+
           <div class="modal modal-warning fade" id="modal-warning2">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -477,9 +550,10 @@
                                       <th>Monto</th>
                                       <th>Comentario</th>
                                       @if($pagos->count())  
-                                      {{$total = 0.0}}
+                                      <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
+                                     
                                       @foreach($pagos as $pago)
-                                      {{$total+=$pago->total}}  
+                                      <input id="total" name="total" type="hidden" value={{$total+=$pago->total}}  >
                                       <tr>
                                       <td>{{$pago->id}}</td>
                                   
@@ -516,6 +590,76 @@
                   <!-- /.modal-dialog -->
                 </div>
 
+
+{{-- --- --}}
+
+
+<div class="modal fade in" id="reembolsos">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Remmbolsos por la reservación'}}  {{$reservacion->id}}</b> </h4>
+      </div>
+      <div class="modal-body">
+
+          <div class="box-body">
+              <div class="row">
+                <div class="col-md-12 ">
+                  <div class="form-group">
+
+              
+                    <table border="1">
+                      <th>Número</th>
+                      <th>Datos</th>
+                      <th>Motivo</th>
+                      <th>Fecha</th>
+                      <th>Monto</th>
+                      <th>Comentario</th>
+                      @if($reembolsos->count())  
+                      <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
+                      @foreach($reembolsos as $reembolso)
+                      <input id="total" name="total" type="hidden" value={{$total+=$reembolso->total}}  >
+                      <tr>
+                      <td>{{$reembolso->id}}</td>
+                  
+                        <td> {{$reembolso->paypal_Datos}}
+
+                        {{$reembolso->mostrador_Datos}} 
+                                                  </td>
+                          <td>{{$reembolso->motivo}}</td>
+
+                         <td>{{$reembolso->fecha}}</td>
+
+                        <td>{{$reembolso->total}}</td>
+                        <td>{{$reembolso->comentario}}</td>
+                        </tr>
+                      @endforeach
+                      @endif
+
+                    </table>
+                  <h3>Total pagado = {{$total}}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+              
+      </div>
+      <div class="modal-footer">
+
+
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+{{-- ---- --}}
 
                 <div class="modal fade in" id="recibir">
 
