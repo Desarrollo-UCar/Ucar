@@ -275,7 +275,7 @@ class EmpleadoController extends Controller
         { 
             if($request['tipo']=='CHOFER'){
                 $request->validate([
-                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                   'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                    'ine' => 'required|regex:/[0-9]{13}/m',
                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',

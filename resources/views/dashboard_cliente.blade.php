@@ -14,7 +14,7 @@
 @foreach($reservas_cliente as $reserva)
 <div class="row border border-primary">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"> <h3 class = "text-primary">Folio: <strong>{{$reserva->id}}</strong></h3></div>
-    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
         <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <div id="lista_itinerario">
@@ -67,7 +67,7 @@
         </div>
         </div>
     </div>
-                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">    
+                <div class="col-sm-4 col-md-4 col-lg-2 col-xl-2">    
                     <div id="lista_itinerario">
                         <h6><strong>Tu vehículo:</strong></h6>  
                         <dl>
@@ -88,10 +88,10 @@
                         </dl>   
                     </div>
                 </div>
-                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="container">
                         <div class="row">
-                                <img src="{{$reserva->foto}}" style="width:80%" />
+                                <img src="{{'/images/'.$reserva->foto}}" style="width:100%" />
                                 <h6><i class="ico icon-circled active icon-1x fa-1x fa fa-window-close text-danger" ></i><strong> Cancelar:</strong> Favor de ponerse en contacto con la sucursal al número: {{$reserva->telefono}}</h6>       
                         </div>
                     </div>
