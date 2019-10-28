@@ -145,7 +145,7 @@
                                     data-amount="{{$datos_reserva->total * 100}}"
                                     data-name="Pago reservación"
                                     data-description="Pago por reserva"
-                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    data-image="img/logo_stripe.jpg"
                                     data-currency="mxn"
                                     data-locale="auto"
                                     data-label="Pagar con tarjeta de crédito">
@@ -175,7 +175,7 @@
                                     data-amount="{{$anticipo * 100}}"
                                     data-name="Pago reservación"
                                     data-description="Pago por reserva"
-                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    data-image="img/logo_stripe.jpg"
                                     data-currency="mxn"
                                     data-locale="auto"
                                     data-label="Pagar con tarjeta de crédito">

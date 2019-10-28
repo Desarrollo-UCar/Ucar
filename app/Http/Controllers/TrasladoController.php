@@ -16,12 +16,14 @@ class TrasladoController extends Controller{
     public function validar_logeo_traslado(Request $reserva){
        // echo "con logeo";
        $estado = "con";
-        return view('renta_traslado', compact('estado'));
+       $sucursales = App\Sucursal::all();
+        return view('renta_traslado', compact('estado','sucursales'));
     }
     public function validar_sin_logeo_traslado(Request $reserva){
         // echo "sin logeo";
         $estado = "sin";
-        return view('renta_traslado',compact('estado'));
+        $sucursales = App\Sucursal::all();
+        return view('renta_traslado',compact('estado','sucursales'));
     }
     //parte de la reserva de un traslado
     public function renta_traslado_vehiculo(Request $request){ 
@@ -65,7 +67,8 @@ class TrasladoController extends Controller{
          $traslado_temp->save();
         //Consultas a las bases de datos flota disponible en las fechas dadas y devolucion de los datos de la reserva de un traslado
          $datos_reserva_traslado = App\traslado_temp::findOrFail($traslado_temp->id);
-        return view('renta_traslado_datos',compact('datos_reserva_traslado'));
+         $sucursales = App\Sucursal::all();
+        return view('renta_traslado_datos',compact('datos_reserva_traslado','sucursales'));
     }
     
 public function calculo_costos_traslado(Request $reserva){
@@ -78,7 +81,8 @@ public function calculo_costos_traslado(Request $reserva){
         $horas = null;
         $subtotal = null;
         $vehiculo_elegido = null;
-        return view('traslado_calculo_cotizacion',compact('vehiculo_elegido','vehiculos_disponibles','solicitud_traslado','sucursales','dias','horas','subtotal'));
+        $sucursales = App\Sucursal::all();
+        return view('traslado_calculo_cotizacion',compact('sucursales','vehiculo_elegido','vehiculos_disponibles','solicitud_traslado','sucursales','dias','horas','subtotal'));
     }
     
 public function vehiculos_por_sucursal(Request $reserva){
@@ -205,7 +209,7 @@ public function vehiculos_por_sucursal(Request $reserva){
     $solicitud_traslado->save();
     $solicitud_traslado = App\traslado_temp::findOrFail($solicitud_traslado->id);
     //return $solicitud_traslado;
-    return view('traslado_calculo_cotizacion',compact('solicitud_traslado','sucursales','vehiculos_disponibles','vehiculo_elegido','dias','horas','subtotal'));
+    return view('traslado_calculo_cotizacion',compact('sucursales','solicitud_traslado','sucursales','vehiculos_disponibles','vehiculo_elegido','dias','horas','subtotal'));
 }
 
 
@@ -280,9 +284,9 @@ public function guardar_confirmacion_traslado(Request $reserva){
     $solicitud_traslado->estatus = 1;
     $solicitud_traslado->save();
     $traslados = App\traslado_temp::all();
-
+    $sucursales = App\Sucursal::all();
     /////////-------------------------
-    return view ('gerente.reservaciones.inicioTraslado',compact('traslados'));
+    return view ('gerente.reservaciones.inicioTraslado',compact('traslados','sucursales'));
 }
 
 

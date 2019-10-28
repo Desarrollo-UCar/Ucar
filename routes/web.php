@@ -45,7 +45,11 @@ Route::get('en_construccion',         'SoloVistasController@en_construccion')-> 
 Route::get('renta_traslado',          'SoloVistasController@renta_traslado')->       name('renta_traslado') ;
 Route::get('bienvenida',              'SoloVistasController@bienvenida')->           name('bienvenida');//bienvenida al cliente al verificar su cuenta de correo
 //vamos a ver que onda con los correos rutas de prueba  y diseño de vitas
+Route::get('correo_salida_vehiculo','SoloVistasController@correo_salida_vehiculo')->name('correo_salida_vehiculo');//bienvenida al cliente al verificar su cuenta de correo
+Route::get('correo_llegada_vehiculo','SoloVistasController@correo_llegada_vehiculo')->name('correo_llegada_vehiculo');//bienvenida al cliente al verificar su cuenta de correo
+
 Route::get('correo_confirmacion_pago','SoloVistasController@correo_confirmacion_pago')->name('correo_confirmacion_pago');//bienvenida al cliente al verificar su cuenta de correo
+
 Route::get('disenio_reserva_finalizada','SoloVistasController@disenio_reserva_finalizada')->name('disenio_reserva_finalizada');//bienvenida al cliente al verificar su cuenta de correo
 
 

@@ -66,11 +66,10 @@
                             <i class="fa fa-bolt" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->rendimiento}} Km/L
                             <i class="fa fa-male" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->pasajeros}} Pasajeros</strong>
                             </h6>
-
             </div>
-                    <figure>
-                            <div><img src={{'/images/'.$vehiculo->foto}} /></div>
-                    </figure>
+                <figure>
+                        <div><img src={{'/images/'.$vehiculo->foto}} /></div>
+                </figure>
             <div class="pricing-action">
                 <!-- Button trigger modal -->
                 

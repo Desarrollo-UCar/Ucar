@@ -363,7 +363,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                 <div class="pricing-box-wrap special animated-fast flyIn">
                   <div class="pricing-heading">
                     <h3><strong> Vehículo</strong></h3>
@@ -372,12 +372,12 @@
                     <h6>Muévete libremente cuando viajas, sin problemas por transporte</h6>
                   </div>
                   <div class="pricing-action">
-                    <a href="{{ route('index') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
+                    <a href="{{ route('flota') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                 <div class="pricing-box-wrap animated-fast flyIn">
                   <div class="pricing-heading">
                     <h3>Auto<strong>+Chofer</strong></h3>
@@ -386,12 +386,12 @@
                     <h6>Viaja cómodamente con un chofer con amabilidad y experiencia</h6>
                   </div>
                   <div class="pricing-action">
-                    <a href="{{ route('index') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
+                    <a href="{{ route('flota') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                 <div class="pricing-box-wrap animated-slow flyIn">
                   <div class="pricing-heading">
                     <h3><strong>Traslado</strong></h3>
@@ -405,19 +405,6 @@
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                <div class="pricing-box-wrap animated flyIn">
-                  <div class="pricing-heading">
-                    <h3><strong>Flotilla</strong></h3>
-                  </div>
-                  <div class="pricing-terms">
-                    <h6>Servicio especial para empresas, renta de flotilla para asuntos de negocios </h6>
-                  </div>
-                  <div class="pricing-action">
-                    <a href="{{ route('en_construccion') }}" class="btn btn-medium btn-theme"><i class="icon-chevron-down"></i>Ver Mas</a>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -543,7 +530,7 @@
 <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
     <p><a href="{{ route('index') }}">Iniciar una reservación</a></p>
-    <p><a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservación</a></p>
+    <p><a href="{{ route('dashboard_cliente') }}">Ver mis reservaciones</a></p>
   
 </div>
 <!-- Grid column -->

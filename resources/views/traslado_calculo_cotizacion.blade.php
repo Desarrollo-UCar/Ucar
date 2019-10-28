@@ -36,88 +36,6 @@
 
     <div id="wrapper">
     <!-- INICIA header -->
-     <header>
-     <div class="bg-white">
-      </div>
-    <div class="container">
-        <div class="row nomargin">
-        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="logo">
-                <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:25%"/></a>
-            </div>
-        </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
-            <div class="navbar">
-              <div class="navigation">
-                <nav>
-                  <ul class="nav ">
-                    <li class="dropdown active">
-                      <a href="{{ route('index') }}"> Inicio</a>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="#">Reservación <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown"><a href="#">Reservar<i class="icon-angle-right"></i></a>
-                          <ul class="dropdown-menu sub-menu-level1">
-                            <li><a href="{{ route('index') }}">Automovil</a></li>
-                            <li><a href="{{ route('renta_traslado') }}">Traslado</a></li>
-                            <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="#">Sucursales <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                      @foreach($sucursales as $sucursal)
-                            <li><a href="{{ route('sucursal_info') }}">{{$sucursal->nombre}}</a></li>
-                        @endforeach
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="{{ route('flota') }}">Flota</a>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="{{ route('servicios') }}">Servicios</a>
-                    </li>
-                    @if(!(Auth::user()))
-                    <li class="dropdown">
-                      <a href="{{ route('login')}}">Iniciar Sesión </a>
-                    </li>
-                    @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();" style="color: white">
-                                {{ __('Cerrar sesión') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                    @endif
-                  </ul>
-                </nav>
-              </div>
-              <!-- end navigation -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- end header -->
 
     
 
@@ -131,7 +49,7 @@
                 <div class="card-body">
                     
       <div class="row">
-{{--calculo de datos para el traslado  --}}
+{{--calculo de datos para el traslado--}}
 
 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
     <form id="reserva_traslado" action="{{ route('vehiculos_por_sucursal')}}" method="post" enctype="multipart/form-data">
@@ -660,74 +578,6 @@
     </div>
     </div>
     </section>
-<!-- Footer -->
-<footer class=" font-small bg-dark text-white">
-<!-- Footer Links -->
-<div class="container">
-<!-- Footer links -->
-<div class="row">
-<!-- Grid column -->
-<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-<a href="{{ route('index') }}"><img src="img/logo.png" alt="Logo ucar" style="width:90%"/></a>
-</div>  
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
-    <p>Somos una empresa dedicada al servicio de renta de automóviles, traslados, especializados en flotillas</p>
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
-    <p><a href="{{ route('index') }}">Iniciar una reservación</a></p>
-    <p><a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservación</a></p>
-  
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
-    <p><a href="{{ route('flota') }}">Toda la flota</a></p>
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Promociones</h6>
-    <p><a href="{{ route('en_construccion') }}">Promociones</a></p>
-    <p><a href="{{ route('en_construccion') }}">Acerca de las promociones</a></p>
-</div>
-<!-- Grid column -->
-
-<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-    <h6 class="text-uppercase font-weight-bold">Servicios al cliente</h6>
-    <p><a href="{{ route('en_construccion') }}">Aviso de privacidad  </a></p>
-    <p><a href="{{ route('en_construccion') }}">Politicas de renta</a></p>
-    <p><a href="{{ route('en_construccion') }}">Protecciones</a></p>
-    <p><a href="{{ route('en_construccion') }}">Preguntas Frecuentes</a></p>
-    <p><a href="{{ route('en_construccion') }}">Contacto</a></p>
-</div>
-<!-- Grid column -->
-<div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
-    <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
-    @foreach($sucursales as $sucursal)
-    <p><a href="{{ route('sucursal_info') }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, {{$sucursal->telefono}} </a></p>
-    @endforeach
-</div>
-                <!-- Grid column -->
-</div>
-<!-- Footer links -->
-<!-- Grid row -->
-</div>
-  <div id="sub-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-          <div class="copyright">
-            <p><span>&copy;2019 Ü-CAR. Todos los derechos reservados.</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Footer Links -->
-</footer>
 </div>
 <!-- Footer -->
     <!-- Optional JavaScript -->
@@ -743,26 +593,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- javascript================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/bootstrap.js"></script>
 
-  <script src="js/modernizr.custom.js"></script>
-  <script src="js/toucheffects.js"></script>
-  <script src="js/google-code-prettify/prettify.js"></script>
-  <script src="js/jquery.bxslider.min.js"></script>
-  <script src="js/camera/camera.js"></script>
-  <script src="js/camera/setting.js"></script>
-
-  <script src="js/jquery.prettyPhoto.js"></script>
-  <script src="js/portfolio/jquery.quicksand.js"></script>
-  <script src="js/portfolio/setting.js"></script>
-
-  <script src="js/jquery.flexslider.js"></script>
-  <script src="js/animate.js"></script>
-  <script src="js/inview.js"></script>
   <script src="js/daterangepicker.js"></script>
-  <script src="js/custom.js"></script>
+  
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>

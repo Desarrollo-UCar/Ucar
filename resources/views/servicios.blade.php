@@ -150,39 +150,6 @@
 
                 </div>
             </article>
-            <article>
-              <div class="row">
-                <div class="align-self-center col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <div class="post-slider">
-                    <div class="post-heading">
-                      <h3><a href="#">Flotillas Para Empresas</a></h3>
-                    </div>
-                    <div class="clear"></div>
-                    <!-- start flexslider -->
-                    <div class="flexslider">
-                      <ul class="slides">
-                        <li>
-                          <img src="img/servicios/renta-mas-chofer-2.jpg" alt="" />
-                        </li>
-                        <li>
-                          <img src="img/servicios/renta-mas-chofer-3.jpg" alt="" />
-                        </li>
-                      </ul>
-                    </div>
-                    <!-- end flexslider -->
-                  </div>
-                  </div>
-                  <div class="align-self-center col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                        <ul>
-                        <h5>Flotilla:</h5>
-                        <li>Identificacion/pasaporte</li>
-                        <li>Licencia de conducir vigente</li>
-                        <li>Aceptamos todas las tarjeta de credito</li>
-                        </ul>
-                        <p>Comunícate con tu sucursal de preferencia y obten la cotización de tu flotilla</p>
-                    </div>
-                </div>
-            </article>
           </div>
         </div>
       </div>
