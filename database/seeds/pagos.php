@@ -24,6 +24,7 @@ class pagos extends Seeder
                 'fecha' =>  $faker->dateTimeBetween('-3 year', '+14 days'),
                 'total' => $faker->numberBetween(1000,3000),
                'estatus' => 'pagado',
+               'metodo' => 'efectivo',
             ));
         }
         //

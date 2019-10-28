@@ -107,7 +107,7 @@
                   </div>
              
                   <div class="row">
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                       @if($alquiler->estatus!='cancelado'&&$alquiler->estatus!='terminado')
                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning2">
                           <b>Registrar cobro </b>
@@ -120,9 +120,9 @@
                             <b>Registrar reembolso </b>
                           </button>
                           @endif
-                        </div>
+                        </div> --}}
                       <div class="col-md-7">
-                      <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#pagos">
+                      <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#cobros">
                         <b>Ver cobros </b>
                       </button>
                     </div>
@@ -130,7 +130,7 @@
                     <div class="row">
 
                         <div class="col-md-4">
-                        <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#reembolsos">
+                        <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#reembolso">
                           <b>Ver reembolso </b>
                         </button>
                       </div>
@@ -385,93 +385,161 @@
             <!-- /.modal-dialog -->
           </div>
 
-          <div class="modal modal-warning fade" id="modal-warning2">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Registrar cobro '}}</b> </h4>
-                  </div>
-                  <div class="modal-body">
 
-                    
+          <div class="modal modal-fade-in" id="cobros">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"> <b> {{'Gestión de cobros'}}</b> </h4>
+                    </div>
+
+                    <div class="modal-body">
+                      <div class="col-md-12 col-md-offset-3">
+                      <div clas="row"> 
+                        <h4> <b> {{'Registrar nuevo cobro:'}}</b> </h4>
+                      </div>
                       <form method="POST" action="{{ route('pagoReservacion') }}"  role="form" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
-                    <p><b>{{'Se registrará un nuevo cobro'}} </b>&hellip;</p>
+                      <div clas="row"> 
+                          <div class="col-md-8">
+                              <div class="col-md-3">
+                              <label>Motivo</label>
+                              </div>
+                              <div class="col-md-5">
+                                     <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
+                                <option value="otro">Otro</option>
+                                <option value="reparacion">Reparacion</option>
+                                @if($reservacion->saldo!=0)
+                                <option value="saldo">Saldo</option>
+                                 @endif
+                            </select>
+                          </div>
+                          </div>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-md-3">
-                      <label>Motivo</label>
-                             <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
-                        <option value="otro">Otro</option>
-                        @if($reservacion->saldo!=0)
-                        <option value="saldo">Saldo</option>
-                         @endif
-                    </select>
- 
-                  </div>
+                          <div clas="row">
+                          <div class="col-md-8">
+                              <div class="col-md-3">
+                              <label>Metodo</label>
+                              </div>
+                              <div class="col-md-5">
+                                <select name= "metodo" id="metodo" class="form-control select2" style="width: 100%;">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="t. credito">Tarjeta/credito</option>
+                                <option value="t. debito">Tarjeta/debito</option>
+                            </select>
+                          </div>
+                          </div>
+                        </div>
 
+                          <div clas="row">
+                              <div class="col-md-8">
                   <div class="col-md-3">
-                    <label>Datos</label>
-                    <input type="text" name="datos" id="" class="form-control"  value="">
-                  </div>
+                      <label>Id/datos</label>
+                      </div>
 
-                    <div class="col-md-3">
-                    <label>Monto</label>
-                    @if($reservacion->saldo!=0)
-                    <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
-                     @else
-                    <input type="number" name="monto" id="" class="form-control"  value="">
-                    @endif
+                      <div class="col-md-5">
+                      <input type="text" name="datos" id="" class="form-control"  value="">
                     </div>
-
-                  <div class="col-md-9">
-                      <label>Comentario</label>
-                      <input type="text" name="comentario" id="" class="form-control"  value="">
+                  </div>
                     </div>
   
+                    <div clas="row">
+                        <div class="col-md-8">
+                      <div class="col-md-3">
+                      <label>Monto</label>
+                      </div>
+                      <div class="col-md-5">
+                      {{-- @if($reservacion->saldo!=0)
+                      <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
+                       @else --}}
+                      <input type="number" name="monto" id="" class="form-control"  value="">
+                      {{-- @endif --}}
+                    </div>
+                      </div>
+                    </div>
+                 
+                    <div clas="row">
+                        <div class="col-md-8">
+                            <div class="col-md-3">
+                            <label>Comentario</label>
+                            </div>
+                    <div class="col-md-5">
+                        <input type="text" name="comentario" id="" class="form-control"  value="">
+                      </div>
+                        </div>
+                      </div>
 
-                  </div>
-                  </div>
-                  <div class="modal-footer">
-                     
-                      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{' Registrar cobro'}}</button>
-              </form>
-    
-                  </div>
+                    </div>
+
+                    <div clas="row">
+                   
+                    <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar cobro'}}</button>
+                  </form>
+               
                 </div>
-                
-                <!-- /.modal-content -->
-              </div>
-              <!-- /.modal-dialog -->
-            </div>
 
-            <div class="modal modal-warning fade" id="modal-warning3">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Cobro de saldo pendiente por reservación'}}  {{$reservacion->id}}</b> </h4>
-                    </div>
-                    <div class="modal-body">
-                      <p><b>{{'Se registrará un pago por '}} {{$reservacion->saldo}} {{' de saldo pendiente, de la reservación'}} {{      $reservacion->id}} </b>&hellip;</p>
-                    </div>
-                    <div class="modal-footer">
-                        <form method="GET" action="{{route('garantia',$reservacion)}}"  role="form">
-                            {{ csrf_field() }}
-                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{' Registrar cobro'}}</button>
-                        </form>
-                    </div>
-                  </div>
-                  <!-- /.modal-content -->
+
+                <div clas="row">
+               
                 </div>
-                <!-- /.modal-dialog -->
-              </div>
+                <div clas="row">
+                    <div class="col-md-12 col-xs-offset-3">
+                    <h4> <b> {{'Registro de cobros:'}}</b> </h4>
+                    <br>
+                  </div>
+                    <div class="col-md-11" style="margin-left: 5%;">
+                        <div class="form-group">
 
-            <div class="modal modal-warning fade" id="modal-warning4">
+                    
+                          <table border="1">
+                            <th>Número</th>
+                            <th>Datos del cobro</th>
+                            <th>Motivo</th>
+                            <th>Fecha</th>
+                            <th>Monto</th>
+                            <th>Comentario</th>
+                            @if($pagos->count())  
+                            <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
+                           
+                            @foreach($pagos as $pago)
+                            <input id="total" name="total" type="hidden" value={{$total+=$pago->total}}  >
+                            <tr>
+                            <td>{{$pago->id}}</td>
+                        
+                              <td> {{$pago->paypal_Datos}}
+ 
+                              {{$pago->mostrador_Datos}} 
+                                                        </td>
+                                <td>{{$pago->motivo}}</td>
+
+                               <td>{{$pago->fecha}}</td>
+
+                              <td>{{$pago->total}}</td>
+                              <td>{{$pago->comentario}}</td>
+                              </tr>
+                            @endforeach
+                            @endif
+
+                          </table>
+                        <h3>Total cobrado = {{$total}}</h3>
+                        </div>
+                      </div>
+
+                </div>
+
+</div>
+
+                      <div class="modal-footer">
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+            <div class="modal modal-warning fade" id="modal-warning4"><!--MODAL CAMBIO DE VEHICULO -->
 
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -524,74 +592,145 @@
                 <!-- /.modal-dialog -->
               </div>
 
-              <div class="modal fade in" id="pagos">
 
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-  
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Cobros por la reservación'}}  {{$reservacion->id}}</b> </h4>
+<!--MODAL REEMBOLSOS-->
+<div class="modal fade in" id="reembolso">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"> <b> {{'Gestión de reembolsos'}}</b> </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="col-md-12 col-md-offset-3">
+              <div clas="row"> 
+                <h4> <b> {{'Registrar nuevo reembolso:'}}</b> </h4>
+              </div>
+              <form method="POST" action="{{ route('reembolsoReservacion') }}"  role="form" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
+              <div clas="row"> 
+                  <div class="col-md-8">
+                      <div class="col-md-3">
+                      <label>Motivo</label>
                       </div>
-                      <div class="modal-body">
-  
-                          <div class="box-body">
-                              <div class="row">
-                                <div class="col-md-12 ">
-                                  <div class="form-group">
-
-                              
-                                    <table border="1">
-                                      <th>Número</th>
-                                      <th>Datos del pago</th>
-                                      <th>Motivo</th>
-                                      <th>Fecha</th>
-                                      <th>Monto</th>
-                                      <th>Comentario</th>
-                                      @if($pagos->count())  
-                                      <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
-                                     
-                                      @foreach($pagos as $pago)
-                                      <input id="total" name="total" type="hidden" value={{$total+=$pago->total}}  >
-                                      <tr>
-                                      <td>{{$pago->id}}</td>
-                                  
-                                        <td> {{$pago->paypal_Datos}}
-           
-                                        {{$pago->mostrador_Datos}} 
-                                                                  </td>
-                                          <td>{{$pago->motivo}}</td>
-
-                                         <td>{{$pago->fecha}}</td>
-
-                                        <td>{{$pago->total}}</td>
-                                        <td>{{$pago->comentario}}</td>
-                                        </tr>
-                                      @endforeach
-                                      @endif
-
-                                    </table>
-                                  <h3>Total cobrado = {{$total}}</h3>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                              
-                      </div>
-                      <div class="modal-footer">
-
-
-                      </div>
-                      </form>
-                    </div>
-                    <!-- /.modal-content -->
+                      <div class="col-md-5">
+                             <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
+                        <option value="otro">Otro</option>
+                        <option value="reparacion">Retraso</option>
+                    </select>
                   </div>
-                  <!-- /.modal-dialog -->
+                  </div>
                 </div>
 
 
-{{-- --- --}}
+
+                  <div clas="row">
+                      <div class="col-md-8">
+          <div class="col-md-3">
+              <label>Dato</label>
+              </div>
+
+              <div class="col-md-5">
+              <input type="text" name="datos" id="" class="form-control"  value="">
+            </div>
+          </div>
+            </div>
+
+            <div clas="row">
+                <div class="col-md-8">
+              <div class="col-md-3">
+              <label>Monto</label>
+              </div>
+              <div class="col-md-5">
+              {{-- @if($reservacion->saldo!=0)
+              <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
+               @else --}}
+              <input type="number" name="monto" id="" class="form-control"  value="">
+              {{-- @endif --}}
+            </div>
+              </div>
+            </div>
+         
+            <div clas="row">
+                <div class="col-md-8">
+                    <div class="col-md-3">
+                    <label>Comentario</label>
+                    </div>
+            <div class="col-md-5">
+                <input type="text" name="comentario" id="" class="form-control"  value="">
+              </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div clas="row">
+
+            <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar reembolso'}}</button>
+          </form>
+          
+        </div>
+
+        <div clas="row">
+               
+          </div>
+
+
+        <div clas="row">
+            <div class="col-md-12 col-xs-offset-3">
+            <h4> <b> {{'Registro de reembolsos:'}}</b> </h4>
+            <br>
+          </div>
+          <div class="col-md-11" style="margin-left: 5%;">
+                <div class="form-group">
+                    <input id="dec" name="dec" type="hidden" value={{$totalr = 0.0}} >
+                    <table border="1">
+                        <th>Número</th>
+                        <th>Datos</th>
+                        <th>Motivo</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Comentario</th>
+                        @if($reembolsos->count())  
+                        @foreach($reembolsos as $reembolso)
+                        <input id="total" name="total" type="hidden" value={{$totalr+=$reembolso->total}}>
+                        <tr>
+                        <td>{{$reembolso->id}}</td>
+                    
+                          <td> {{$reembolso->paypal_Datos}}
+  
+                          {{$reembolso->mostrador_Datos}} 
+                                                    </td>
+                            <td>{{$reembolso->motivo}}</td>
+  
+                           <td>{{$reembolso->fecha}}</td>
+  
+                          <td>{{$reembolso->total}}</td>
+                          <td>{{$reembolso->comentario}}</td>
+                          </tr>
+                        @endforeach
+                        @endif
+  
+                      </table>
+                    <h3>Total pagado = {{$totalr}}</h3>
+                </div>
+              </div>
+
+        </div>
+      </div>
+
+
+
+              <div class="modal-footer">
+              </div>
+          </div>
+      </div>
+  </div>
+
+<!--FIN MODAL REEMBOLSOS-->
 
 
 <div class="modal fade in" id="reembolsos">
@@ -612,36 +751,7 @@
                   <div class="form-group">
 
               
-                    <table border="1">
-                      <th>Número</th>
-                      <th>Datos</th>
-                      <th>Motivo</th>
-                      <th>Fecha</th>
-                      <th>Monto</th>
-                      <th>Comentario</th>
-                      @if($reembolsos->count())  
-                      <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
-                      @foreach($reembolsos as $reembolso)
-                      <input id="total" name="total" type="hidden" value={{$total+=$reembolso->total}}  >
-                      <tr>
-                      <td>{{$reembolso->id}}</td>
-                  
-                        <td> {{$reembolso->paypal_Datos}}
 
-                        {{$reembolso->mostrador_Datos}} 
-                                                  </td>
-                          <td>{{$reembolso->motivo}}</td>
-
-                         <td>{{$reembolso->fecha}}</td>
-
-                        <td>{{$reembolso->total}}</td>
-                        <td>{{$reembolso->comentario}}</td>
-                        </tr>
-                      @endforeach
-                      @endif
-
-                    </table>
-                  <h3>Total pagado = {{$total}}</h3>
                   </div>
                 </div>
               </div>

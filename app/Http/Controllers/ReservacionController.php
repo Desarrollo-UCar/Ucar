@@ -338,8 +338,6 @@ class ReservacionController extends Controller
         $pagos = App\Pago_reservacion::where('reservacion','=',$reservacion->id)->get() ;
         return view ('gerente.reservaciones.detalle', compact('cliente', 'reservacion', 'alquiler', 'vehiculo','edad','disponibles','pagos'));
 
-
-    
         //return response()->json($alquileres);
 
     }
@@ -465,7 +463,7 @@ return response()->download(storage_path('Documento01.docx'));
     public function pago_Reservacion(request $request)
     {   //return response()->json(date('Y\-m\-d H\:i\:s'));
          $reservacion = Reservacion::where('id','=',$request['reservacion'])->first();
-        
+        return $request;
         if($request['motivo']=='saldo'){
         $saldoNuevo = $reservacion->saldo - $request['monto'];
         $reservacion->saldo = $saldoNuevo;
@@ -484,6 +482,7 @@ return response()->download(storage_path('Documento01.docx'));
         $pago->estatus= 'pagado';
         $pago->motivo = $request['motivo'];
         $pago->comentario = $request['comentario'];
+        $pago->metodo = $request['metodo'];
         $pago->save();
 
 
