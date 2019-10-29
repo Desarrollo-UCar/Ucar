@@ -256,7 +256,7 @@
                   
                 <div class="form-group col-md-4" style="display: none;" id="licencia">
                     <label>Número de licencia</label>
-                    <input type="number" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia">
+                    <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia" pattern="[0-9]*" minlength = "11" maxlength="11" title="Número a 11 digitos, no se admiten decimales">
 
                     <span id="errornumLicencia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                     <span id="validonumLicencia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>

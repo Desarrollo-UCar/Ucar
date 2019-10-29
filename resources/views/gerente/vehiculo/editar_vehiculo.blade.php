@@ -320,22 +320,53 @@
 
                     {{-- FORMULARIO PARA SUBIR FOTO DEL VEHICULO --}}
                     
-                    <div class="col-md-6 ">
+                    <div class="col-md-6">
+                      <div class="col-md-6">
                         <div id="preview" style="margin-top: 5%;">
-                          @if ($vehi->foto == null)
-                          <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 100%; height: 100%;">
-                          @else
-                          <img src="{{ '/images/'.$vehi->foto }}" style="width: 100%; height: 100%;" >   
-                          @endif
-                        
+                          <div class="alert" id="message" style="display: none"></div>
+                         <img src="{{'/images/'.$vehi->foto}}" style="width: 200px; height: 200px;" >
                         </div>
                         <hr>
-                        <div class="col-md-1 col-md-offset-5  file-loading">
-                        <span class="btn btn-primary btn-file"> Subir Foto
-                            <input id="foto" type="file" name="foto"></span>  
+                        <div class="col-md-1 col-md-offset-3  file-loading">
+                        <span class="btn btn-warning btn-file"> Subir Foto
+                        <input id="foto" type="file" name="foto"/></span>  
                         </div> 
+                  </div>
+                  <div class="col-md-6">
+                    <div id="preview_derecha" style="margin-top: 5%;">
+                      <div class="alert" id="message_derecha" style="display: none"></div>
+                     <img src="{{'/images/'.$vehi->foto_derecha}}" style="width: 200px; height: 200px;" >
+                    </div>
+                    <hr>
+                    <div class="col-md-1 col-md-offset-3  file-loading">
+                    <span class="btn btn-warning btn-file"> Subir Foto
+                    <input id="foto_derecha" type="file" name="foto_derecha"/></span>  
+                    </div> 
+              </div>
+              <div class="col-md-6">
+                <div id="preview_izquierda" style="margin-top: 5%;">
+                  <div class="alert" id="message_izquierda" style="display: none"></div>
+                 <img src="{{'/images/'.$vehi->foto_izquierda}}" style="width: 200px; height: 200px;" >
+                </div>
+                <hr>
+                <div class="col-md-1 col-md-offset-3  file-loading">
+                <span class="btn btn-warning btn-file"> Subir Foto
+                <input id="foto_izquierda" type="file" name="foto_izquierda"/></span>  
+                </div> 
+          </div>
+          <div class="col-md-6">
+            <div id="preview_atras" style="margin-top: 5%;">
+              <div class="alert" id="message_atras" style="display: none"></div>
+             <img src="{{'/images/'.$vehi->foto_trasera}}" style="width: 200px; height: 200px;" >
+            </div>
+            <hr>
+            <div class="col-md-1 col-md-offset-3  file-loading">
+            <span class="btn btn-warning btn-file"> Subir Foto
+            <input id="foto_atras" type="file" name="foto_atras"/></span>  
+            </div> 
+      </div>
+    
                   </div> 
-                   
                     
               
                     
@@ -432,28 +463,99 @@
 
 
 @section('scripts')
+
 <script>
-document.getElementById("foto").onchange = function(e) {
-  // Creamos el objeto de la clase FileReader
-  let reader = new FileReader();
+  document.getElementById("foto").onchange = function(e) {
+    // Creamos el objeto de la clase FileReader
+    let reader = new FileReader();
+  
+    // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+    reader.readAsDataURL(e.target.files[0]);
+  
+    // Le decimos que cuando este listo ejecute el código interno
+    reader.onload = function(){
+      let preview = document.getElementById('preview'),
+              image = document.createElement('img');
+              btn=document.getElementById('foto');
+      image.src = reader.result;
+      btn.getElementsByClassName('btn btn-success');
+      image.style.width="200px";
+      image.style.height="200px";
+      preview.innerHTML = '';
+      preview.append(image);
+    };
+  }
+  </script>
+  
+  <script>
+    document.getElementById("foto_derecha").onchange = function(e) {
+      // Creamos el objeto de la clase FileReader
+      let reader = new FileReader();
+    
+      // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+      reader.readAsDataURL(e.target.files[0]);
+    
+      // Le decimos que cuando este listo ejecute el código interno
+      reader.onload = function(){
+        let preview = document.getElementById('preview_derecha'),
+                image = document.createElement('img');
+    
+        image.src = reader.result;
+        // image.getElementsByClassName('rounded-circle');
+        image.style.width="200px";
+        image.style.height="200px";
+        preview.innerHTML = '';
+        preview.append(image);
+      };
+    }
+    </script>
+    
+    <script>
+      document.getElementById("foto_izquierda").onchange = function(e) {
+        // Creamos el objeto de la clase FileReader
+        let reader = new FileReader();
+      
+        // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+        reader.readAsDataURL(e.target.files[0]);
+      
+        // Le decimos que cuando este listo ejecute el código interno
+        reader.onload = function(){
+          let preview = document.getElementById('preview_izquierda'),
+                  image = document.createElement('img');
+      
+          image.src = reader.result;
+          // image.getElementsByClassName('rounded-circle');
+          image.style.width="200px";
+          image.style.height="200px";
+          preview.innerHTML = '';
+          preview.append(image);
+        };
+      }
+      </script>
+      <script>
+        document.getElementById("foto_atras").onchange = function(e) {
+          // Creamos el objeto de la clase FileReader
+          let reader = new FileReader();
+        
+          // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+          reader.readAsDataURL(e.target.files[0]);
+        
+          // Le decimos que cuando este listo ejecute el código interno
+          reader.onload = function(){
+            let preview = document.getElementById('preview_atras'),
+                    image = document.createElement('img');
+        
+            image.src = reader.result;
+            // image.getElementsByClassName('rounded-circle');
+            image.style.width="200px";
+            image.style.height="200px";
+            preview.innerHTML = '';
+            preview.append(image);
+          };
+        }
+        </script>
+  
 
-  // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-  reader.readAsDataURL(e.target.files[0]);
-
-  // Le decimos que cuando este listo ejecute el código interno
-  reader.onload = function(){
-    let preview = document.getElementById('preview'),
-            image = document.createElement('img');
-
-    image.src = reader.result;
-    image.getElementsByClassName('rounded-circle');
-    image.style.width="450px";
-    image.style.height="450px";
-    preview.innerHTML = '';
-    preview.append(image);
-  };
-}
-</script>
 <script>
   function recargar(){
     location.reload(); 
