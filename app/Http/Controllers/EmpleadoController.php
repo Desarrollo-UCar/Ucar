@@ -85,7 +85,7 @@ class EmpleadoController extends Controller
                     'genero' => 'required',
                     'sucursal' => 'required',
                     'numero' => 'required',
-                    'numLicencia' => 'required|regex:/[0-9]{13}/m',
+                    'numLicencia' => 'required|regex:/[0-9]{11}/m',
                     'licenciaFechaExpiracion' => 'required|date',
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
@@ -245,7 +245,7 @@ class EmpleadoController extends Controller
 
     public function modificar(Request $empleado){
 
-
+        // return $empleado['ine'];
 
         $foranea = Sucursal::where('idsucursal',$empleado['idsucursal'])->first();      
 
@@ -272,7 +272,6 @@ class EmpleadoController extends Controller
     }
 
     public function ModificarDatos(Request $request){
-
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
 
@@ -302,7 +301,7 @@ class EmpleadoController extends Controller
                     'genero' => 'required',
                     'sucursal' => 'required',
                     'numero' => 'required',
-                    'numLicencia' => 'required|regex:/[0-9]{13}/m',
+                    'numLicencia' => 'required|regex:/[0-9]{11}/m',
                     'licenciaFechaExpiracion' => 'required|date',
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
@@ -376,6 +375,7 @@ class EmpleadoController extends Controller
         $image->move(public_path('images'), $new_name);
 
         try{           
+        
         $empleado->update([
                         'ine'=>$request['ine'],
                         'nombres'=>$request['nombres'],
@@ -446,7 +446,7 @@ class EmpleadoController extends Controller
                     'genero' => 'required',
                     'sucursal' => 'required',
                     'numero' => 'required',
-                    'numLicencia' => 'required|regex:/[0-9]{13}/m',
+                    'numLicencia' => 'required|regex:/[0-9]{11}/m',
                     'licenciaFechaExpiracion' => 'required|date',
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);

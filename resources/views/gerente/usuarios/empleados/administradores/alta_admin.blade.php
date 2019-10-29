@@ -255,7 +255,7 @@
                   
                 <div class="form-group col-md-4" style="display: none;" id="licencia">
                     <label>Número de licencia</label>
-                    <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia"  data-inputmask='"mask": "9999999999999"' data-mask>
+                    <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia"  data-inputmask='"mask": "99999999999"' data-mask>
 
                     <span id="errornumLicencia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                     <span id="validonumLicencia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
