@@ -83,7 +83,7 @@ class SucursalController extends Controller
             }
         }
         }
-
+       
         //SE AGREGA LA PRIMERA FOTO
         $image = $request->file('foto');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();

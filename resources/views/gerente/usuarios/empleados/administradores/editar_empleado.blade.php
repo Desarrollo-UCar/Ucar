@@ -53,6 +53,15 @@
                       </div> 
             
                {{-- FORMULARIO DE ID PERSONA --}}  
+               <div class="row" style="display:none">
+                <div class="form-group col-md-4">
+                    <label>idempleado</label>
+                  <input type="text" class="form-control" autofocus placeholder="Número de credencial de elector" name="idempleado" value="{{$emp->idempleado}}" id="idempleado">
+                </div>   
+              </div> 
+
+
+
                <div class="row" style="margin-left: 0.1%;margin-right: 0.1%;">
                 <div class="form-group col-md-4">
                     <label>INE</label>
@@ -204,7 +213,7 @@
                     {{--FORMULARIO DE CORREO EMAIL--}}
                     <div class="form-group col-md-4">
                         <label>Correo</label>
-                        <input type="email" class="form-control" placeholder="Correo Eléctronico" name="correo" id="correo" value="{{ $emp->correo}}">
+                        <input type="email" class="form-control" onkeyup="javascript:this.value=this.value.toLowerCase();" placeholder="Correo Eléctronico" name="correo" id="correo" value="{{ $emp->correo}}" >
 
                         <span id="errorcorreo" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                         <span id="validocorreo" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>

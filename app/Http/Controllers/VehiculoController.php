@@ -76,6 +76,10 @@ class VehiculoController extends Controller
 
         $request->validate([
             'foto'       => 'required|image|mimes:jpeg,png,jpg,gif',
+            'foto_derecha' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'foto_izquierda' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'foto_atras' => 'required|image|mimes:jpeg,png,jpg,gif',
+            // 'nombre'=>'required|regex:/^[\pL\s]+$/u',
             'vin'        => 'required| regex:/[0-9A-Za-z]{17}/m',
             'matricula'  => 'required| regex:/[0-9A-Za-z]/m|min:6|max:8',
             'marca'      => 'required',
@@ -96,7 +100,7 @@ class VehiculoController extends Controller
             'sucursal'   => 'required',
            // 'descripcion'=> 'required',
         ]);
-        
+       
         $todo=Vehiculo::all();
         if(count($todo)>0){
         $vehiculo = Vehiculo::where('vin',$request['vin'])->first();
@@ -104,13 +108,28 @@ class VehiculoController extends Controller
             return response()->json(['success'=>'ERROR1']);
          }
         }
-         $image = $request->file('foto');
+        
+        $image = $request->file('foto');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $new_name);
 
-            Vehiculo::insert([
-                'foto'       =>$new_name,
-                'vin'        =>$request['vin'],
+        //SE AGREGA LA PRIMERA FOTO
+        $image_derecha = $request->file('foto_derecha');
+        $new_name_derecha = rand() . '.' . $image_derecha->getClientOriginalExtension();
+        $image_derecha->move(public_path('images'), $new_name_derecha);
+
+        //SE AGREGA LA PRIMERA FOTO
+        $image_izquierda = $request->file('foto_izquierda');
+        $new_name_izquierda = rand() . '.' . $image_izquierda->getClientOriginalExtension();
+        $image_izquierda->move(public_path('images'), $new_name_izquierda);
+
+        $image_atras = $request->file('foto_atras');
+        $new_name_atras = rand() . '.' . $image_atras->getClientOriginalExtension();
+        $image_atras->move(public_path('images'), $new_name_atras);
+        
+        // return response()->json(['success'=>$request['vin']]);
+            Vehiculo::insert([                
+                'vin' =>$request['vin'],
                 'matricula'  =>$request['matricula'],
                 'marca'      =>$request['marca'],
                 'modelo'     =>$request['modelo'],
@@ -129,12 +148,16 @@ class VehiculoController extends Controller
                 'tipo'       =>$request['tipo'],
                 'descripcion'=>$request['descripcion'],
                 'estatus'       =>$request['status'],
+                'foto'       =>$new_name,
+                'foto_derecha'=>$new_name_derecha,
+                'foto_izquierda'=>$new_name_izquierda,
+                'foto_trasera' =>$new_name_atras,
                 'created_at'=>$date,
                 'updated_at'=>$date
             ]);
 
            
-          
+        // return response()->json(['success'=>'ERROR1']);
         $sucu = $request->input('sucursal');
         $foranea = Sucursal::where('nombre',$sucu)->first();      
             $emp = Vehiculo::where('vin',$request['vin'])->first();
@@ -192,10 +215,9 @@ class VehiculoController extends Controller
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();    
         $new_name = $request->hidden_image;
-        $image = $request->file('foto');       
-      
+        $image = $request->file('foto');  
 
-            if($image != '')
+if($image != '')
         { 
             
         $request->validate([
@@ -231,10 +253,10 @@ class VehiculoController extends Controller
                 'matricula'  =>$request['matricula'],
                 'marca'      =>$request['marca'],
                 'modelo'     =>$request['modelo'],
-                'transmicion' =>$request['transmision'],
-                'puertas' =>$request['puertas'],
-                'rendimiento' =>$request['rendimiento'],
-                'estatus'     =>$request['status'],
+                'transmicion'=>$request['transmision'],
+                'puertas'    =>$request['puertas'],
+                'rendimiento'=>$request['rendimiento'],
+                'estatus'    =>$request['status'],
                 'anio'       =>$request['anio'],
                 'precio'     =>$request['precio'],
                 'costo'      =>$request['costo'],
@@ -245,69 +267,8 @@ class VehiculoController extends Controller
                 'kilometraje'=>$request['kilometraje'],
                 'tipo'       =>$request['tipo'],
                 'descripcion'=>$request['descripcion'],
-                'estatus'       =>$request['status'],               
-                'updated_at'=>$date
-            ]);
-
-            $foranea = Sucursal::where('nombre',$request['sucursal'])->first();      
-            $vehi =Vehiculo::where('vin',$request['vin'])->first();
-            $vehiculosucursal=VehiculoSucursales::where('vehiculo',$vehi['idvehiculo'])
-            ->first();
-                $vehiculosucursal->update([
-                    'sucursal'=>$foranea['idsucursal'],
-                    'vehiculo'=>$vehi['idvehiculo'],
-                    'status'=>$request['status'],
-                    'updated_at'=>$date
-                    ]);
-    
-                    return response()->json(['success'=>'EXITO']);
-            }else{
-
-                $vehiculo = vehiculo::where('vin',$request['vin'])->first();
-                $request->validate([
-                    //'foto'       => 'required|image|mimes:jpeg,png,jpg,gif',
-                    'vin'        => 'required| regex:/[0-9A-Za-z]{17}/m',
-                    'matricula'  => 'required| regex:/[0-9A-Za-z]/m|min:6|max:8',
-                    'marca'      => 'required',
-                    'modelo'     => 'required',
-                    'transmision'=> 'required',
-                    'puertas'    => 'required',
-                    'rendimiento'=> 'required',
-                    'anio'       => 'required',
-                    'precio'     => 'required',
-                    'costo'      => 'required',
-                    'pasajeros'  => 'required',
-                    'maletero'   => 'required',
-                    'color'      => 'required',
-                    'cilindros'  => 'required',
-                    'kilometraje'=> 'required',
-                    'tipo'       => 'required',
-                    'status'     => 'required',
-                    'sucursal'   => 'required',
-                   // 'descripcion'=> 'required',
-                ]);
-                $vehiculo ->update([
-                //'foto'       =>$new_name,
-                'vin'        =>$request['vin'],
-                'matricula'  =>$request['matricula'],
-                'marca'      =>$request['marca'],
-                'modelo'     =>$request['modelo'],
-                'transmicion' =>$request['transmision'],
-                'puertas' =>$request['puertas'],
-                'rendimiento' =>$request['rendimiento'],
-                'estatus'     =>$request['status'],
-                'anio'       =>$request['anio'],
-                'precio'     =>$request['precio'],
-                'costo'      =>$request['costo'],
-                'pasajeros'  =>$request['pasajeros'],
-                'maletero'   =>$request['maletero'],
-                'color'      =>$request['color'],
-                'cilindros'  =>$request['cilindros'],
-                'kilometraje'=>$request['kilometraje'],
-                'tipo'       =>$request['tipo'],
-                'descripcion'=>$request['descripcion'],
-                'estatus'       =>$request['status'],               
-                'updated_at'=>$date
+                'estatus'    =>$request['status'],               
+                'updated_at' =>$date
             ]);
 
             $foranea = Sucursal::where('nombre',$request['sucursal'])->first();      

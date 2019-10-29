@@ -290,21 +290,52 @@
                     {{-- FORMULARIO PARA SUBIR FOTO DEL VEHICULO --}}
                     
                     <div class="col-md-6">
+                      <div class="col-md-6">
                         <div id="preview" style="margin-top: 5%;">
                           <div class="alert" id="message" style="display: none"></div>
-                         <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 400px; height: 400px;" >
+                         <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 200px; height: 200px;" >
                         </div>
                         <hr>
-                        <div class="col-md-1 col-md-offset-5  file-loading">
-                        <span class="btn btn-primary btn-file"> Subir Foto
-                        <input id="foto" type="file" name="foto"/>    </span>  
+                        <div class="col-md-1 col-md-offset-3  file-loading">
+                        <span class="btn btn-warning btn-file"> Subir Foto
+                        <input id="foto" type="file" name="foto"/></span>  
                         </div> 
+                  </div>
+                  <div class="col-md-6">
+                    <div id="preview_derecha" style="margin-top: 5%;">
+                      <div class="alert" id="message_derecha" style="display: none"></div>
+                     <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 200px; height: 200px;" >
+                    </div>
+                    <hr>
+                    <div class="col-md-1 col-md-offset-3  file-loading">
+                    <span class="btn btn-warning btn-file"> Subir Foto
+                    <input id="foto_derecha" type="file" name="foto_derecha"/></span>  
+                    </div> 
+              </div>
+              <div class="col-md-6">
+                <div id="preview_izquierda" style="margin-top: 5%;">
+                  <div class="alert" id="message_izquierda" style="display: none"></div>
+                 <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 200px; height: 200px;" >
+                </div>
+                <hr>
+                <div class="col-md-1 col-md-offset-3  file-loading">
+                <span class="btn btn-warning btn-file"> Subir Foto
+                <input id="foto_izquierda" type="file" name="foto_izquierda"/></span>  
+                </div> 
+          </div>
+          <div class="col-md-6">
+            <div id="preview_atras" style="margin-top: 5%;">
+              <div class="alert" id="message_atras" style="display: none"></div>
+             <img src="http://www.cespcampeche.gob.mx/repuve/images/chip-blanco-2.png" style="width: 200px; height: 200px;" >
+            </div>
+            <hr>
+            <div class="col-md-1 col-md-offset-3  file-loading">
+            <span class="btn btn-warning btn-file"> Subir Foto
+            <input id="foto_atras" type="file" name="foto_atras"/></span>  
+            </div> 
+      </div>
+    
                   </div> 
-                   
-                    
-              
-                    
-
                   <!-- /.box-body -->
                  
               <div class="row">
@@ -431,16 +462,84 @@ document.getElementById("foto").onchange = function(e) {
   reader.onload = function(){
     let preview = document.getElementById('preview'),
             image = document.createElement('img');
-
+            btn=document.getElementById('foto');
     image.src = reader.result;
-    image.getElementsByClassName('rounded-circle');
-    image.style.width="450px";
-    image.style.height="450px";
+    btn.getElementsByClassName('btn btn-success');
+    image.style.width="200px";
+    image.style.height="200px";
     preview.innerHTML = '';
     preview.append(image);
   };
 }
 </script>
+
+<script>
+  document.getElementById("foto_derecha").onchange = function(e) {
+    // Creamos el objeto de la clase FileReader
+    let reader = new FileReader();
+  
+    // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+    reader.readAsDataURL(e.target.files[0]);
+  
+    // Le decimos que cuando este listo ejecute el código interno
+    reader.onload = function(){
+      let preview = document.getElementById('preview_derecha'),
+              image = document.createElement('img');
+  
+      image.src = reader.result;
+      // image.getElementsByClassName('rounded-circle');
+      image.style.width="200px";
+      image.style.height="200px";
+      preview.innerHTML = '';
+      preview.append(image);
+    };
+  }
+  </script>
+  
+  <script>
+    document.getElementById("foto_izquierda").onchange = function(e) {
+      // Creamos el objeto de la clase FileReader
+      let reader = new FileReader();
+    
+      // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+      reader.readAsDataURL(e.target.files[0]);
+    
+      // Le decimos que cuando este listo ejecute el código interno
+      reader.onload = function(){
+        let preview = document.getElementById('preview_izquierda'),
+                image = document.createElement('img');
+    
+        image.src = reader.result;
+        // image.getElementsByClassName('rounded-circle');
+        image.style.width="200px";
+        image.style.height="200px";
+        preview.innerHTML = '';
+        preview.append(image);
+      };
+    }
+    </script>
+    <script>
+      document.getElementById("foto_atras").onchange = function(e) {
+        // Creamos el objeto de la clase FileReader
+        let reader = new FileReader();
+      
+        // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+        reader.readAsDataURL(e.target.files[0]);
+      
+        // Le decimos que cuando este listo ejecute el código interno
+        reader.onload = function(){
+          let preview = document.getElementById('preview_atras'),
+                  image = document.createElement('img');
+      
+          image.src = reader.result;
+          // image.getElementsByClassName('rounded-circle');
+          image.style.width="200px";
+          image.style.height="200px";
+          preview.innerHTML = '';
+          preview.append(image);
+        };
+      }
+      </script>
 
 <script>
   function recargar(){
@@ -479,7 +578,7 @@ document.getElementById("foto").onchange = function(e) {
          /*jQuery.each(arreglo, function(key, value){
             console.log(arreglo);
                       });*/
-                      console.log(arreglo);
+                      // console.log(arreglo);
           var vin = arreglo.vin;
           var matricula = arreglo.matricula;
           var marca = arreglo.marca;
@@ -499,16 +598,40 @@ document.getElementById("foto").onchange = function(e) {
              var sucursal = arreglo.sucursal;
              var puertas = arreglo.puertas;
              var foto = arreglo.foto;       
+             var foto_derecha = arreglo.foto_derecha;
+             var foto_izquierda = arreglo.foto_izquierda;
+             var foto_atras = arreglo.foto_atras;
              
              if (foto == undefined){  
               
                }else{
-                $('#message').css('display', 'block');
-              $('#message').html('AGREGA UNA FOTO DEl VEHICULO');
-              $('#message').addClass("alert alert-danger");
+                $('#message').css({"display": "block", "color":"red"});
+           $('#message').html('AGREGA UNA FOTO');;
                //console.log(nombre);
              }
+             if (foto_derecha == undefined){  
+              
+            }else{
+              $('#message_derecha').css({"display": "block", "color":"red"});
+           $('#message_derecha').html('AGREGA UNA FOTO');
+            //console.log(nombre);
+          }
+
+          if (foto_izquierda == undefined){  
+              
+            }else{
+              $('#message_izquierda').css({"display": "block", "color":"red"});
+           $('#message_izquierda').html('AGREGA UNA FOTO');
+            //console.log(nombre);
+          }
            
+          if (foto_atras == undefined){  
+              
+            }else{
+              $('#message_atras').css({"display": "block", "color":"red"});
+           $('#message_atras').html('AGREGA UNA FOTO');
+            //console.log(nombre);
+          }
              if (vin == undefined){  
                $( '#vin' ).css('borderColor', 'green');         
                jQuery('#validovin').show(); 
