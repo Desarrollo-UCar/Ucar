@@ -235,7 +235,7 @@ class EmpleadoController extends Controller
 
     public function modificar(Request $empleado){
 
-
+        // return $empleado['ine'];
 
         $foranea = Sucursal::where('idsucursal',$empleado['idsucursal'])->first();      
 
@@ -262,8 +262,6 @@ class EmpleadoController extends Controller
     }
 
     public function ModificarDatos(Request $request){
-
-        
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
 
@@ -360,8 +358,7 @@ class EmpleadoController extends Controller
         $image = $request->file('foto');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $new_name);
-
-                   
+        
         $empleado->update([
                         'ine'=>$request['ine'],
                         'nombres'=>$request['nombres'],
