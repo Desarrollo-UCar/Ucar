@@ -30,7 +30,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -55,7 +55,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -80,7 +80,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -105,7 +105,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -130,7 +130,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -155,7 +155,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -180,7 +180,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -205,7 +205,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
 
@@ -232,7 +232,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -257,7 +257,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -282,7 +282,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -307,7 +307,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -332,7 +332,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -357,7 +357,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -382,7 +382,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -407,7 +407,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
             \DB::table('vehiculos')->insert(array(
@@ -432,7 +432,7 @@ class Vehiculo extends Seeder{
                 'foto' => 'img/auto/1.jpg',
                 'foto_derecha' => 'img/auto/1.jpg',
                 'foto_izquierda' => 'img/auto/2.jpg',
-                'foto_frente' => 'img/auto/3.jpg',
+                // 'foto_frente' => 'img/auto/3.jpg',
                 'foto_trasera' => 'img/auto/4.jpg'
             ));
     }

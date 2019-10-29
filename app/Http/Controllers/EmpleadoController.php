@@ -67,7 +67,7 @@ class EmpleadoController extends Controller
         $date = $carbon->now();
             if($request['tipo']=='CHOFER'){
                 $request->validate([
-                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
+                   'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                    'ine' => 'required|regex:/[0-9]{13}/m',
                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
@@ -263,7 +263,6 @@ class EmpleadoController extends Controller
 
     public function ModificarDatos(Request $request){
 
-        
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
 
@@ -351,7 +350,7 @@ class EmpleadoController extends Controller
             }  
         }
         
-        $empleado = Empleado::where('ine',$request['ine'])->first();
+        $empleado = Empleado::where('idempleado',$request['idempleado'])->first();
          $diff = $date->diffInYears($request['fechaNacimiento']); 
        if($diff<15 ||$diff > 60){
             return response()->json(['success'=>'ERROR2']);
@@ -391,7 +390,7 @@ class EmpleadoController extends Controller
 
                  $sucu = $request['sucursal'];
                 $foranea = Sucursal::where('nombre',$sucu)->first();      
-                    $emp = Empleado::where('ine',$request['ine'])->first();
+                    $emp = Empleado::where('idempleado',$request['idempleado'])->first();
                     EmpleadoSucursal::insert([
                         'sucursal'=>$foranea->idsucursal,
                         'empleado'=>$emp->idempleado,
@@ -465,6 +464,7 @@ class EmpleadoController extends Controller
                          return response()->json(['success'=>'ERRORCONTRA']);
                      }
                   }
+                  
                 $request->validate([
                     'ine' => 'required|regex:/[0-9]{13}/m',
                     'nombres' =>'required|regex:/^[\pL\s]+$/u',
@@ -490,13 +490,13 @@ class EmpleadoController extends Controller
       
       
         
-        $empleado = Empleado::where('ine',$request['ine'])->first();
+        $empleado = Empleado::where('idempleado',$request['idempleado'])->first();
          $diff = $date->diffInYears($request['fechaNacimiento']); 
        if($diff<15 ||$diff > 60){
             return response()->json(['success'=>'ERROR2']);
         }
 
-                        
+
         $empleado->update([
                         'ine'=>$request['ine'],
                         'nombres'=>$request['nombres'],
@@ -525,7 +525,7 @@ class EmpleadoController extends Controller
 
                  $sucu = $request['sucursal'];
                 $foranea = Sucursal::where('nombre',$sucu)->first();      
-                    $emp = Empleado::where('ine',$request['ine'])->first();
+                    $emp = Empleado::where('idempleado',$request['idempleado'])->first();
                     EmpleadoSucursal::insert([
                         'sucursal'=>$foranea->idsucursal,
                         'empleado'=>$emp->idempleado,

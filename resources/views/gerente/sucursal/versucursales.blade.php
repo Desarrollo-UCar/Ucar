@@ -53,12 +53,12 @@
                   <thead>
                       <tr>
                           <th style="text-align: center">Nombre</th>
-                          <th style="text-align: center">Código Postal</th>
-                          <th style="text-align: center">Estado</th>
+                          {{-- <th style="text-align: center">Código Postal</th> --}}
+                          {{-- <th style="text-align: center">Estado</th> --}}
                           <th style="text-align: center">Municipio</th>
                           <th style="text-align: center">Colonia</th>
                           <th style="text-align: center">Calle</th>
-                          <th style="text-align: center">Num. Calle</th>
+                          {{-- <th style="text-align: center">Num. Calle</th> --}}
                           <th style="text-align: center">Teléfono</th>
                           <th style="text-align: center">Acción</th>
                       </tr>
@@ -67,12 +67,12 @@
                       @foreach ($sucursals as $sucursal)                      
                       <tr>
                       <td>{{$sucursal->nombre}}</td>
-                        <td>{{$sucursal->codigopostal}}</td>
-                        <td>{{$sucursal->estado}}</td>
+                        {{-- <td>{{$sucursal->codigopostal}}</td> --}}
+                        {{-- <td>{{$sucursal->estado}}</td> --}}
                         <td>{{$sucursal->municipio}}</td>
                         <td>{{$sucursal->colonia}}</td>
                         <td>{{$sucursal->calle}}</td>
-                        <td>{{$sucursal->numero}}</td>
+                        {{-- <td>{{$sucursal->numero}}</td> --}}
                         <td>{{$sucursal->telefono}}</td>
                         <td style="text-align: center;"> 
                           <a href="{{ route('modificarsucursal',['idsucursal'=>$sucursal->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>
