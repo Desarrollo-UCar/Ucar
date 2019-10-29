@@ -8,6 +8,6 @@ class Pago_reservacion extends Model
 {
     //
     protected $fillable = [
-        'id', 'id_reserva','paypal_Datos', 'fecha','total','estatus'
+        'id', 'id_reserva','paypal_Datos', 'fecha','total','estatus','metodo'
     ];
 }

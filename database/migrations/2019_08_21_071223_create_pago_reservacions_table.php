@@ -20,6 +20,7 @@ class CreatePagoReservacionsTable extends Migration
             $table->string('mostrador_Datos')->nullable();
             $table->string('motivo')->nullable();
             $table->string('comentario')->nullable();
+            $table->string('metodo')->nullable();
             $table->datetime('fecha');
             $table->decimal('total');
             $table->string('estatus');

@@ -420,7 +420,7 @@ class PagesController extends Controller{
         $dias = $diferencia->format('%a');
         if($dias == 0)
             $dias = 1;
-        $anticipo_pasado = $resevacion->total / $dias;
+        $anticipo_pasado = $reservacion->total / $dias;
         //actualizar e3l registro de la reserva
             if($anticipo_pasado > $anticipo){//comparamos si el anticipo que ya pago el cliente es mayor al modificado y en ese caso ya no se le cobra el anticipo
                 $reservacion->motivo_visita = 'por rellenar';
