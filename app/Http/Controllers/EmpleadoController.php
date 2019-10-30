@@ -62,13 +62,14 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {   
         
-
+        // return response()->json(['success'=>$request['rfc']]);
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
             if($request['tipo']=='CHOFER'){
                 $request->validate([
                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                    'ine' => 'required|regex:/[0-9]{13}/m',
+                   'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
                     'segundoApellido' =>'required',
@@ -99,6 +100,7 @@ class EmpleadoController extends Controller
                     $request->validate([
                        'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                        'ine' => 'required|regex:/[0-9]{13}/m',
+                       'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                        'nombres' =>'required|regex:/^[\pL\s]+$/u',
                         'primerApellido' =>'required',
                         'segundoApellido' =>'required',
@@ -128,6 +130,7 @@ class EmpleadoController extends Controller
                 $request->validate([
                     'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                     'ine' => 'required|regex:/[0-9]{13}/m',
+                    'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                     'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
                     'segundoApellido' =>'required',
@@ -175,6 +178,7 @@ class EmpleadoController extends Controller
 
                   Empleado::insert([
                         'ine'=>$request['ine'],
+                        'rfc'=>$request['rfc'],
                         'nombres'=>$request['nombres'],
                         'primerApellido'=>$request['primerApellido'],
                         'segundoApellido'=>$request['segundoApellido'],
@@ -277,7 +281,7 @@ class EmpleadoController extends Controller
 
         $new_name = $request->hidden_image;
         $image = $request->file('foto');       
-      
+        // return response()->json(['success'=>$request['rfc']]);
 
             if($image != '')
         { 
@@ -285,6 +289,7 @@ class EmpleadoController extends Controller
                 $request->validate([
                    'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                    'ine' => 'required|regex:/[0-9]{13}/m',
+                   'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
                     'segundoApellido' =>'required',
@@ -315,6 +320,7 @@ class EmpleadoController extends Controller
                     $request->validate([
                        'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                        'ine' => 'required|regex:/[0-9]{13}/m',
+                       'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                        'nombres' =>'required|regex:/^[\pL\s]+$/u',
                         'primerApellido' =>'required',
                         'segundoApellido' =>'required',
@@ -343,6 +349,7 @@ class EmpleadoController extends Controller
                 $request->validate([
                     'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                     'ine' => 'required|regex:/[0-9]{13}/m',
+                    'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                     'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
                     'segundoApellido' =>'required',
@@ -378,6 +385,7 @@ class EmpleadoController extends Controller
         
         $empleado->update([
                         'ine'=>$request['ine'],
+                        'rfc'=>$request['rfc'],
                         'nombres'=>$request['nombres'],
                         'primerApellido'=>$request['primerApellido'],
                         'segundoApellido'=>$request['segundoApellido'],
@@ -407,14 +415,24 @@ class EmpleadoController extends Controller
 
                  $sucu = $request['sucursal'];
                 $foranea = Sucursal::where('nombre',$sucu)->first();      
-                    $emp = Empleado::where('idempleado',$request['idempleado'])->first();
-                    EmpleadoSucursal::insert([
+                $emp = Empleado::where('idempleado',$request['idempleado'])->first();
+                
+                $emsucu=EmpleadoSucursal::all();
+                $aux=0;
+                foreach($emsucu as $ems){
+                    if($ems->sucursal == $foranea->idsucursal && $ems->empleado == $emp->idempleado)
+                    $aux=1;
+                }
+
+                if($aux==0){
+                                    EmpleadoSucursal::insert([
                         'sucursal'=>$foranea->idsucursal,
                         'empleado'=>$emp->idempleado,
                         'status'=>$request['status'],
                         'created_at'=>$date,
                         'updated_at'=>$date
                         ]);
+                                    }
                         
                         
                         if($request['tipo']=='ADMINISTRADOR'){
@@ -430,6 +448,7 @@ class EmpleadoController extends Controller
             if($request['tipo']=='CHOFER'){
                 $request->validate([
                    'ine' => 'required|regex:/[0-9]{13}/m',
+                   'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                    'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
                     'segundoApellido' =>'required',
@@ -460,6 +479,7 @@ class EmpleadoController extends Controller
                     $request->validate([
                         // 'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
                         'ine' => 'required|regex:/[0-9]{13}/m',
+                        'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                         'nombres' =>'required|regex:/^[\pL\s]+$/u',
                          'primerApellido' =>'required',
                          'segundoApellido' =>'required',
@@ -488,6 +508,7 @@ class EmpleadoController extends Controller
                   
                 $request->validate([
                     'ine' => 'required|regex:/[0-9]{13}/m',
+                    'rfc' => 'required|regex:/[A-Z]{4}[0-9]{6}[A-Z0-9]{3}/m',
                     'nombres' =>'required|regex:/^[\pL\s]+$/u',
                     'primerApellido' =>'required',
                     'segundoApellido' =>'required',
@@ -520,6 +541,7 @@ class EmpleadoController extends Controller
 try{
         $empleado->update([
                         'ine'=>$request['ine'],
+                        'rfc'=>$request['rfc'],
                         'nombres'=>$request['nombres'],
                         'primerApellido'=>$request['primerApellido'],
                         'segundoApellido'=>$request['segundoApellido'],
@@ -549,14 +571,23 @@ try{
                  $sucu = $request['sucursal'];
                 $foranea = Sucursal::where('nombre',$sucu)->first();      
                     $emp = Empleado::where('idempleado',$request['idempleado'])->first();
-                    EmpleadoSucursal::insert([
-                        'sucursal'=>$foranea->idsucursal,
-                        'empleado'=>$emp->idempleado,
-                        'status'=>$request['status'],
-                        'created_at'=>$date,
-                        'updated_at'=>$date
-                        ]);
-
+                    $emsucu=EmpleadoSucursal::all();
+                    $aux=0;
+                    foreach($emsucu as $ems){
+                        if($ems->sucursal == $foranea->idsucursal && $ems->empleado == $emp->idempleado){
+                        $aux=1;
+                        }
+                    }
+    
+                    if($aux==0){
+                            EmpleadoSucursal::insert([
+                            'sucursal'=>$foranea->idsucursal,
+                            'empleado'=>$emp->idempleado,
+                            'status'=>$request['status'],
+                            'created_at'=>$date,
+                            'updated_at'=>$date
+                            ]);
+                }
 
             if($request['tipo']=='ADMINISTRADOR'){
 

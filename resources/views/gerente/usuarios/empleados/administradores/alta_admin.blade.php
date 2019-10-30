@@ -54,6 +54,13 @@
                   <span id="errorine" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validoine" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                 </div>   
+                <div class="form-group col-md-4">
+                    <label>RFC</label>
+                  <input type="text" class="form-control" autofocus placeholder="Número de RFC" name="rfc"  id="rfc" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="13">
+
+                  <span id="errorfc" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                <span id="validorfc" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                </div>   
               </div> 
 
               
@@ -594,6 +601,7 @@ function Tipo(){
                       });*/
                       console.log(arreglo);
           var ine = arreglo.ine;
+          var rfc = arreglo.rfc;
           var codigo = arreglo.codigopostal;
           var estado = arreglo.estado;
           var municipio = arreglo.municipio;
@@ -782,8 +790,19 @@ function Tipo(){
                jQuery('#errorine').show();          
               $( '#ine' ).css('borderColor', 'red');
                //console.log(nombre);
-             }          
-          
+             }         
+
+             if (rfc == undefined){  
+               $( '#rfc' ).css('borderColor', 'green');         
+               jQuery('#validorfc').show(); 
+               jQuery('#errorfc').hide(); 
+               }else{
+                 jQuery('#validorfc').hide(); 
+               jQuery('#errorfc').show();          
+              $( '#rfc' ).css('borderColor', 'red');
+               //console.log(nombre);
+             }
+
 
           if (codigo == undefined){  
             $( '#codigo_postal' ).css('borderColor', 'green');         
