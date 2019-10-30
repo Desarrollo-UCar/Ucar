@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
+    
 <body class="hold-transition skin-blue sidebar-mini">
   <!-- Site wrapper -->
   <div class="wrapper">
@@ -48,7 +49,6 @@
         @include("theme/$theme/footer")
   
   </div>
-
   <!-- jQuery 3 -->
 <script src="{{asset("assets/$theme/bower_components/jquery/dist/jquery.min.js")}}"></script>
 <!-- Bootstrap 3.3.7 -->
