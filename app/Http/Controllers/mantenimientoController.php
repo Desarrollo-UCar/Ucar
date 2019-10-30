@@ -309,7 +309,7 @@ class mantenimientoController extends Controller
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
         }
         
-        if(!(is_array($servicios)) && !(empty($taller))){
+        if(!(is_array($servicios)) && (empty($taller))){
             //return "hola";
             return back()->with('mensaje','SELECCIONA UNO O MÁS SERVICIOS REALIZADOS EN LA SECCION AGREGAR DESCRIPCIÓN:)');
         }
