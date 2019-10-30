@@ -365,7 +365,7 @@ class ReservacionController extends Controller
        $vehiculo = Vehiculo::where('idVehiculo','=',$alquiler->id_vehiculo)->first();
 
 //GENERAR WORD
-$templateWord = new TemplateProcessor(storage_path('plantillab.docx'));
+$templateWord = new TemplateProcessor(storage_path('plantilla.docx'));
  
 $nombre = $cliente->nombre.' '.$cliente->primer_apellido.' '.$cliente->segundo_apellido;
 $direccion = $cliente->ciudad.' '.$cliente->colonia.' '.$cliente->calle.' '.$cliente->numero.'  Estado: '.$cliente->estado.'   Pais: '.$cliente->pais;

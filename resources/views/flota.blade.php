@@ -105,16 +105,16 @@
                           <ul class="slides">
                             
                             <li>
-                              <img src={{$vehiculo->foto_derecha}}  alt="" />
+                              <img src={{'/images/'.$vehiculo->foto_derecha}}  alt="" />
                             </li>
                             <li>
-                              <img src={{$vehiculo->foto_izquierda}}  alt="" />
+                              <img src={{'/images/'.$vehiculo->foto_izquierda}}  alt="" />
                             </li>
                             <li>
-                              <img src={{$vehiculo->foto}}  alt="" />
+                              <img src={{'/images/'.$vehiculo->foto}}  alt="" />
                             </li>
                             <li>
-                              <img src={{$vehiculo->foto_trasera}}  alt="" />
+                              <img src={{'/images/'.$vehiculo->foto_trasera}}  alt="" />
                             </li>
                           </ul>
                         </div>
