@@ -748,10 +748,21 @@ return response()->download(storage_path('Documento01.docx'));
         $vehiculo->kilometraje = $request['km'];
         $vehiculo->save();
         //enviar correo al cliente cuando entrega el cehiculo
-        $asunto = 'Confirmacion de pago reserva Ü-CAR';
+        $asunto = 'Entrega de vehículo Ü-CAR';
         $sucursal = App\Sucursal::findOrFail($alquiler->lugar_recogida);
         $cliente  = App\cliente::findOrFail($reservacion->id_cliente);
         $correo = $cliente->correo; 
+        $reservacion = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
+        reservacions.saldo, sucursals.nombre, alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
+        IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+        vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,vehiculos.kilometraje,
+        vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,vehiculos.foto
+        FROM reservacions
+        INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
+        inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
+        inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
+        INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
+        where reservacions.id = ?',[$alquiler->id_reservacion]);
         setlocale(LC_ALL,"es_ES");
         $fecha = date("d-m-y",strtotime(date("Y-m-d")));
         $hora = date("h:m:s",strtotime(date("h-m-s")));
