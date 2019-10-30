@@ -29,6 +29,19 @@
             <h4>¡Alquiler terminado!</h4>
           </div>
           @endif
+
+          
+        @if($vehiculo->estatus=='MANTENIMIENTO')
+        <div class="alert alert-warning alert-dismissible">
+            <h4>¡El vehículo se encuentra en mantenimiento!</h4>
+          </div>
+          @endif
+
+          @if($vehiculo->estatus=='INACTIVO')
+          <div class="alert alert-warning alert-dismissible">
+              <h4>¡Vehiculo se encuentra inactivo!</h4>
+            </div>
+            @endif
         
     <div class="row">
       <div class="col-md-12">
@@ -238,7 +251,7 @@
                         <span id="errorfecha_c" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                         <span id="validofecha_c" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                  </div>
-                 @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado')
+                 @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado'&&$alquiler->estatus!='en curso')
                  <button type="submit" id="enviar" class="btn btn-primary pull-right">Agregar</button>
                 @endif
                   </form>
@@ -286,7 +299,7 @@
                       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
                         <b>Cancelar</b>
                       </button>
-                      @if($alquiler->nombreConductor!="por rellenar"&&$alquiler->expedicion_licencia!="por rellenar"&&$alquiler->num_licencia!="por rellenar"&&$alquiler->expiracion_licencia!="por rellenar"&&$alquiler->estatus!='en curso'&&date("Y-m-d")>=$alquiler->fecha_recogida)
+                      @if($vehiculo->estatus=='ACTIVO'&&$alquiler->nombreConductor!="por rellenar"&&$alquiler->expedicion_licencia!="por rellenar"&&$alquiler->num_licencia!="por rellenar"&&$alquiler->expiracion_licencia!="por rellenar"&&$alquiler->estatus!='en curso'&&date("Y-m-d")>=$alquiler->fecha_recogida)
                       <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
                       @endif
                       @elseif($alquiler->estatus=="en curso")
