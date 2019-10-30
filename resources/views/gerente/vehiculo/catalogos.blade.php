@@ -145,7 +145,7 @@
                             <div class="row">
                                <div class="col-md-12">
                                  <div class="col-md-8 col-md-offset-4">
-                                   <label>-- Nueva marca de vehiculo -- </label>
+                                   <label>-- Nueva Categoria -- </label>
                                  </div>
                                </div>  
                              </div>
@@ -175,10 +175,10 @@
                                  </tr>
                              </thead>
                              <tbody>
-                                  @foreach ($marcas as $marca)                      
+                                  @foreach ($categorias as $cate)                      
                        <tr>
-                               <td style="text-align: center">{{$marca->id}}</td>
-                               <td >{{$marca->nombre}}</td>
+                               <td style="text-align: center">{{$cate->idcategoria}}</td>
+                               <td >{{$cate->nombre}}</td>
                              </tr> 
                        @endforeach
                              
@@ -275,9 +275,9 @@
       $('.btn-info').click();
        }
 
-       $( '#nombre' ).css('borderColor', 'green');         
-                     jQuery('#validonombre').show(); 
-                     jQuery('#errornombre').hide(); 
+       $( '#categoria' ).css('borderColor', 'green');         
+                     jQuery('#validocategoria').show(); 
+                     jQuery('#errorcategoria').hide(); 
 
      },
      error: function (data) {
@@ -287,16 +287,16 @@
             console.log(arreglo);
                       });*/
                      console.log(arreglo);
-           var nombre = arreglo.nombre;        
+           var categoria = arreglo.categoria;        
                        
-           if (nombre == undefined){  
-                     $( '#nombre' ).css('borderColor', 'green');         
-                     jQuery('#validonombre').show(); 
-                     jQuery('#errornombre').hide(); 
+           if (catgoria == undefined){  
+                     $( '#catgoria' ).css('borderColor', 'green');         
+                     jQuery('#validocatgoria').show(); 
+                     jQuery('#errorcatgoria').hide(); 
                      }else{
-                       jQuery('#validonombre').hide(); 
-                     jQuery('#errornombre').show();          
-                    $( '#nombre' ).css('borderColor', 'red');
+                       jQuery('#validocatgoria').hide(); 
+                     jQuery('#errorcatgoria').show();          
+                    $( '#catgoria' ).css('borderColor', 'red');
                      //console.log(nombre);
                    }       
                 
@@ -338,7 +338,7 @@
      },
      error: function (data) {
          var err = JSON.parse(data.responseText);
-         var arreglo = err.errors;
+         var err = JSON.pa.errors;
          /*jQuery.each(arreglo, function(key, value){
             console.log(arreglo);
                       });*/
@@ -362,4 +362,61 @@
   
   });
   </script>
+  
+  <script>
+    $(document).ready(function(){
+    
+     $('#upload_categoria').on('submit', function(event){
+      event.preventDefault();
+      $.ajax({
+       url:"{{ route('Agregarcategoria') }}",
+       method:"get",
+       data:$('#upload_categoria').serialize(),//new FormData(this),
+       dataType:'JSON',
+       contentType: false,
+       cache: false,
+       processData: false,
+       success:function(data)
+       {      
+         var mensaje=data.success;
+         console.log(mensaje);
+         if(mensaje=='ERROR1'){
+        $('#existe1').click();
+         }
+         if(mensaje=='EXITO'){
+        $('.btn-info').click();
+         }
+  
+         $( '#nombre' ).css('borderColor', 'green');         
+                       jQuery('#validonombre').show(); 
+                       jQuery('#errornombre').hide(); 
+  
+       },
+       error: function (data) {
+           var err = JSON.parse(data.responseText);
+           var arreglo = err.errors;
+           /*jQuery.each(arreglo, function(key, value){
+              console.log(arreglo);
+                        });*/
+                       console.log(arreglo);
+             var nombre = arreglo.nombre;        
+                         
+             if (nombre == undefined){  
+                       $( '#nombre' ).css('borderColor', 'green');         
+                       jQuery('#validonombre').show(); 
+                       jQuery('#errornombre').hide(); 
+                       }else{
+                         jQuery('#validonombre').hide(); 
+                       jQuery('#errornombre').show();          
+                      $( '#nombre' ).css('borderColor', 'red');
+                       //console.log(nombre);
+                     }       
+                  
+       }
+      })
+     });
+    
+    });
+    </script>
+
 @endsection

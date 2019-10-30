@@ -54,6 +54,13 @@
                   <span id="errorine" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validoine" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
                 </div>   
+                <div class="form-group col-md-4">
+                    <label>RFC</label>
+                  <input type="text" class="form-control" autofocus placeholder="Número de RFC" name="rfc"  id="rfc" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="13">
+
+                  <span id="errorfc" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                <span id="validorfc" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                </div>   
               </div> 
 
               
@@ -105,7 +112,7 @@
 
                       {{--FORMULARIO DE GENERO--}}
                       <div class="form-group col-md-4">
-                          <label>Género</label>
+                          <label>Genero</label>
                           <select class="form-control" name="genero" id="genero">
                             <option>HOMBRE</option> 
                             <option>MUJER</option>
@@ -265,7 +272,7 @@
                 
                 <div class="form-group col-md-4" style="display: none;" id="expedicion">
                   <label>Fecha de expedición </label>
-                  <input type="date" class="form-control" name="licenciaFechaExpedicion"  placeholder="Fecha de expedición de licencia" id="licenciaFechaExpedicion">
+                  <input type="date" class="form-control" name="licenciaFechaExpedicion"  placeholder="Fecha de expedición de licencia" id="licenciaFechaExpedicion" onblur="validar_fecha();">
 
                   <span id="errorlicenciaFechaExpedicion" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                   <span id="validolicenciaFechaExpedicion" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -275,7 +282,7 @@
               
               <div class="form-group col-md-4" style="display: none;" id="vencimiento">
                 <label>Fecha de vencimiento</label>
-                <input type="date" class="form-control" name="licenciaFechaExpiracion" id="licenciaFechaExpiracion"  placeholder="Fecha de expiración de licencia" >
+                <input type="date" class="form-control" name="licenciaFechaExpiracion" id="licenciaFechaExpiracion"  placeholder="Fecha de expiración de licencia" onblur="validar_fecha();">
                 <span id="errorlicenciaFechaExpiracion" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validolicenciaFechaExpiracion" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
             </div>
@@ -594,6 +601,7 @@ function Tipo(){
                       });*/
                       console.log(arreglo);
           var ine = arreglo.ine;
+          var rfc = arreglo.rfc;
           var codigo = arreglo.codigopostal;
           var estado = arreglo.estado;
           var municipio = arreglo.municipio;
@@ -782,8 +790,19 @@ function Tipo(){
                jQuery('#errorine').show();          
               $( '#ine' ).css('borderColor', 'red');
                //console.log(nombre);
-             }          
-          
+             }         
+
+             if (rfc == undefined){  
+               $( '#rfc' ).css('borderColor', 'green');         
+               jQuery('#validorfc').show(); 
+               jQuery('#errorfc').hide(); 
+               }else{
+                 jQuery('#validorfc').hide(); 
+               jQuery('#errorfc').show();          
+              $( '#rfc' ).css('borderColor', 'red');
+               //console.log(nombre);
+             }
+
 
           if (codigo == undefined){  
             $( '#codigo_postal' ).css('borderColor', 'green');         
@@ -917,6 +936,20 @@ function checar_horas(){
                 alert("menor de edad");
                 document.getElementById("fechaNacimiento").value = null;
     }
-  }
+  };
+
+  function validar_fecha(){
+          var expedicion = document.getElementById("licenciaFechaExpedicion").value;
+          var vencimiento = document.getElementById("licenciaFechaExpiracion").value;
+            var expedicion  = new Date(expedicion);
+            var vencimiento = new Date(vencimiento);
+            //--------------
+            if(vencimiento < expedicion ){
+                alert("Fecha invalida!! La fecha de vencimiento no puede ser menor a la de expedición");
+                document.getElementById("licenciaFechaExpedicion").value = null;
+                document.getElementById("licenciaFechaExpiracion").value = null;
+            }
+                    
+        };
   </script>
 @endsection  

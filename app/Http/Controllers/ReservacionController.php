@@ -487,6 +487,18 @@ return response()->download(storage_path('Documento01.docx'));
         $pago->metodo = $request['metodo'];
         $pago->save();
 
+               //enviar mensaje de un nuevo pago realizado
+               $pago_reserva = $pago;
+               $alquiler = App\Alquiler::findOrFail($reservacion->id);
+               $sucursal = App\Sucursal::findOrFail($alquiler->lugar_recogida);
+               $asunto   = 'pago por {{pago_reserva->motivo}} Ü-CAR';
+               $cliente  = App\cliente::findOrFail($reservacion->id_cliente);
+               $correo = $cliente->correo; 
+               Mail::send('mails.confirmacion_pago',compact('reservacion','pago_reserva','sucursal'), function ($message) use ($asunto,$correo,$reservacion) {
+                   $message->from('ucardesarollo@gmail.com', 'Ü-car');
+                   $message->to($correo)->subject($asunto);
+                   }); 
+
 
         return back()->with('message','Operation Successful !');
         
@@ -723,9 +735,20 @@ return response()->download(storage_path('Documento01.docx'));
         $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
         $vehiculo->kilometraje = $request['km'];
         $vehiculo->save();
+        //enviar correo al cliente cuando entrega el cehiculo
+        $asunto = 'Confirmacion de pago reserva Ü-CAR';
+        $sucursal = App\Sucursal::findOrFail($alquiler->lugar_recogida);
+        $cliente  = App\cliente::findOrFail($reservacion->id_cliente);
+        $correo = $cliente->correo; 
+        setlocale(LC_ALL,"es_ES");
+        $fecha = date("d-m-y",strtotime(date("Y-m-d")));
+        $hora = date("h:m:s",strtotime(date("h-m-s")));
+                Mail::send('mails.llegada_de_vehiculo',compact('reservacion','sucursal','fecha','hora'), function ($message) use ($asunto,$correo,$reservacion) {
+                    $message->from('ucardesarollo@gmail.com', 'Ü-car');
+                    $message->to($correo)->subject($asunto);
+                    }); 
 
         return back()->with('message','Operation Successful !');
-
 
     }
 

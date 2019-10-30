@@ -233,11 +233,36 @@
     <p><a href="{{ route('en_construccion') }}">Contacto</a></p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
     <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
     @foreach($sucursales as $sucursal)
-    <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal])}}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, {{$sucursal->telefono}} </a></p>
+    <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, <i class="fa fa-whatsapp text-success" aria-hidden="true" ></i>  {{$sucursal->telefono}} </a></p>
     @endforeach
+</div>
+                <!-- Grid column -->
+<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="box flyRight">
+          <div class="icon">
+            <i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-4x active icon-2x"></i><a href="https://www.facebook.com/UcarMx/"> Facebook</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="box flyRight">
+          <div class="icon">
+            <i class="ico icon-circled icon-bgdark fa fa-instagram fa-4x active icon-2x"></i><a href="https://www.instagram.com/ucar_mexico/"> Instagram</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="box flyRight">
+          <div class="icon">
+            <i class="ico icon-circled icon-bgdark fa fa-twitter fa-4x active icon-2x"></i><a href="https://twitter.com/ucarmx"> Twitter</a>
+          </div>
+        </div>
+      </div>         
 </div>
                 <!-- Grid column -->
 </div>

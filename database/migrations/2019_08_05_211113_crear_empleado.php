@@ -16,6 +16,7 @@ class CrearEmpleado extends Migration
         Schema::create('empleados', function (Blueprint $table) {          
             $table->bigIncrements('idempleado');
             $table->string('ine')->unique();
+            $table->string('rfc')->nullable();
             $table->string('nombres')->require;
             $table->string('primerApellido')->require;
             $table->string('segundoApellido');

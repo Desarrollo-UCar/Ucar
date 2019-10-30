@@ -127,8 +127,8 @@
                             {{-- FORMULARIO RENDIMIENTO DEL VEHICULO --}}
                             
                                 <div class="col-md-6 form-group">
-                                    <label>Rendimiento</label>
-                                    <input type="text" name="rendimiento" id="rendimiento" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                    <label>Rendimiento (km/ltr)</label>
+                                    <input type="number" name="rendimiento" id="rendimiento" class="form-control" min="0">
 
                                     <span id="errorrendimiento" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                     <span id="validorendimiento" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
@@ -165,9 +165,9 @@
                                 <div class="form-group col-md-6">
                                   <label>Tipo</label>
                                   <select class="form-control" name="tipo" id="tipo">
-                                    <option>COMPACTO</option> 
-                                    <option>CAMIONETA</option>
-                                    <option>MOTONETA</option>
+                                    @foreach ($categoria as $categoria)
+                                    <option>{{$categoria->nombre}}</option>
+                                    @endforeach 
                                   </select>                                              
 
                                       <span id="errorpuertas" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -178,13 +178,7 @@
                                 
                                 <div class="form-group col-md-6">
                                     <label>Pasajeros</label>
-                                    <select class="form-control" id="pasajeros" name="pasajeros">            <option>2</option>
-                                      <option>4</option>
-                                      <option>6</option>
-                                      <option>8</option>
-                                    </select>
-                                    
-
+                                    <input type="number" name="pasajeros" id="pasajeros" class="form-control" max="99" min="0">      
                                     <span id="errorpasajeros" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                     <span id="validopasajeros" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
             

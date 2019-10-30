@@ -9,6 +9,7 @@ use App\Modelo;
 use App\VehiculoSucursales;
 use App\MarcaVehiculo;
 use App\MarcaModelo;
+use App\Categoria;
 use Illuminate\Http\Request;
 
 use phpDocumentor\Reflection\Types\Nullable;
@@ -61,7 +62,8 @@ class VehiculoController extends Controller
 
         $sucursal=Sucursal::all();
         $marca= MarcaVehiculo::all();
-        return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca'));
+        $categoria= Categoria::all();
+        return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca','categoria'));
     }
 
     
@@ -184,13 +186,12 @@ class VehiculoController extends Controller
        
         $foranea = Sucursal::where('idsucursal',$vehiculo['sucursal'])->first();      
         $vehi = Vehiculo::where('idvehiculo',$vehiculo['vehiculo'])->first();
-
+        $categoria= Categoria::all();
         if(!$vehiculo->user()->hasRole('gerente')){
             $email = $vehiculo->user()->email;
             $empleado = Empleado::where('correo','=',$email)->first();  
             $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
             ->where('status','=','activo')->first();
-
             $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
         }
         else{
@@ -199,7 +200,7 @@ class VehiculoController extends Controller
         $vehiculosucursal = VehiculoSucursales::where('sucursal',$foranea['idsucursal'])->first();
         
         //return $vehi;
-        return view('gerente.vehiculo.editar_vehiculo',compact('foranea','vehi','sucursal','vehiculosucursal'));
+        return view('gerente.vehiculo.editar_vehiculo',compact('foranea','vehi','sucursal','vehiculosucursal','categoria'));
     }
 
     
@@ -214,12 +215,10 @@ class VehiculoController extends Controller
     public function ModificarDatos(Request $request){
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();    
-        $new_name = $request->hidden_image;
-        $image = $request->file('foto');  
-
-if($image != '')
-        { 
-            
+        
+        // return response()->json(['success'=>$request['foto']]);
+if($request['foto'] != null)
+        {             
         $request->validate([
             'foto'       => 'required|image|mimes:jpeg,png,jpg,gif',
             'vin'        => 'required| regex:/[0-9A-Za-z]{17}/m',
@@ -243,11 +242,13 @@ if($image != '')
            // 'descripcion'=> 'required',
         ]);
        
-            $vehiculo = vehiculo::where('vin',$request['vin'])->first();
+            $vehiculo = vehiculo::where('idvehiculo',$request['idvehiculo'])->first();
+            $new_name = $request->hidden_image;
+            $image = $request->file('foto'); 
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $new_name);
 
-            $vehiculo ->update([
+            try{            $vehiculo ->update([
                 'foto'       =>$new_name,
                 'vin'        =>$request['vin'],
                 'matricula'  =>$request['matricula'],
@@ -270,19 +271,86 @@ if($image != '')
                 'estatus'    =>$request['status'],               
                 'updated_at' =>$date
             ]);
-
+            }catch(\Illuminate\Database\QueryException $ex){
+                return response()->json(['success'=>'REPITE']);
+            }
             $foranea = Sucursal::where('nombre',$request['sucursal'])->first();      
-            $vehi =Vehiculo::where('vin',$request['vin'])->first();
-            $vehiculosucursal=VehiculoSucursales::where('vehiculo',$vehi['idvehiculo'])
+            // $vehi =Vehiculo::where('idvehiculo',$request['idvehiculo'])->first();
+            $vehiculosucursal=VehiculoSucursales::where('vehiculo',$vehiculo['idvehiculo'])
             ->first();
                 $vehiculosucursal->update([
                     'sucursal'=>$foranea['idsucursal'],
-                    'vehiculo'=>$vehi['idvehiculo'],
+                    'vehiculo'=>$vehiculo['idvehiculo'],
                     'status'=>$request['status'],
                     'updated_at'=>$date
                     ]);
     
                     return response()->json(['success'=>'EXITO']);
+            }else{
+                $request->validate([
+                    // 'foto'       => 'required|image|mimes:jpeg,png,jpg,gif',
+                    'vin'        => 'required| regex:/[0-9A-Za-z]{17}/m',
+                    'matricula'  => 'required| regex:/[0-9A-Za-z]/m|min:6|max:8',
+                    'marca'      => 'required',
+                    'modelo'     => 'required',
+                    'transmision'=> 'required',
+                    'puertas'    => 'required',
+                    'rendimiento'=> 'required',
+                    'anio'       => 'required',
+                    'precio'     => 'required',
+                    'costo'      => 'required',
+                    'pasajeros'  => 'required',
+                    'maletero'   => 'required',
+                    'color'      => 'required',
+                    'cilindros'  => 'required',
+                    'kilometraje'=> 'required',
+                    'tipo'       => 'required',
+                    'status'     => 'required',
+                    'sucursal'   => 'required',
+                   // 'descripcion'=> 'required',
+                ]);
+               
+                    $vehiculo = vehiculo::where('idvehiculo',$request['idvehiculo'])->first();
+                  
+        try{
+                    $vehiculo ->update([
+                        // 'foto'       =>$new_name,
+                        'vin'        =>$request['vin'],
+                        'matricula'  =>$request['matricula'],
+                        'marca'      =>$request['marca'],
+                        'modelo'     =>$request['modelo'],
+                        'transmicion'=>$request['transmision'],
+                        'puertas'    =>$request['puertas'],
+                        'rendimiento'=>$request['rendimiento'],
+                        'estatus'    =>$request['status'],
+                        'anio'       =>$request['anio'],
+                        'precio'     =>$request['precio'],
+                        'costo'      =>$request['costo'],
+                        'pasajeros'  =>$request['pasajeros'],
+                        'maletero'   =>$request['maletero'],
+                        'color'      =>$request['color'],
+                        'cilindros'  =>$request['cilindros'],
+                        'kilometraje'=>$request['kilometraje'],
+                        'tipo'       =>$request['tipo'],
+                        'descripcion'=>$request['descripcion'],
+                        'estatus'    =>$request['status'],               
+                        'updated_at' =>$date
+                    ]);
+            }catch(\Illuminate\Database\QueryException $ex){
+                return response()->json(['success'=>'REPITE']);
+            }
+                    $foranea = Sucursal::where('nombre',$request['sucursal'])->first();      
+                    // $vehi =Vehiculo::where('idvehiculo',$request['idvehiculo'])->first();
+                    $vehiculosucursal=VehiculoSucursales::where('vehiculo',$vehiculo['idvehiculo'])
+                    ->first();
+                        $vehiculosucursal->update([
+                            'sucursal'=>$foranea['idsucursal'],
+                            'vehiculo'=>$vehiculo['idvehiculo'],
+                            'status'=>$request['status'],
+                            'updated_at'=>$date
+                            ]);
+            
+                            return response()->json(['success'=>'EXITO']);
             }
 
     }

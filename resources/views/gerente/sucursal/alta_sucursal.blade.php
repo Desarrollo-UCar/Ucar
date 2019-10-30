@@ -120,6 +120,18 @@
                 </div>                             
                               
 
+                
+                  <div class="col-md-8">
+                    <label>link del mapa</label>
+                    <input type="text" class="form-control" placeholder="link del mapa" name="link"   id="link">
+
+                    <span id="errorlink" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                      <span id="validolink" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+                      </div>
+                      
+                      
+                
+
                 <div class="row">
                   <div class="col-md-12">
                     <div class="col-md-4">
@@ -396,6 +408,7 @@
           var calle = arreglo.calle;
           var numero = arreglo.numero;
           var telefono = arreglo.telefono;
+          var link = arreglo.link;
           var foto = arreglo.foto;
           var foto1 = arreglo.foto1;
           var foto2 = arreglo.foto2;
@@ -427,6 +440,16 @@
               jQuery('#validonombre').hide(); 
             jQuery('#errornombre').show();          
            $( '#nombre' ).css('borderColor', 'red');
+          }
+
+          if (link == undefined){  
+            $( '#link' ).css('borderColor', 'green');         
+            jQuery('#validolink').show(); 
+            jQuery('#errorlink').hide(); 
+            }else{
+              jQuery('#validolink').hide(); 
+            jQuery('#errorlink').show();          
+           $( '#link' ).css('borderColor', 'red');
           }
 
           if (codigo == undefined){  
