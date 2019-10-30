@@ -56,7 +56,7 @@
                <div class="row" style="display:none">
                 <div class="form-group col-md-4">
                     <label>idempleado</label>
-                  <input type="text" class="form-control" autofocus placeholder="Número de credencial de elector" name="idempleado" value="{{$emp->idempleado}}" id="idempleado">
+                  <input type="text" class="form-control" name="idempleado" value="{{$emp->idempleado}}" id="idempleado">
                 </div>   
               </div> 
 

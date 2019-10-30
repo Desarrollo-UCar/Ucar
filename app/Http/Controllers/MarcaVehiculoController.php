@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MarcaVehiculo;
 use App\ModeloVehiculo;
 use App\MarcaModelo;
+use App\Categoria;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,10 +22,11 @@ class MarcaVehiculoController extends Controller
         //
         $marcas = MarcaVehiculo::all();
         $modelos = ModeloVehiculo::all();
+        $categorias = Categoria::all();
         $marcasm = MarcaVehiculo::join('marca_modelos','marca_modelos.idMarca','=','marca_vehiculos.id')
         ->join('modelo_vehiculos','modelo_vehiculos.id','=','marca_modelos.idModelo')->
         select('modelo_vehiculos.nombre as nombre2','marca_vehiculos.nombre')->get();
-        return view('gerente.vehiculo.catalogos',compact('marcas','modelos','marcasm'));
+        return view('gerente.vehiculo.catalogos',compact('marcas','modelos','marcasm','categorias'));
 
     }
 

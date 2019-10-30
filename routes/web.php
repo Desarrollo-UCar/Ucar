@@ -150,6 +150,7 @@ Route::get('InicioReportes', 'ReportesController@index')->name ('InicioReportes'
 Route::get('catalogos', 'MarcaVehiculoController@index')->name('catalogos');
 Route::get('registrarMarca','MarcaVehiculoController@store')->name('registrarMarca');
 Route::get('registrarModelo','ModeloVehiculoController@store')->name('registrarModelo');
+Route::get('registrarCategoria','ModeloVehiculoController@Categoria')->name('Agregarcategoria');
 Route::resource('marca', 'MarcaVehiculoController');
  //Route::resource('marcamodelo', 'MarcaModeloController');
 Route::post('marcasmodelos','VehiculoController@Consultar')->name('marcasmodelos');

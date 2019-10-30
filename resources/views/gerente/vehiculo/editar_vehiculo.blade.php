@@ -38,6 +38,14 @@
                                                         
                                        
                     <div class="col-md-6">
+
+                        <div class="row" style="display:none">
+                            <div class="form-group col-md-4">
+                                <label>idvehiculo</label>
+                              <input type="text" class="form-control" name="idvehiculo" value="{{$vehi->idvehiculo}}" id="idvehiculo">
+                            </div>   
+                          </div> 
+            
                      
                       {{-- FORMULARIO DE NUMERO VIN DEL VEHICULO --}}
                       
@@ -169,22 +177,13 @@
                                 <div class="form-group col-md-6">
                                   <label>Tipo</label>
                                   <select class="form-control" name="tipo" id="tipo">
-                                      <option>{{$vehi->tipo}}</option> 
-                                      @if($vehi->tipo == 'COMPACTO')
-                                      <option>CAMIONETA</option>
-                                      <option>MOTONETA</option>
-                                      @endif
-                                      @if($vehi->tipo == 'CAMIONETA')
-                                      <option>COMPACTO</option>
-                                      <option>MOTONETA</option>
-                                      @endif
-                                      @if($vehi->tipo == 'MOTONETA')
-                                      <option>COMPACTO</option>
-                                      <option>CAMIONETA</option>
-                                      @endif
-                                  
-                                   
-                                  </select>                                              
+                                      <option>{{$vehi->tipo}}</option>
+                                    @foreach ($categoria as $categoria)
+                                    @if ($vehi->tipo!=$categoria->nombre)
+                                    <option>{{$categoria->nombre}}</option>
+                                    @endif
+                                    @endforeach 
+                                  </select>                     
 
                                       <span id="errorpuertas" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                       <span id="validopuertas" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
@@ -458,6 +457,27 @@
     <!-- /.modal-dialog -->
   </div>
  
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#errorepite" style="display: none" id="repite">Cancelar</button>
+  <div class="modal modal-danger fade" id="errorepite">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">No se pudo modificar </b> </h4>
+          </div>
+          <div class="modal-body">
+            <p>UN VEHÍCULO YA SE ENCUENTRA REGISTRADO CON EL MISMO VIN&hellip;</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+          
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
 
 @endsection
 
@@ -580,8 +600,13 @@
      success:function(data)
      {      
        var mensaje=data.success;
-      
-      
+       console.log(mensaje);
+       if(mensaje=='REPITE'){   
+        $('#repite').click();  
+        jQuery('#validovin').hide(); 
+               jQuery('#errorvin').show();          
+              $( '#vin' ).css('borderColor', 'red');
+       }
        if(mensaje=='EXITO'){
       $('.btn-info').click();
        }
