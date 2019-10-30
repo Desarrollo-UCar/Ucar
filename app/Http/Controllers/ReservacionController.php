@@ -20,6 +20,7 @@ use App\Sucursal;
 use Illuminate\Foundation\Console\Presets\Bootstrap;
 use PhpOffice\PhpWord\TemplateProcessor;
 use App\reintegros;
+use Mail;
 
 
 use PhpOffice\PhpWord\IOFactory;
@@ -365,7 +366,7 @@ class ReservacionController extends Controller
        $vehiculo = Vehiculo::where('idVehiculo','=',$alquiler->id_vehiculo)->first();
 
 //GENERAR WORD
-$templateWord = new TemplateProcessor(storage_path('plantillab.docx'));
+$templateWord = new TemplateProcessor(storage_path('plantilla.docx'));
  
 $nombre = $cliente->nombre.' '.$cliente->primer_apellido.' '.$cliente->segundo_apellido;
 $direccion = $cliente->ciudad.' '.$cliente->colonia.' '.$cliente->calle.' '.$cliente->numero.'  Estado: '.$cliente->estado.'   Pais: '.$cliente->pais;
@@ -465,7 +466,7 @@ return response()->download(storage_path('Documento01.docx'));
     public function pago_Reservacion(request $request)
     {   //return response()->json(date('Y\-m\-d H\:i\:s'));
          $reservacion = Reservacion::where('id','=',$request['reservacion'])->first();
-        return $request;
+       // return $request;
         if($request['motivo']=='saldo'){
         $saldoNuevo = $reservacion->saldo - $request['monto'];
         $reservacion->saldo = $saldoNuevo;
@@ -486,6 +487,29 @@ return response()->download(storage_path('Documento01.docx'));
         $pago->comentario = $request['comentario'];
         $pago->metodo = $request['metodo'];
         $pago->save();
+
+               //enviar mensaje de un nuevo pago realizado
+               $pago_reserva = $pago;
+               $alquiler = App\Alquiler::findOrFail($reservacion->id);
+               $sucursal = App\Sucursal::findOrFail($alquiler->lugar_recogida);
+               $asunto   = 'pago por {{pago_reserva->motivo}} Ü-CAR';
+               $cliente  = App\cliente::findOrFail($reservacion->id_cliente);
+               $correo = $cliente->correo; 
+               $reservacion = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
+            reservacions.saldo, sucursals.nombre, alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
+            IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+            vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,
+            vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,vehiculos.foto
+            FROM reservacions
+            INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
+            inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
+            inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
+            INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
+            where reservacions.id = ?',[$alquiler->id_reservacion]);
+               Mail::send('mails.confirmacion_pago',compact('reservacion','pago_reserva','sucursal'), function ($message) use ($asunto,$correo,$reservacion) {
+                   $message->from('ucardesarollo@gmail.com', 'Ü-car');
+                   $message->to($correo)->subject($asunto);
+                   }); 
 
 
         return back()->with('message','Operation Successful !');
@@ -723,9 +747,31 @@ return response()->download(storage_path('Documento01.docx'));
         $vehiculo = Vehiculo::where('idvehiculo','=',$alquiler->id_vehiculo)->first();
         $vehiculo->kilometraje = $request['km'];
         $vehiculo->save();
+        //enviar correo al cliente cuando entrega el cehiculo
+        $asunto = 'Entrega de vehículo Ü-CAR';
+        $sucursal = App\Sucursal::findOrFail($alquiler->lugar_recogida);
+        $cliente  = App\cliente::findOrFail($reservacion->id_cliente);
+        $correo = $cliente->correo; 
+        $reservacion = DB::select('SELECT reservacions.id, alquilers.id AS id_alquiler, reservacions.fecha_reservacion, reservacions.total,
+        reservacions.saldo, sucursals.nombre, alquilers.fecha_recogida,alquilers.fecha_devolucion, alquilers.hora_recogida, alquilers.hora_devolucion,
+        IF (DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida) = 0,1,DATEDIFF(alquilers.fecha_devolucion , alquilers.fecha_recogida)) AS dias,
+        vehiculos.marca, vehiculos.modelo,vehiculos.transmicion,vehiculos.puertas,vehiculos.rendimiento,vehiculos.anio,vehiculos.kilometraje,
+        vehiculos.precio,vehiculos.pasajeros,vehiculos.maletero,vehiculos.color,vehiculos.cilindros,vehiculos.tipo, vehiculos.descripcion,vehiculos.foto
+        FROM reservacions
+        INNER join alquilers ON alquilers.id_reservacion = reservacions.id 
+        inner join vehiculos ON vehiculos.idvehiculo		 = alquilers.id_vehiculo 
+        inner join sucursals ON sucursals.idsucursal		 = alquilers.lugar_recogida
+        INNER JOIN pago_reservacions ON pago_reservacions.id_reserva	= reservacions.id
+        where reservacions.id = ?',[$alquiler->id_reservacion]);
+        setlocale(LC_ALL,"es_ES");
+        $fecha = date("d-m-y",strtotime(date("Y-m-d")));
+        $hora = date("h:m:s",strtotime(date("h-m-s")));
+                Mail::send('mails.llegada_de_vehiculo',compact('reservacion','sucursal','fecha','hora'), function ($message) use ($asunto,$correo,$reservacion) {
+                    $message->from('ucardesarollo@gmail.com', 'Ü-car');
+                    $message->to($correo)->subject($asunto);
+                    }); 
 
         return back()->with('message','Operation Successful !');
-
 
     }
 
