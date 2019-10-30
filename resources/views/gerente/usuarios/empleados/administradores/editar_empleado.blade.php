@@ -291,8 +291,12 @@
                   
                 <div class="form-group col-md-4" style="display: none;" id="licencia">
                     <label>Número de licencia</label>
+<<<<<<< HEAD
 
                 <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia" value="{{ $emp->numLicencia}}" pattern="[0-9]*" minlength = "11" maxlength="11" title="Número a 11 digitos, no se admiten decimales">
+=======
+                <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia" value="{{ $emp->numLicencia}}"  data-inputmask='"mask": "9999999999999"' data-mask>
+>>>>>>> 8222fd8a25102660e4cbc70a4471257988ce6697
 
                     <span id="errornumlicencia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                     <span id="validonumlicencia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -441,6 +445,29 @@
         </div>
         <div class="modal-body">
           <p>Verifique los campos necesarios&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+        
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#errorepite" style="display: none" id="repite">Cancelar</button>
+<div class="modal modal-warning fade" id="errorepite">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">No se pudo modificar </b> </h4>
+        </div>
+        <div class="modal-body">
+          <p>UN EMPLEADO YA SE ENCUENTRA REGISTRADO CON EL MISMO INE&hellip;</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
@@ -672,6 +699,24 @@ function Tipo(){
             //console.log(nombre);
          
        }
+
+       if(mensaje=='ERROR'){     
+        jQuery('#validolicenciaFechaExpedicion').hide(); 
+               jQuery('#errorlicenciaFechaExpedicion').show();          
+              $( '#licenciaFechaExpedicion' ).css('borderColor', 'red');              
+      
+              jQuery('#validolicenciaFechaExpiracion').hide(); 
+               jQuery('#errorlicenciaFechaExpiracion').show();          
+              $( '#licenciaFechaExpiracion' ).css('borderColor', 'red');
+         
+       }
+
+       if(mensaje=='REPITE'){   
+        $('#repite').click();  
+        jQuery('#validoine').hide(); 
+               jQuery('#errorine').show();          
+              $( '#ine' ).css('borderColor', 'red');
+       }
      },
      error: function (data) {
          var err = JSON.parse(data.responseText);
@@ -828,7 +873,7 @@ function Tipo(){
                jQuery('#errornumLicencia').hide(); 
                }else{
                  jQuery('#validonumLicencia').hide(); 
-               jQuery('#errornumLicencia').show();          
+               jQuery('#errornumlicencia').show();          
               $( '#numLicencia' ).css('borderColor', 'red');
                //console.log(nombre);
              }

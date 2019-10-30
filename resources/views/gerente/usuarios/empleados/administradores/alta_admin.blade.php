@@ -31,11 +31,10 @@
              
               <form method="post" id="upload_form" enctype="multipart/form-data">
                {{ csrf_field() }}
-          
+               <div class="alert col-md-4 col-md-offset-4 " id="message" style="display: none"></div>
                 <div class="col-md-6 col-md-offset-4  file-loading">
-                    <div class="alert col-md-7" id="message" style="display: none"></div>
-                  <div id="preview" >
-                   
+                    
+                  <div id="preview" >                   
                     <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;border-radius: 50%;">                
                 
                   </div>
@@ -89,7 +88,7 @@
                       {{--FORMULARIO DE FECHA DE NACIMIENTO--}}
                       <div class="form-group col-md-4">
                           <label>Fecha de Nacimiento</label>
-                          <input type="date" class="form-control" placeholder="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento">
+                          <input type="date" class="form-control" placeholder="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento" onchange="checar_horas();">
 
                           <span id="errorfechaNacimiento" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                           <span id="validofechaNacimiento" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -256,7 +255,7 @@
                   
                 <div class="form-group col-md-4" style="display: none;" id="licencia">
                     <label>Número de licencia</label>
-                    <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia" pattern="[0-9]*" minlength = "11" maxlength="11" title="Número a 11 digitos, no se admiten decimales">
+                    <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia"  data-inputmask='"mask": "99999999999"' data-mask>
 
                     <span id="errornumLicencia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                     <span id="validonumLicencia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -558,6 +557,7 @@ function Tipo(){
        if(mensaje=='ERROR1'){
       $('#existe1').click();
        }
+     
        if(mensaje=='ERROR2'){
       $('#rango1').click();
       jQuery('#validofechaNacimiento').hide(); 
@@ -573,6 +573,16 @@ function Tipo(){
             jQuery('#errorconfcontra').show();          
            $( '#confcontra' ).css('borderColor', 'red');
             //console.log(nombre);
+         
+       }
+       if(mensaje=='ERRORLIC'){     
+        jQuery('#validolicenciaFechaExpedicion').hide(); 
+               jQuery('#errorlicenciaFechaExpedicion').show();          
+              $( '#licenciaFechaExpedicion' ).css('borderColor', 'red');              
+      
+              jQuery('#validolicenciaFechaExpiracion').hide(); 
+               jQuery('#errorlicenciaFechaExpiracion').show();          
+              $( '#licenciaFechaExpiracion' ).css('borderColor', 'red');
          
        }
      },
@@ -611,9 +621,9 @@ function Tipo(){
              if (foto == undefined){  
               
                }else{
-                $('#message').css('display', 'block');
+                $('#message').css({"display": "block", "color":"red"});
               $('#message').html('AGREGA UNA FOTO DE EMPLEADO');
-              $('#message').addClass("alert alert-danger");
+              // $('#message').addClass("alert alert-danger");
                //console.log(nombre);
              }
            
@@ -875,5 +885,68 @@ function Tipo(){
    });
   
   });
+  </script>
+
+<script>
+function checar_horas(){
+  //accedemos a los valores de los elementos horarecogida y hora devolucion
+    var fecha     = document.getElementById("fechaNacimiento").value;
+    var fecha_nacimiento =  new Date(fecha);
+    //console.log(fecha_nacimiento);
+    
+    hoy = new Date();
+// console.log(fecha);
+//     console.log(fecha_nacimiento);
+//     console.log(hoy);
+    // console.log(hoy.getFullYear());
+    // console.log(fecha_nacimiento.getFullYear());
+    var dif_anios =hoy.getFullYear() - fecha_nacimiento.getFullYear() ;
+    // console.log(dif_anios);
+
+    if(dif_anios > 18){
+        //console.log(dif_anios);
+        console.log("edad valida 1");
+    }
+    if(dif_anios == 18){
+        // console.log("igual a 18")
+        // console.log(hoy.getMonth() - fecha_nacimiento.getMonth());
+        if(hoy.getMonth() - fecha_nacimiento.getMonth() < 0)
+            console.log("edad valida 2 ");
+        if(hoy.getMonth() - fecha_nacimiento.getMonth() > 0)
+            alert("menor de edad");
+        if(hoy.getMonth() - fecha_nacimiento.getMonth() == 0){
+            //  console.log("meses iguales");
+            //  console.log(hoy.getDate() - fecha_nacimiento.getDate());
+            //  console.log(".........");
+            //  console.log(hoy.getDate());
+            //  console.log(fecha_nacimiento.getDate() +1 );
+            if(hoy.getDate() - (fecha_nacimiento.getDate()+1) == 0)
+                alert("Felices 18 !!!! :)");
+            if(hoy.getDate() - (fecha_nacimiento.getDate()+1) < 0)
+                alert("menor de edad");
+            if(hoy.getDate() - (fecha_nacimiento.getDate()+1) > 0)
+                console.log("edad valida 4");
+
+        }
+    }
+    if(dif_anios < 18){
+        console.log(hoy.getYear() - fecha_nacimiento.getYear() );
+        alert("menor de edad");
+    }
+        
+
+
+    var dia = parseInt(hoy.getDate()) ;
+    var mes = (parseInt(hoy.getMonth())) ;
+    var hora = parseInt(hoy.getHours());
+    var hora_1 = parseInt(hoy.getHours()) +1;
+    var hora_2 = parseInt(hoy.getHours()) +2;
+
+    
+    
+  
+    
+  
+  }
   </script>
 @endsection  

@@ -35,7 +35,7 @@ class CrearEmpleado extends Migration
             $table->string('status');
             $table->date('licenciaFechaExpiracion')->nullable();
             $table->date('licenciaFechaExpedicion')->nullable();
-            $table->integer('numLicencia')->nullable();           
+            $table->string('numLicencia')->nullable();           
             $table->timestamps();
         });
     }
