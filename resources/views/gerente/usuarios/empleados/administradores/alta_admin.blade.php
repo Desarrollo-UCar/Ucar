@@ -105,7 +105,7 @@
 
                       {{--FORMULARIO DE GENERO--}}
                       <div class="form-group col-md-4">
-                          <label>Genero</label>
+                          <label>Género</label>
                           <select class="form-control" name="genero" id="genero">
                             <option>HOMBRE</option> 
                             <option>MUJER</option>

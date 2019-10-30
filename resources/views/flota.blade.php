@@ -111,7 +111,7 @@
                               <img src={{$vehiculo->foto_izquierda}}  alt="" />
                             </li>
                             <li>
-                              <img src={{$vehiculo->foto_frente}}  alt="" />
+                              <img src={{$vehiculo->foto}}  alt="" />
                             </li>
                             <li>
                               <img src={{$vehiculo->foto_trasera}}  alt="" />
