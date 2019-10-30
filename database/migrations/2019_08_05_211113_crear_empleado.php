@@ -15,7 +15,7 @@ class CrearEmpleado extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {          
             $table->bigIncrements('idempleado');
-            $table->string('ine');
+            $table->string('ine')->unique();
             $table->string('nombres')->require;
             $table->string('primerApellido')->require;
             $table->string('segundoApellido');

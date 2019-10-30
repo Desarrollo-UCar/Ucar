@@ -219,7 +219,7 @@ class PagesController extends Controller{
     public function pflota(){
         $flota = DB::table('vehiculos')->select('marca', 'modelo','transmicion','puertas','rendimiento',
         'estatus','anio','precio','pasajeros','maletero','color','cilindros','kilometraje','tipo','descripcion',
-        'foto','foto_derecha','foto_izquierda','foto_frente','foto_trasera')
+        'foto','foto_derecha','foto_izquierda','foto_trasera')
         ->orderBy('precio','desc','marca','desc','modelo','desc')->distinct()->paginate(6); 
         $sucursales = App\Sucursal::all();
         return view('flota',compact('flota','sucursales'));
