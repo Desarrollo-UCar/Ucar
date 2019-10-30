@@ -20,6 +20,7 @@ use App\Sucursal;
 use Illuminate\Foundation\Console\Presets\Bootstrap;
 use PhpOffice\PhpWord\TemplateProcessor;
 use App\reintegros;
+use Mail;
 
 
 use PhpOffice\PhpWord\IOFactory;
