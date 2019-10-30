@@ -465,7 +465,7 @@ return response()->download(storage_path('Documento01.docx'));
     public function pago_Reservacion(request $request)
     {   //return response()->json(date('Y\-m\-d H\:i\:s'));
          $reservacion = Reservacion::where('id','=',$request['reservacion'])->first();
-        return $request;
+       // return $request;
         if($request['motivo']=='saldo'){
         $saldoNuevo = $reservacion->saldo - $request['monto'];
         $reservacion->saldo = $saldoNuevo;

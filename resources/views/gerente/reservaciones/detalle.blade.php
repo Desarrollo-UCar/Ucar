@@ -183,7 +183,7 @@
                         <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
                       </div>
                       <div class="col-md-2 form-group">
-                          @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado')
+                          @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado'&&$alquiler->estatus!='en curso')
                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
                               <b>Cambiar VEHÍCULO</b>
                             </button>
@@ -456,7 +456,7 @@
                       {{-- @if($reservacion->saldo!=0)
                       <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
                        @else --}}
-                      <input type="number" name="monto" id="" class="form-control"  value="">
+                      <input type="number" name="monto" id="" class="form-control"  value="" min="100" max="1000000">
                       {{-- @endif --}}
                     </div>
                       </div>
@@ -562,7 +562,7 @@
                                     @if(count($disponibles)>0)
                                         @for($i = 0;$i<count($disponibles); $i++)
 
-                                        <option value = {{$disponibles[$i]->idvehiculo}}>{{$disponibles[$i]->marca}} {{$disponibles[$i]->modelo}} Placas: {{$disponibles[$i]->matricula}}</option>
+                                        <option value = {{$disponibles[$i]->idvehiculo}}>Tipo: {{$disponibles[$i]->tipo}}  {{$disponibles[$i]->marca}} {{$disponibles[$i]->modelo}} Placas: {{$disponibles[$i]->matricula}}</option>
                                         @endfor
                                       @else
                                       <option value=""> No hay vehículos disponibles</option>
@@ -648,7 +648,7 @@
               {{-- @if($reservacion->saldo!=0)
               <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
                @else --}}
-              <input type="number" name="monto" id="" class="form-control"  value="">
+              <input type="number" name="monto" id="" class="form-control"  value="" min="100" max="1000000">
               {{-- @endif --}}
             </div>
               </div>
