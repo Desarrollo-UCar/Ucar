@@ -151,6 +151,12 @@ class mantenimientoController extends Controller
                  'updated_at'=>$date
                 ]
             );
+            $vehiculo->update(
+                [
+                 'estatus'=> 'ACTIVO',
+                 'updated_at'=>$date
+                ]
+            );
            }
 
            if($request['fecha_salida']==null||$request['fecha_salida']>$hoy){
@@ -322,14 +328,26 @@ class mantenimientoController extends Controller
 
             $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])
                 ->first();
-           if($request['fecha_salida']==null){
+           if($request['fecha_salida']==null ||$request['fecha_salida']>$hoy){
             $vehiculosucursal->update(
                    [
                     'status'=> 'MANTENIMIENTO',
                     'updated_at'=>$date
                    ]
                );
+               $vehiculo->update(
+                [
+                 'estatus'=> 'MANTENIMINETO',
+                 'updated_at'=>$date
+                ]
+            );
            }else{
+            $vehiculo->update(
+                [
+                 'estatus'=> 'ACTIVO',
+                 'updated_at'=>$date
+                ]
+            );
             $vehiculosucursal->update(
                 [
                  'status'=> 'ACTIVO',
@@ -338,7 +356,7 @@ class mantenimientoController extends Controller
             );
            }
 
-           if($request['fecha_salida']!=null){
+           if($request['fecha_salida']==$hoy ||$request['fecha_salida']<$hoy ){
                 $status = 'INACTIVO';
             }else{
                 $status = 'ACTIVO';
