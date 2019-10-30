@@ -979,4 +979,30 @@
       });
            });
       </script>
+<script>   
+        function validar_fecha(){
+          var expedicion = document.getElementById("fecha_e").value;
+          var vencimiento = document.getElementById("fecha_c").value;
+            var expedicion  = new Date(expedicion);
+            var vencimiento = new Date(vencimiento);
+            var hoy =  new Date();
+            //--------------
+            if(vencimiento < expedicion ){
+                alert("Fecha invalida!! La fecha de vencimiento no puede ser menor a la de expedición");
+                document.getElementById("fecha_e").value = null;
+                document.getElementById("fecha_c").value = null;
+            }
+            if(expedicion > hoy){
+                alert("Licencia de conducir no existente");
+                document.getElementById("fecha_e").value = null;
+                document.getElementById("fecha_c").value = null;
+            }
+            if(vencimiento < hoy){
+                alert("La licencia ya vencio");
+                document.getElementById("fecha_e").value = null;
+                document.getElementById("fecha_c").value = null;
+            }
+                    
+        };
+</script>
 @endsection
