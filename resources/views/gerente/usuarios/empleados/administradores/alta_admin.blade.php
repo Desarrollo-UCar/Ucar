@@ -31,11 +31,10 @@
              
               <form method="post" id="upload_form" enctype="multipart/form-data">
                {{ csrf_field() }}
-          
+               <div class="alert col-md-4 col-md-offset-4 " id="message" style="display: none"></div>
                 <div class="col-md-6 col-md-offset-4  file-loading">
-                    <div class="alert col-md-7" id="message" style="display: none"></div>
-                  <div id="preview" >
-                   
+                    
+                  <div id="preview" >                   
                     <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;border-radius: 50%;">                
                 
                   </div>
@@ -256,7 +255,7 @@
                   
                 <div class="form-group col-md-4" style="display: none;" id="licencia">
                     <label>Número de licencia</label>
-                    <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia" pattern="[0-9]*" minlength = "11" maxlength="11" title="Número a 11 digitos, no se admiten decimales">
+                    <input type="text" class="form-control" name="numLicencia" placeholder="Número de licencia" id="numLicencia"  data-inputmask='"mask": "99999999999"' data-mask>
 
                     <span id="errornumLicencia" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                     <span id="validonumLicencia" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -558,6 +557,7 @@ function Tipo(){
        if(mensaje=='ERROR1'){
       $('#existe1').click();
        }
+     
        if(mensaje=='ERROR2'){
       $('#rango1').click();
       jQuery('#validofechaNacimiento').hide(); 
@@ -573,6 +573,16 @@ function Tipo(){
             jQuery('#errorconfcontra').show();          
            $( '#confcontra' ).css('borderColor', 'red');
             //console.log(nombre);
+         
+       }
+       if(mensaje=='ERRORLIC'){     
+        jQuery('#validolicenciaFechaExpedicion').hide(); 
+               jQuery('#errorlicenciaFechaExpedicion').show();          
+              $( '#licenciaFechaExpedicion' ).css('borderColor', 'red');              
+      
+              jQuery('#validolicenciaFechaExpiracion').hide(); 
+               jQuery('#errorlicenciaFechaExpiracion').show();          
+              $( '#licenciaFechaExpiracion' ).css('borderColor', 'red');
          
        }
      },
@@ -611,9 +621,9 @@ function Tipo(){
              if (foto == undefined){  
               
                }else{
-                $('#message').css('display', 'block');
+                $('#message').css({"display": "block", "color":"red"});
               $('#message').html('AGREGA UNA FOTO DE EMPLEADO');
-              $('#message').addClass("alert alert-danger");
+              // $('#message').addClass("alert alert-danger");
                //console.log(nombre);
              }
            

@@ -15,7 +15,7 @@ class CrearEmpleado extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {          
             $table->bigIncrements('idempleado');
-            $table->string('ine');
+            $table->string('ine')->unique();
             $table->string('nombres')->require;
             $table->string('primerApellido')->require;
             $table->string('segundoApellido');
@@ -35,7 +35,7 @@ class CrearEmpleado extends Migration
             $table->string('status');
             $table->date('licenciaFechaExpiracion')->nullable();
             $table->date('licenciaFechaExpedicion')->nullable();
-            $table->integer('numLicencia')->nullable();           
+            $table->string('numLicencia')->nullable();           
             $table->timestamps();
         });
     }

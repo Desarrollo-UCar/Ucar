@@ -85,10 +85,14 @@ class EmpleadoController extends Controller
                     'genero' => 'required',
                     'sucursal' => 'required',
                     'numero' => 'required',
-                    'numLicencia' => 'required',
+                    'numLicencia' => 'required|regex:/[0-9]{11}/m',
                     'licenciaFechaExpiracion' => 'required|date',
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
+
+                if($request['licenciaFechaExpiracion']<= $request['licenciaFechaExpedicion']){
+                    return response()->json(['success'=>'ERRORLIC']);
+                }
             }else{
 
                 if($request['tipo']=='ADMINISTRADOR'){
@@ -153,7 +157,12 @@ class EmpleadoController extends Controller
         if(!empty($empleado)){
             return response()->json(['success'=>'ERROR1']);
          }
+         $correo = Empleado::where('correo',$request['correo'])->first();
+        if(!empty($correo)){
+            return response()->json(['success'=>'ERROR1']);
+         }
         }
+        
          $diff = $date->diffInYears($request['fechaNacimiento']); 
        if($diff<15 ||$diff > 60){
             return response()->json(['success'=>'ERROR2']);
@@ -162,8 +171,9 @@ class EmpleadoController extends Controller
         $image = $request->file('foto');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $new_name);
+        
 
-                    Empleado::insert([
+                  Empleado::insert([
                         'ine'=>$request['ine'],
                         'nombres'=>$request['nombres'],
                         'primerApellido'=>$request['primerApellido'],
@@ -235,7 +245,7 @@ class EmpleadoController extends Controller
 
     public function modificar(Request $empleado){
 
-
+        // return $empleado['ine'];
 
         $foranea = Sucursal::where('idsucursal',$empleado['idsucursal'])->first();      
 
@@ -262,7 +272,6 @@ class EmpleadoController extends Controller
     }
 
     public function ModificarDatos(Request $request){
-
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
 
@@ -292,10 +301,15 @@ class EmpleadoController extends Controller
                     'genero' => 'required',
                     'sucursal' => 'required',
                     'numero' => 'required',
-                    'numLicencia' => 'required',
+                    'numLicencia' => 'required|regex:/[0-9]{11}/m',
                     'licenciaFechaExpiracion' => 'required|date',
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
+                
+                if($request['licenciaFechaExpiracion']<= $request['licenciaFechaExpedicion']){
+                    return response()->json(['success'=>'ERROR']);
+                }
+
             }else{
                 if($request['tipo']=='ADMINISTRADOR'){
                     $request->validate([
@@ -323,7 +337,7 @@ class EmpleadoController extends Controller
                     ]);
                     
                     if($request['contra']!=$request['confcontra']){
-                        return response()->json(['success'=>'ERRORCONTRA']);
+                        return response()->json(['success'=>'ERROR']);
                     }
                 }else{
                 $request->validate([
@@ -360,7 +374,8 @@ class EmpleadoController extends Controller
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $new_name);
 
-                   
+        try{           
+        
         $empleado->update([
                         'ine'=>$request['ine'],
                         'nombres'=>$request['nombres'],
@@ -386,7 +401,9 @@ class EmpleadoController extends Controller
                         'created_at'=>$date,
                         'updated_at'=>$date
                     ]);
-               
+        }catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(['success'=>'REPITE']);
+        }
 
                  $sucu = $request['sucursal'];
                 $foranea = Sucursal::where('nombre',$sucu)->first();      
@@ -429,10 +446,14 @@ class EmpleadoController extends Controller
                     'genero' => 'required',
                     'sucursal' => 'required',
                     'numero' => 'required',
-                    'numLicencia' => 'required',
+                    'numLicencia' => 'required|regex:/[0-9]{11}/m',
                     'licenciaFechaExpiracion' => 'required|date',
                     'licenciaFechaExpedicion' => 'required|date',
                 ]);
+
+                if($request['licenciaFechaExpiracion']<= $request['licenciaFechaExpedicion']){
+                    return response()->json(['success'=>'ERROR']);
+                }
             }else{
                 if($request['tipo']=='ADMINISTRADOR'){
                     // return response()->json(['success'=>'ERROR2']);
@@ -496,7 +517,7 @@ class EmpleadoController extends Controller
             return response()->json(['success'=>'ERROR2']);
         }
 
-
+try{
         $empleado->update([
                         'ine'=>$request['ine'],
                         'nombres'=>$request['nombres'],
@@ -521,7 +542,9 @@ class EmpleadoController extends Controller
                         'created_at'=>$date,
                         'updated_at'=>$date
                     ]);
-               
+        }catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(['success'=>'REPITE']);
+        }
 
                  $sucu = $request['sucursal'];
                 $foranea = Sucursal::where('nombre',$sucu)->first();      

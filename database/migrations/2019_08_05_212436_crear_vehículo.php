@@ -15,7 +15,7 @@ class CrearVehículo extends Migration
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->bigIncrements('idvehiculo');            
-            $table->string('vin');
+            $table->string('vin')->unique();
             $table->string('matricula')->require;
             $table->string('marca')->require;
             $table->string('modelo')->require;
