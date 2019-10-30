@@ -88,7 +88,7 @@
                       {{--FORMULARIO DE FECHA DE NACIMIENTO--}}
                       <div class="form-group col-md-4">
                           <label>Fecha de Nacimiento</label>
-                          <input type="date" class="form-control" placeholder="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento">
+                          <input type="date" class="form-control" placeholder="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento" onblur="checar_horas();">
 
                           <span id="errorfechaNacimiento" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                           <span id="validofechaNacimiento" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -265,7 +265,7 @@
                 
                 <div class="form-group col-md-4" style="display: none;" id="expedicion">
                   <label>Fecha de expedición </label>
-                  <input type="date" class="form-control" name="licenciaFechaExpedicion"  placeholder="Fecha de expedición de licencia" id="licenciaFechaExpedicion">
+                  <input type="date" class="form-control" name="licenciaFechaExpedicion"  placeholder="Fecha de expedición de licencia" id="licenciaFechaExpedicion" onblur="validar_fecha();">
 
                   <span id="errorlicenciaFechaExpedicion" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                   <span id="validolicenciaFechaExpedicion" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
@@ -275,7 +275,7 @@
               
               <div class="form-group col-md-4" style="display: none;" id="vencimiento">
                 <label>Fecha de vencimiento</label>
-                <input type="date" class="form-control" name="licenciaFechaExpiracion" id="licenciaFechaExpiracion"  placeholder="Fecha de expiración de licencia" >
+                <input type="date" class="form-control" name="licenciaFechaExpiracion" id="licenciaFechaExpiracion"  placeholder="Fecha de expiración de licencia" onblur="validar_fecha();">
                 <span id="errorlicenciaFechaExpiracion" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validolicenciaFechaExpiracion" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
             </div>
@@ -885,5 +885,52 @@ function Tipo(){
    });
   
   });
+</script>
+<script>
+function checar_horas(){
+    var fecha = document.getElementById("fechaNacimiento").value;
+    var fecha_nacimiento =  new Date(fecha);
+    hoy = new Date();
+    var dif_anios =hoy.getFullYear() - fecha_nacimiento.getFullYear() ;
+    if(dif_anios == 18){
+        if(hoy.getMonth() > fecha_nacimiento.getMonth())
+            console.log("edad valida 2 ");
+        if(hoy.getMonth() < fecha_nacimiento.getMonth()){
+            alert("menor de edad");
+            document.getElementById("fechaNacimiento").value = null;
+        }
+        if(hoy.getMonth() == fecha_nacimiento.getMonth()){
+            if(hoy.getDate() == (fecha_nacimiento.getDate()+1))
+                alert("Felices 18 !!!! :)");
+            if(hoy.getDate() < (fecha_nacimiento.getDate()+1)){
+                alert("menor de edad");
+                document.getElementById("fechaNacimiento").value = null;
+            }
+            
+            if(hoy.getDate() > (fecha_nacimiento.getDate()+1))
+                console.log("edad valida 4");
+        }
+    }
+    if(dif_anios > 18)
+        console.log("edad valida 1");
+    if(dif_anios < 18){
+                alert("menor de edad");
+                document.getElementById("fechaNacimiento").value = null;
+    }
+  };
+
+  function validar_fecha(){
+          var expedicion = document.getElementById("licenciaFechaExpedicion").value;
+          var vencimiento = document.getElementById("licenciaFechaExpiracion").value;
+            var expedicion  = new Date(expedicion);
+            var vencimiento = new Date(vencimiento);
+            //--------------
+            if(vencimiento < expedicion ){
+                alert("Fecha invalida!! La fecha de vencimiento no puede ser menor a la de expedición");
+                document.getElementById("licenciaFechaExpedicion").value = null;
+                document.getElementById("licenciaFechaExpiracion").value = null;
+            }
+                    
+        };
   </script>
 @endsection  
