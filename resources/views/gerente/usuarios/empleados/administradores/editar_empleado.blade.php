@@ -36,21 +36,7 @@
                <!-- FORM PARA PREVISUALIZAR FOTO -->             
                     <div class="box-body"> 
                                 
-                        <div class="col-md-4 col-md-offset-5  file-loading">
-                            <div class="alert col-md-10" id="message" style="display: none"></div> 
-                          <div id="preview" >
-                            @if ($emp->foto == null)
-                            <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;border-radius: 50%;">
-                            @else
-                            <img src="{{'/images/'.$emp->foto}}" style="width: 200px;height:200px;border-radius: 50%;">
-                            @endif
                         
-                          </div>
-                          <div class="col-md-1 col-md-offset-2  file-loading">
-                          <span class="btn btn-primary btn-file"> Subir Foto
-                          <input id="foto" type="file" name="foto" value="{{$emp->foto}}"></span>  
-                          </div> 
-                      </div> 
             
                {{-- FORMULARIO DE ID PERSONA --}}  
                <div class="row" style="display:none">
@@ -340,7 +326,46 @@
             <span id="errorconfcontra" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
             <span id="validoconfcontra" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
         </div>
-
+        <div class="form-group col-md-4">
+          
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#picture" id="botonpicture">Subir foto</button>
+        </div>
+          
+  
+  <div class="modal modal-dialog-centered fade" id="picture">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <div class="col-md-offset-4  file-loading">
+                  <div class="alert col-md-10" id="message" style="display: none"></div> 
+                <div id="preview" >
+                  @if ($emp->foto == null)
+                  <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;">
+                  @else
+                  <img src="{{'/images/'.$emp->foto}}" style="width: 200px;height:200px;">
+                  @endif
+              
+                </div>
+                <div class="col-md-1 col-md-offset-2  file-loading">
+                <span class="btn btn-primary btn-file"> Subir Foto
+                <input id="foto" type="file" name="foto" value="{{$emp->foto}}"></span>  
+                </div> 
+            </div> 
+               
+          
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
 
               <div class="row">
                 <div class="col-md-12">
@@ -518,7 +543,6 @@
      image.getElementsByClassName('rounded-circle');
      image.style.width="200px";
      image.style.height="200px";
-     image.style.borderRadius="50%";
      preview.innerHTML = '';
      preview.append(image);
    };

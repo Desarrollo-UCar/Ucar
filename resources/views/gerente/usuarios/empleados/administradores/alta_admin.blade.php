@@ -31,19 +31,8 @@
              
               <form method="post" id="upload_form" enctype="multipart/form-data">
                {{ csrf_field() }}
-               <div class="alert col-md-4 col-md-offset-4 " id="message" style="display: none"></div>
-                <div class="col-md-6 col-md-offset-4  file-loading">
-                    
-                  <div id="preview" >                   
-                    <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;border-radius: 50%;">                
-                
-                  </div>
-                  <div class="col-md-4 col-md-offset-1  file-loading">
-                  <span class="btn btn-primary btn-file"> Subir Foto
-                  <input id="foto" type="file" name="foto" ></span>  
-                  
-                  </div> 
-              </div>  
+              
+
             
                {{-- FORMULARIO DE ID PERSONA --}}  
                <div class="row" style="margin-left: 0.1%;margin-right: 0.1%;">
@@ -302,7 +291,45 @@
             <span id="errorconfcontra" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
             <span id="validoconfcontra" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
         </div>
+       
+        <div class="form-group col-md-4">
+          
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#picture" id="botonpicture">Subir foto</button>
+      </div>
+        
 
+<div class="modal modal-dialog-centered fade" id="picture">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert col-md-4 col-md-offset-4 " id="message" style="display: none"></div>
+                <div class=" col-md-offset-4  file-loading">
+                    
+                  <div id="preview" >                   
+                    <img src="https://www.tuexperto.com/wp-content/uploads/2015/07/perfil_01.jpg" style="width: 200px;height:200px;">                
+                
+                  </div>
+                  <div class="col-md-4 col-md-offset-1  file-loading">
+                  <span class="btn btn-primary btn-file"> Subir Foto
+                  <input id="foto" type="file" name="foto" ></span> 
+                  
+                  </div> 
+              </div>  
+             
+        
+        </div>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
               <div class="row">
                 <div class="col-md-12">
                     <div class="box-footer" style="float: right">
@@ -364,6 +391,7 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
+
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rango" style="display: none" id="rango1">Cancelar</button>
   <div class="modal modal-danger fade" id="rango">
       <div class="modal-dialog" >
@@ -470,8 +498,7 @@
      image.src = reader.result;
      image.getElementsByClassName('rounded-circle');
      image.style.width="200px";
-     image.style.height="200px";
-     image.style.borderRadius="50%";
+     image.style.height="200px";  
      preview.innerHTML = '';
      preview.append(image);
    };
