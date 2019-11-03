@@ -58,6 +58,7 @@ class mantenimientoController extends Controller
         //
         $vehiculo = Vehiculo::join('vehiculosucursales','vehiculo','=','idvehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
+        ->select('vehiculos.*','sucursals.nombre')
         ->where('vehiculos.vin',$request['vehiculo'])->first();
         $alquileres = Alquiler::where('id_vehiculo','=',$vehiculo['idvehiculo'])
                             ->where('estatus','like','%curso')
@@ -222,7 +223,7 @@ class mantenimientoController extends Controller
          join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')
         ->join('vehiculosucursales','idvehiculo','=','mantenimientos.vehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
-        ->select('mantenimientos.*','vehiculos.*','sucursals.*')
+        ->select('mantenimientos.*','vehiculos.*','sucursals.nombre')
         // ->select('mantenimientos.*','vehiculos.*')
         ->where('idmantenimiento',$mantenimientos['mantenimiento'])
         ->first();
@@ -254,7 +255,7 @@ class mantenimientoController extends Controller
         $mantenimiento = mantenimientos::join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')
         ->join('vehiculosucursales','idvehiculo','=','mantenimientos.vehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
-        ->select('mantenimientos.*','vehiculos.*','sucursals.*','mantenimientos.tipo as serv')
+        ->select('mantenimientos.*','vehiculos.*','sucursals.nombre','mantenimientos.tipo as serv')
         ->where('idmantenimiento',$mantenimientos['mantenimiento'])
         ->first();
 
