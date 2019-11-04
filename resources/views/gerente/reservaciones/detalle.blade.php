@@ -221,7 +221,7 @@
     <div clas="col-md-6">
         <h4 ><br>Servicios Extras Reservados </h4>.
         <div class="col-md-6 form-group">
-            <table border="1">
+            <table class="table table-striped table-dark">
                 <body>
                     <th>Nombre</th><th>Descripción</th>
                     @if($servicios->count())  
@@ -344,7 +344,7 @@
 
           <div class="modal modal-fade-in" id="cobros">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content modal-lg">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
@@ -447,11 +447,11 @@
                     <h4> <b> {{'Registro de cobros:'}}</b> </h4>
                     <br>
                   </div>
-                    <div class="col-md-11" style="margin-left: 5%;">
+                    <div class="col-md-12">
                         <div class="form-group">
 
                     
-                          <table border="1">
+                          <table class="table table-striped table-dark">
                             <th>Número</th>
                             <th>Datos del cobro</th>
                             <th>Motivo</th>
@@ -643,7 +643,7 @@
           <div class="col-md-11" style="margin-left: 5%;">
                 <div class="form-group">
                     <input id="dec" name="dec" type="hidden" value={{$totalr = 0.0}} >
-                    <table border="1">
+                    <table class="table table-striped table-dark">
                         <th>Número</th>
                         <th>Datos</th>
                         <th>Motivo</th>

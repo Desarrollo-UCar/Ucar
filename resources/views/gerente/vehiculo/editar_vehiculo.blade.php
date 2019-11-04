@@ -37,7 +37,7 @@
                   <div class="box-body">           
                                                         
                                        
-                    <div class="col-md-6">
+                    <div class="col-md-12">
 
                         <div class="row" style="display:none">
                             <div class="form-group col-md-4">
@@ -49,7 +49,7 @@
                      
                       {{-- FORMULARIO DE NUMERO VIN DEL VEHICULO --}}
                       
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                             <label>Número VIN</label>
                           <input type="text" name="vin" id="vin" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" 
                         maxlength="17" value="{{$vehi->vin}}">
@@ -62,7 +62,7 @@
 
                         {{-- FORMULARIO PLACAS DEL VEHICULO --}}
                         
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                             <label>Placas</label>
                           <input type="text" name="matricula" id="matricula" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();"value="{{$vehi->matricula}}" >
                           
@@ -72,7 +72,7 @@
 
                         {{-- FORMULARIO DE MARCA DEL VEHICULO --}}
                         
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                           <label>Marca</label>
                           <input type="text" name="marca" id="marca" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();"value="{{$vehi->marca}}">
 
@@ -83,7 +83,7 @@
 
                           {{-- FORMULARIO DE MODELO DEL VEHICULO --}}
                           
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                             <label>Modelo</label>
                             <input type="text" name="modelo" id="modelo" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehi->modelo}}">
 
@@ -94,7 +94,7 @@
 
                           {{-- FROMULARIO AÑO DEL VEHICULO --}}
                           
-                          <div class="col-md-6 form-group">
+                          <div class="col-md-4 form-group">
                               <label>Año</label>
                               <?php
                                   $cont = date('Y');
@@ -116,7 +116,7 @@
                             
                             {{-- FROMULARIO TRANSMISION DEL VEHICULO --}}
                             
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label>Transmisión </label>
                                 <select class="form-control" id="transmision" name="transmision"> 
                                   <option value="{{$vehi->transmicion}}">{{$vehi->transmicion}}</option>
@@ -133,7 +133,7 @@
 
                             {{-- FORMULARIO RENDIMIENTO DEL VEHICULO --}}
                             
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <label>Rendimiento</label>
                                 <input type="text" name="rendimiento" id="rendimiento" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehi->rendimiento}}">
 
@@ -142,7 +142,7 @@
                                   </div>
 
                                   {{-- FORMULARIO PUERTAS --}}
-                                  <div class="form-group col-md-6">
+                                  <div class="form-group col-md-4">
                                     <label>Puertas</label>
                                     <select class="form-control" name="puertas" id="puertas">
                                         <option>{{$vehi->puertas}}</option>            <?php
@@ -163,7 +163,7 @@
                                         
                               {{-- FORMULARIO COLOR DEL VEHICULO --}}
                                                     
-                              <div class="col-md-6 form-group">
+                              <div class="col-md-4 form-group">
                                   <label>Color</label>
                                   <input type="text" name="color" id="color" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehi->color}}">
 
@@ -174,7 +174,7 @@
                                 
                                 {{-- FORMULARIO TIPO DEL VEHICULO --}}
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                   <label>Tipo</label>
                                   <select class="form-control" name="tipo" id="tipo">
                                       <option>{{$vehi->tipo}}</option>
@@ -191,7 +191,7 @@
 
                                 {{-- FORMULARIO CANTIDAD DE PASAJEROS DEL VEHICULO  --}}
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Pasajeros</label>
                                     <select class="form-control" id="pasajeros" name="pasajeros">  
                                         <option>{{$vehi->pasajeros}}</option>            <?php
@@ -212,7 +212,7 @@
 
                                 {{-- FORMULARIO MALETERO DEL VEHICULO --}}
                                 
-                                  <div class="col-md-6 form-group">
+                                  <div class="col-md-4 form-group">
                                       <label>Maletero</label>
                                       <input type="text" name="maletero" id="maletero" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehi->maletero}}">                                      
 
@@ -222,7 +222,7 @@
 
                                     {{-- FORMULARIO CILINDROS DEL VEHICULO --}}
                                     
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         <label>Cilindros</label>
                                         <select class="form-control" id="cilindros" name="cilindros"> 
                                             <option>{{$vehi->cilindros}}</option>            <?php
@@ -240,7 +240,7 @@
                                       
                                     {{-- FORMULARIO KILOMETRAJE DEL VEHICULO --}}
                                     
-                                      <div class="col-md-6 form-group">
+                                      <div class="col-md-4 form-group">
                                           <label>Kilometraje</label>
                                           <input type="number" step="0.00" name="kilometraje" id="kilometraje" min="0.00" class="form-control" value="{{$vehi->kilometraje}}" >
 
@@ -250,7 +250,7 @@
 
                                         {{-- FORMULARIO PRECIO COMPRA --}}
                                         
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-4 form-group">
                                               <label>Precio compra</label>
                                               <input type="number" step="0.01" name="costo" class="form-control" min="0.00" placeholder="0.00" id="costo" value="{{$vehi->costo}}">                                 
 
@@ -261,7 +261,7 @@
 
                                             {{-- FORMULARIO PRECIO DE RENTA --}}
                                             
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-4 form-group">
                                                 <label>Precio renta</label>
                                                 <input type="number" step="0.01" min="0" name="precio" id="precio" placeholder="0.00" min="0.00" class="form-control" value="{{$vehi->precio}}">
 
@@ -271,7 +271,7 @@
 
                                               {{-- FORMULARIO DESCRIPCION --}}
                                               
-                                              <div class="col-md-6 form-group">
+                                              <div class="col-md-4 form-group">
                                                 <label>descripción</label>
                                                 <input type="text" name="descripcion" id="descripcion" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehi->descripcion}}">
                                                 
@@ -282,7 +282,7 @@
 
                                               {{-- FORMULARIO SUCURSAL DEL VEHICULO --}}
                                               
-                                             <div class="form-group col-md-6">
+                                             <div class="form-group col-md-4">
                                                 <label>Sucursal</label>
                                                 <select class="form-control" name="sucursal" id="sucursal">
                                                     <option>{{$foranea->nombre}}</option>
@@ -300,7 +300,7 @@
                                             
                                             {{-- FORMULARIO DE ESTATUS DEL VEHICULO --}}
                                             
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                               <label>Estatus</label>
                                               <select class="form-control" name="status" id="status">
                                                   <option>{{$vehi->estatus}}</option>
@@ -313,61 +313,86 @@
 
                                                   <span id="errorstatus" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                                   <span id="validostatus" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
-                                          </div>  
+                                          </div> 
+                                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#picture">Subir Foto</button> 
                     </div>
 
 
                     {{-- FORMULARIO PARA SUBIR FOTO DEL VEHICULO --}}
                     
-                    <div class="col-md-6">
-                      <div class="col-md-6">
-                        <div id="preview" style="margin-top: 5%;">
-                          <div class="alert" id="message" style="display: none"></div>
-                         <img src="{{'/images/'.$vehi->foto}}" style="width: 200px; height: 200px;" >
-                        </div>
-                        <hr>
-                        <div class="col-md-1 col-md-offset-3  file-loading">
-                        <span class="btn btn-warning btn-file"> Subir Foto
-                        <input id="foto" type="file" name="foto"/></span>  
-                        </div> 
-                  </div>
-                  <div class="col-md-6">
-                    <div id="preview_derecha" style="margin-top: 5%;">
-                      <div class="alert" id="message_derecha" style="display: none"></div>
-                     <img src="{{'/images/'.$vehi->foto_derecha}}" style="width: 200px; height: 200px;" >
-                    </div>
-                    <hr>
-                    <div class="col-md-1 col-md-offset-3  file-loading">
-                    <span class="btn btn-warning btn-file"> Subir Foto
-                    <input id="foto_derecha" type="file" name="foto_derecha"/></span>  
-                    </div> 
-              </div>
-              <div class="col-md-6">
-                <div id="preview_izquierda" style="margin-top: 5%;">
-                  <div class="alert" id="message_izquierda" style="display: none"></div>
-                 <img src="{{'/images/'.$vehi->foto_izquierda}}" style="width: 200px; height: 200px;" >
-                </div>
-                <hr>
-                <div class="col-md-1 col-md-offset-3  file-loading">
-                <span class="btn btn-warning btn-file"> Subir Foto
-                <input id="foto_izquierda" type="file" name="foto_izquierda"/></span>  
-                </div> 
-          </div>
-          <div class="col-md-6">
-            <div id="preview_atras" style="margin-top: 5%;">
-              <div class="alert" id="message_atras" style="display: none"></div>
-             <img src="{{'/images/'.$vehi->foto_trasera}}" style="width: 200px; height: 200px;" >
-            </div>
-            <hr>
-            <div class="col-md-1 col-md-offset-3  file-loading">
-            <span class="btn btn-warning btn-file"> Subir Foto
-            <input id="foto_atras" type="file" name="foto_atras"/></span>  
-            </div> 
-      </div>
-    
-                  </div> 
+                    
                     
               
+
+                    
+                  <div class="modal modal-info fade" id="picture">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">Alta Vehículo</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="col-md-12">
+                            <div class="col-md-6">
+                              <div id="preview" style="margin-top: 5%;">
+                                <div class="alert" id="message" style="display: none"></div>
+                               <img src="{{'/images/'.$vehi->foto}}" style="width: 200px; height: 200px;" >
+                              </div>
+                              <hr>
+                              <div class="col-md-1 col-md-offset-3  file-loading">
+                              <span class="btn btn-warning btn-file"> Subir Foto
+                              <input id="foto" type="file" name="foto"/></span>  
+                              </div> 
+                        </div>
+                        <div class="col-md-6">
+                          <div id="preview_derecha" style="margin-top: 5%;">
+                            <div class="alert" id="message_derecha" style="display: none"></div>
+                           <img src="{{'/images/'.$vehi->foto_derecha}}" style="width: 200px; height: 200px;" >
+                          </div>
+                          <hr>
+                          <div class="col-md-1 col-md-offset-3  file-loading">
+                          <span class="btn btn-warning btn-file"> Subir Foto
+                          <input id="foto_derecha" type="file" name="foto_derecha"/></span>  
+                          </div> 
+                    </div>
+                    <div class="col-md-6">
+                      <div id="preview_izquierda" style="margin-top: 5%;">
+                        <div class="alert" id="message_izquierda" style="display: none"></div>
+                       <img src="{{'/images/'.$vehi->foto_izquierda}}" style="width: 200px; height: 200px;" >
+                      </div>
+                      <hr>
+                      <div class="col-md-1 col-md-offset-3  file-loading">
+                      <span class="btn btn-warning btn-file"> Subir Foto
+                      <input id="foto_izquierda" type="file" name="foto_izquierda"/></span>  
+                      </div> 
+                </div>
+                <div class="col-md-6">
+                  <div id="preview_atras" style="margin-top: 5%;">
+                    <div class="alert" id="message_atras" style="display: none"></div>
+                   <img src="{{'/images/'.$vehi->foto_trasera}}" style="width: 200px; height: 200px;" >
+                  </div>
+                  <hr>
+                  <div class="col-md-1 col-md-offset-3  file-loading">
+                  <span class="btn btn-warning btn-file"> Subir Foto
+                  <input id="foto_atras" type="file" name="foto_atras"/></span>  
+                  </div> 
+            </div>
+          
+                        </div> 
+               
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline" data-dismiss="modal">Continuar</button>
+                          
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+
                     
 
                   <!-- /.box-body -->

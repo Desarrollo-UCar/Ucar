@@ -130,8 +130,8 @@
                   </div>    
                   
                   
-                  <div class="modal" id="modal-warning">
-                      <div class="modal-dialog" >
+                  <div class="modal " id="modal-warning">
+                      <div class="modal-dialog modal-lg" >
                         <div class="modal-content">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:red;" title="Cerrar">
@@ -140,22 +140,14 @@
                           <div class="modal-body">
                   
                   <table class="table">
-                      <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">Servicio</th>
-                          <th scope="col">Seleccionar</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                      
                           @foreach ($taller as $tal)
-                        <tr>
-                          <th scope="row">o</th>
-                          <td>{{$tal->nombreservicio}}</td>
-                          <td><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>
+                        <tr class="col-md-4">                       
+                          <td class="col-md-6">{{$tal->nombreservicio}}</td>
+                          <td class="col-md-1"><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>
                         </tr>
                         @endforeach
-                      </tbody>
+                   
                     </table>
                                 
                           </div>
