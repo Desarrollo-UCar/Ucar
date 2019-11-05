@@ -1,5 +1,4 @@
 @extends("theme.$theme.layout")
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,42 +6,22 @@
   <title>Reservaciones</title>
   <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.9.0/d3.min.js"></script>
 </head>
-
 <body>
-  
 @section('contenido')
-  <section class="content-header">
-    <h1>
-      Panel de administración | <small>Reservaciones</small>
-    </h1>
-  </section>
-
+  <section class="content-header"><h1>Panel de administración | <small>Reservaciones</small></h1></section>
   <section class="content">
     @if($alquiler->estatus=='cancelado')
-      <div class="alert alert-warning alert-dismissible">
-          <h4>¡Reservación cancelada!</h4>
-        </div>
-        @endif
-
-        @if($alquiler->estatus=='terminado')
-        <div class="alert alert-warning alert-dismissible">
-            <h4>¡Alquiler terminado!</h4>
-          </div>
-          @endif
-
-          
-        @if($vehiculo->estatus=='MANTENIMIENTO')
-        <div class="alert alert-warning alert-dismissible">
-            <h4>¡El vehículo se encuentra en mantenimiento!</h4>
-          </div>
-          @endif
-
-          @if($vehiculo->estatus=='INACTIVO')
-          <div class="alert alert-warning alert-dismissible">
-              <h4>¡Vehiculo se encuentra inactivo!</h4>
-            </div>
-            @endif
-        
+    <div class="alert alert-warning alert-dismissible"><h4>¡Reservación cancelada!</h4></div>
+    @endif
+    @if($alquiler->estatus=='terminado')
+    <div class="alert alert-warning alert-dismissible"><h4>¡Alquiler terminado!</h4></div>
+    @endif 
+    @if($vehiculo->estatus=='MANTENIMIENTO')
+    <div class="alert alert-warning alert-dismissible"><h4>¡El vehículo se encuentra en mantenimiento!</h4></div>
+    @endif
+    @if($vehiculo->estatus=='INACTIVO')
+    <div class="alert alert-warning alert-dismissible"><h4>¡Vehiculo se encuentra inactivo!</h4></div>
+    @endif    
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
@@ -50,51 +29,42 @@
                 <h3 class="box-title">{{'Detalle Reservación'}} <b>{{$reservacion->id}}</b></h3>
             </div>
             <div class="box-body">
-
 <div class="row">
-    <div class="col-md-6">
-<h4 >Datos del <a href="">cliente </a></h4>
-            <!-- {{$alquiler->id  }} -->
-            
+<div class="col-md-6">
+    <h4>Datos del <a href="">cliente </a></h4>
             <div class="col-md-6">
-            <label>
-                @if($cliente->credencial==null)
-                Pasaporte
-                @else
-            Identificación
-                @endif cliente</label>
-                <input type="text" name="cliente" id="" class="form-control" disabled value="@if($cliente->credencial==null)
-                {{$cliente->pasaporte}}
-                @else
-                {{$cliente->credencial}}
-                @endif">
-                </div>
-                <div class="col-md-6 form-group">
-                <label>Nombre cliente <!--{{$cliente->idCliente}}--></label>
+                <label>@if($cliente->credencial==null)
+                            Pasaporte
+                        @else
+                            Identificación
+                        @endif cliente</label>
+                    <input type="text" name="cliente" id="" class="form-control" disabled value=@if($cliente->credencial==null)
+                                                                                                    {{$cliente->pasaporte}}
+                                                                                                @else
+                                                                                                    {{$cliente->credencial}}
+                                                                                                @endif>
+            </div>
+            <div class="col-md-6 form-group">
+                <label>Nombre cliente</label>
                 <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->nombre}} {{$cliente->primer_apellido}} {{$cliente->segundo_apellido}}">  
             </div>
-
             <div class="col-md-4 form-group">
                 <label>Nacionalidad</label>
                 <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->pais}}">  
             </div>
-
             <div class="col-md-2 form-group">
                 <label>Edad</label>
                 <input type="text" name="cliente" id="" class="form-control" disabled value="{{$edad}}">  
             </div>
-
             <div class="col-md-6 form-group">
                 <label>Correo</label>
                 <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->correo}}">  
             </div>
-
-<h4 ><br>Datos de la reservación</h4>
+    <h4 ><br>Datos de la reservación</h4>
             <div class="col-md-6">
                 <label>Fecha Reservación</label>
                 <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
             </div>
-            
             <div class="col-md-6  form-group">
                 <label>Precio Total</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->total}}">
@@ -116,49 +86,42 @@
                 <b>Ver reembolso </b>
                 </button>
             </div>
-    </div>
-    <div class="col-md-6">
+</div>
+<div class="col-md-6">
             <h4 >Datos del <a href="">vehículo </a></h4> 
             <div class="col-md-6 form-group">
                 <label>Tipo</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->tipo}}">
             </div>
-    
             <div class="col-md-6 form-group">
                 <label>Modelo</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}">
             </div>
-    
             <div class="col-md-6 form-group">
                 <label>Vin</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->vin}}">
             </div>
-    
             <div class="col-md-6 form-group">
                 <label>Placas</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->matricula}}">
-                </div>
-    
+            </div>
             <div class="col-md-6 form-group">
                 <label>Fecha Entrega</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_recogida}}">
             </div>
-            
             <div class="col-md-6 form-group">
                 <label>Hora</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
-                </div>
-    
-                <div class="col-md-6 form-group">
+            </div>
+            <div class="col-md-6 form-group">
                 <label>Fecha Devolución</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
             </div>
-    
             <div class="col-md-6 form-group">
                 <label>Hora</label>
                 <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
-                </div>
-                <div class="col-md-2 form-group">
+            </div>
+            <div class="col-md-2 form-group">
                     @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado'&&$alquiler->estatus!='en curso')
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
                         <b>Cambiar VEHÍCULO</b>
@@ -167,7 +130,7 @@
                     <button type="button" class="btn btn-danger" data-toggle="modal"  disabled data-target="">
                         <b>Cambiar VEHÍCULO</b>
                         @endif
-                    </div>
+            </div>
     </div>
 </div>
  
@@ -178,24 +141,26 @@
             @csrf
             <input type="text" name="reservacion"  style="display: none" value= "{{$reservacion->id}}">
             <input type="text" name="alquiler"  style="display: none" value= "{{$alquiler->id}}">
-                
             <div class="col-md-6 form-group">
                 <label>Número Licencia</label>
-                <input type="text" name="numero" id="numero" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
-
+                <input type="text" name="numero" id="numero" class="form-control" title="Escriba numero de licencia"  required value=@if($alquiler->num_licencia == "por rellenar")
+                                                                                                                                        {{null}}
+                                                                                                                                    @else
+                                                                                                                                        {{$alquiler->num_licencia}}
+                                                                                                                                    @endif>
                 <span id="errornumero" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validonumero" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
             </div>
-
             <div class="col-md-6 form-group">
                 <label>Nombre conductor</label>                       
-                <input type="text" name="nombre" id="nombre" class="form-control"  value="{{$alquiler->nombreConductor}} " required>                   
-
+                <input type="text" name="nombre" id="nombre" class="form-control" required value=@if($alquiler->nombreConductor == "por rellenar")
+                                                                                            {{null}}
+                                                                                        @else
+                                                                                            {{$alquiler->nombreConductor}}
+                                                                                        @endif>                   
                 <span id="errornombre" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validonombre" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
-            </div>
-
-                
+            </div> 
             <div class="col-md-6 form-group">
                 <label>Fecha expedición</label>                        
                 <input type="date" name="fecha_e" id="fecha_e" class="form-control"  value="{{date($alquiler->expedicion_licencia)}}"  onblur="validar_fecha();">
@@ -203,7 +168,6 @@
                 <span id="errorfecha_e" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                 <span id="validofecha_e" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
             </div>
-
                 
             <div class="col-md-6 form-group">
                 <label>Fecha expiración</label>
@@ -238,34 +202,27 @@
 
     <div class="col-md-11">
         <div class="box-footer" style="float: right">
-
-        @if($alquiler->estatus=="pendiente_recogida")
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
-        <b>Cancelar</b>
-        </button>
-        @if($vehiculo->estatus=='ACTIVO'&&$alquiler->nombreConductor!="por rellenar"&&$alquiler->expedicion_licencia!="por rellenar"&&$alquiler->num_licencia!="por rellenar"&&$alquiler->expiracion_licencia!="por rellenar"&&$alquiler->estatus!='en curso'&&date("Y-m-d")>=$alquiler->fecha_recogida)
-        <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
-        @endif
-        @elseif($alquiler->estatus=="en curso")
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#recibir">
-        <b>Recibir</b>
-        </button>
-        @endif
+            @if($alquiler->estatus=="pendiente_recogida")
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning"><b>Cancelar</b></button>
+            @if($vehiculo->estatus=='ACTIVO'&&$alquiler->nombreConductor!="por rellenar"&&$alquiler->expedicion_licencia!="por rellenar"&&$alquiler->num_licencia!="por rellenar"&&$alquiler->expiracion_licencia!="por rellenar"&&$alquiler->estatus!='en curso'&&date("Y-m-d")>=$alquiler->fecha_recogida)
+                <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
+            @endif
+            @elseif($alquiler->estatus=="en curso")
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#recibir"><b>Recibir</b></button>
+            @endif
         </div>                       
     </div>  
 
-</div>       
-   
+</div>        
  <!-- ----------------------------------------------------------------------seccion de modales----------------------------------------------------------------------------- -->
-
         <div class="modal modal-danger fade" id="modal-warning">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                       <h4 class="modal-title"> <span class="glyphicon glyphicon-alert"></span> <b> {{' Esta seguro de cancelar la reservacion'}}  {{$reservacion->id}}</b> </h4>
-                    </div>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-alert"></span> <b> {{' Esta seguro de cancelar la reservacion'}}  {{$reservacion->id}}</b> </h4>
+                </div>
                 <div class="modal-body">
                   <p><b>{{'La reservación del servicio de alquiler y sus servicios extra serán cancelados'}} </b>&hellip;</p>
                 </div>
@@ -282,67 +239,52 @@
             <!-- /.modal-dialog -->
           </div>
 
-          <div class="modal modal-warning fade" id="registrar_reintegro">
+        <div class="modal modal-warning fade" id="registrar_reintegro">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Registrar reembolso'}}</b> </h4>
+                <h4 class="modal-title"> <span class="glyphicon glyphicon-usd"></span> <b> {{'Registrar reembolso'}}</b> </h4>
                 </div>
+            <form method="POST" action="{{ route('reembolsoReservacion') }}"  role="form" enctype="multipart/form-data">
                 <div class="modal-body">
-
-                  
-                    <form method="POST" action="{{ route('reembolsoReservacion') }}"  role="form" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
-                  <p><b>{{'Se registrará un nuevo reembolso'}} </b>&hellip;</p>
-
-                  <div class="row"> 
-                      <div class="col-md-3">
-                    <label>Motivo</label>
-                           <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
-                      <option value="otro">Otro</option>
-                      <option value="cambio de vehiculo">Cambio de vehiculo</option>
-
-
-                  </select>
-
-                </div>
-
-                <div class="col-md-3">
-                  <label>Datos</label>
-                  <input type="text" name="datos" id="" class="form-control"  value="">
-                </div>
-
-                  <div class="col-md-3">
-                  <label>Monto</label>
-                  <input type="number" name="monto" id="" class="form-control"  value="">
-                  </div>
-
-                <div class="col-md-9">
-                    <label>Comentario</label>
-                    <input type="text" name="comentario" id="" class="form-control"  value="">
-                  </div>
-
-
-                </div>
+                    {{ csrf_field() }}
+                    <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
+                    <p><b>{{'Se registrará un nuevo reembolso'}} </b>&hellip;</p>
+                    <div class="row"> 
+                        <div class="col-md-3">
+                            <label>Motivo</label>
+                            <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
+                            <option value="otro">Otro</option>
+                            <option value="cambio de vehiculo">Cambio de vehiculo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Datos</label>
+                            <input type="text" name="datos" id="" class="form-control"  value="">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Monto</label>
+                            <input type="number" name="monto" id="" class="form-control"  value="">
+                        </div>
+                        <div class="col-md-9">
+                            <label>Comentario</label>
+                            <input type="text" name="comentario" id="" class="form-control"  value="">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                   
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>{{' Registrar reembolso'}}</button>
-            </form>
-  
                 </div>
+            </form>
               </div>
-              
               <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
-          </div>
+        </div>
 
-
-          <div class="modal modal-fade-in" id="cobros">
+        <div class="modal modal-fade-in" id="cobros">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -350,142 +292,115 @@
                             <span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title"> <b> {{'Gestión de cobros'}}</b> </h4>
                     </div>
-
                     <div class="modal-body">
                       <div class="col-md-12 col-md-offset-3">
-                      <div clas="row"> 
-                        <h4> <b> {{'Registrar nuevo cobro:'}}</b> </h4>
-                      </div>
+                        <div clas="row"> 
+                            <h4> <b> {{'Registrar nuevo cobro:'}}</b> </h4>
+                        </div>
                       <form method="POST" action="{{ route('pagoReservacion') }}"  role="form" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input name="reservacion" type="hidden" value= "{{$reservacion->id}}">
-                      <div clas="row"> 
-                          <div class="col-md-8">
-                              <div class="col-md-3">
-                              <label>Motivo</label>
-                              </div>
-                              <div class="col-md-5">
-                                     <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
-                                <option value="otro">Otro</option>
-                                <option value="reparacion">Reparacion</option>
-                                @if($reservacion->saldo!=0)
-                                <option value="saldo">Saldo</option>
-                                 @endif
-                            </select>
-                          </div>
-                          </div>
-                        </div>
-
-                          <div clas="row">
-                          <div class="col-md-8">
-                              <div class="col-md-3">
-                              <label>Metodo</label>
-                              </div>
-                              <div class="col-md-5">
-                                <select name= "metodo" id="metodo" class="form-control select2" style="width: 100%;">
-                                <option value="efectivo">Efectivo</option>
-                                <option value="t. credito">Tarjeta/credito</option>
-                                <option value="t. debito">Tarjeta/debito</option>
-                            </select>
-                          </div>
-                          </div>
-                        </div>
-
-                          <div clas="row">
-                              <div class="col-md-8">
-                  <div class="col-md-3">
-                      <label>Id/datos</label>
-                      </div>
-
-                      <div class="col-md-5">
-                      <input type="text" name="datos" id="" class="form-control"  value="">
-                    </div>
-                  </div>
-                    </div>
-  
-                    <div clas="row">
-                        <div class="col-md-8">
-                      <div class="col-md-3">
-                      <label>Monto</label>
-                      </div>
-                      <div class="col-md-5">
-                      {{-- @if($reservacion->saldo!=0)
-                      <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
-                       @else --}}
-                      <input type="number" name="monto" id="" class="form-control"  value="" min="100" max="1000000">
-                      {{-- @endif --}}
-                    </div>
-                      </div>
-                    </div>
-                 
-                    <div clas="row">
-                        <div class="col-md-8">
-                            <div class="col-md-3">
-                            <label>Comentario</label>
+                        <div clas="row"> 
+                            <div class="col-md-8">
+                                <div class="col-md-3"><label>Motivo</label></div>
+                                <div class="col-md-5">
+                                    <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
+                                        <option value="otro">Otro</option>
+                                        <option value="reparacion">Reparacion</option>
+                                        @if($reservacion->saldo!=0)
+                                            <option value="saldo">Saldo</option>
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
-                    <div class="col-md-5">
-                        <input type="text" name="comentario" id="" class="form-control"  value="">
-                      </div>
                         </div>
-                      </div>
+                        <div clas="row">
+                            <div class="col-md-8">
+                                <div class="col-md-3"><label>Metodo</label></div>
+                                <div class="col-md-5">
+                                    <select name= "metodo" id="metodo" class="form-control select2" style="width: 100%;">
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="t. credito">Tarjeta/credito</option>
+                                        <option value="t. debito">Tarjeta/debito</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div clas="row">
+                            <div class="col-md-8">
+                                <div class="col-md-3"><label>Id/datos</label></div>
+                                <div class="col-md-5">
+                                <input type="text" name="datos" id="" class="form-control"  value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div clas="row">
+                            <div class="col-md-8">
+                                <div class="col-md-3"><label>Monto</label></div>
+                                <div class="col-md-5">
+                                    {{-- @if($reservacion->saldo!=0)
+                                    <input type="number" name="monto" id="" class="form-control"  value={{$reservacion->saldo}}>
+                                    @else --}}
+                                    <input type="number" name="monto" id="" class="form-control"  value="" min="100" max="1000000">
+                                    {{-- @endif --}}
+                                </div>
+                            </div>
+                        </div>
+                        <div clas="row">
+                            <div class="col-md-8">
+                                <div class="col-md-3"><label>Comentario</label></div>
+                                <div class="col-md-5">
+                                    <input type="text" name="comentario" id="" class="form-control"  value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div clas="row">
+                        <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar cobro'}}</button>
+                </form>
+                        </div>
+                    <div clas="row"></div>
+                    <div clas="row">
+                        <div class="col-md-12 col-xs-offset-3">
+                            <h4> <b> {{'Registro de cobros:'}}</b> </h4><br>
+                        </div>
+                        <div class="col-md-11" style="margin-left: 5%;">
+                            <div class="form-group">
+                                <table border="1">
+                                    <th>Número</th>
+                                    <th>Datos del cobro</th>
+                                    <th>Motivo</th>
+                                    <th>Fecha</th>
+                                    <th>Monto</th>
+                                    <th>Comentario</th>
+                                    @if($pagos->count())  
+                                    <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
+                                
+                                    @foreach($pagos as $pago)
+                                    <input id="total" name="total" type="hidden" value={{$total+=$pago->total}}  >
+                                    <tr>
+                                    <td>{{$pago->id}}</td>
+                                
+                                    <td> {{$pago->paypal_Datos}}
+        
+                                    {{$pago->mostrador_Datos}} 
+                                                                </td>
+                                        <td>{{$pago->motivo}}</td>
+
+                                    <td>{{$pago->fecha}}</td>
+
+                                    <td>{{$pago->total}}</td>
+                                    <td>{{$pago->comentario}}</td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
+
+                                </table>
+                                <h3>Total cobrado = {{$total}}</h3>
+                            </div>
+                        </div>
 
                     </div>
-
-                    <div clas="row">
-                   
-                    <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar cobro'}}</button>
-                  </form>
-               
-                </div>
-
-
-                <div clas="row">
-               
-                </div>
-                <div clas="row">
-                    <div class="col-md-12 col-xs-offset-3">
-                    <h4> <b> {{'Registro de cobros:'}}</b> </h4>
-                    <br>
-                  </div>
-                    <div class="col-md-11" style="margin-left: 5%;">
-                        <div class="form-group">
-
-                    
-                          <table border="1">
-                            <th>Número</th>
-                            <th>Datos del cobro</th>
-                            <th>Motivo</th>
-                            <th>Fecha</th>
-                            <th>Monto</th>
-                            <th>Comentario</th>
-                            @if($pagos->count())  
-                            <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
-                           
-                            @foreach($pagos as $pago)
-                            <input id="total" name="total" type="hidden" value={{$total+=$pago->total}}  >
-                            <tr>
-                            <td>{{$pago->id}}</td>
-                        
-                              <td> {{$pago->paypal_Datos}}
- 
-                              {{$pago->mostrador_Datos}} 
-                                                        </td>
-                                <td>{{$pago->motivo}}</td>
-
-                               <td>{{$pago->fecha}}</td>
-
-                              <td>{{$pago->total}}</td>
-                              <td>{{$pago->comentario}}</td>
-                              </tr>
-                            @endforeach
-                            @endif
-
-                          </table>
-                        <h3>Total cobrado = {{$total}}</h3>
-                        </div>
-                      </div>
-
-                </div>
 
 </div>
 
@@ -886,8 +801,7 @@
                  }else{
                    jQuery('#validonumero').hide(); 
                  jQuery('#errornumero').show();          
-                $( '#numero' ).css('borderColor', 'red');
-                 
+                $( '#numero' ).css('borderColor', 'red'); 
                }
      
            
@@ -928,10 +842,7 @@
                    $('#error1').click();
               }
           });
-        });
-        
-       
-         
+        });     
       });
            });
       </script>
@@ -964,5 +875,6 @@
     }
                 
     };
+    //945 lineas
 </script>
 @endsection
