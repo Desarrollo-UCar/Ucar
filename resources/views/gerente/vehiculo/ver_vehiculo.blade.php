@@ -43,15 +43,7 @@
                   </button>
                 </div>             
               @endif   
-              @if (session()->has('curso'))
-              <div style="display: none;">
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#espera" id="<?php 
-                echo "botonespera";
-              ?>">
-                    Cancelar
-                  </button>
-                </div>             
-              @endif      
+                   
               <div class="box-body ">
                 <table id="example" class="display nowrap " style="width:100%">
                     <thead>
@@ -63,7 +55,6 @@
                             <th style="text-align: center">Estatus</th>
                             <th style="text-align: center">Modificar</th>
                             <th style="text-align: center">Mantenimiento</th>
-                            <th style="text-align: center">Historial</th>
                             <th style="text-align: center">Reservaciones</th>
                           
                         </tr>
@@ -77,24 +68,14 @@
                 <td >{{$vehiculo->color}}</td>
                 <td >{{$vehiculo->estatus}}</td>
                 <td style="text-align: center"> 
-                  <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>
-                   
-                    @if ($vehiculo->estatus=='MANTENIMIENTO')
-                    <td style="text-align: center"> 
-                        <a href="{{ route('mantenimiento.index') }}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver mantenimiento"></span></td>
-                    @else
-                    <td style="text-align: center"> 
-                        <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span></td>
-                    @endif
-
-                    <td style="text-align: center">
-                      <a href="{{ route('historialmantenimiento',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}" title="Eliminar"> <span class="fa fa-cogs fa-2x" style="color:orange;"></span>
-            </td>
-
-            
-            <td style="text-align: center">
-              <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
-    </td>  
+                    <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>
+                </td>   
+                <td style="text-align: center"> 
+                    <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span>
+                </td>
+                <td style="text-align: center">
+                    <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
+                </td>  
                     </tr> 
               @endforeach
                     
@@ -214,13 +195,7 @@
              obj.click();
              } );
             </script>
-            <script>           
-              $(document).ready(function() {
-      
-               var obj= document.getElementById("botonespera");
-               obj.click();
-               } );
-              </script>
+           
 
 <script>
   $(document).ready(function() {

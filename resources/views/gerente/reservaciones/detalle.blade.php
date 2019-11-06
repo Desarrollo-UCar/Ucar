@@ -63,18 +63,19 @@
     <h4 ><br>Datos de la reservación</h4>
             <div class="col-md-6">
                 <label>Fecha Reservación</label>
-                <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
+                <input type="text" name="fecha Reservacion" id="" class="form-control" disabled 
+                value="{{date("d\-m\-Y", strtotime($reservacion->fecha_reservacion))}}">
             </div>
             <div class="col-md-6  form-group">
                 <label>Precio Total</label>
-                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->total}}">
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{number_format($reservacion->total,2)}}">
             </div>
             @if($reservacion->saldo==0)
                 <h3>Se pagó el total de la reservación</h3>
             @endif 
             <div class="col-md-6 form-group">
                 <label>Saldo</label>
-                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->saldo}}">
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{number_format($reservacion->saldo,2)}}">
             </div>
             <div class="col-md-7">
                 <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#cobros">
@@ -107,7 +108,7 @@
             </div>
             <div class="col-md-6 form-group">
                 <label>Fecha Entrega</label>
-                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_recogida}}">
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{date("d\-m\-Y", strtotime($alquiler->fecha_recogida))}}">
             </div>
             <div class="col-md-6 form-group">
                 <label>Hora</label>
@@ -115,7 +116,7 @@
             </div>
             <div class="col-md-6 form-group">
                 <label>Fecha Devolución</label>
-                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{date("d\-m\-Y", strtotime($alquiler->fecha_devolucion))}}">
             </div>
             <div class="col-md-6 form-group">
                 <label>Hora</label>
@@ -361,33 +362,6 @@
                         </div>
                     <div clas="row"></div>
                     <div clas="row">
-<<<<<<< HEAD
-                        <div class="col-md-12 col-xs-offset-3">
-                            <h4> <b> {{'Registro de cobros:'}}</b> </h4><br>
-                        </div>
-                        <div class="col-md-11" style="margin-left: 5%;">
-                            <div class="form-group">
-                                <table border="1">
-                                    <th>Número</th>
-                                    <th>Datos del cobro</th>
-                                    <th>Motivo</th>
-                                    <th>Fecha</th>
-                                    <th>Monto</th>
-                                    <th>Comentario</th>
-                                    @if($pagos->count())  
-                                    <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
-                                
-                                    @foreach($pagos as $pago)
-                                    <input id="total" name="total" type="hidden" value={{$total+=$pago->total}}  >
-                                    <tr>
-                                    <td>{{$pago->id}}</td>
-                                
-                                    <td> {{$pago->paypal_Datos}}
-        
-                                    {{$pago->mostrador_Datos}} 
-                                                                </td>
-                                        <td>{{$pago->motivo}}</td>
-=======
                    
                     <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar cobro'}}</button>
                   </form>
@@ -427,18 +401,17 @@
                               {{$pago->mostrador_Datos}} 
                                                         </td>
                                 <td>{{$pago->motivo}}</td>
->>>>>>> 2e63a26e45fb8b05f03491db29d12851710f83e1
 
-                                    <td>{{$pago->fecha}}</td>
+                                    <td>{{date("d\-m\-Y", strtotime($pago->fecha))}}</td>
 
-                                    <td>{{$pago->total}}</td>
+                                    <td>{{number_format($pago->total,2)}}</td>
                                     <td>{{$pago->comentario}}</td>
                                     </tr>
                                     @endforeach
                                     @endif
 
                                 </table>
-                                <h3>Total cobrado = {{$total}}</h3>
+                                <h3>Total cobrado = ${{$total}}</h3>
                             </div>
                         </div>
 
@@ -619,16 +592,16 @@
                                                     </td>
                             <td>{{$reembolso->motivo}}</td>
   
-                           <td>{{$reembolso->fecha}}</td>
+                           <td>{{date("d\-m\-Y", strtotime($reembolso->fecha))}}</td>
   
-                          <td>{{$reembolso->total}}</td>
+                          <td>{{number_format($reembolso->total,2)}}</td>
                           <td>{{$reembolso->comentario}}</td>
                           </tr>
                         @endforeach
                         @endif
   
                       </table>
-                    <h3>Total pagado = {{$totalr}}</h3>
+                    <h3>Total pagado =${{$totalr}}</h3>
                 </div>
               </div>
 
@@ -887,9 +860,8 @@
         });     
       });
            });
-      </script>
-<script>   
-    function validar_fecha(){
+
+           function validar_fecha(){
         var expedicion = document.getElementById("fecha_e").value;
         var vencimiento = document.getElementById("fecha_c").value;
         //--------------
@@ -917,6 +889,5 @@
     }
                 
     };
-    //945 lineas
-</script>
+      </script>
 @endsection

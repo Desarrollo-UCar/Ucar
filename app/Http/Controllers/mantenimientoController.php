@@ -12,7 +12,7 @@ use App\Sucursal;
 use App\EmpleadoSucursal;
 use App\Alquiler;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class mantenimientoController extends Controller
 {
     /**
@@ -53,9 +53,7 @@ class mantenimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        //
+    public function create(Request $request){
         $vehiculo = Vehiculo::join('vehiculosucursales','vehiculo','=','idvehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
         ->select('vehiculos.*','sucursals.nombre')
@@ -69,20 +67,18 @@ class mantenimientoController extends Controller
         $reservas = Alquiler::where('id_vehiculo',$vehiculo->idvehiculo)
         ->where('fecha_recogida','>=',$date)->get();
         //  return $reservas;
-        if(count($alquileres)>0){
-            return back()->with('mensaje','EN CURSO');
-        
-        } 
-        if(count($reservas)>0){
-            return back()->with('curso',$reservas);
-        
-        }                         
+        // if(count($alquileres)>0){
+        //     return back()->with('mensaje','EN CURSO');
+        // } 
+        // if(count($reservas)>0){
+        //     return back()->with('curso',$reservas);
+        // }                         
         // return $alquileres;
-        
        $taller=Tallerservicios::all();
-    
         //return $vehiculo;
-        return view('gerente.mantenimiento.alta_mantenimiento', compact('vehiculo','taller')) ;
+        $mantenimientos= mantenimientos::where('mantenimientos.vehiculo',$vehiculo->idvehiculo)->get();
+        //return $mantenimientos;
+        return view('gerente.mantenimiento.alta_mantenimiento', compact('vehiculo','taller','mantenimientos')) ;
     }
 
     /**
@@ -91,13 +87,9 @@ class mantenimientoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-
+    public function store(Request $request){
         //return $request;
         $servicios =$request['servicios'];
-       
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
         $hoy =$date->format('Y-m-d');
@@ -107,15 +99,13 @@ class mantenimientoController extends Controller
             return back()->with('mensaje','INTRODUZCA LA FECHA DE SALIDA CORRECTAMENTE :)');
         }
         if($request['fecha_salida']!=null){
-        if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
-            return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
+            if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
+                return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
+            }
         }
-    }
-
         if($request['fecha_ingresa']==null){
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
         }
-       
 
        if(($request->validate([
             'tipo' => 'required',
@@ -124,54 +114,46 @@ class mantenimientoController extends Controller
             'kilometraje' => 'required',
             //'costo' =>'required',
         ]))){
-            
-            $vehiculo = Vehiculo::where('vin',$request['vin'])->first();
-
+            $vehiculo = Vehiculo::where('matricula',$request['matricula'])->first();
             $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])
                 ->first();
-
-           if($request['fecha_salida']==null||$request['fecha_salida']>$hoy){
-
-            $vehiculosucursal->update(
+                //return $vehiculosucursal;
+           if($request['fecha_salida'] == $hoy){
+                $vehiculosucursal->update(
                    [
                     'status'=> 'MANTENIMIENTO',
                     'updated_at'=>$date
                    ]
                );
-               
                $vehiculo->update(
                 [
                  'estatus'=> 'MANTENIMIENTO',
                  'updated_at'=>$date
                 ]
-            );
+                );
            }else{
-            $vehiculosucursal->update(
-                [
-                 'status'=> 'ACTIVO',
-                 'updated_at'=>$date
-                ]
-            );
-            $vehiculo->update(
-                [
-                 'estatus'=> 'ACTIVO',
-                 'updated_at'=>$date
-                ]
-            );
+                //progrmar mantenimientos ... inserrtar en mantenimiento
            }
-
-           if($request['fecha_salida']==null||$request['fecha_salida']>$hoy){
-                $status = 'ACTIVO';
+//return  $hoy;
+//return  $request['fecha_salida'];
+           if($request['fecha_salida'] == $hoy){
+                $status = 'CURSO';
             }else{
-                $status = 'INACTIVO';
+                $status = 'ESPERA';
             }
            //return $vehiculo;
-           $mantenimiento = mantenimientos::where('vehiculo',$vehiculo['idvehiculo'])
-            ->where('fecha_ingresa',$request['fecha_ingresa'])
-            ->get(); 
+           $mantenimiento = DB::select('SELECT vehiculo FROM mantenimientos
+           WHERE (? BETWEEN mantenimientos.fecha_ingresa AND mantenimientos.fecha_salida
+           OR ? BETWEEN mantenimientos.fecha_ingresa AND mantenimientos.fecha_salida)
+           AND mantenimientos.STATUS = "ESPERA"
+           UNION
+           SELECT vehiculo FROM mantenimientos
+           WHERE  mantenimientos.fecha_ingresa >= ?
+           AND mantenimientos.fecha_salida <= ?
+           AND mantenimientos.STATUS = "ESPERA"',[$request['fecha_ingresa'],$request['fecha_salida'],$request['fecha_ingresa'],$request['fecha_salida']]);
 
             if(count($mantenimiento)>0){
-                return back()->with('mensaje','EL MANTENIMIENTO YA SE ENCUENTRA REGISTRADO');
+                return back()->with('mensaje','NO PUEDES PROGRAMAR DOS MANTENIMIENTOS EN LAS MISMAS FECHAS');
             }
 
             mantenimientos::insert([
@@ -190,7 +172,7 @@ class mantenimientoController extends Controller
             ->where('fecha_ingresa',$request['fecha_ingresa'])
             ->first();  
                       
-            if(is_array($servicios)){
+        if(is_array($servicios)){
             if(count($servicios)>0){
                 foreach($servicios as $serv){
                     $taller=Tallerservicios::where('nombreservicio',$serv)->first();
@@ -204,10 +186,7 @@ class mantenimientoController extends Controller
             }
         }
             return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
-        }
-
-        
-       
+        }  
     }
 
     /**
@@ -216,8 +195,7 @@ class mantenimientoController extends Controller
      * @param  \App\mantenimientos  $mantenimientos
      * @return \Illuminate\Http\Response
      */
-    public function mostrar(Request $mantenimientos)
-    {
+    public function mostrar(Request $mantenimientos){
         //  return $mantenimientos['mantenimiento'];
         $mantenimiento = mantenimientos::
          join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')
@@ -229,9 +207,16 @@ class mantenimientoController extends Controller
         ->first();
 
         $taller = Tallerservicios::all();
+        $tipo   = mantenimientos::findOrFail($mantenimientos['mantenimiento']);
 
+
+        $servicios = mantenimientos::join('detalletallerservicios','idmantenimiento','detalletallerservicios.mantenimiento')
+        ->join('tallerservicios','idserviciotaller','=','detalletallerservicios.tallerservicio')
+        ->select('mantenimientos.*','detalletallerservicios.*','tallerservicios.*','detalletallerservicios.created_at as fecha')
+        ->where('idmantenimiento',$mantenimientos['mantenimiento'])
+        ->get();
         //  return $mantenimiento;
-        return view('gerente.mantenimiento.editar_mantenimiento',compact('mantenimiento','taller'));
+        return view('gerente.mantenimiento.editar_mantenimiento',compact('mantenimiento','taller','servicios','tipo'));
     }
 
 
