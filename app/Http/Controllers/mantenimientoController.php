@@ -106,7 +106,6 @@ class mantenimientoController extends Controller
         if($request['fecha_ingresa']==null){
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
         }
-
        if(($request->validate([
             'tipo' => 'required',
             'fecha_ingresa' => 'required',
@@ -136,7 +135,7 @@ class mantenimientoController extends Controller
            }
 //return  $hoy;
 //return  $request['fecha_salida'];
-           if($request['fecha_salida'] == $hoy){
+           if($request['fecha_ingresa'] == $hoy){
                 $status = 'CURSO';
             }else{
                 $status = 'ESPERA';
@@ -146,11 +145,14 @@ class mantenimientoController extends Controller
            WHERE (? BETWEEN mantenimientos.fecha_ingresa AND mantenimientos.fecha_salida
            OR ? BETWEEN mantenimientos.fecha_ingresa AND mantenimientos.fecha_salida)
            AND mantenimientos.STATUS = "ESPERA"
+           AND mantenimientos.vehiculo = ?
            UNION
            SELECT vehiculo FROM mantenimientos
            WHERE  mantenimientos.fecha_ingresa >= ?
+           AND mantenimientos.vehiculo = ?
            AND mantenimientos.fecha_salida <= ?
-           AND mantenimientos.STATUS = "ESPERA"',[$request['fecha_ingresa'],$request['fecha_salida'],$request['fecha_ingresa'],$request['fecha_salida']]);
+           AND mantenimientos.STATUS = "ESPERA"',
+           [$request['fecha_ingresa'],$request['fecha_salida'],$vehiculo->idvehiculo,$request['fecha_ingresa'],$vehiculo->idvehiculo,$request['fecha_salida']]);
 
             if(count($mantenimiento)>0){
                 return back()->with('mensaje','NO PUEDES PROGRAMAR DOS MANTENIMIENTOS EN LAS MISMAS FECHAS');
@@ -189,6 +191,36 @@ class mantenimientoController extends Controller
         }  
     }
 
+    public function enviar(Request $request){
+        //return $request;
+        $servicios =$request['servicios'];
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+        $hoy =$date->format('Y-m-d');
+            $vehiculo = Vehiculo::where('idvehiculo',$request['vehiculo'])->first();
+            $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])->first();
+            $mantenimiento = mantenimientos::where('idmantenimiento',$request['mantenimiento']);
+                $vehiculosucursal->update(
+                   [
+                    'status'=> 'MANTENIMIENTO',
+                    'updated_at'=>$date
+                   ]
+               );
+               $vehiculo->update(
+                [
+                 'estatus'=> 'MANTENIMIENTO',
+                 'updated_at'=>$date
+                ]
+                );
+                $mantenimiento->update(
+                [
+                    'status'=> 'CURSO',
+                    'updated_at'=>$date,
+                    'fecha_ingresa' => $hoy
+                ]
+                );
+            return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
+    }
     /**
      * Display the specified resource.
      *
@@ -266,41 +298,22 @@ class mantenimientoController extends Controller
      * @param  \App\mantenimientos  $mantenimientos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
-        // return $request;
+    public function update(Request $request){
+        //return $request;
         $servicios =$request['servicios'];
-        
-        $vehiculo = Vehiculo::where('vin',$request['vin'])->first();
+        $vehiculo = Vehiculo::where('matricula',$request['matricula'])->first();
+        //return $vehiculo;
         $mantenimiento = mantenimientos::where('vehiculo',$vehiculo['idvehiculo'])->first();
-
-        $taller=Detalletallerservicios::where('mantenimiento',$mantenimiento['idmantenimiento'])
-        ->get();
-
-        
-
+        $taller=Detalletallerservicios::where('mantenimiento',$mantenimiento['idmantenimiento'])->get();
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
         $hoy =$date->format('Y-m-d');
-        //return $request['fecha_ingresa'];
-        //return $hoy;
-        // if($request['fecha_ingresa']<$hoy){
-        //     return back()->with('mensaje','INTRODUZCA LA FECHA DE SALIDA CORRECTAMENTE :)');
-        // }
-        if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
+        if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa'])
             return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
-        }
-
-        if($request['fecha_ingresa']==null){
+        if($request['fecha_ingresa']==null)
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
-        }
-        
-        if(!(is_array($servicios)) && (empty($taller))){
-            //return "hola";
+        if(!(is_array($servicios)) && (empty($taller)))
             return back()->with('mensaje','SELECCIONA UNO O MÁS SERVICIOS REALIZADOS EN LA SECCION AGREGAR DESCRIPCIÓN:)');
-        }
-
-        //return "Lleno";
     //return "tiene que ser un arreglo";
        if(($request->validate([
             'tipo' => 'required',
@@ -309,55 +322,30 @@ class mantenimientoController extends Controller
             'kilometraje' => 'required',
             'costo' =>'required',
         ]))){
-            
-            $vehiculo = Vehiculo::where('vin',$request['vin'])->first();
-
-            $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])
-                ->first();
-           if($request['fecha_salida']==null ||$request['fecha_salida']>$hoy){
+            $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])->first();
             $vehiculosucursal->update(
                    [
-                    'status'=> 'MANTENIMIENTO',
+                    'status'=> 'ACTIVO',
                     'updated_at'=>$date
                    ]
                );
                $vehiculo->update(
                 [
-                 'estatus'=> 'MANTENIMINETO',
-                 'updated_at'=>$date
-                ]
-            );
-           }else{
-            $vehiculo->update(
-                [
                  'estatus'=> 'ACTIVO',
                  'updated_at'=>$date
                 ]
             );
-            $vehiculosucursal->update(
-                [
-                 'status'=> 'ACTIVO',
-                 'updated_at'=>$date
-                ]
-            );
-           }
 
-           if($request['fecha_salida']==$hoy ||$request['fecha_salida']<$hoy ){
-                $status = 'INACTIVO';
-            }else{
-                $status = 'ACTIVO';
-            }
            //return $vehiculo;
            $mantenimiento = mantenimientos::where('vehiculo',$vehiculo['idvehiculo'])
-           ->where('fecha_ingresa',$request['fecha_ingresa'])
-           ->first(); 
+           ->where('fecha_ingresa',$request['fecha_ingresa'])->first(); 
 
            $mantenimiento ->update([
                 'fecha_ingresa' => $request['fecha_ingresa'],
                 'fecha_salida' => $request['fecha_salida'],
                 'costo_total' => $request['costo'],
                 'tipo' =>  $request['tipo'],
-                'status' => $status,
+                'status' => 'TERMINADO',
                 //'vehiculo' => $vehiculo['idvehiculo'],
                 //'created_at'=>$date,
                 'updated_at'=>$date
@@ -365,8 +353,7 @@ class mantenimientoController extends Controller
             ]); 
             
             $mantenimiento = mantenimientos::where('vehiculo',$vehiculo['idvehiculo'])
-            ->where('fecha_ingresa',$request['fecha_ingresa'])
-            ->first();  
+            ->where('fecha_ingresa',$request['fecha_ingresa'])->first();  
                       
             if(is_array($servicios)){
             if(count($servicios)>0){

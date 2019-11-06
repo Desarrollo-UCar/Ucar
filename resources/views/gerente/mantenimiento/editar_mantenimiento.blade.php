@@ -72,7 +72,12 @@
 
                                     <div class="col-md-3 form-group">
                                         <label>Fecha salida</label>
-                                        <input type="date" name="fecha_ingresa" class="form-control" value="{{$mantenimiento->fecha_ingresa}}" required>
+                                        <input type="date" name="fecha_ingresa" class="form-control" value="{{$mantenimiento->fecha_ingresa}}" required 
+                                        @if($mantenimiento->fecha_ingresa <= date("Y-m-d"))
+                                            readonly
+                                        @else
+                                        @endif
+                                        >
                                     </div>
                                     
                                     <div class="col-md-3 form-group">
@@ -89,12 +94,12 @@
                                         <label>Costo</label>
                                         <input type="number" step="0.01" name="costo" class="form-control" min="0.00" placeholder="0.00" value="{{$mantenimiento->costo_total}}" required>
                                     </div>
-
+                                    @if($mantenimiento->status == "CURSO")
                                     <div class="col-md-6 form-group" style="margin-top: 3%;">
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-warning" id="boton">Elegir Servicios</button>
-                                        <button type="submit" class="btn btn-primary">Actualizar</button>
-                                        <button type="submit" class="btn btn-primary">Finalizar</button>
-                                    </div>           
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-warning" id="boton">Agregar Servicios</button>
+                                        <button name = "finalizar" type="submit" class="btn btn-primary">Finalizar</button>
+                                    </div> 
+                                    @endif          
                                 <!-- /.box-body -->
                             </form>
                     </div>

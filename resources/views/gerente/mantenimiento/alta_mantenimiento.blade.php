@@ -110,7 +110,7 @@
                                 <th >Fecha salida</th>
                                 <th >Fecha regreso</th>
                                 <th >Estatus</th>
-                                <th >Ver</th>
+                                <th >Enviar/Finalizar</th>
                                 <th >Cancelar</th>
                             </tr>
                         </thead>
@@ -138,9 +138,27 @@
                           <td >{{$mante->fecha_salida}}</td>
                           @endif
                           <td >{{$mante->status}}</td>
-                          <td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar"></span></td>
+@if($mante->status == 'ESPERA' & $mante->fecha_ingresa >= date("Y-m-d"))
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-right fa-2x" style="color:rgb(90, 69, 69);" title="Accion no permitida"></span></td>
+@endif
+@if($mante->status == 'ESPERA' & $mante->fecha_ingresa <= date("Y-m-d"))
+<td style="text-align: center"> <a href="{{ route('enviarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-right fa-2x" style="color:rgb(226, 247, 34);" title="Enviar a mantenimiento"></span></td>
+@endif
+@if($mante->status == 'TERMINADO')
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-eye fa-2x" style="color:rgb(90, 69, 69);" title="Ver detalles"></span></td>
+@endif
+@if($mante->status == 'CURSO')
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-left fa-2x" style="color:greenyellow;" title="Finalizar mantenimiento"></span></td>
+@endif
+@if($mante->status == 'CANCELADO')
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-window-close fa-2x" style="color:rgb(255, 47, 47);" title="Finalizar mantenimiento"></span></td>
+@endif
 <!-- si esta en espera se puede cancelar, debera aparecer el boton de cancelar -->
-                          <td style="text-align: center"> <a href="{{ route('modificarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-trash-o fa-2x" style="color:red;" title="ver detalles"></span></td>   
+@if($mante->status == 'ESPERA')
+<td style="text-align: center"> <a href="{{ route('modificarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-trash-o fa-2x" style="color:red;" title="Eliminar"></span></td>   
+@else
+<td style="text-align: center"><span class="fa fa-trash-o fa-2x" style="color:rgb(90, 69, 69);" title="Acción no permitida"></span></td>   
+@endif
                         </tr> 
                   @endforeach      
                         </tbody>
