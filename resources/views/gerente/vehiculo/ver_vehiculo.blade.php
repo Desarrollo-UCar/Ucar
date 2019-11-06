@@ -43,7 +43,35 @@
                   </button>
                 </div>             
               @endif   
-                   
+              @if (session()->has('curso'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#espera" id="<?php 
+                echo "botonespera";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif    
+              
+              @if (session()->has('baja'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminado" id="<?php 
+                echo "botonbaja";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif
+
+              @if (session()->has('alta'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#altavehiculo" id="<?php 
+                echo "botonalta";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif
               <div class="box-body ">
                 <table id="example" class="display nowrap " style="width:100%">
                     <thead>
@@ -260,7 +288,13 @@
              obj.click();
              } );
             </script>
-           
+            <script>           
+              $(document).ready(function() {
+      
+               var obj= document.getElementById("botonespera");
+               obj.click();
+               } );
+              </script>
 
     <script>           
     $(document).ready(function() {
