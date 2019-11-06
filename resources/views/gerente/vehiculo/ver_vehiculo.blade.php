@@ -55,6 +55,7 @@
                             <th style="text-align: center">Estatus</th>
                             <th style="text-align: center">Modificar</th>
                             <th style="text-align: center">Mantenimiento</th>
+                            <th style="text-align: center">Alta/Baja</th>
                             <th style="text-align: center">Reservaciones</th>
                           
                         </tr>
@@ -68,14 +69,28 @@
                 <td >{{$vehiculo->color}}</td>
                 <td >{{$vehiculo->estatus}}</td>
                 <td style="text-align: center"> 
-                    <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>
-                </td>   
-                <td style="text-align: center"> 
-                    <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span>
-                </td>
-                <td style="text-align: center">
-                    <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
-                </td>  
+                  <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>
+                   
+                    @if ($vehiculo->estatus=='MANTENIMIENTO')
+                    <td style="text-align: center"> 
+                        <a href="{{ route('mantenimiento.index') }}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver mantenimiento"></span></td>
+                    @else
+                    <td style="text-align: center"> 
+                        <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span></td>
+                    @endif                  
+                    @if($vehiculo->estatus=='ACTIVO' || $vehiculo->estatus=='activo')
+                    <td style="text-align: center">
+                      <a href="{{ route('EliminarVehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"title="Eliminar"> <span class="fa fa-trash-o fa-2x" style="color:red;"></span>
+                    @else
+                    <td style="text-align: center">
+                        <a href="{{ route('UpVehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"title="Activar"> <span class="fa fa-external-link-square fa-2x" style="color:blue;"></span>
+                    @endif
+            </td>
+
+            
+            <td style="text-align: center">
+              <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
+    </td>  
                     </tr> 
               @endforeach
                     
