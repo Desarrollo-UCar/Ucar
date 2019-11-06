@@ -314,17 +314,12 @@
                                                   <span id="errorstatus" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                                   <span id="validostatus" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
                                           </div> 
-                                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#picture">Subir Foto</button> 
+                                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#picture">Subir Foto</button>
                     </div>
 
 
-                    {{-- FORMULARIO PARA SUBIR FOTO DEL VEHICULO --}}
-                    
-                    
-                    
-              
+                    {{-- FORMULARIO PARA SUBIR FOTO DEL VEHICULO --}}               
 
-                    
                   <div class="modal modal-info fade" id="picture">
                     <div class="modal-dialog">
                       <div class="modal-content">
