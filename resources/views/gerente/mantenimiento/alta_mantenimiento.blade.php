@@ -27,7 +27,16 @@
     </div>                                    
     @endif 
     @if (session()->has('mensaje'))
-    <div class="alert alert-danger" role="alert">{{session('mensaje')}}</div>                                    
+    <div class="alert alert-danger" role="alert">{{session('mensaje')}}</div>                              
+    @endif 
+    @if (session()->has('curso'))
+    <div style="display: none;">
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#espera" id="<?php 
+      echo "botonespera";
+    ?>">
+          Cancelar
+        </button>
+      </div>             
     @endif 
             <div class="box box-primary">            
                 <div class="box-header with-border">
@@ -36,8 +45,16 @@
                 <!-- FORM PARA PREVISUALIZAR FOTO -->
                 <div class="row">
                     <div class="col-md-8">
-                            <form action="{{ route('mantenimiento.store')}}" method="POST" enctype="multipart/form-data" id="form">
+                            <form action="{{ route('mantenimiento.store')}}" method="POST" enctype="multipart/form-data" id="form">                              
                                 @csrf
+
+                                <div class="row" style="display:none">
+                                    <div class="form-group col-md-4">
+                                        <label>idvehiculo</label>
+                                      <input type="text" class="form-control" name="idvehiculo" value="{{$vehiculo->idvehiculo}}" id="idvehiculo">
+                                    </div>   
+                                  </div> 
+
                                     <div class="col-md-5 form-group">
                                         <label>Sucursal</label>
                                             <input type="text" name="sucursal" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$vehiculo->nombre}}" readonly>
@@ -192,9 +209,73 @@
               </div>
               </div>
     </section>
+
+
+
+    <div class="modal modal-success fade" id="espera">
+        <div class="modal-dialog" >
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">EL VEHÍCULO TIENE RESERVAS PRÓXIMAS</b> </h4>
+            </div>
+            <div class="modal-body">
+              <p>Para mandar un vehículo a mantenimiento es necesario verificar sus próximas reservas.&hellip;</p>
+              @if (session()->has('curso'))
+              
+<table class="table">
+<thead>
+  <tr>
+    <th scope="col">No reserva</th>
+    <th scope="col">Fecha Entrega</th>
+    <th scope="col">Fecha Devolución</th>
+    <th scope="col">Conductor</th>
+  </tr>
+</thead>
+<tbody>
+    @foreach (Session::get('curso') as $alquiler)
+  <tr>
+  <th>{{$alquiler->id_reservacion}}</th>
+  <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_recogida))}}</td>
+  <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_devolucion))}}</td>
+  <td>{{$alquiler->nombreConductor}}</td>
+  <td><form action ="{{route('reservacion',$alquiler->id_reservacion)}}" method ="GET" enctype="multipart/form-data">
+    {{csrf_field()}}
+   <button type="sumbit" class="btn btn-primary btn-xs" type="sumbit"> 
+     <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>
+   </button>
+</form></td>
+  </tr>
+  @endforeach   
+</tbody>
+</table>
+              </div>                                    
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Cerrar</button>
+              {{-- <a href="{{ route('DeleteVehiculo',['vehiculo'=>$alquiler->id_vehiculo]) }}" class="btn btn-primary" > --}}
+                Continuar</a>
+            </div>
+          </div>
+          @endif 
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
 @endsection
 
 @section('scripts')
+
+<script>           
+    $(document).ready(function() {
+
+     var obj= document.getElementById("botonespera");
+     obj.click();
+     } );
+    </script>
 <script>
         $(document).ready(function() {
              $('#example').DataTable( {
