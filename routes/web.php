@@ -106,6 +106,9 @@ Route::get('modificarservicio','ServiciosExtraController@modificar')->name('modi
 Route::get('modificarsucursal','SucursalController@modificar')->name('modificarsucursal');
 Route::get('vehiculomodelo','VehiculoController@Modelo')->name('modelovehiculo');//admin
 Route::post('vehiculoinsert','VehiculoController@insertModelo')->name('insertmodelo');//admin
+Route::get('vehiculodelete','VehiculoController@BajaVehiculo')->name('EliminarVehiculo');
+Route::get('vehiculoBorrar','VehiculoController@BorrarVehiculo')->name('DeleteVehiculo');//admin
+Route::get('vehiculoAlta','VehiculoController@AltaVehiculo')->name('UpVehiculo');//admin
 Route::post('clientemostrar', 'ClienteController@mostrar')->name('showcliente');
 Route::post('sucursalModificarDatos','SucursalController@ModificarDatos')->name('modificardatos');
 Route::post('sucursalModificarEmpleado','EmpleadoController@ModificarDatos')->name('datosempleado');
@@ -157,3 +160,5 @@ Route::resource('marca', 'MarcaVehiculoController');
 Route::post('marcasmodelos','VehiculoController@Consultar')->name('marcasmodelos');
 
 Route::get('indexAndroid','ReservacionController@indexAndroid')->name('indexAndroid');
+
+Route::get('printBitacora','ReservacionController@printBITACORA')->name('printBITACORA');

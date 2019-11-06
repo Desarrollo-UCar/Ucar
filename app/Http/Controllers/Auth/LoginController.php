@@ -41,6 +41,9 @@ class LoginController extends Controller
     public function redirectTo()
     {    //    return reponse()->json(\Auth::user()->hasRole());
 
+        // session(['success' => 'yes']);
+
+
         if(\Auth::user()->hasRole('admin')||\Auth::user()->hasRole('gerente'))
             return '/gerente/inicio';
         
@@ -48,18 +51,11 @@ class LoginController extends Controller
         
         if(\Auth::user()->hasRole('user'))
         return '/';
-
-
-        
+    
     }
 
-     /** * Log the user out of the application. * * @param \Illuminate\Http\Request $request * @return \Illuminate\Http\Response */ public function logout(Request $request) {
-          $this->guard()->logout();
-           $request->session()->flush(); 
-           $request->session()->regenerate(); 
-           $response = ('/');
-           return redirect('/');
-        } 
+
+
 
 
 }

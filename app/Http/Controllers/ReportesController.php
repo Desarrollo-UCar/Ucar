@@ -22,7 +22,7 @@ class ReportesController extends Controller
 
     public function index(){
 
-        return view('gerente.reportes.inicio');
+        return view('gerente.reportes.ver_reportes');
 
     }
 
@@ -51,7 +51,7 @@ public function fechaReservacion(){
 
    
    
-        $dias = DB::SELECT('      SELECT DAY(DIA) AS DIA, CANTIDAD FROM (SELECT (date(fecha_reservacion)) AS DIA, COUNT(*) AS CANTIDAD
+        $dias = DB::SELECT('SELECT DAY(DIA) AS DIA, CANTIDAD FROM (SELECT (date(fecha_reservacion)) AS DIA, COUNT(*) AS CANTIDAD
         FROM reservacions
         WHERE fecha_reservacion  <= CURDATE() 
         AND fecha_reservacion >= DATE_SUB(CURDATE(), INTERVAL ? WEEK) GROUP BY date(fecha_reservacion))tabla',[1]);

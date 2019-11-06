@@ -266,19 +266,18 @@
                                                 <span id="validosucursal" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
                                             </div>  
                                             
-                                            {{-- FORMULARIO DE ESTATUS DEL VEHICULO --}}
+                                            {{-- FORMULARIO DE ESTATUS DEL VEHICULO
                                             
                                             <div class="form-group col-md-4">
                                               <label>Estatus</label>
                                               <select class="form-control" name="status" id="status">
                                                 <option>ACTIVO</option> 
-                                                <option>INACTIVO</option>
+                                                 <option>INACTIVO</option>
                                               </select>                                              
 
                                                   <span id="errorstatus" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                                   <span id="validostatus" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
-                                          </div>  
-                                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#picture" >Subir Foto</button>
+                                          </div>  --}}
                     </div>
 
 
@@ -362,6 +361,10 @@
                     <div class="box-footer" style="float: right">
                       <input type="submit" name="upload" id="upload" class="btn btn-primary" value="Agregar">
                       </div>
+                      <div class="box-footer" style="float: right">
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#picture" >Subir Foto</button>
+                        </div>
+
                     <div class="box-footer" style="float: right">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">Cancelar</button>
                       </div>                       
@@ -613,7 +616,7 @@ document.getElementById("foto").onchange = function(e) {
              var kilometraje = arreglo.kilometraje;                                       
              var costo = arreglo.costo;           
              var precio = arreglo.precio;
-             var status = arreglo.status;
+            //  var status = arreglo.status;
              var sucursal = arreglo.sucursal;
              var puertas = arreglo.puertas;
              var foto = arreglo.foto;       
@@ -837,16 +840,16 @@ document.getElementById("foto").onchange = function(e) {
             //console.log(nombre);
           }
 
-          if (status == undefined){  
-            $( '#status' ).css('borderColor', 'green');         
-            jQuery('#validostatus').show(); 
-            jQuery('#errorstatus').hide(); 
-            }else{
-              jQuery('#validostatus').hide(); 
-            jQuery('#errorstatus').show();          
-           $( '#status' ).css('borderColor', 'red');
-            //console.log(nombre);
-          }
+          // if (status == undefined){  
+          //   $( '#status' ).css('borderColor', 'green');         
+          //   jQuery('#validostatus').show(); 
+          //   jQuery('#errorstatus').hide(); 
+          //   }else{
+          //     jQuery('#validostatus').hide(); 
+          //   jQuery('#errorstatus').show();          
+          //  $( '#status' ).css('borderColor', 'red');
+          //   //console.log(nombre);
+          // }
           $('#error1').click();
      }
     })

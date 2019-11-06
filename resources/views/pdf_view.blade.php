@@ -57,12 +57,21 @@
         line-height: 0.2;
         }
         table{
-        
-          margin: 15px;
-          border-style: solid;
-          border-width: 2px; 
-
+          border-collapse: collapse;
+          /* margin: 15px; */
+          /* border-style: solid; */
+          /* border-width: 2px;  */
+          border: 1px solid black;
         }
+        th {
+          border: 1px solid black;
+  background-color:cadetblue;
+  color: black;
+}
+td{
+  border: 1px solid black;
+}
+
 
         label {
   font-size: 9px;
@@ -73,7 +82,7 @@
 }
       #footer .page:after { content: counter(page, upper-roman) }
     </style>
-  <body>
+<head>
     <div id="header">
       <!--  <div class="pull-left image">
             <img src="{{asset("assets/$theme/dist/img/descarga.jpg")}}" class="img-circle" alt="User Image">
@@ -91,334 +100,74 @@
     </div>
   </head>
       <body> 
-        <h5>___________________________________________________________________________________________________________________</h5>
-          <h5>Datos arrendatario (Renter)</h5>
-      
-              <table class="table" WIDTH="100%">
+          <h2>BITACORA DE MANTENIMIENTOS</h2>
+          <h5>___________________________________________________________________________________________________________________</h5>
+          
+          <?php
+          $anterior='0';
+          $total = 0;
+          $gran_total = 0;
+          ?>
 
+            @foreach ($mantenimientos as $mantenimiento)
+            
+            @if($anterior!=$mantenimiento->vehiculo)
+            @if($anterior!='0')
+            <tr>
+              <td colspan='4'>TOTAL</td>
+              {{-- <td></td>
+              <td></td>      
+              <td></td>
+              <td></td> --}}
+              <td> ${{number_format($total,2)}} </td>
+               </tr>
+            </table>
+            <?php
+            $gran_total+=$total;
+            $total=0;
+            ?>
+            
+            @endif
+              <h4> Vehiculo: {{$mantenimiento->marca}} {{$mantenimiento->modelo}} {{$mantenimiento->anio}}Matricula: {{$mantenimiento->matricula}} </h4>
+               
+               <table class="table" WIDTH="100%">
                   <tr>
-                
-                    <td>  
-                      <label for="fname"  >Nombre (Name)</label></td>
-                    <td>
-                    <label for="fname"  >Fecha Nac. (Bhirthday)</label></td>
-                
-                    <td><label for="fname"> Tel Cel. (CelPhone)</label></td>
-                
+                    <th>Numero</th>
+                    <th>Entra</th>
+                    <th>Sale</th>
+                    {{-- <th>Costo</th> --}}
+                    <th>Tipo</th>
+                    <th>Costo</th>
                   </tr>
-                
-                  <tr>
-                
-                      <td> {{$nombre}}  {{$ap}} {{$am}}  </td>
-                  
-                      <td>2000/01/01</td>
-                  
-                      <td>{{$nombre}}</td>
-                  
-                    </tr>
+                  {{-- <br> --}}
 
-                  <tr>
-                
-                    <td> <input type="text" id="fname" name="fname"au></td>
-                
-                    <td><input type="text" id="fname" name="fname"></td>
-                
-                    <td><input type="text" id="fname" name="fname"></td>
+              @endif
 
-                  </tr>
+              <tr>
+              <td>{{$mantenimiento->idmantenimiento}}</td>
+              <td>{{date("d\-m\-Y", strtotime($mantenimiento->fecha_ingresa))}}</td>
+              <td>{{date("d\-m\-Y", strtotime($mantenimiento->fecha_salida))}}</td>
+              <td>{{$mantenimiento->tipom}}</td>
+              <td> ${{number_format($mantenimiento->costo_total,2)}}</td>
+             </tr>
 
-                  <!-- SEGUNDA FILA-->
+             <?php
+             $total+=$mantenimiento->costo_total;
+             $anterior=$mantenimiento->vehiculo;
+             ?>
+     @endforeach
 
-                  <tr>
-                
-                      <td>  
-                        <label for="fname"  >Direccion Local (Local Addess)</label></td>
-                      <td>
-                      <label for="fname" > Calle (Street)</label></td>
-                  
-                      <td><label for="fname"  > Correo Electronico/e-mail</label></td>
-                  
-                    </tr>
-                  
-                    <tr>
-                  
-                        <td> {{$nombre}}  {{$ap}} {{$am}} </td>
-                    
-                        <td><input type="text" id="fname" name="fname"></td>
-                    
-                        <td>{{$nombre}}</td>
-                    
-                      </tr>
-  
-                    <tr>
-                  
-                      <td> <input type="text" id="fname" name="fname"></td>
-                  
-                      <td><input type="text" id="fname" name="fname"></td>
-                  
-                      <td><input type="text" id="fname" name="fname"></td>
-                      
-                    </tr>
-                    
-                    <!-- Tercer nivel-->
-
-                    <tr>
-                
-                        <td>  
-                          <label for="fname"  >Licencia Conductor (Driver License)</label></td>
-                        <td>
-                        <label for="fname" >Ciudaad (City)</label></td>
-                    
-                        <td><label for="fname"  > Lugar de hospedaje / Place of</label></td>
-                    
-                      </tr>
-                    
-                      <tr>
-                    
-                          <td> {{$nombre}}  {{$ap}} {{$am}} </td>
-                      
-                          <td><input type="text" id="fname" name="fname"></td>
-                      
-                          <td>{{$nombre}}</td>
-                      
-                        </tr>
-    
-                      <tr>
-                    
-                        <td> <input type="text" id="fname" name="fname"></td>
-                    
-                        <td><input type="text" id="fname" name="fname"></td>
-                    
-                        <td><input type="text" id="fname" name="fname"></td>
-                        
-                      </tr>
-
-                      <tr>
-                
-                          <td>  
-                            <label for="fname"  >Vence (Expire)</label></td>
-                          <td>
-                          <label for="fname" > Pais (Country)</label></td>
-                      
-                          <td><label for="fname"  > </label></td>
-                      
-                        </tr>
-                      
-                        <tr>
-                      
-                            <td> {{$nombre}}  {{$ap}} {{$am}} </td>
-                        
-                            <td><input type="text" id="fname" name="fname"></td>
-                        
-                            <td>{{$nombre}}</td>
-                        
-                          </tr>
-      
-                        <tr>
-                      
-                          <td> <input type="text" id="fname" name="fname"></td>
-                      
-                          <td><input type="text" id="fnamDe" name="fname"></td>
-                      
-                          <td><input type="text" id="fname" name="fname"></td>
-                          
-                        </tr>
-
-                        <!-- -->
-
-                        <tr>
-
-                          <td>             
-                            <label for="fname" ><b>Conductor adicional (Additiona driver)</b></label></td>
-                          <td>
-                          <label for="fname" ></label></td>
-                      
-                          <td><label for="fname"  > </label></td>
-                      
-                        </tr>
-                      
-
-                        <tr>
-
-                            <td>             
-                              <label for="fname">Nombre (Name)</label></td>
-                            <td>
-                            <label for="fname" >Fecha Nac. (Bithday) &nbsp;&nbsp;&nbsp;&nbsp;Licencia Conductor(Driver Licence)}</label></td>
-                        
-                            <td><label for="fname"  >Vence (Expire)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspFirma (Signature)</label></td>
-                        
-                          </tr>
-                        
-                          <tr>
-                        
-                              <td> {{$nombre}}  {{$ap}} {{$am}} </td>
-                          
-                              <td><input type="text" id="fname" name="fname"></td>
-                          
-                              <td>{{$nombre}}</td>
-                          
-                            </tr>
-        
-                          <tr>
-                        
-                            <td> <input type="text" id="fname" name="fname"></td>
-                        
-                            <td><input type="text" id="fname" name="fname"></td>
-                        
-                            <td><input type="text" id="fname" name="fname"></td>
-                            
-                          </tr>            
-                </table>
-<table>
-  <tr>
-              <td>
-                <table>
-                  <tr>
-                    <td>  
-                      <table>
-                        <tr>
-                        <td>
-                            <table>
-                              <tr>
-                              <td>&nbsp;&nbsp;</td>
-                              <td>S</td>
-                              <td>E</td>
-                              </tr>
-
-                              <tr>
-                                <td>Espejo <br> Mirror</td>
-                                <td>|_|</td>
-                                <td>|_|</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Llanta <br> Spare</td>
-                                    <td>|_|</td>
-                                    <td>|_|</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Radio</td>
-                                        <td>|_|</td>
-                                        <td>|_|</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Toldo <br> awning<br></td>
-                                        <td>|_|</td>
-                                        <td>|_|</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Gas</td>
-                                            <td>|_|</td>
-                                            <td>|_|</td>
-                                        </tr>
-
-                            </table>  
-
-                       
-                        </td>  
-
-                        <td>
-                            <table>
-                                <tr>
-                                <td>&nbsp;&nbsp;</td>
-                                <td>S</td>
-                                <td>E</td>
-                                </tr>
-  
-                                <tr>
-                                  <td>Placas <br> Plates</td>
-                                  <td>|_|</td>
-                                  <td>|_|</td>
-                                  </tr>
-  
-                                  <tr>
-                                      <td>Antena <br> antenna</td>
-                                      <td>|_|</td>
-                                      <td>|_|</td>
-                                      </tr>
-  
-                                      <tr>
-                                          <td>______ <br>______<br></td>
-                                          <td>|_|</td>
-                                          <td>|_|</td>
-                                          </tr>
-  
-                                          <tr>
-                                              <td>______ <br>______<br></td>
-                                              <td>|_|</td>
-                                              <td>|_|</td>
-                                          </tr>
-  
-                              </table>  
-                        </td>
-
-                        <td>
-                            <table>
-                                <tr>
-                                <td>&nbsp;&nbsp;</td>
-                                <td>S</td>
-                                <td>E</td>
-                                </tr>
-  
-                                <tr>
-                                  <td>______<br>______</td>
-                                  <td>|_|</td>
-                                  <td>|_|</td>
-                                  </tr>
-  
-                                  <tr>
-                                      <td>______ <br>______</td>
-                                      <td>|_|</td>
-                                      <td>|_|</td>
-                                      </tr>
-  
-                                      <tr>
-                                          <td>______ <br>______<br></td>
-                                          <td>|_|</td>
-                                          <td>|_|</td>
-                                          </tr>
-  
-                                          <tr>
-                                              <td>______ <br>______<br></td>
-                                              <td>|_|</td>
-                                              <td>|_|</td>
-                                          </tr>
-  
-                              </table>  
-                        </td>
-                      </tr>
-                      
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                    <td>
-                        He verificado que el vehiculo lleva el equipo especial especificado, que los daños esten marcados en el croquis y soy responsable por daños o robo parcial o total.
-                        <br>
-                        He verified that the vehicle carries the specified special equipment, that the damages are marked in the sketch and I am responsible for damages or partial or total theft.
-                    </td>
-                  </tr>
-                </table>
-       </td>
-      <td>
-          <td>
-              He verificado que el vehiculo lleva el equipo especial especificado, que los daños esten marcados en el croquis y soy responsable por daños o robo parcial o total.
-              <br>
-              He verified that the vehicle carries the specified special equipment, that the damages are marked in the sketch and I am responsible for damages or partial or total theft.
-          </td>  
-      </td> 
+     <tr>
+        <td colspan='4'>TOTAL</td>
+        <td>${{number_format($total,2)}} </td>
+         </tr>
       </table>
-      </body>
-    
-    <div id="footer">
-      <p class="page">Page </p>
-    </div>
-    <div id="content">
+      <?php
+      $gran_total+=$total;
 
-      <p style="page-break-before: always;">the second page</p>
-    </div>
+      ?>
+              <p class="small">
+    <h2>Costo total de mantenimientos =<strong> ${{number_format($gran_total,2)}}</strong> </h2>
+          </p>
   </body>
 </html>

@@ -43,7 +43,35 @@
                   </button>
                 </div>             
               @endif   
-                   
+              @if (session()->has('curso'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#espera" id="<?php 
+                echo "botonespera";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif    
+              
+              @if (session()->has('baja'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminado" id="<?php 
+                echo "botonbaja";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif
+
+              @if (session()->has('alta'))
+              <div style="display: none;">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#altavehiculo" id="<?php 
+                echo "botonalta";
+              ?>">
+                    Cancelar
+                  </button>
+                </div>             
+              @endif
               <div class="box-body ">
                 <table id="example" class="display nowrap " style="width:100%">
                     <thead>
@@ -55,6 +83,7 @@
                             <th style="text-align: center">Estatus</th>
                             <th style="text-align: center">Modificar</th>
                             <th style="text-align: center">Mantenimiento</th>
+                            <th style="text-align: center">Alta/Baja</th>
                             <th style="text-align: center">Reservaciones</th>
                           
                         </tr>
@@ -68,14 +97,28 @@
                 <td >{{$vehiculo->color}}</td>
                 <td >{{$vehiculo->estatus}}</td>
                 <td style="text-align: center"> 
-                    <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>
-                </td>   
-                <td style="text-align: center"> 
-                    <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span>
-                </td>
-                <td style="text-align: center">
-                    <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
-                </td>  
+                  <a href="{{ route('modificarvehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span></td>
+                   
+                    @if ($vehiculo->estatus=='MANTENIMIENTO')
+                    <td style="text-align: center"> 
+                        <a href="{{ route('mantenimiento.index') }}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver mantenimiento"></span></td>
+                    @else
+                    <td style="text-align: center"> 
+                        <a href="{{ route('mantenimiento.create',['vehiculo'=>$vehiculo->vin]) }}"> <span class="fa fa-cog fa-2x" style="color:seagreen;" title="Mandar a mantenimiento"></span></td>
+                    @endif                  
+                    @if($vehiculo->estatus=='ACTIVO' || $vehiculo->estatus=='activo')
+                    <td style="text-align: center">
+                      <a href="{{ route('EliminarVehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"title="Eliminar"> <span class="fa fa-trash-o fa-2x" style="color:red;"></span>
+                    @else
+                    <td style="text-align: center">
+                        <a href="{{ route('UpVehiculo',['vehiculo'=>$vehiculo->idvehiculo,'sucursal'=>$vehiculo->idsucursal]) }}"title="Activar"> <span class="fa fa-external-link-square fa-2x" style="color:blue;"></span>
+                    @endif
+            </td>
+
+            
+            <td style="text-align: center">
+              <a href="{{ route('porVehiculo',['vehiculo'=>$vehiculo->idvehiculo]) }}" title="Ver reservaciones"> <span class="fa fa-tags fa-2x" style="color:yellowgreen;"></span>
+    </td>  
                     </tr> 
               @endforeach
                     
@@ -84,6 +127,28 @@
             </div>
             
       </section>
+
+      <div class="modal modal-info fade" id="altavehiculo">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Alta Vehículo</h4>
+              </div>
+              <div class="modal-body">
+                <p>EL VEHÍCULO SE DIÓ DE ALTA EXITOSAMENTE&hellip;</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="recargar()">Continuar</button>
+                
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal ---->
 
       <div class="modal modal-warning fade" id="modal-warning">
           <div class="modal-dialog" >
@@ -106,6 +171,28 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
+
+        <div class="modal modal-warning fade" id="eliminado">
+            <div class="modal-dialog" >
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">ELIMINADO!</b> </h4>
+                </div>
+                <div class="modal-body">
+                    
+                  <p>EL VEHICULO SE DIÓ DE BAJA EXITOSAMENTE.&hellip;</p>
+                
+                </div>
+                <div class="modal-footer">
+                  {{--<button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Cerrar</button>--}}<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Continuar</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
 
         <div class="modal modal-warning fade" id="encurso">
           <div class="modal-dialog" >
@@ -159,6 +246,12 @@
     <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_recogida))}}</td>
     <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_devolucion))}}</td>
     <td>{{$alquiler->nombreConductor}}</td>
+    <td><form action ="{{route('reservacion',$alquiler->id_reservacion)}}" method ="GET" enctype="multipart/form-data">
+      {{csrf_field()}}
+     <button type="sumbit" class="btn btn-primary btn-xs" type="sumbit"> 
+       <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>
+     </button>
+</form></td>
     </tr>
     @endforeach   
   </tbody>
@@ -168,7 +261,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                <a href="{{ route('confmante',['vehiculo'=>$alquiler->id_vehiculo]) }}" class="btn btn-primary" >
+                <a href="{{ route('DeleteVehiculo',['vehiculo'=>$alquiler->id_vehiculo]) }}" class="btn btn-primary" >
                   Continuar</a>
               </div>
             </div>
@@ -195,7 +288,29 @@
              obj.click();
              } );
             </script>
-           
+            <script>           
+              $(document).ready(function() {
+      
+               var obj= document.getElementById("botonespera");
+               obj.click();
+               } );
+              </script>
+
+    <script>           
+    $(document).ready(function() {
+
+     var obj= document.getElementById("botonalta");
+     obj.click();
+     } );
+    </script>
+
+<script>           
+    $(document).ready(function() {
+
+     var obj= document.getElementById("botonbaja");
+     obj.click();
+     } );
+    </script>
 
 <script>
   $(document).ready(function() {

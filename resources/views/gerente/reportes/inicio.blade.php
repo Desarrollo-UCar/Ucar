@@ -3,19 +3,7 @@
 @section('styles')
   <!-- Morris chart -->
   <link rel="stylesheet" href="{{asset("assets/$theme/bower_components/morris.js/morris.css")}}">
-  <style>
-  table { 
-    display: table;
-    border-collapse: separate;
-    border-spacing: 1px;
-    border-color: :teal;
-    border: 1px ;
-  }
 
-  table, th, td {
-  border: 1px solid gray;
-}
-  </style>
 @endsection
 
 @section('contenido')
