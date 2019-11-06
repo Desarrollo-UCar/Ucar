@@ -10,6 +10,7 @@ use App\VehiculoSucursales;
 use App\MarcaVehiculo;
 use App\MarcaModelo;
 use App\Categoria;
+use App\Alquiler;
 use Illuminate\Http\Request;
 
 use phpDocumentor\Reflection\Types\Nullable;
@@ -54,7 +55,7 @@ class VehiculoController extends Controller
             $email = $request->user()->email;
             $empleado = Empleado::where('correo','=',$email)->first();
             $sucursale = EmpleadoSucursal::where('empleado','=',$empleado->idempleado)
-            ->where('status','=','activo')->first();
+            ->where('status','=','ACTIVO')->first();
             $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
             $marca= MarcaVehiculo::all();
             return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca'));
@@ -98,7 +99,7 @@ class VehiculoController extends Controller
             'cilindros'  => 'required',
             'kilometraje'=> 'required',
             'tipo'       => 'required',
-            'status'     => 'required',
+            // 'status'     => 'required',
             'sucursal'   => 'required',
            // 'descripcion'=> 'required',
         ]);
@@ -138,7 +139,7 @@ class VehiculoController extends Controller
                 'transmicion' =>$request['transmision'],
                 'puertas' =>$request['puertas'],
                 'rendimiento' =>$request['rendimiento'],
-                'estatus'     =>$request['status'],
+                'estatus'     =>'ACTIVO',
                 'anio'       =>$request['anio'],
                 'precio'     =>$request['precio'],
                 'costo'      =>$request['costo'],
@@ -149,7 +150,6 @@ class VehiculoController extends Controller
                 'kilometraje'=>$request['kilometraje'],
                 'tipo'       =>$request['tipo'],
                 'descripcion'=>$request['descripcion'],
-                'estatus'       =>$request['status'],
                 'foto'       =>$new_name,
                 'foto_derecha'=>$new_name_derecha,
                 'foto_izquierda'=>$new_name_izquierda,
@@ -240,7 +240,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
         'cilindros'  => 'required',
         'kilometraje'=> 'required',
         'tipo'       => 'required',
-        'status'     => 'required',
+        // 'status'     => 'required',
         'sucursal'   => 'required',
        // 'descripcion'=> 'required',
     ]);
@@ -257,7 +257,7 @@ try{
             'transmicion'=>$request['transmision'],
             'puertas'    =>$request['puertas'],
             'rendimiento'=>$request['rendimiento'],
-            'estatus'    =>$request['status'],
+            // 'estatus'    =>$request['status'],
             'anio'       =>$request['anio'],
             'precio'     =>$request['precio'],
             'costo'      =>$request['costo'],
@@ -268,7 +268,7 @@ try{
             'kilometraje'=>$request['kilometraje'],
             'tipo'       =>$request['tipo'],
             'descripcion'=>$request['descripcion'],
-            'estatus'    =>$request['status'],               
+            // 'estatus'    =>$request['status'],               
             'updated_at' =>$date
         ]);
 }catch(\Illuminate\Database\QueryException $ex){
@@ -281,7 +281,7 @@ try{
             $vehiculosucursal->update([
                 'sucursal'=>$foranea['idsucursal'],
                 'vehiculo'=>$vehiculo['idvehiculo'],
-                'status'=>$request['status'],
+                // 'status'=>$request['status'],
                 'updated_at'=>$date
                 ]);
 
@@ -312,7 +312,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
         'cilindros'  => 'required',
         'kilometraje'=> 'required',
         'tipo'       => 'required',
-        'status'     => 'required',
+        // 'status'     => 'required',
         'sucursal'   => 'required',
        // 'descripcion'=> 'required',
     ]);
@@ -332,7 +332,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'transmicion'=>$request['transmision'],
             'puertas'    =>$request['puertas'],
             'rendimiento'=>$request['rendimiento'],
-            'estatus'    =>$request['status'],
+            // 'estatus'    =>$request['status'],
             'anio'       =>$request['anio'],
             'precio'     =>$request['precio'],
             'costo'      =>$request['costo'],
@@ -343,7 +343,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'kilometraje'=>$request['kilometraje'],
             'tipo'       =>$request['tipo'],
             'descripcion'=>$request['descripcion'],
-            'estatus'    =>$request['status'],               
+            // 'estatus'    =>$request['status'],               
             'updated_at' =>$date
         ]);
         }catch(\Illuminate\Database\QueryException $ex){
@@ -356,7 +356,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             $vehiculosucursal->update([
                 'sucursal'=>$foranea['idsucursal'],
                 'vehiculo'=>$vehiculo['idvehiculo'],
-                'status'=>$request['status'],
+                // 'status'=>$request['status'],
                 'updated_at'=>$date
                 ]);
 
@@ -385,7 +385,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                     'cilindros'  => 'required',
                     'kilometraje'=> 'required',
                     'tipo'       => 'required',
-                    'status'     => 'required',
+                    // 'status'     => 'required',
                     'sucursal'   => 'required',
                    // 'descripcion'=> 'required',
                 ]);
@@ -405,7 +405,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                         'transmicion'=>$request['transmision'],
                         'puertas'    =>$request['puertas'],
                         'rendimiento'=>$request['rendimiento'],
-                        'estatus'    =>$request['status'],
+                        // 'estatus'    =>$request['status'],
                         'anio'       =>$request['anio'],
                         'precio'     =>$request['precio'],
                         'costo'      =>$request['costo'],
@@ -416,7 +416,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                         'kilometraje'=>$request['kilometraje'],
                         'tipo'       =>$request['tipo'],
                         'descripcion'=>$request['descripcion'],
-                        'estatus'    =>$request['status'],               
+                        // 'estatus'    =>$request['status'],               
                         'updated_at' =>$date
                     ]);
                     }catch(\Illuminate\Database\QueryException $ex){
@@ -429,7 +429,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                         $vehiculosucursal->update([
                             'sucursal'=>$foranea['idsucursal'],
                             'vehiculo'=>$vehiculo['idvehiculo'],
-                            'status'=>$request['status'],
+                            // 'status'=>$request['status'],
                             'updated_at'=>$date
                             ]);
             
@@ -458,7 +458,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                 'cilindros'  => 'required',
                                 'kilometraje'=> 'required',
                                 'tipo'       => 'required',
-                                'status'     => 'required',
+                                // 'status'     => 'required',
                                 'sucursal'   => 'required',
                                // 'descripcion'=> 'required',
                             ]);
@@ -478,7 +478,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                     'transmicion'=>$request['transmision'],
                                     'puertas'    =>$request['puertas'],
                                     'rendimiento'=>$request['rendimiento'],
-                                    'estatus'    =>$request['status'],
+                                    // 'estatus'    =>$request['status'],
                                     'anio'       =>$request['anio'],
                                     'precio'     =>$request['precio'],
                                     'costo'      =>$request['costo'],
@@ -489,7 +489,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                     'kilometraje'=>$request['kilometraje'],
                                     'tipo'       =>$request['tipo'],
                                     'descripcion'=>$request['descripcion'],
-                                    'estatus'    =>$request['status'],               
+                                    // 'estatus'    =>$request['status'],               
                                     'updated_at' =>$date
                                 ]);
                                 }catch(\Illuminate\Database\QueryException $ex){
@@ -502,7 +502,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                     $vehiculosucursal->update([
                                         'sucursal'=>$foranea['idsucursal'],
                                         'vehiculo'=>$vehiculo['idvehiculo'],
-                                        'status'=>$request['status'],
+                                        // 'status'=>$request['status'],
                                         'updated_at'=>$date
                                         ]);
                         
@@ -531,7 +531,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                     'cilindros'  => 'required',
                     'kilometraje'=> 'required',
                     'tipo'       => 'required',
-                    'status'     => 'required',
+                    // 'status'     => 'required',
                     'sucursal'   => 'required',
                    // 'descripcion'=> 'required',
                 ]);
@@ -551,7 +551,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                         'transmicion'=>$request['transmision'],
                         'puertas'    =>$request['puertas'],
                         'rendimiento'=>$request['rendimiento'],
-                        'estatus'    =>$request['status'],
+                        // 'estatus'    =>$request['status'],
                         'anio'       =>$request['anio'],
                         'precio'     =>$request['precio'],
                         'costo'      =>$request['costo'],
@@ -562,7 +562,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                         'kilometraje'=>$request['kilometraje'],
                         'tipo'       =>$request['tipo'],
                         'descripcion'=>$request['descripcion'],
-                        'estatus'    =>$request['status'],               
+                        // 'estatus'    =>$request['status'],               
                         'updated_at' =>$date
                     ]);
                     }catch(\Illuminate\Database\QueryException $ex){
@@ -575,7 +575,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                         $vehiculosucursal->update([
                             'sucursal'=>$foranea['idsucursal'],
                             'vehiculo'=>$vehiculo['idvehiculo'],
-                            'status'=>$request['status'],
+                            // 'status'=>$request['status'],
                             'updated_at'=>$date
                             ]);
             
@@ -607,7 +607,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                         'cilindros'  => 'required',
                                         'kilometraje'=> 'required',
                                         'tipo'       => 'required',
-                                        'status'     => 'required',
+                                        // 'status'     => 'required',
                                         'sucursal'   => 'required',
                                        // 'descripcion'=> 'required',
                                     ]);
@@ -633,7 +633,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                             'transmicion'=>$request['transmision'],
                                             'puertas'    =>$request['puertas'],
                                             'rendimiento'=>$request['rendimiento'],
-                                            'estatus'    =>$request['status'],
+                                            // 'estatus'    =>$request['status'],
                                             'anio'       =>$request['anio'],
                                             'precio'     =>$request['precio'],
                                             'costo'      =>$request['costo'],
@@ -644,7 +644,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                             'kilometraje'=>$request['kilometraje'],
                                             'tipo'       =>$request['tipo'],
                                             'descripcion'=>$request['descripcion'],
-                                            'estatus'    =>$request['status'],               
+                                            // 'estatus'    =>$request['status'],               
                                             'updated_at' =>$date
                                         ]);
                                         }catch(\Illuminate\Database\QueryException $ex){
@@ -657,7 +657,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                             $vehiculosucursal->update([
                                                 'sucursal'=>$foranea['idsucursal'],
                                                 'vehiculo'=>$vehiculo['idvehiculo'],
-                                                'status'=>$request['status'],
+                                                // 'status'=>$request['status'],
                                                 'updated_at'=>$date
                                                 ]);
                                 
@@ -686,7 +686,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                         'cilindros'  => 'required',
                                         'kilometraje'=> 'required',
                                         'tipo'       => 'required',
-                                        'status'     => 'required',
+                                        // 'status'     => 'required',
                                         'sucursal'   => 'required',
                                        // 'descripcion'=> 'required',
                                     ]);
@@ -712,7 +712,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                             'transmicion'=>$request['transmision'],
                                             'puertas'    =>$request['puertas'],
                                             'rendimiento'=>$request['rendimiento'],
-                                            'estatus'    =>$request['status'],
+                                            // 'estatus'    =>$request['status'],
                                             'anio'       =>$request['anio'],
                                             'precio'     =>$request['precio'],
                                             'costo'      =>$request['costo'],
@@ -723,7 +723,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                             'kilometraje'=>$request['kilometraje'],
                                             'tipo'       =>$request['tipo'],
                                             'descripcion'=>$request['descripcion'],
-                                            'estatus'    =>$request['status'],               
+                                            // 'estatus'    =>$request['status'],               
                                             'updated_at' =>$date
                                         ]);
                                         }catch(\Illuminate\Database\QueryException $ex){
@@ -736,7 +736,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
                                             $vehiculosucursal->update([
                                                 'sucursal'=>$foranea['idsucursal'],
                                                 'vehiculo'=>$vehiculo['idvehiculo'],
-                                                'status'=>$request['status'],
+                                                // 'status'=>$request['status'],
                                                 'updated_at'=>$date
                                                 ]);
                                 
@@ -766,7 +766,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
         'cilindros'  => 'required',
         'kilometraje'=> 'required',
         'tipo'       => 'required',
-        'status'     => 'required',
+        // 'status'     => 'required',
         'sucursal'   => 'required',
        // 'descripcion'=> 'required',
     ]);
@@ -792,7 +792,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'transmicion'=>$request['transmision'],
             'puertas'    =>$request['puertas'],
             'rendimiento'=>$request['rendimiento'],
-            'estatus'    =>$request['status'],
+            // 'estatus'    =>$request['status'],
             'anio'       =>$request['anio'],
             'precio'     =>$request['precio'],
             'costo'      =>$request['costo'],
@@ -803,7 +803,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'kilometraje'=>$request['kilometraje'],
             'tipo'       =>$request['tipo'],
             'descripcion'=>$request['descripcion'],
-            'estatus'    =>$request['status'],               
+            // 'estatus'    =>$request['status'],               
             'updated_at' =>$date
         ]);
         }catch(\Illuminate\Database\QueryException $ex){
@@ -816,7 +816,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             $vehiculosucursal->update([
                 'sucursal'=>$foranea['idsucursal'],
                 'vehiculo'=>$vehiculo['idvehiculo'],
-                'status'=>$request['status'],
+                // 'status'=>$request['status'],
                 'updated_at'=>$date
                 ]);
 
@@ -847,7 +847,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
         'cilindros'  => 'required',
         'kilometraje'=> 'required',
         'tipo'       => 'required',
-        'status'     => 'required',
+        // 'status'     => 'required',
         'sucursal'   => 'required',
        // 'descripcion'=> 'required',
     ]);
@@ -879,7 +879,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'transmicion'=>$request['transmision'],
             'puertas'    =>$request['puertas'],
             'rendimiento'=>$request['rendimiento'],
-            'estatus'    =>$request['status'],
+            // 'estatus'    =>$request['status'],
             'anio'       =>$request['anio'],
             'precio'     =>$request['precio'],
             'costo'      =>$request['costo'],
@@ -890,7 +890,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'kilometraje'=>$request['kilometraje'],
             'tipo'       =>$request['tipo'],
             'descripcion'=>$request['descripcion'],
-            'estatus'    =>$request['status'],               
+            // 'estatus'    =>$request['status'],               
             'updated_at' =>$date
         ]);
         }catch(\Illuminate\Database\QueryException $ex){
@@ -903,7 +903,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             $vehiculosucursal->update([
                 'sucursal'=>$foranea['idsucursal'],
                 'vehiculo'=>$vehiculo['idvehiculo'],
-                'status'=>$request['status'],
+                // 'status'=>$request['status'],
                 'updated_at'=>$date
                 ]);
 
@@ -932,7 +932,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
         'cilindros'  => 'required',
         'kilometraje'=> 'required',
         'tipo'       => 'required',
-        'status'     => 'required',
+        // 'status'     => 'required',
         'sucursal'   => 'required',
        // 'descripcion'=> 'required',
     ]);
@@ -965,7 +965,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'transmicion'=>$request['transmision'],
             'puertas'    =>$request['puertas'],
             'rendimiento'=>$request['rendimiento'],
-            'estatus'    =>$request['status'],
+            // 'estatus'    =>$request['status'],
             'anio'       =>$request['anio'],
             'precio'     =>$request['precio'],
             'costo'      =>$request['costo'],
@@ -976,7 +976,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             'kilometraje'=>$request['kilometraje'],
             'tipo'       =>$request['tipo'],
             'descripcion'=>$request['descripcion'],
-            'estatus'    =>$request['status'],               
+            // 'estatus'    =>$request['status'],               
             'updated_at' =>$date
         ]);
         }catch(\Illuminate\Database\QueryException $ex){
@@ -989,7 +989,7 @@ if($request['foto'] ==null && $request['foto_derecha'] ==null && $request['foto_
             $vehiculosucursal->update([
                 'sucursal'=>$foranea['idsucursal'],
                 'vehiculo'=>$vehiculo['idvehiculo'],
-                'status'=>$request['status'],
+                // 'status'=>$request['status'],
                 'updated_at'=>$date
                 ]);
 
@@ -1019,7 +1019,7 @@ if($request['foto'] !=null && $request['foto_derecha'] !=null && $request['foto_
         'cilindros'  => 'required',
         'kilometraje'=> 'required',
         'tipo'       => 'required',
-        'status'     => 'required',
+        // 'status'     => 'required',
         'sucursal'   => 'required',
        // 'descripcion'=> 'required',
     ]);
@@ -1057,7 +1057,7 @@ if($request['foto'] !=null && $request['foto_derecha'] !=null && $request['foto_
             'transmicion'=>$request['transmision'],
             'puertas'    =>$request['puertas'],
             'rendimiento'=>$request['rendimiento'],
-            'estatus'    =>$request['status'],
+            // 'estatus'    =>$request['status'],
             'anio'       =>$request['anio'],
             'precio'     =>$request['precio'],
             'costo'      =>$request['costo'],
@@ -1068,7 +1068,7 @@ if($request['foto'] !=null && $request['foto_derecha'] !=null && $request['foto_
             'kilometraje'=>$request['kilometraje'],
             'tipo'       =>$request['tipo'],
             'descripcion'=>$request['descripcion'],
-            'estatus'    =>$request['status'],               
+            // 'estatus'    =>$request['status'],               
             'updated_at' =>$date
         ]);
         }catch(\Illuminate\Database\QueryException $ex){
@@ -1081,7 +1081,7 @@ if($request['foto'] !=null && $request['foto_derecha'] !=null && $request['foto_
             $vehiculosucursal->update([
                 'sucursal'=>$foranea['idsucursal'],
                 'vehiculo'=>$vehiculo['idvehiculo'],
-                'status'=>$request['status'],
+                // 'status'=>$request['status'],
                 'updated_at'=>$date
                 ]);
 
@@ -1136,6 +1136,53 @@ if($request['foto'] !=null && $request['foto_derecha'] !=null && $request['foto_
 
             return response()->json(['success'=>$marcamodelo]);
     }
+
+
+    public function BajaVehiculo(Request $request){
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+                        $reservas = Alquiler::where('id_vehiculo',$request['vehiculo'])
+                        ->where('fecha_recogida','>=',$date)
+                        ->orderBy('id','asc')
+                        ->get();
+
+                        if(count($reservas)>0){
+                        return back()->with('curso',$reservas);
+                        }else{
+                            $vehiculo = vehiculo::where('idvehiculo',$request['vehiculo'])->first(); 
+                            $vehiculo ->update([                              
+                             'estatus'    =>'INACTIVO',
+                             'updated_at' =>$date                             
+                            ]);  
+                            return back()->with('baja',$vehiculo);                          
+                        }
+        return $reservas;
+    }
+
+    public function BorrarVehiculo(Request $request){
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+                      
+        $vehiculo = vehiculo::where('idvehiculo',$request['vehiculo'])->first(); 
+        $vehiculo1 = vehiculo::where('idvehiculo',$request['vehiculo'])->first(); 
+                        $vehiculo ->update([                              
+                             'estatus'    =>'INACTIVO', 
+                             'updated_at' =>$date                            
+                            ]);
+        return back()->with('baja',$vehiculo1);        
+    }
     
+
+    public function AltaVehiculo(Request $request){
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+        // return $request;          
+        $vehiculo = vehiculo::where('idvehiculo',$request['vehiculo'])->first(); 
+                        $vehiculo ->update([                              
+                             'estatus'    =>'ACTIVO', 
+                             'updated_at' =>$date                            
+                            ]);
+        return back()->with('alta',$vehiculo);        
+    }
 }
 

@@ -361,33 +361,6 @@
                         </div>
                     <div clas="row"></div>
                     <div clas="row">
-<<<<<<< HEAD
-                        <div class="col-md-12 col-xs-offset-3">
-                            <h4> <b> {{'Registro de cobros:'}}</b> </h4><br>
-                        </div>
-                        <div class="col-md-11" style="margin-left: 5%;">
-                            <div class="form-group">
-                                <table border="1">
-                                    <th>Número</th>
-                                    <th>Datos del cobro</th>
-                                    <th>Motivo</th>
-                                    <th>Fecha</th>
-                                    <th>Monto</th>
-                                    <th>Comentario</th>
-                                    @if($pagos->count())  
-                                    <input id="dec" name="dec" type="hidden" value= {{$total = 0.0}}  >
-                                
-                                    @foreach($pagos as $pago)
-                                    <input id="total" name="total" type="hidden" value={{$total+=$pago->total}}  >
-                                    <tr>
-                                    <td>{{$pago->id}}</td>
-                                
-                                    <td> {{$pago->paypal_Datos}}
-        
-                                    {{$pago->mostrador_Datos}} 
-                                                                </td>
-                                        <td>{{$pago->motivo}}</td>
-=======
                    
                     <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-info-sign"></span>{{'Registrar cobro'}}</button>
                   </form>
@@ -427,7 +400,6 @@
                               {{$pago->mostrador_Datos}} 
                                                         </td>
                                 <td>{{$pago->motivo}}</td>
->>>>>>> 2e63a26e45fb8b05f03491db29d12851710f83e1
 
                                     <td>{{$pago->fecha}}</td>
 

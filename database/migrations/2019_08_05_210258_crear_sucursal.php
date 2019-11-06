@@ -19,7 +19,7 @@ class CrearSucursal extends Migration
             $table->string('foto1');
             $table->string('foto2');
             $table->string('nombre')->require;
-            $table->string('link')->nullable();
+            $table->text('link')->nullable();
             $table->integer('codigopostal')->require;
             $table->string('estado')->require;
             $table->string('municipio')->require;

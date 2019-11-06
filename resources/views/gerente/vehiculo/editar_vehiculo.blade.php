@@ -300,9 +300,9 @@
                                             
                                             {{-- FORMULARIO DE ESTATUS DEL VEHICULO --}}
                                             
-                                            <div class="form-group col-md-4">
+                                            {{-- <div class="form-group col-md-4">
                                               <label>Estatus</label>
-                                              <select class="form-control" name="status" id="status">
+                                              <select class="form-control" name="status" id="status" onchange="Pendientes()">
                                                   <option>{{$vehi->estatus}}</option>
                                                   @if ($vehi->estatus=='ACTIVO')
                                                   <option>INACTIVO</option>                      
@@ -313,8 +313,8 @@
 
                                                   <span id="errorstatus" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                                   <span id="validostatus" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
-                                          </div> 
-                                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#picture">Subir Foto</button>
+                                          </div>  --}}
+                                          
                     </div>
 
 
@@ -397,6 +397,10 @@
                     <div class="box-footer" style="float: right">
                       <input type="submit" name="upload" id="upload" class="btn btn-primary" value="Agregar">
                       </div>
+                      <div class="box-footer" style="float: right">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#picture">Subir Foto</button>
+                        </div>
+                     
                     <div class="box-footer" style="float: right">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">Cancelar</button>
                       </div>                       
@@ -488,6 +492,28 @@
           </div>
           <div class="modal-body">
             <p>UN VEHÍCULO YA SE ENCUENTRA REGISTRADO CON EL MISMO VIN&hellip;</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+          
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#pendiente" style="display: none" id="btnpendiente">Cancelar</button>
+  <div class="modal modal-success fade" id="pendiente">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Reservas del vehiculo</b> </h4>
+          </div>
+          <div class="modal-body">
+            <p>AQUÍ VA UNA TABLA DE RESERVAS&hellip;</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
@@ -601,7 +627,18 @@
     location.reload(); 
   }
 </script>
+{{-- <script>
+  function Pendientes(){
+    var opcion= document.getElementById("status");
+    var texto = opcion.options[opcion.selectedIndex].text;
 
+    var id= document.getElementById("idvehiculo").value;
+    console.log(id);
+    if(texto=='INACTIVO'){
+      $('#btnpendiente').click(); 
+    }
+  }
+  </script> --}}
 
 <script>
   $(document).ready(function(){   
@@ -653,7 +690,7 @@
              var kilometraje = arreglo.kilometraje;                                       
              var costo = arreglo.costo;           
              var precio = arreglo.precio;
-             var status = arreglo.status;
+            //  var status = arreglo.status;
              var sucursal = arreglo.sucursal;
              var puertas = arreglo.puertas;
                        
@@ -844,16 +881,16 @@
             //console.log(nombre);
           }
 
-          if (status == undefined){  
-            $( '#status' ).css('borderColor', 'green');         
-            jQuery('#validostatus').show(); 
-            jQuery('#errorstatus').hide(); 
-            }else{
-              jQuery('#validostatus').hide(); 
-            jQuery('#errorstatus').show();          
-           $( '#status' ).css('borderColor', 'red');
-            //console.log(nombre);
-          }     
+          // if (status == undefined){  
+          //   $( '#status' ).css('borderColor', 'green');         
+          //   jQuery('#validostatus').show(); 
+          //   jQuery('#errorstatus').hide(); 
+          //   }else{
+          //     jQuery('#validostatus').hide(); 
+          //   jQuery('#errorstatus').show();          
+          //  $( '#status' ).css('borderColor', 'red');
+          //   //console.log(nombre);
+          // }     
           $('#error1').click(); 
      }
     })
