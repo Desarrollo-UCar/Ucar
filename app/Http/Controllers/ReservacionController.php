@@ -709,6 +709,8 @@ return response()->download(storage_path('Documento01.docx'));
 
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
+
+
        $request->validate([
             'reservacion'=>'required',
             'alquiler'=>'required',
