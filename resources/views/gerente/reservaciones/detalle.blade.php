@@ -43,277 +43,220 @@
             </div>
             @endif
         
-    <div class="row">
-      <div class="col-md-12">
-          <div class="box box-primary">
-              <div class="box-header">
-                  <h3 class="box-title">{{'Detalle Reservación'}} <b>{{$reservacion->id}}</b></h3>
-                  </div>
-                <div class="box-body">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">{{'Detalle Reservación'}} <b>{{$reservacion->id}}</b></h3>
+            </div>
+            <div class="box-body">
 
-        <div class="row">
-
-            <div class="col-md-8">
-
-            <h4 >Datos del <a href="">cliente </a></h4>
-                   <!-- {{$alquiler->id  }} -->
-                   
-                   <div class="col-md-6">
-                    <label>
-                      @if($cliente->credencial==null)
-                     Pasaporte
-                     @else
-                    Identificación
-                     @endif cliente</label>
-                      <input type="text" name="cliente" id="" class="form-control" disabled value="@if($cliente->credencial==null)
-                      {{$cliente->pasaporte}}
-                      @else
-                      {{$cliente->credencial}}
-                      @endif">
-                      </div>
-                      <div class="col-md-6 form-group">
-                      <label>Nombre cliente <!--{{$cliente->idCliente}}--></label>
-                      <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->nombre}} {{$cliente->primer_apellido}} {{$cliente->segundo_apellido}}">  
-                  </div>
-
-                  <div class="col-md-4 form-group">
-                      <label>Nacionalidad</label>
-                      <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->pais}}">  
-                  </div>
-
-                  <div class="col-md-2 form-group">
-                      <label>Edad</label>
-                      <input type="text" name="cliente" id="" class="form-control" disabled value="{{$edad}}">  
-                  </div>
-
-                  <div class="col-md-6 form-group">
-                      <label>Correo</label>
-                      <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->correo}}">  
-                  </div>
+<div class="row">
+    <div class="col-md-6">
+<h4 >Datos del <a href="">cliente </a></h4>
+            <!-- {{$alquiler->id  }} -->
+            
+            <div class="col-md-6">
+            <label>
+                @if($cliente->credencial==null)
+                Pasaporte
+                @else
+            Identificación
+                @endif cliente</label>
+                <input type="text" name="cliente" id="" class="form-control" disabled value="@if($cliente->credencial==null)
+                {{$cliente->pasaporte}}
+                @else
+                {{$cliente->credencial}}
+                @endif">
                 </div>
-                </div>
-
-  
- 
-         
-                  <div class="row">
-                      <div class="col-md-8">
-                          <h4 ><br>Datos de la reservación</h4>
-                  <div class="col-md-6">
-                      <label>Fecha Reservación</label>
-                      <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
-                  </div>
-                    
-                  <div class="col-md-6  form-group">
-                      <label>Precio Total</label>
-                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->total}}">
-                  </div>
-
-
-                @if($reservacion->saldo==0)
-                  <h3>Se pagó el total de la reservación</h3>
-                  @endif 
-
                 <div class="col-md-6 form-group">
-                    <label>Saldo</label>
-                    <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->saldo}}">
-                  </div>
-             
-                  <div class="row">
-                    {{-- <div class="col-md-4">
-                      @if($alquiler->estatus!='cancelado'&&$alquiler->estatus!='terminado')
-                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-warning2">
-                          <b>Registrar cobro </b>
-                        </button>
+                <label>Nombre cliente <!--{{$cliente->idCliente}}--></label>
+                <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->nombre}} {{$cliente->primer_apellido}} {{$cliente->segundo_apellido}}">  
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label>Nacionalidad</label>
+                <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->pais}}">  
+            </div>
+
+            <div class="col-md-2 form-group">
+                <label>Edad</label>
+                <input type="text" name="cliente" id="" class="form-control" disabled value="{{$edad}}">  
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label>Correo</label>
+                <input type="text" name="cliente" id="" class="form-control" disabled value="{{$cliente->correo}}">  
+            </div>
+
+<h4 ><br>Datos de la reservación</h4>
+            <div class="col-md-6">
+                <label>Fecha Reservación</label>
+                <input type="text" name="fecha Reservacion" id="" class="form-control" disabled value="{{$reservacion->fecha_reservacion}}">
+            </div>
+            
+            <div class="col-md-6  form-group">
+                <label>Precio Total</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->total}}">
+            </div>
+            @if($reservacion->saldo==0)
+                <h3>Se pagó el total de la reservación</h3>
+            @endif 
+            <div class="col-md-6 form-group">
+                <label>Saldo</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$reservacion->saldo}}">
+            </div>
+            <div class="col-md-7">
+                <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#cobros">
+                <b>Ver cobros </b>
+                </button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#reembolso">
+                <b>Ver reembolso </b>
+                </button>
+            </div>
+    </div>
+    <div class="col-md-6">
+            <h4 >Datos del <a href="">vehículo </a></h4> 
+            <div class="col-md-6 form-group">
+                <label>Tipo</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->tipo}}">
+            </div>
+    
+            <div class="col-md-6 form-group">
+                <label>Modelo</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}">
+            </div>
+    
+            <div class="col-md-6 form-group">
+                <label>Vin</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->vin}}">
+            </div>
+    
+            <div class="col-md-6 form-group">
+                <label>Placas</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->matricula}}">
+                </div>
+    
+            <div class="col-md-6 form-group">
+                <label>Fecha Entrega</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_recogida}}">
+            </div>
+            
+            <div class="col-md-6 form-group">
+                <label>Hora</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
+                </div>
+    
+                <div class="col-md-6 form-group">
+                <label>Fecha Devolución</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
+            </div>
+    
+            <div class="col-md-6 form-group">
+                <label>Hora</label>
+                <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado'&&$alquiler->estatus!='en curso')
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
+                        <b>Cambiar VEHÍCULO</b>
+                    </button>
+                    @else
+                    <button type="button" class="btn btn-danger" data-toggle="modal"  disabled data-target="">
+                        <b>Cambiar VEHÍCULO</b>
                         @endif
-                      </div>
-                      <div class="col-md-4">
-                        @if($alquiler->estatus!='cancelado'&&$alquiler->estatus!='terminado')
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#registrar_reintegro">
-                            <b>Registrar reembolso </b>
-                          </button>
-                          @endif
-                        </div> --}}
-                      <div class="col-md-7">
-                      <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#cobros">
-                        <b>Ver cobros </b>
-                      </button>
                     </div>
+    </div>
+</div>
+ 
+<div class="row">
+    <div class="col-md-6">
+        <h4 ><br>Datos del conductor</h4>
+        <form id="datos" >
+            @csrf
+            <input type="text" name="reservacion"  style="display: none" value= "{{$reservacion->id}}">
+            <input type="text" name="alquiler"  style="display: none" value= "{{$alquiler->id}}">
+                
+            <div class="col-md-6 form-group">
+                <label>Número Licencia</label>
+                <input type="text" name="numero" id="numero" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
 
-                    <div class="row">
+                <span id="errornumero" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                <span id="validonumero" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+            </div>
 
-                        <div class="col-md-4">
-                        <button type="button" class="btn btn-sucess" data-toggle="modal" data-target="#reembolso">
-                          <b>Ver reembolso </b>
-                        </button>
-                      </div>
-                    </div>
-                      
-  
+            <div class="col-md-6 form-group">
+                <label>Nombre conductor</label>                       
+                <input type="text" name="nombre" id="nombre" class="form-control"  value="{{$alquiler->nombreConductor}} " required>                   
 
-              <div class="row">
-                <div class="col-md-8">
-                    <h4 ><br>Datos del <a href="">vehículo </a></h4> 
+                <span id="errornombre" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                <span id="validonombre" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+            </div>
 
+                
+            <div class="col-md-6 form-group">
+                <label>Fecha expedición</label>                        
+                <input type="date" name="fecha_e" id="fecha_e" class="form-control"  value="{{date($alquiler->expedicion_licencia)}}"  onblur="validar_fecha();">
+                
+                <span id="errorfecha_e" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                <span id="validofecha_e" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+            </div>
 
-                   <div class="col-md-6 form-group">
-                     <label>Tipo</label>
-                     <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->tipo}}">
-                   </div>
+                
+            <div class="col-md-6 form-group">
+                <label>Fecha expiración</label>
+                <input type="date" name="fecha_c" id="fecha_c" class="form-control"  value="{{date($alquiler->expiracion_licencia)}}"  onblur="validar_fecha();">
 
-                   <div class="col-md-6 form-group">
-                      <label>Modelo</label>
-                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->marca}} {{$vehiculo->modelo}}">
-                    </div>
+                <span id="errorfecha_c" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
+                <span id="validofecha_c" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
+            </div>
+            @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado'&&$alquiler->estatus!='en curso')
+            <button type="submit" id="enviar" class="btn btn-primary pull-right">Agregar</button>
+            @endif
+        </form>
+    </div>
 
-                    <div class="col-md-6 form-group">
-                      <label>Vin</label>
-                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->vin}}">
-                    </div>
+    <div clas="col-md-6">
+        <h4 ><br>Servicios Extras Reservados </h4>.
+        <div class="col-md-6 form-group">
+            <table border="1">
+                <body>
+                    <th>Nombre</th><th>Descripción</th>
+                    @if($servicios->count())  
+                        @foreach($servicios as $servicio) 
+                        <tr><td>{{$servicio->nombre}}</td><td>{{$servicio->descripcion}}</td></tr>
+                        @endforeach
+                        @else
+                            <tr><td>No hay extras reservados!</td></tr>
+                    @endif
+                </body>
+            </table>
+        </div>
+    </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>Placas</label>
-                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$vehiculo->matricula}}">
-                      </div>
+    <div class="col-md-11">
+        <div class="box-footer" style="float: right">
 
-                    <div class="col-md-6 form-group">
-                      <label>Fecha Entrega</label>
-                      <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_recogida}}">
-                    </div>
-                    
-                    <div class="col-md-6 form-group">
-                        <label>Hora</label>
-                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
-                      </div>
-  
-                     <div class="col-md-6 form-group">
-                       <label>Fecha Devolución</label>
-                       <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->fecha_devolucion}}">
-                    </div>
+        @if($alquiler->estatus=="pendiente_recogida")
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
+        <b>Cancelar</b>
+        </button>
+        @if($vehiculo->estatus=='ACTIVO'&&$alquiler->nombreConductor!="por rellenar"&&$alquiler->expedicion_licencia!="por rellenar"&&$alquiler->num_licencia!="por rellenar"&&$alquiler->expiracion_licencia!="por rellenar"&&$alquiler->estatus!='en curso'&&date("Y-m-d")>=$alquiler->fecha_recogida)
+        <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
+        @endif
+        @elseif($alquiler->estatus=="en curso")
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#recibir">
+        <b>Recibir</b>
+        </button>
+        @endif
+        </div>                       
+    </div>  
 
-                    <div class="col-md-6 form-group">
-                        <label>Hora</label>
-                        <input type="text" name="nombre" id="" class="form-control" disabled value="{{$alquiler->hora_recogida}}">
-                      </div>
-                      <div class="col-md-2 form-group">
-                          @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado'&&$alquiler->estatus!='en curso')
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning4">
-                              <b>Cambiar VEHÍCULO</b>
-                            </button>
-                            @else
-                            <button type="button" class="btn btn-danger" data-toggle="modal"  disabled data-target="">
-                                <b>Cambiar VEHÍCULO</b>
-                                @endif
-                            </div>
-                  </div>
-                </div>
-
-                  <div class="row">
-                    <div class="col-md-8">
-                        <h4 ><br>Datos del conductor</h4>
-
-                        <form id="datos" >
-                          @csrf
-                            <input type="text" name="reservacion"  style="display: none" value= "{{$reservacion->id}}">
-                            <input type="text" name="alquiler"  style="display: none" value= "{{$alquiler->id}}">
-                        
-                  <div class="col-md-6 form-group">
-                      <label>Número Licencia</label>
-                  <input type="text" name="numero" id="numero" class="form-control" value="{{$alquiler->num_licencia}}"  title="Escriba numero de licencia">
-
-                  <span id="errornumero" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                  <span id="validonumero" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
-                 
-                    </div>
-
-                    <div class="col-md-6 form-group">
-                        <label>Nombre conductor</label>                       
-                        <input type="text" name="nombre" id="nombre" class="form-control"  value="{{$alquiler->nombreConductor}} " required>                   
-
-                        <span id="errornombre" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                        <span id="validonombre" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
-                      </div>
-
-                      
-                    <div class="col-md-6 form-group">
-                        <label>Fecha expedición</label>                        
-                        <input type="date" name="fecha_e" id="fecha_e" class="form-control"  value="{{date($alquiler->expedicion_licencia)}}">
-                      
-                        <span id="errorfecha_e" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                        <span id="validofecha_e" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
-                      </div>
-
-                      
-                    <div class="col-md-6 form-group">
-                        <label>Fecha expiración</label>
-                       
-                        <input type="date" name="fecha_c" id="fecha_c" class="form-control"  value="{{date($alquiler->expiracion_licencia)}}">
-                        <span id="errorfecha_c" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
-                        <span id="validofecha_c" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span>
-                 </div>
-                 @if($alquiler->estatus!='terminado'&&$alquiler->estatus!='cancelado'&&$alquiler->estatus!='en curso')
-                 <button type="submit" id="enviar" class="btn btn-primary pull-right">Agregar</button>
-                @endif
-                  </form>
-                  </div>
-                </div>
-
-
-                  <div class="row">
-                    <div clas="col-md-8">
-                        <h4 ><br>Servicios Extras Reservados </h4>.
-
-                        <div class="col-md-6 form-group">
-                            <table border="1">
-                                     <body>
-
-                                      <th>Nombre</th>
-                                       <th>Descripción</th>
-                                       
-                                            @if($servicios->count())  
-                                            @foreach($servicios as $servicio) 
-                                            <tr>
-                                        <td>{{$servicio->nombre}}</td>
-                                        <td>{{$servicio->descripcion}}</td>
-                                        </tr>
-                                      @endforeach
-                                      @else
-                                      <tr>
-                                      <td>No hay extras reservados!</td>
-                                      </tr>
-                                      @endif
-                                     </body>
-
-                                      </table>
-                        </div>
-                    </div>
-
-                  </div>
-
-               
-                <div class="row">
-                  <div class="col-md-12">
-                      <div class="box-footer" style="float: right">
-
-                      @if($alquiler->estatus=="pendiente_recogida")
-                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">
-                        <b>Cancelar</b>
-                      </button>
-                      @if($vehiculo->estatus=='ACTIVO'&&$alquiler->nombreConductor!="por rellenar"&&$alquiler->expedicion_licencia!="por rellenar"&&$alquiler->num_licencia!="por rellenar"&&$alquiler->expiracion_licencia!="por rellenar"&&$alquiler->estatus!='en curso'&&date("Y-m-d")>=$alquiler->fecha_recogida)
-                      <a href="{{route('contrato', $reservacion)}}" class="btn btn-success"><b>Entregar</b></a>
-                      @endif
-                      @elseif($alquiler->estatus=="en curso")
-                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#recibir">
-                        <b>Recibir</b>
-                      </button>
-                      @endif
-                        </div>                       
-                    </div>  
-                  </div>  
-
-             
+</div>       
    
-
+ <!-- ----------------------------------------------------------------------seccion de modales----------------------------------------------------------------------------- -->
 
         <div class="modal modal-danger fade" id="modal-warning">
             <div class="modal-dialog">
@@ -992,4 +935,34 @@
       });
            });
       </script>
+<script>   
+    function validar_fecha(){
+        var expedicion = document.getElementById("fecha_e").value;
+        var vencimiento = document.getElementById("fecha_c").value;
+        //--------------
+        console.log(expedicion);
+        console.log(expedicion);
+        var expedicion  = new Date(expedicion);
+        var vencimiento = new Date(vencimiento);
+        var hoy =  new Date();
+    if(expedicion != null && vencimiento != null){
+        if(vencimiento < expedicion ){
+            alert("Fecha invalida!! La fecha de vencimiento no puede ser menor a la de expedición");
+            document.getElementById("fecha_e").value = null;
+            document.getElementById("fecha_c").value = null;
+        }
+        if(expedicion > hoy){
+            alert("Licencia de conducir no existente");
+            document.getElementById("fecha_e").value = null;
+            document.getElementById("fecha_c").value = null;
+        }
+        if(vencimiento < hoy){
+            alert("La licencia ya vencio");
+            document.getElementById("fecha_e").value = null;
+            document.getElementById("fecha_c").value = null;
+        }
+    }
+                
+    };
+</script>
 @endsection

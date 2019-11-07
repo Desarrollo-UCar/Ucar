@@ -22,7 +22,6 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use App\reintegros;
 use Mail;
 
-
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
 
@@ -750,7 +749,7 @@ return response()->download(storage_path('Documento01.docx'));
         $vehiculo->kilometraje = $request['km'];
         $vehiculo->save();
         //enviar correo al cliente cuando entrega el cehiculo
-        $asunto = 'Entrega de vehículo Ü-CAR';
+        $asunto = 'Gracias por tu reservación en Ü-CAR';
         $sucursal = App\Sucursal::findOrFail($alquiler->lugar_recogida);
         $cliente  = App\cliente::findOrFail($reservacion->id_cliente);
         $correo = $cliente->correo; 
