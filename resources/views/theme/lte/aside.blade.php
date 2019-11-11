@@ -110,8 +110,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('vehiculo.index')}}"><i class="fa fa-circle-o"></i>Nuevo</a></li>
-              <li><a href="{{ route('mantenimiento.index') }}"><i class="fa fa-circle-o"></i>Ver Mantenimientos</a></li>
+              <li><a href="{{ route('vehiculo.index')}}"><i class="fa fa-circle-o"></i>Mantenimientos</a></li>
+              <li><a href="{{ route('printBITACORA') }}"><i class="fa fa-circle-o"></i>Bitacora {{date('Y')}}</a></li>
             </ul>
           </li> 
 

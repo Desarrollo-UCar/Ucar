@@ -12,6 +12,7 @@ use App\Vehiculo;
 use PDF;
 use mpdf;
 use App;
+use App\mantenimientos;
 use DB;
 use App\VehiculoSucursales;
 use App\traslado_temp;
@@ -342,6 +343,33 @@ class ReservacionController extends Controller
 
     }
 
+
+          /**
+     * Display the specified resource.
+     *
+     * @param  \App\reservacion  $reservacion
+     * @return \Illuminate\Http\Response
+     */
+    public function printBITACORA(reservacion $reservacion)
+    {
+        $mantenimientos= mantenimientos::
+        JOIN('vehiculos','vehiculos.idvehiculo','=','mantenimientos.vehiculo')->orderBy('mantenimientos.vehiculo','asc')
+        ->orderBy('mantenimientos.fecha_salida','ASC')->select('*','mantenimientos.tipo as tipom')
+        ->whereYEAR('mantenimientos.fecha_salida',' =',date('Y'))->get();
+
+        //  return $manteni mientos;
+        $data = [
+         'title' => 'Contrato',
+         'heading' => 'RENTA DE AUTOS Y SCOOTERS',
+         'content' => '',
+         'mantenimientos' => $mantenimientos
+   ];
+   
+         
+       $pdf = PDF::loadView('pdf_view', $data);  
+       return $pdf->stream('contrato.pdf');
+
+    }
         /**
      * Display the specified resource.
      *
@@ -350,6 +378,9 @@ class ReservacionController extends Controller
      */
     public function printPDF(reservacion $reservacion)
     {
+                //return response()->json($r);
+       // This  $data array will be passed to our PDF blade
+
 
         //return response()->json(date('Y\-m\-d H\:i\:s'));
         //$pdf = PDF::loadView('index', $reservacion);  
@@ -377,7 +408,7 @@ $reservacion = $alquiler->id_reservacion;
 
 
 // --- Asignamos valores a la plantilla
-$templateWord->setValue('Reservacion',$reservacion);
+$templateWord->setValue('reservacion',$reservacion);
 $templateWord->setValue('nombre',$nombre);
 $templateWord->setValue('direccion',$direccion);
 $templateWord->setValue('correo',$correo);
@@ -410,24 +441,10 @@ Settings::setPdfRendererPath('.');
 $phpWord = IOFactory::load(storage_path('Documento01.docx'), 'Word2007');
 $phpWord->save(storage_path('result.pdf'), 'PDF');
 
-return response()->download(storage_path('Documento01.docx'));
+return response()->download(storage_path('result.pdf'));
 
 //FIN GENERAR WORD
 
-        //return response()->json($r);
-       // This  $data array will be passed to our PDF blade
-       $data = [
-          'title' => 'Contrato',
-          'heading' => 'RENTA DE AUTOS Y SCOOTERS',
-          'content' => '',
-        'nombre' => $cliente->nombre,
-        'ap' => $cliente->primer_apellido,
-        'am' => $cliente->segundo_apellido
-    ];
-    
-          
-        $pdf = PDF::loadView('pdf_view', $data);  
-        return $pdf->stream(' contrato.pdf');
     }
 
             /**
@@ -730,6 +747,7 @@ return response()->download(storage_path('Documento01.docx'));
             $alquiler->expedicion_licencia = $request['fecha_e'];
             $alquiler->expiracion_licencia = $request['fecha_c'];
             $alquiler->save();
+
             return response()->json(['success'=>'EXITO']);          
     }
  

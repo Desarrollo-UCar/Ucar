@@ -156,3 +156,5 @@ Route::resource('marca', 'MarcaVehiculoController');
 Route::post('marcasmodelos','VehiculoController@Consultar')->name('marcasmodelos');
 
 Route::get('indexAndroid','ReservacionController@indexAndroid')->name('indexAndroid');
+
+Route::get('printBitacora','ReservacionController@printBITACORA')->name('printBITACORA');
