@@ -38,11 +38,11 @@
                   <div class="box-body">           
                                                         
                                        
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                      
                       {{-- FORMULARIO DE NUMERO VIN DEL VEHICULO --}}
                       
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                             <label>Número VIN</label>
                           <input type="text" name="vin" id="vin" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" 
                          maxlength="17">
@@ -55,7 +55,7 @@
 
                         {{-- FORMULARIO PLACAS DEL VEHICULO --}}
                         
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                             <label>Placas</label>
                           <input type="text" name="matricula" id="matricula" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" >
                           
@@ -67,7 +67,7 @@
                         
                      
                            
-                          <div class="form-group col-md-6">
+                          <div class="form-group col-md-4">
                             <label>Marca</label>                            
                             <select class="form-control" name="marca" id="marca" onchange="consulta()">
                               @foreach ($marca as $marca)
@@ -83,7 +83,7 @@
 
                           {{-- FORMULARIO DE MODELO DEL VEHICULO --}}
                           
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-4 form-group">
                             <label>Modelo</label>
                             <select class="form-control" name="modelo" id="modelo" onchange="consulta()">
                               <option value="">Ninguno</option>                           
@@ -96,7 +96,7 @@
 
                           {{-- FROMULARIO AÑO DEL VEHICULO --}}
                           
-                          <div class="col-md-6 form-group">
+                          <div class="col-md-4 form-group">
                               <label>Año</label>
                               <?php
                                   $cont = date('Y')+1;
@@ -115,7 +115,7 @@
                             
                             {{-- FROMULARIO TRANSMISION DEL VEHICULO --}}
                             
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label>Transmisión </label>
                                 <select class="form-control" id="transmision" name="transmision">            <option>MANUAL</option>
                                   <option>AUTOMÁTICO</option>
@@ -126,7 +126,7 @@
 
                             {{-- FORMULARIO RENDIMIENTO DEL VEHICULO --}}
                             
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <label>Rendimiento (km/ltr)</label>
                                     <input type="number" name="rendimiento" id="rendimiento" class="form-control" min="0">
 
@@ -135,7 +135,7 @@
                                   </div>
 
                                   {{-- FORMULARIO PUERTAS --}}
-                                  <div class="form-group col-md-6">
+                                  <div class="form-group col-md-4">
                                     <label>Puertas</label>
                                     <select class="form-control" name="puertas" id="puertas">
                                       <option>2</option> 
@@ -151,7 +151,7 @@
                                         
                               {{-- FORMULARIO COLOR DEL VEHICULO --}}
                                                     
-                              <div class="col-md-6 form-group">
+                              <div class="col-md-4 form-group">
                                   <label>Color</label>
                                   <input type="text" name="color" id="color" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
 
@@ -162,7 +162,7 @@
                                 
                                 {{-- FORMULARIO TIPO DEL VEHICULO --}}
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                   <label>Tipo</label>
                                   <select class="form-control" name="tipo" id="tipo">
                                     @foreach ($categoria as $categoria)
@@ -176,7 +176,7 @@
 
                                 {{-- FORMULARIO CANTIDAD DE PASAJEROS DEL VEHICULO  --}}
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Pasajeros</label>
                                     <input type="number" name="pasajeros" id="pasajeros" class="form-control" max="99" min="0">      
                                     <span id="errorpasajeros" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
@@ -187,7 +187,7 @@
 
                                 {{-- FORMULARIO MALETERO DEL VEHICULO --}}
                                 
-                                  <div class="col-md-6 form-group">
+                                  <div class="col-md-4 form-group">
                                       <label>Maletero</label>
                                       <input type="text" name="maletero" id="maletero" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">                                      
 
@@ -197,7 +197,7 @@
 
                                     {{-- FORMULARIO CILINDROS DEL VEHICULO --}}
                                     
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         <label>Cilindros</label>
                                         <select class="form-control" id="cilindros" name="cilindros"> 
                                           <option>4</option>
@@ -211,7 +211,7 @@
                                       
                                     {{-- FORMULARIO KILOMETRAJE DEL VEHICULO --}}
                                     
-                                      <div class="col-md-6 form-group">
+                                      <div class="col-md-4 form-group">
                                           <label>Kilometraje</label>
                                           <input type="number" step="0.00" name="kilometraje" id="kilometraje" min="0.00" class="form-control" >
 
@@ -221,7 +221,7 @@
 
                                         {{-- FORMULARIO PRECIO COMPRA --}}
                                         
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-4 form-group">
                                               <label>Precio compra</label>
                                               <input type="number" step="0.01" name="costo" class="form-control" min="0.00" placeholder="0.00" id="costo">                                 
 
@@ -232,7 +232,7 @@
 
                                             {{-- FORMULARIO PRECIO DE RENTA --}}
                                             
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-4 form-group">
                                                 <label>Precio renta</label>
                                                 <input type="number" step="0.01" min="0" name="precio" id="precio" placeholder="0.00" min="0.00" class="form-control">
 
@@ -242,7 +242,7 @@
 
                                               {{-- FORMULARIO DESCRIPCION --}}
                                               
-                                              <div class="col-md-6 form-group">
+                                              <div class="col-md-4 form-group">
                                                 <label>descripción</label>
                                                 <input type="text" name="descripcion" id="descripcion" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();">
                                                 
@@ -253,7 +253,7 @@
 
                                               {{-- FORMULARIO SUCURSAL DEL VEHICULO --}}
                                               
-                                             <div class="form-group col-md-6">
+                                             <div class="form-group col-md-4">
                                                 <label>Sucursal</label>
                                                 <select class="form-control" name="sucursal" id="sucursal">
                                                   @foreach ($sucursal as $sucursal)
@@ -266,24 +266,33 @@
                                                 <span id="validosucursal" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
                                             </div>  
                                             
-                                            {{-- FORMULARIO DE ESTATUS DEL VEHICULO --}}
+                                            {{-- FORMULARIO DE ESTATUS DEL VEHICULO
                                             
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                               <label>Estatus</label>
                                               <select class="form-control" name="status" id="status">
                                                 <option>ACTIVO</option> 
-                                                <option>INACTIVO</option>
+                                                 <option>INACTIVO</option>
                                               </select>                                              
 
                                                   <span id="errorstatus" class="glyphicon glyphicon-remove form-control-feedback" style="color:red;display: none;"></span>
                                                   <span id="validostatus" class="glyphicon glyphicon-ok  form-control-feedback" style="color:green;display: none;"></span> 
-                                          </div>  
+                                          </div>  --}}
                     </div>
 
 
-                    {{-- FORMULARIO PARA SUBIR FOTO DEL VEHICULO --}}
                     
-                    <div class="col-md-6">
+                    <div class="modal modal-info fade" id="picture">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Alta Vehículo</h4>
+                          </div>
+                          <div class="modal-body">
+                          
+                    <div class="col-md-12">
                       <div class="col-md-6">
                         <div id="preview" style="margin-top: 5%;">
                           <div class="alert" id="message" style="display: none"></div>
@@ -329,7 +338,22 @@
             </div> 
       </div>
     
-                  </div> 
+                  </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-outline" data-dismiss="modal">Continuar</button>
+                            
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal ---->
+                    
+
+                    {{-- FORMULARIO PARA SUBIR FOTO DEL VEHICULO --}}
+                     
                   <!-- /.box-body -->
                  
               <div class="row">
@@ -337,6 +361,10 @@
                     <div class="box-footer" style="float: right">
                       <input type="submit" name="upload" id="upload" class="btn btn-primary" value="Agregar">
                       </div>
+                      <div class="box-footer" style="float: right">
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#picture" >Subir Foto</button>
+                        </div>
+
                     <div class="box-footer" style="float: right">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-warning">Cancelar</button>
                       </div>                       
@@ -588,7 +616,7 @@ document.getElementById("foto").onchange = function(e) {
              var kilometraje = arreglo.kilometraje;                                       
              var costo = arreglo.costo;           
              var precio = arreglo.precio;
-             var status = arreglo.status;
+            //  var status = arreglo.status;
              var sucursal = arreglo.sucursal;
              var puertas = arreglo.puertas;
              var foto = arreglo.foto;       
@@ -812,16 +840,16 @@ document.getElementById("foto").onchange = function(e) {
             //console.log(nombre);
           }
 
-          if (status == undefined){  
-            $( '#status' ).css('borderColor', 'green');         
-            jQuery('#validostatus').show(); 
-            jQuery('#errorstatus').hide(); 
-            }else{
-              jQuery('#validostatus').hide(); 
-            jQuery('#errorstatus').show();          
-           $( '#status' ).css('borderColor', 'red');
-            //console.log(nombre);
-          }
+          // if (status == undefined){  
+          //   $( '#status' ).css('borderColor', 'green');         
+          //   jQuery('#validostatus').show(); 
+          //   jQuery('#errorstatus').hide(); 
+          //   }else{
+          //     jQuery('#validostatus').hide(); 
+          //   jQuery('#errorstatus').show();          
+          //  $( '#status' ).css('borderColor', 'red');
+          //   //console.log(nombre);
+          // }
           $('#error1').click();
      }
     })

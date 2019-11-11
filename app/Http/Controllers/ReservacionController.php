@@ -736,10 +736,15 @@ return response()->download(storage_path('result.pdf'));
             'fecha_c'=>'required|date',
         ]);
         
+        if($request['fecha_e']>=$date){
+            return response()->json(['success'=>'FECHAS']); 
+        }
+        
         if($request['fecha_e']>=$request['fecha_c']){
             return response()->json(['success'=>'FECHAS']); 
         }   
 
+         
             $alquiler = Alquiler::where('id','=',$request['alquiler'])->first();
 
             $alquiler->num_licencia = $request['numero'];

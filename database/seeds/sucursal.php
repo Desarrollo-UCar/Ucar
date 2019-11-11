@@ -66,3 +66,4 @@ class sucursal extends Seeder
     }
 }
 
+

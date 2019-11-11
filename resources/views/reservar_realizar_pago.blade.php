@@ -264,8 +264,8 @@
     
     <!-- Large modal -->
     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> --}}
-    
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <section id="inner-headline" >
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="margin-top: 3%;">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
                 <div class="modal-header" style="background: cornflowerblue;">
@@ -456,7 +456,7 @@
       </div>
     </div>
     </div> {{-- AQUI TERMINA EL MODAL  --}}
-
+  </section>
     {{-- MODAL PARA NOTIFICAR QUE NO SE PUEDE AGREGAR UN CLIENTE MENOR DE 18 AÑOS --}}
 
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rango" style="display: none" id="rango1">Cancelar</button>
