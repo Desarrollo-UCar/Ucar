@@ -115,7 +115,8 @@ class mantenimientoController extends Controller
 
         // return $reservas;
         if(count($reservas)>0){
-            return back()->with('curso',$reservas);
+            return back()->with('curso',$reservas)
+                         ->withInput();
         }
         
        if(($request->validate([
