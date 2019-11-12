@@ -28,10 +28,10 @@
             <table id="example" class="display nowrap " style="width:100%">
                 <thead>
                     <tr>
-                      <th>Número</th>
-                      <th>Fecha de reservacion</th>
+                      <th><small>N/P</small></th>
+                      <th>Fecha reservacion</th>
                       <th>Cliente</th>
-                      <th>identificación/Pasaporte</th>
+                      <th><small>identificación/Pasaporte</small></th>
                       <th>Vehiculo</th>
                       <th>Placas</th>
                       <th>Fecha entrega</th>
@@ -89,7 +89,7 @@
      <script>
      $(document).ready(function() {
           $('#example').DataTable( {
-            "scrollY":"400px",
+            "scrollY":"380px",
             "scrollX": true,
             "language": {
               "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

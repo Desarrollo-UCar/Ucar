@@ -98,6 +98,7 @@ Route::resource('cliente', 'ClienteController');
 Route::get('mostrarmantenimiento', 'MantenimientoController@mostrar')->name('mostrarmantenimiento');
 Route::get('enviarmantenimiento', 'MantenimientoController@enviar')->name('enviarmantenimiento');
 Route::get('editarmantenimieto', 'MantenimientoController@modificar')->name('modificarmantenimiento');
+Route::get('cancelarmantenimieto', 'MantenimientoController@cancelar')->name('cancelarmantenimiento');
 Route::get('historialmantenimieto', 'MantenimientoController@Historial')->name('historialmantenimiento');
 Route::get('confirmarmantenimieto', 'MantenimientoController@Confmante')->name('confmante');
 Route::get('modificar','EmpleadoController@modificar')->name('modificarempleado');
