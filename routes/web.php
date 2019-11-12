@@ -163,3 +163,4 @@ Route::post('marcasmodelos','VehiculoController@Consultar')->name('marcasmodelos
 Route::get('indexAndroid','ReservacionController@indexAndroid')->name('indexAndroid');
 
 Route::get('printBitacora','ReservacionController@printBITACORA')->name('printBITACORA');
+Route::get('reporteMantenimientos','ReportesController@mantenimientos')->name('reporteMantenimientos');
