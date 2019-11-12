@@ -53,9 +53,9 @@
 <section id="mensaje-intermedio">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-            <h4>Renta un automovil en <strong>{{$sucursal->nombre}}</strong> </h4>
+            <h4>Renta un automóvil en <strong>{{$sucursal->nombre}}</strong> </h4>
             <p>
-            Ü-CAR tiene la mejor flota de vehiculos para tus necesidades. Tenemos ofertas y promociones para ti.
+            Ü-CAR tiene la mejor flota de vehículos para tus necesidades. Tenemos ofertas y promociones para ti.
             </p>
         </div>
     </div>
