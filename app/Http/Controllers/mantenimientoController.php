@@ -88,7 +88,7 @@ class mantenimientoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        //return $request;
+        //  return $request;
         $servicios =$request['servicios'];
         $carbon = new \Carbon\Carbon();
         $date = $carbon->now();
@@ -100,12 +100,25 @@ class mantenimientoController extends Controller
         }
         if($request['fecha_salida']!=null){
             if($request['fecha_salida']<$hoy ||$request['fecha_salida']<$request['fecha_ingresa']){
-                return back()->with('mensaje','INTRODUZCA LA FECHA DE INGRESO CORRECTAMENTE :)');
+                return back()->with('mensaje','INTRODUZCA LA FECHA DE REGRESO CORRECTAMENTE :)');
             }
         }
         if($request['fecha_ingresa']==null){
             return back()->with('mensaje','LAS FECHAS SON INCORRECTAS :)');
         }
+
+        $reservas = Alquiler::where('id_vehiculo',$request['idvehiculo'])
+         ->where('fecha_recogida','>=',$request['fecha_ingresa'])
+        ->where('fecha_recogida','<=',$request['fecha_salida'])
+        ->orderBy('id','asc')
+        ->get();
+
+        // return $reservas;
+        if(count($reservas)>0){
+            return back()->with('curso',$reservas)
+                         ->withInput();
+        }
+        
        if(($request->validate([
             'tipo' => 'required',
             'fecha_ingresa' => 'required',
