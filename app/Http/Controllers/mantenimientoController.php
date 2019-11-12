@@ -124,12 +124,6 @@ class mantenimientoController extends Controller
                     'updated_at'=>$date
                    ]
                );
-               $vehiculo->update(
-                [
-                 'estatus'=> 'MANTENIMIENTO',
-                 'updated_at'=>$date
-                ]
-                );
            }else{
                 //progrmar mantenimientos ... inserrtar en mantenimiento
            }
@@ -206,12 +200,6 @@ class mantenimientoController extends Controller
                     'updated_at'=>$date
                    ]
                );
-               $vehiculo->update(
-                [
-                 'estatus'=> 'MANTENIMIENTO',
-                 'updated_at'=>$date
-                ]
-                );
                 $mantenimiento->update(
                 [
                     'status'=> 'CURSO',

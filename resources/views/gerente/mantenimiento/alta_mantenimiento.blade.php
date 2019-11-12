@@ -95,7 +95,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-6 col-md-offset-4">
-                    <label>--Lista de mantenimientos realizados al vehículo--<label>
+                    <label>--Lista de mantenimientos del vehículo--<label>
                     </div>
                 </div>  
             </div>
@@ -130,12 +130,12 @@
                           @if ($mante->fecha_ingresa==null)
                           <td style="text-align: center;">----------------</td>
                           @else
-                          <td >{{$mante->fecha_ingresa}}</td>
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_ingresa))}}</td>
                           @endif 
                           @if ($mante->fecha_salida==null)
                           <td style="text-align: center;">----------------</td>
                           @else
-                          <td >{{$mante->fecha_salida}}</td>
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_salida))}}</td>
                           @endif
                           <td >{{$mante->status}}</td>
 @if($mante->status == 'ESPERA' & $mante->fecha_ingresa >= date("Y-m-d"))

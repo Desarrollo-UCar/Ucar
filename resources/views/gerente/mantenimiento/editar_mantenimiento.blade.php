@@ -34,8 +34,7 @@
     @if (session()->has('mensaje'))
     <div class="alert alert-danger" role="alert">{{session('mensaje')}}</div>                                    
     @endif 
-            <div class="box box-primary"> 
-                          
+            <div class="box box-primary">           
                 <div class="box-header with-border">
                   <h3 class="box-title">Nuevo mantenimiento</h3>
                 </div>
