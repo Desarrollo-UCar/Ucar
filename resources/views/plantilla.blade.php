@@ -34,12 +34,12 @@
       
     <div class="container">
         <div class="row nomargin">
-        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                     <div class="logo">
-                                    <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:25%"/></a>
+                                    <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:45%"/></a>
                                     </div>
                                   </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+        <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
             <div class="navbar">
               <div class="navigation">
                 <nav>
@@ -98,6 +98,15 @@
                         </div>
                     </li>
                     @endif
+<li  class="dropdown">
+    <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled  fa fa-facebook-square fa-2x active icon-1x"></i></a>
+</li>
+<li  class="dropdown">
+    <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled  fa fa-instagram fa-2x active icon-1x"></i></a>
+</li>
+<li  class="dropdown">
+    <a href="https://twitter.com/ucarmx"><i class="ico icon-circled  fa fa-twitter fa-2x active icon-1x"></i></a>
+</li>
                   </ul>
                 </nav>
               </div>

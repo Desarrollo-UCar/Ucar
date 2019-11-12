@@ -137,12 +137,6 @@ class mantenimientoController extends Controller
                     'updated_at'=>$date
                    ]
                );
-               $vehiculo->update(
-                [
-                 'estatus'=> 'MANTENIMIENTO',
-                 'updated_at'=>$date
-                ]
-                );
            }else{
                 //progrmar mantenimientos ... inserrtar en mantenimiento
            }
@@ -219,12 +213,6 @@ class mantenimientoController extends Controller
                     'updated_at'=>$date
                    ]
                );
-               $vehiculo->update(
-                [
-                 'estatus'=> 'MANTENIMIENTO',
-                 'updated_at'=>$date
-                ]
-                );
                 $mantenimiento->update(
                 [
                     'status'=> 'CURSO',
@@ -265,9 +253,7 @@ class mantenimientoController extends Controller
     }
 
 
-    public function show(Request $mantenimientos)
-    {
-        //
+    public function show(Request $mantenimientos){
         $mantenimiento = mantenimientos::join('vehiculos','idvehiculo','=','mantenimientos.vehiculo')
         ->select('mantenimientos.*','vehiculos.*')->get();
         $datos = mantenimientos::all();
@@ -383,11 +369,23 @@ class mantenimientoController extends Controller
         }
             return back()->with('msj','DATOS GUARDADOS EXITOSAMENTE :)');
         }
-
-        
-       
         return $servicios;
         //
+    }
+
+    public function cancelar(Request $request){
+        //return $request;
+        $vehiculo = Vehiculo::where('idvehiculo',$request['vehiculo'])->first();
+        $mantenimiento = mantenimientos::where('idmantenimiento',$request['mantenimiento'])->first();
+        //return $mantenimiento;
+        $carbon = new \Carbon\Carbon();
+        $date = $carbon->now();
+        $hoy =$date->format('Y-m-d');
+        $mantenimiento ->update([
+            'status' => 'CANCELADO',
+            'updated_at'=>$date
+        ]); 
+        return back()->with('msj','CANCELADO EXITOSAMENTE :)');
     }
 
     public function Historial(Request $request)

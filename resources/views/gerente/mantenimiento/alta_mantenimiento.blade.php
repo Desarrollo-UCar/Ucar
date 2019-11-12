@@ -112,7 +112,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-6 col-md-offset-4">
-                    <label>--Lista de mantenimientos realizados al vehículo--<label>
+                    <label>--Lista de mantenimientos del vehículo--<label>
                     </div>
                 </div>  
             </div>
@@ -147,16 +147,16 @@
                           @if ($mante->fecha_ingresa==null)
                           <td style="text-align: center;">----------------</td>
                           @else
-                          <td >{{$mante->fecha_ingresa}}</td>
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_ingresa))}}</td>
                           @endif 
                           @if ($mante->fecha_salida==null)
                           <td style="text-align: center;">----------------</td>
                           @else
-                          <td >{{$mante->fecha_salida}}</td>
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_salida))}}</td>
                           @endif
                           <td >{{$mante->status}}</td>
 @if($mante->status == 'ESPERA' & $mante->fecha_ingresa >= date("Y-m-d"))
-<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-right fa-2x" style="color:rgb(90, 69, 69);" title="Accion no permitida"></span></td>
+<td style="text-align: center"><span class="fa fa-arrow-right fa-2x" style="color:rgb(90, 69, 69);" title="Accion no permitida"></span></td>
 @endif
 @if($mante->status == 'ESPERA' & $mante->fecha_ingresa <= date("Y-m-d"))
 <td style="text-align: center"> <a href="{{ route('enviarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-right fa-2x" style="color:rgb(226, 247, 34);" title="Enviar a mantenimiento"></span></td>
@@ -168,11 +168,11 @@
 <td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-left fa-2x" style="color:greenyellow;" title="Finalizar mantenimiento"></span></td>
 @endif
 @if($mante->status == 'CANCELADO')
-<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-window-close fa-2x" style="color:rgb(255, 47, 47);" title="Finalizar mantenimiento"></span></td>
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-eye fa-2x" style="color:rgb(90, 69, 69);" title="Ver Detalles"></span></td>
 @endif
 <!-- si esta en espera se puede cancelar, debera aparecer el boton de cancelar -->
 @if($mante->status == 'ESPERA')
-<td style="text-align: center"> <a href="{{ route('modificarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-trash-o fa-2x" style="color:red;" title="Eliminar"></span></td>   
+<td style="text-align: center"> <a href="{{ route('cancelarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-trash-o fa-2x" style="color:red;" title="Eliminar"></span></td>   
 @else
 <td style="text-align: center"><span class="fa fa-trash-o fa-2x" style="color:rgb(90, 69, 69);" title="Acción no permitida"></span></td>   
 @endif
@@ -240,7 +240,7 @@
   <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_recogida))}}</td>
   <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_devolucion))}}</td>
   <td>{{$alquiler->nombreConductor}}</td>
-  <td><form action ="{{route('reservacion',$alquiler->id_reservacion)}}" method ="GET" enctype="multipart/form-data">
+  <td><form action ="{{route('reservacion',$alquiler->id_reservacion)}}" method ="GET" enctype="multipart/form-data" target="_blank">
     {{csrf_field()}}
    <button type="sumbit"> 
      <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>

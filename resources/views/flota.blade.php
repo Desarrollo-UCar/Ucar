@@ -20,10 +20,10 @@
           <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
               <ul class="portfolio-categ filter">
                 <li class="all active"><a href="#">Todos</a></li>
-                <li class="compacto"><a href="#" title="">Compactos</a></li>
-                <li class="camioneta"><a href="#" title="">Camionetas</a></li>
-                <li class="van"><a href="#" title="">Vans</a></li>
-                <li class="motoneta"><a href="#" title="">Motonetas</a></li>
+                <li class="COMPACTO"><a href="#" title="">Compactos</a></li>
+                <li class="CAMIONETA"><a href="#" title="">Camionetas</a></li>
+                <li class="VAN"><a href="#" title="">Vans</a></li>
+                <li class="MOTONETA"><a href="#" title="">Motonetas</a></li>
               </ul>
           </div>
           <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">

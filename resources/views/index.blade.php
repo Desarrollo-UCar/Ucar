@@ -30,12 +30,12 @@
       </div>
     <div class="container">
         <div class="row nomargin">
-        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
             <div class="logo">
-                <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:25%"/></a>
+                <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:45%"/></a>
             </div>
         </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+          <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
             <div class="navbar">
               <div class="navigation">
                 <nav>
@@ -96,6 +96,15 @@
                         </div>
                     </li>
                     @endif
+<li  class="dropdown">
+        <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled  fa fa-facebook-square fa-2x active icon-1x"></i></a>
+</li>
+<li  class="dropdown">
+        <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled  fa fa-instagram fa-2x active icon-1x"></i></a>
+</li>
+<li  class="dropdown">
+        <a href="https://twitter.com/ucarmx"><i class="ico icon-circled  fa fa-twitter fa-2x active icon-1x"></i></a>
+</li>
                   </ul>
                 </nav>
               </div>
@@ -563,28 +572,32 @@
 </div>
                 <!-- Grid column -->
 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-    <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
-    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <div class="box flyRight">
-          <div class="icon">
-            <i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-4x active icon-2x"></i><a href="https://www.facebook.com/UcarMx/"> Facebook</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <div class="box flyRight">
-          <div class="icon">
-            <i class="ico icon-circled icon-bgdark fa fa-instagram fa-4x active icon-2x"></i><a href="https://www.instagram.com/ucar_mexico/"> Instagram</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <div class="box flyRight">
-          <div class="icon">
-            <i class="ico icon-circled icon-bgdark fa fa-twitter fa-4x active icon-2x"></i><a href="https://twitter.com/ucarmx"> Twitter</a>
-          </div>
-        </div>
-      </div>         
+    <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <div class="box flyRight">
+                  <div class="icon">
+                    <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-3x active icon-2x"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                    <div class="box flyRight">
+                  <div class="icon">
+                    <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled icon-bgdark fa fa-instagram fa-3x active icon-2x"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                    <div class="box flyRight">
+                  <div class="icon">
+                    <a href="https://twitter.com/ucarmx"><i class="ico icon-circled icon-bgdark fa fa-twitter fa-3x active icon-2x"></i></a>
+                  </div>
+                </div>
+              </div> 
+    </div>      
 </div>
 </div>
 <!-- Footer links -->

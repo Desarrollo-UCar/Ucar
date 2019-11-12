@@ -175,8 +175,21 @@ class PagesController extends Controller{
     AND reserva_temps.estatus != "reserva_finalizada"
    AND reserva_temps.estatus != "cancelada"
     AND  reserva_temps.fecha_recogida = ?
-    AND reserva_temps.hora_recogida <= ?)ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
-                                        [$sucursal,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_i,$hora_rr,$sucursal,$fecha_f,$hora_dd,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff]);
+    AND reserva_temps.hora_recogida <= ?
+    UNION
+    SELECT vehiculo FROM mantenimientos
+    WHERE (? BETWEEN mantenimientos.fecha_ingresa AND mantenimientos.fecha_salida
+    OR ? BETWEEN mantenimientos.fecha_ingresa AND mantenimientos.fecha_salida)
+    AND mantenimientos.STATUS = "ESPERA"
+    OR mantenimientos.STATUS = "CURSO"
+    UNION
+    SELECT vehiculo FROM mantenimientos
+    WHERE  mantenimientos.fecha_ingresa >= ?
+    AND mantenimientos.fecha_salida <= ?
+    AND mantenimientos.STATUS = "ESPERA"
+    OR mantenimientos.STATUS = "CURSO"
+    )ORDER BY vehiculos.precio,vehiculos.marca, vehiculos.modelo',
+                                        [$sucursal,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_i,$hora_rr,$sucursal,$fecha_f,$hora_dd,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$sucursal,$fecha_ii,$fecha_ff,$fecha_ii,$fecha_ff,$fecha_ii,$fecha_ff]);
 
         $datos_reserva         = App\reserva_temp::findOrFail($reserva_temp->id);
         //obtener solo un vehiculo por marca y modelo
