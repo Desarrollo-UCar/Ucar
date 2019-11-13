@@ -22,7 +22,7 @@ class ReportesController extends Controller
 {
 
     public function index(){
-        $serviciost = tallerservicios::get();
+        $serviciost = tallerservicios::orderby ('nombreservicio', 'asc')->get();
         return view('gerente.reportes.inicio', compact('serviciost'));
 
     }
@@ -134,44 +134,79 @@ public function fechaCobro(){
     
 
 public function mantenimientos(Request $request){
-
+    //return $request;
+    //consultas para mantenimientos
     if($request['fecha_inicio']==null&&$request['fecha_fin']==null&&$request['servicio']=='ninguno'){
-        $titulo = 'MANTENIMIENTOS POR VEHICULO GENERAL';
-        $mantenimientos = DB::SELECT('SELECT  vehiculos.modelo ,vehiculos.matricula,
+        $titulo   = 'MANTENIMIENTOS POR VEHICULO (GENERAL)';
+        $x        = 'matricula';
+        $y        = 'cantidad';
+        $etiqueta = 'Mantenimientos';
+        $datos = DB::SELECT('SELECT  vehiculos.modelo ,vehiculos.matricula,
         COUNT(*) AS cantidad FROM mantenimientos
         INNER JOIN vehiculos ON mantenimientos.vehiculo = vehiculos.idvehiculo
         GROUP BY mantenimientos.vehiculo');
-        return view('gerente.reportes.mantenimientos',compact('mantenimientos','titulo'));
-        // return $mantenimientos;
+        return view('gerente.reportes.mantenimientos',compact('datos','titulo','x','y','etiqueta'));
     }
 
     if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['servicio']=='ninguno'){
-        $titulo = ' ';
-        $mantenimientos = DB::SELECT('SELECT  vehiculos.modelo ,vehiculos.matricula,
+        $titulo = 'MANTENIMIENTOS POR VEHICULO '. '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
+        $x = 'matricula';
+        $y = 'cantidad';
+        $etiqueta = 'Mantenimientos';
+        $datos = DB::SELECT('SELECT  vehiculos.modelo ,vehiculos.matricula,
         COUNT(*) AS cantidad FROM mantenimientos
         INNER JOIN vehiculos ON mantenimientos.vehiculo = vehiculos.idvehiculo
         WHERE mantenimientos.fecha_salida BETWEEN ? AND ?
         GROUP BY mantenimientos.vehiculo',[$request['fecha_inicio'],$request['fecha_fin']]);
-        return view('gerente.reportes.mantenimientos',compact('mantenimientos','titulo'));
+        return view('gerente.reportes.mantenimientos',compact('datos','titulo','x','y','etiqueta'));
     }
 
     if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['servicio']!='ninguno'){
-    $mantenimientos = DB::SELECT(
-    'SELECT matricula, marca, modelo, anio, nombreservicio, cantidad FROM (SELECT mantenimientos.vehiculo, detalletallerservicios.tallerservicio,
-COUNT(*) as cantidad FROM detalletallerservicios 
-INNER JOIN tallerservicios ON detalletallerservicios.idetalletallerservicio = tallerservicios.idserviciotaller
-INNER JOIN mantenimientos ON mantenimientos.idmantenimiento = detalletallerservicios.mantenimiento
-WHERE detalletallerservicios.tallerservicio = ?
-AND mantenimientos.fecha_salida BETWEEN ? AND ?
-GROUP BY mantenimientos.vehiculo, detalletallerservicios.tallerservicio) A
-INNER JOIN
-vehiculos ON vehiculos.idvehiculo = A.vehiculo
-INNER JOIN 
-tallerservicios ON A.tallerservicio = tallerservicios.idserviciotaller
-ORDER BY cantidad desc',[$request['servicio'],$request['fecha_inicio'],$request['fecha_fin'] ]
-    );
-    return view('gerente.reportes.mantenimientos', compact('mantenimientos','titulo'));
-}
+        $titulo = 'MANTENIMIENTOS POR VEHICULO '. '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
+        $x = 'matricula';
+        $y = 'cantidad';
+        $etiqueta = 'Mantenimientos';
+        $datos = DB::SELECT('SELECT matricula, marca, modelo, anio, nombreservicio, cantidad FROM (SELECT mantenimientos.vehiculo, detalletallerservicios.tallerservicio,
+        COUNT(*) as cantidad FROM detalletallerservicios 
+        INNER JOIN tallerservicios ON detalletallerservicios.idetalletallerservicio = tallerservicios.idserviciotaller
+        INNER JOIN mantenimientos ON mantenimientos.idmantenimiento = detalletallerservicios.mantenimiento
+        WHERE detalletallerservicios.tallerservicio = ?
+        AND mantenimientos.fecha_salida BETWEEN ? AND ?
+        GROUP BY mantenimientos.vehiculo, detalletallerservicios.tallerservicio) A
+        INNER JOIN
+        vehiculos ON vehiculos.idvehiculo = A.vehiculo
+        INNER JOIN 
+        tallerservicios ON A.tallerservicio = tallerservicios.idserviciotaller
+        ORDER BY cantidad desc',[$request['servicio'],$request['fecha_inicio'],$request['fecha_fin'] ]
+            );
+        return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
+    }
+
+    if($request['fecha_inicio']==null&&$request['fecha_fin']==null&&$request['servicio']!='ninguno'){
+        $servicio = tallerservicios::findOrFail($request['servicio']);
+        $titulo   = 'MANTENIMIENTOS POR VEHICULO (GENERAL PARA: '. $servicio->nombreservicio. ')';
+        $x = 'matricula';
+        $y = 'cantidad';
+        $etiqueta = 'Mantenimientos';
+        $datos = DB::SELECT('SELECT matricula, marca, modelo, anio, nombreservicio, cantidad FROM (SELECT mantenimientos.vehiculo, detalletallerservicios.tallerservicio,
+        COUNT(*) as cantidad FROM detalletallerservicios 
+        INNER JOIN tallerservicios ON detalletallerservicios.idetalletallerservicio = tallerservicios.idserviciotaller
+        INNER JOIN mantenimientos ON mantenimientos.idmantenimiento = detalletallerservicios.mantenimiento
+        WHERE detalletallerservicios.tallerservicio = ?
+        GROUP BY mantenimientos.vehiculo, detalletallerservicios.tallerservicio) A
+        INNER JOIN
+        vehiculos ON vehiculos.idvehiculo = A.vehiculo
+        INNER JOIN 
+        tallerservicios ON A.tallerservicio = tallerservicios.idserviciotaller
+        ORDER BY cantidad desc',[$request['servicio']]
+            );
+        return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
+    }
+//consulta para vehiculos -----------VEEHICULO CON MAS RENTAS Y VEHICULO CON MAS INGRESOS
+    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['consulta']!=null){
+        
+            return view('gerente.reportes.mantenimientos', compact('mantenimientos','titulo'));
+        }
 
 }
 

@@ -22,7 +22,7 @@
                   <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
       
-                  <h3 class="box-title">{{$titulo}}</h3>
+                  <h3 class="box-title">{{$titulo}} </h3>
     
                   </div>
                   <div class="box-body">
@@ -71,11 +71,11 @@
     var bar = new Morris.Bar({
       element: 'bar-chart2-mantenimientos',
       resize: true,
-      data: @json($mantenimientos),
+      data: @json($datos),
       barColors: ['#4AB0FC'],
-      xkey: 'matricula',
-      ykeys: ['cantidad'],
-      labels: ['Mantenimientos'],
+      xkey: @json($x),
+      ykeys: [@json($y)],
+      labels: [@json($etiqueta)],
       hideHover: 'auto',
       fillOpacity: 100
     });

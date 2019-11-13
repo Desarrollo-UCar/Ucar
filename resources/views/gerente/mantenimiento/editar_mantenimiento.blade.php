@@ -164,14 +164,12 @@
                     <div class="modal-body">
             
             <table class="table">
-                
                     @foreach ($taller as $tal)
-                  <tr class="col-md-4">                       
-                    <td class="col-md-6">{{$tal->nombreservicio}}</td>
-                    <td class="col-md-1"><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>
+                  <tr class="col-md-4">     
+                  <td class="col-md-1"><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>                  
+                    <td class="col-md-11">{{$tal->nombreservicio}}</td>
                   </tr>
                   @endforeach
-             
               </table>
                           
                     </div>
