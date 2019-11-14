@@ -230,7 +230,7 @@ class mantenimientoController extends Controller
         ->where('idmantenimiento',$mantenimientos['mantenimiento'])
         ->first();
 
-        $taller = Tallerservicios::all();
+        $taller = Tallerservicios::orderby ('nombreservicio', 'asc')->get();
         $tipo   = mantenimientos::findOrFail($mantenimientos['mantenimiento']);
 
 
@@ -399,7 +399,7 @@ class mantenimientoController extends Controller
         $vehiculo = Vehiculo::join('vehiculosucursales','vehiculo','=','idvehiculo')
         ->join('sucursals','idsucursal','=','vehiculosucursales.sucursal')
         ->where('vehiculos.idvehiculo',$request['vehiculo'])->first();
-        $taller=Tallerservicios::all();
+        $taller=Tallerservicios::orderby ('nombreservicio', 'asc')->get();
     
         return view('gerente.mantenimiento.alta_mantenimiento', compact('vehiculo','taller')) ;
         return $vehiculo;
