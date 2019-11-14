@@ -99,6 +99,34 @@
                                         <button type="submit" class="btn btn-primary" id="subcontinuar">Agregar</button>
                                     </div>           
                                 <!-- /.box-body -->
+                                <div class="modal" id="modal-warning">
+                                  <div class="modal-dialog modal-lg" >
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:red;" title="Cerrar">
+                                          <span aria-hidden="true">&times;</span></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <table class="table">
+                                              @foreach ($taller as $tal)
+                                            <tr class="col-md-4">                       
+                                              <td class="col-md-6">{{$tal->nombreservicio}}</td>
+                                              <td class="col-md-1"><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>
+                                            </tr>
+                                            @endforeach
+                                        </table>
+                                            
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary " data-dismiss="modal">Agregar</button>
+                                      </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                  </div>
+                                  <!-- /.modal-dialog -->
+                                </div>
+                                </div>
+
                               </form>
                     </div>
                     <div class="col-md-4">
@@ -181,33 +209,7 @@
                         </tbody>
                     </table>
           </div>
-          <div class="modal" id="modal-warning">
-                <div class="modal-dialog modal-lg" >
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:red;" title="Cerrar">
-                        <span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                      <table class="table">
-                            @foreach ($taller as $tal)
-                          <tr class="col-md-4">                       
-                            <td class="col-md-6">{{$tal->nombreservicio}}</td>
-                            <td class="col-md-1"><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>
-                          </tr>
-                          @endforeach
-                      </table>
-                          
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary " data-dismiss="modal">Agregar</button>
-                    </div>
-                  </div>
-                  <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-              </div>
-              </div>
+         
     </section>
 
 
@@ -278,7 +280,7 @@
 
 <script>           
  function Continue(){
-   console.log("se dió click en alguna parte")
+  //  console.log("se dió click en alguna parte")
   var sub= document.getElementById("subcontinuar");
      sub.click();
  }

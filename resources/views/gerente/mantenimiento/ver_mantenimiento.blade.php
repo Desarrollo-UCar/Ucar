@@ -39,50 +39,70 @@
           @endif 
           
               <!-- /.box-header -->
-              <div class="box-body">
-                  <table id="example" class="display nowrap " style="width:100%">
-                      <thead>
-                          <tr>
-                              <th style="text-align: center">Vin</th>
-                              <th style="text-align: center">Placas</th>
-                              <th style="text-align: center">Marca</th>
-                              <th style="text-align: center">Modelo</th>                              
-                              <th style="text-align: center">Tipo Mantenimiento</th>   
-                              <th style="text-align: center">Fecha Salida</th>
-                              <th style="text-align: center">Fecha Ingreso</th>
-                              <th style="text-align: center">Estatus</th>
-                              <th style="text-align: center">Modificar</th>
-                              <th style="text-align: center">Ver detalle</th>
-                              
-                          </tr>
-                      </thead>
-                      <tbody>
-                           @foreach ($mantenimiento as $ser)                      
-                      <tr>
-                        <td style="text-align: center">{{$ser->vin}}</td>
-                        <td style="text-align: center">{{$ser->matricula}}</td>
-                        <td style="text-align: center">{{$ser->marca}}</td>
-                        <td style="text-align: center">{{$ser->modelo}}</td>
-                        <td style="text-align: center">{{$ser->servicio}}</td>
-                        <td style="text-align: center">{{$ser->fecha_ingresa}}</td>
-                        @if ($ser->fecha_salida==null)
-                        <td style="text-align: center">---------</td>
-                        @else
-                        <td style="text-align: center">{{$ser->fecha_salida}}</td>
-                        @endif  
-                        
-                        <td style="text-align: center">{{$ser->status}}</td>
-
-                        <td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$ser->idmantenimiento,'vehiculo'=>$ser->idvehiculo])}}"> <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar"></span></td> 
-                        
-                        <td style="text-align: center"> <a href="{{ route('modificarmantenimiento',['mantenimiento'=>$ser->idmantenimiento,'vehiculo'=>$ser->idvehiculo])}}"> <span class="fa fa-external-link-square fa-2x" style="color:blue;" title="ver detalles"></span></td> 
-                      </tr> 
-                @endforeach
-                      
-                      </tbody>
-                  </table>
-              </div>
-             
+  <div class="box-body">
+                    <table id="example" class="display nowrap " style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">Número</th>
+                                <th >Tipo</th>
+                                <th >Costo</th>
+                                <th >Fecha salida</th>
+                                <th >Fecha regreso</th>
+                                <th >Estatus</th>
+                                <th >Enviar/Finalizar</th>
+                                <th >Cancelar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <?php $i = 0;?>
+                             @foreach ($mantenimiento as $mante)  
+                  <tr>
+                          <td style="text-align: center"><?php 
+                            echo $i=$i+1;
+                          ?></td>
+                          <td >{{$mante->tipo}}</td>
+                          @if ($mante->total==null)
+                          <td style="text-align: center;" >----------------</td>
+                          @else
+                          <td>{{$mante->total}}</td>
+                          @endif
+                          @if ($mante->fecha_ingresa==null)
+                          <td style="text-align: center;">----------------</td>
+                          @else
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_ingresa))}}</td>
+                          @endif 
+                          @if ($mante->fecha_salida==null)
+                          <td style="text-align: center;">----------------</td>
+                          @else
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_salida))}}</td>
+                          @endif
+                          <td >{{$mante->status}}</td>
+@if($mante->status == 'ESPERA' & $mante->fecha_ingresa >= date("Y-m-d"))
+<td style="text-align: center"><span class="fa fa-arrow-right fa-2x" style="color:rgb(90, 69, 69);" title="Accion no permitida"></span></td>
+@endif
+@if($mante->status == 'ESPERA' & $mante->fecha_ingresa <= date("Y-m-d"))
+<td style="text-align: center"> <a href="{{ route('enviarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-right fa-2x" style="color:rgb(226, 247, 34);" title="Enviar a mantenimiento"></span></td>
+@endif
+@if($mante->status == 'TERMINADO')
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-eye fa-2x" style="color:rgb(90, 69, 69);" title="Ver detalles"></span></td>
+@endif
+@if($mante->status == 'CURSO')
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-arrow-left fa-2x" style="color:greenyellow;" title="Finalizar mantenimiento"></span></td>
+@endif
+@if($mante->status == 'CANCELADO')
+<td style="text-align: center"> <a href="{{ route('mostrarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-eye fa-2x" style="color:rgb(90, 69, 69);" title="Ver Detalles"></span></td>
+@endif
+<!-- si esta en espera se puede cancelar, debera aparecer el boton de cancelar -->
+@if($mante->status == 'ESPERA')
+<td style="text-align: center"> <a href="{{ route('cancelarmantenimiento',['mantenimiento'=>$mante->idmantenimiento,'vehiculo'=>$mante->vehiculo])}}"> <span class="fa fa-trash-o fa-2x" style="color:red;" title="Eliminar"></span></td>   
+@else
+<td style="text-align: center"><span class="fa fa-trash-o fa-2x" style="color:rgb(90, 69, 69);" title="Acción no permitida"></span></td>   
+@endif
+                        </tr> 
+                  @endforeach      
+                        </tbody>
+                    </table>
+          </div>
      
       </section>
    
@@ -95,7 +115,7 @@
                 <h4 class="modal-title">No se encuentra ningún registro. :( </b> </h4>
               </div>
               <div class="modal-body">
-                <p>Para dar de alta un servicio extra dale click en continuar :).&hellip;</p>
+                <p>Para dar de alta un mantenimiento extra dale click en continuar :).&hellip;</p>
               </div>
               <div class="modal-footer">
                 {{--<button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Cerrar</button>--}}

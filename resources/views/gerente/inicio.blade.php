@@ -77,9 +77,17 @@
             <!-- small box -->
             <div class="small-box bg-purple-gradient">
               <div class="inner">
-                <h3> <br> </h3>
-  
-                <p>Mantenimientos</p>
+                
+                <?php 
+                $carbon = new \Carbon\Carbon();
+                $date = $carbon->now();
+                $hoy =$date->format('Y-m-d');
+                $cantidad = DB::table('mantenimientos')
+                ->where('fecha_ingresa','>=',$hoy)
+                ->where('status','like','%ESPERA')
+                ->get(); ?>
+                <h3>{{count($cantidad)}}</h3>
+                <p>Proximos Mantenimientos</p>
               </div>
               <div class="icon">
                 <i class="ion ion-gear-b"></i>

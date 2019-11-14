@@ -1,18 +1,19 @@
+@extends("theme.$theme.layout")
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <title>Ü-car Renta de vehículos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_token" content="{{ csrf_token() }}" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Alta Sucursal</title>
+  {{-- <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans:300,400,600,700,800" rel="stylesheet"> --}}
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/flexslider.css" rel="stylesheet" />
     <link href="css/prettyPhoto.css" rel="stylesheet" />
     <link href="css/camera.css" rel="stylesheet" />
     <link href="css/jquery.bxslider.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
+    {{-- <link href="css/style.css" rel="stylesheet" /> --}}
     <link href="css/shortcodes.css" rel="stylesheet" />
     
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
@@ -31,16 +32,21 @@
         border: 1px solid red;
       }
     </style>
-  </head>
-  <body>
+  
+  
+ </head>
+<body>
+  
+@section('contenido')
+    <section class="content-header">
+        <h1>
+          Panel de administración |
+          <small>Traslado</small>
+        </h1>        
+    </section>
 
-    <div id="wrapper">
-    <!-- INICIA header -->
-
-    
-
-    <section id="formulario">
-    <div class="container">
+    <section class="content"> 
+      <div class="container">
         <div class="row">
 
                 <!-- inicio card reserva -->
@@ -51,7 +57,7 @@
       <div class="row">
 {{--calculo de datos para el traslado--}}
 
-<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+<div class="col-sm-11 col-md-11 col-lg-11 col-xl-11">
     <form id="reserva_traslado" action="{{ route('vehiculos_por_sucursal')}}" method="post" enctype="multipart/form-data">
       @csrf
        <div class="row">
@@ -576,9 +582,20 @@
 </div>
 </div> 
     </div>
-    </div>
-    </section>
-</div>
+    </div>                   
+           
+
+</section> 
+
+
+@endsection   
+
+
+
+</body>
+</html>
+
+@section('scripts')
 <!-- Footer -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -590,7 +607,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> --}}
     <!-- javascript================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
 
@@ -650,12 +667,12 @@ $('#fecha_llegada_solicitada').daterangepicker({
     if(checked){
       tiempo_espera.style.display = 'block';
       document.getElementById("dias_espera").required = true;
-      console.log("1");
+      // console.log("1");
     }
     else{
       tiempo_espera.style.display = 'none';
       document.getElementById("dias_espera").required = false;
-      console.log("2");
+      // console.log("2");
     }
   }
   </script>
@@ -773,6 +790,5 @@ $('#fecha_llegada_solicitada').daterangepicker({
         };
 
       </script>
-</body>
-</html>
 
+@endsection  

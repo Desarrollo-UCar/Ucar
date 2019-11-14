@@ -46,6 +46,11 @@
                         <form action="{{ route('mantenimiento.update',$mantenimiento->idmantenimiento)}}" method="POST" enctype="multipart/form-data" id="form">
                             @csrf
                             @method('PUT')
+
+                            <div class="col-md-5 form-group" style="display:none">
+                              <label>Sucursal</label>
+                                  <input type="text" name="idmantenimiento" id="idmantenimiento" class="form-control" value="{{$mantenimiento->idmantenimiento}}" readonly>
+                          </div>
                                     <div class="col-md-5 form-group">
                                         <label>Sucursal</label>
                                             <input type="text" name="sucursal" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->nombre}}" readonly>
@@ -53,12 +58,12 @@
 
                                     <div class="col-md-4 form-group">
                                         <label>Vehículo</label>
-                                            <input type="text" name="anio" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->marca}} {{$mantenimiento->modelo}} {{$mantenimiento->anio}}" readonly>
+                                            <input type="text" name="anio" id="" class="form-control"  onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->marca}} {{$mantenimiento->modelo}} {{$mantenimiento->anio}}" readonly>
                                     </div>
 
                                     <div class="col-md-3 form-group">
                                         <label>Placas</label>
-                                            <input type="text" name="matricula" id="" class="form-control" autofocus onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->matricula}}" readonly>
+                                            <input type="text" name="matricula" id="" class="form-control"  onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$mantenimiento->matricula}}" readonly>
                                     </div>
                                         <hr width="90%"/>
 
@@ -91,7 +96,7 @@
 
                                     <div class="col-md-3 form-group">
                                         <label>Costo</label>
-                                        <input type="number" step="0.01" name="costo" class="form-control" min="0.00" placeholder="0.00" value="{{$mantenimiento->costo_total}}" required>
+                                        <input type="number" step="0.01" name="costo" class="form-control" min="0.00" placeholder="0.00" value="{{$mantenimiento->costo_total}}" value="{{old('fecha_salida')}}" required>
                                     </div>
                                     @if($mantenimiento->status == "CURSO")
                                     <div class="col-md-6 form-group" style="margin-top: 3%;">
@@ -100,6 +105,36 @@
                                     </div> 
                                     @endif          
                                 <!-- /.box-body -->
+                                <div class="modal " id="modal-warning">
+                                  <div class="modal-dialog modal-lg" >
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:red;" title="Cerrar">
+                                          <span aria-hidden="true">&times;</span></button>
+                                      </div>
+                                      <div class="modal-body">
+                              
+                              <table class="table">
+                                  
+                                      @foreach ($taller as $tal)
+                                    <tr class="col-md-4">                       
+                                      <td class="col-md-6">{{$tal->nombreservicio}}</td>
+                                      <td class="col-md-1"><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>
+                                    </tr>
+                                    @endforeach
+                               
+                                </table>
+                                            
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                                      </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                  </div>
+                                  <!-- /.modal-dialog -->
+                                </div>
+
                             </form>
                     </div>
                     <div class="col-md-4">
@@ -154,35 +189,7 @@
 
 
               </div>
-              <div class="modal " id="modal-warning">
-                <div class="modal-dialog modal-lg" >
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:red;" title="Cerrar">
-                        <span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-            
-            <table class="table">
-                
-                    @foreach ($taller as $tal)
-                  <tr class="col-md-4">                       
-                    <td class="col-md-6">{{$tal->nombreservicio}}</td>
-                    <td class="col-md-1"><input type="checkbox" class="custom-control-input" id="{{$tal->nombreservicio}}" name="servicios[]" value="{{$tal->nombreservicio}}"></td>
-                  </tr>
-                  @endforeach
-             
-              </table>
-                          
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-                    </div>
-                  </div>
-                  <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-              </div>
+           
     </section>
    
     <div class="modal modal-warning fade" id="modal">
