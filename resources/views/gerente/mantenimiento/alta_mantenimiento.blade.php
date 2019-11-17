@@ -240,7 +240,7 @@
   <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_recogida))}}</td>
   <td>{{date("d\-m\-Y", strtotime($alquiler->fecha_devolucion))}}</td>
   <td>{{$alquiler->nombreConductor}}</td>
-  <td><form action ="{{route('reservacion',$alquiler->id_reservacion)}}" method ="GET" enctype="multipart/form-data">
+  <td><form action ="{{route('reservacion',$alquiler->id_reservacion)}}" method ="GET" enctype="multipart/form-data" target="_blank">
     {{csrf_field()}}
    <button type="sumbit" class="btn btn-primary btn-xs" type="sumbit"> 
      <span class="fa fa-edit fa-2x" style="color:goldenrod;" title="Modificar datos"></span>

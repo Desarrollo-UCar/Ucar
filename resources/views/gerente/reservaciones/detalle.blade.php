@@ -256,10 +256,10 @@
                     <div class="row"> 
                         <div class="col-md-3">
                             <label>Motivo</label>
-                            <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
-                            <option value="otro">Otro</option>
-                            <option value="cambio de vehiculo">Cambio de vehiculo</option>
-                            </select>
+                              <select name= "motivo" id="motivo" class="form-control select2" style="width: 100%;">
+                              <option value="otro">Otro</option>
+                              <option value="cambio de vehiculo">Cambio de vehiculo</option>
+                              </select>
                         </div>
                         <div class="col-md-3">
                             <label>Datos</label>

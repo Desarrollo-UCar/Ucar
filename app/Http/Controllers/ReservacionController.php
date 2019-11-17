@@ -26,6 +26,7 @@ use Mail;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
 
+
 class ReservacionController extends Controller
 {
     /**
@@ -437,9 +438,12 @@ $templateWord->saveAs(storage_path('Documento01.docx'));
 Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
 // Any writable directory here. It will be ignored.
 Settings::setPdfRendererPath('.');
-
 $phpWord = IOFactory::load(storage_path('Documento01.docx'), 'Word2007');
 $phpWord->save(storage_path('result.pdf'), 'PDF');
+
+//Save it
+// $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+// $xmlWriter->save('result.pdf');  
 
 return response()->download(storage_path('result.pdf'));
 
