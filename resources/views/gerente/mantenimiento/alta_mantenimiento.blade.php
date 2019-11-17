@@ -81,12 +81,12 @@
             
                                     <div class="col-md-3 form-group">
                                         <label>Fecha salida</label>
-                                        <input type="date" name="fecha_ingresa" class="form-control" value="<?php echo date("Y-m-d");?>" required>
+                                    <input type="date" name="fecha_ingresa" id="fecha_ingresa" class="form-control" {{--value="<?php echo date("Y-m-d");?>"--}} value="{{old('fecha_ingresa')}}" required>
                                     </div>
                                     
                                     <div class="col-md-3 form-group">
                                         <label>Fecha Regreso</label>
-                                        <input type="date" name="fecha_salida" class="form-control" required>
+                                        <input type="date" name="fecha_salida" id="fecha_salida" class="form-control" value="{{old('fecha_salida')}}" required>
                                     </div>
             
                                     <div class="col-md-3 form-group">
@@ -96,7 +96,7 @@
             
                                     <div class="col-md-12 form-group" style="margin-left: 70%;">
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-warning" id="boton">Elegir Servicios</button>
-                                        <button type="submit" class="btn btn-primary">Agregar</button>
+                                        <button type="submit" class="btn btn-primary" id="subcontinuar">Agregar</button>
                                     </div>           
                                 <!-- /.box-body -->
                               </form>
@@ -112,7 +112,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-6 col-md-offset-4">
-                    <label>--Lista de mantenimientos realizados al vehículo--<label>
+                    <label>--Lista de mantenimientos del vehículo--<label>
                     </div>
                 </div>  
             </div>
@@ -147,12 +147,12 @@
                           @if ($mante->fecha_ingresa==null)
                           <td style="text-align: center;">----------------</td>
                           @else
-                          <td >{{$mante->fecha_ingresa}}</td>
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_ingresa))}}</td>
                           @endif 
                           @if ($mante->fecha_salida==null)
                           <td style="text-align: center;">----------------</td>
                           @else
-                          <td >{{$mante->fecha_salida}}</td>
+                          <td >{{date("d\-m\-Y", strtotime($mante->fecha_salida))}}</td>
                           @endif
                           <td >{{$mante->status}}</td>
 @if($mante->status == 'ESPERA' & $mante->fecha_ingresa >= date("Y-m-d"))
@@ -254,9 +254,8 @@
               
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Cerrar</button>
-              {{-- <a href="{{ route('DeleteVehiculo',['vehiculo'=>$alquiler->id_vehiculo]) }}" class="btn btn-primary" > --}}
-                Continuar</a>
+              <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" id="continuar" onclick="Continue()">Continuar</button>
+              
             </div>
           </div>
           @endif 
@@ -276,6 +275,14 @@
      obj.click();
      } );
     </script>
+
+<script>           
+ function Continue(){
+   console.log("se dió click en alguna parte")
+  var sub= document.getElementById("subcontinuar");
+     sub.click();
+ }
+  </script>
 <script>
         $(document).ready(function() {
              $('#example').DataTable( {
