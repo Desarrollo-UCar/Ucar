@@ -256,18 +256,6 @@ public function clientes(Request $request){
 public function sucursales(Request $request){
    // return $request;
     //consulta para sucursales ------------------CONSULTAS RELEVANTES SOBRE CADA SUCURSAL
-    if($request['fecha_inicio']==null&&$request['fecha_fin']==null&&$request['sucursal']!=null){
-        $titulo   = 'CANTIDAD DE ALQUILERES POR AÑO (GENERAL)';
-        $x = 'anio';
-        $y = 'total';
-        $etiqueta = 'Sucursal';
-        $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
-        $datos = DB::SELECT('SELECT (YEAR(fecha_recogida)) AS anio, COUNT(*) AS total FROM alquilers
-        INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
-        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = alquilers.id_vehiculo
-        WHERE vehiculosucursales.sucursal = ? GROUP BY (YEAR(fecha_recogida)) ORDER BY (YEAR(fecha_recogida)) ASC LIMIT ?',[$sucursal->idsucursal,$request['limite']]);
-            return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
-    }
     if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']!=null&&$request['aniomes']=='año'){
         $titulo   = 'CANTIDAD DE ALQUILERES POR AÑO' . '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
         $x = 'anio';
@@ -295,7 +283,7 @@ public function sucursales(Request $request){
         GROUP BY MONTH(fecha_recogida))meses',[$request['fecha_inicio'],$request['fecha_fin'],$sucursal->idsucursal]);
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
-    if($request['fecha_inicio']!=null&&$request['sucursal']!=null&&$request['aniomes']=='semana'){
+    if($request['sucursal']!=null&&$request['aniomes']=='semana'){
         $titulo   = 'cantidad de alquileres por dia GENERAL ULTIMA SEMANA';
         $x = 'dia';
         $y = 'cantidad';
@@ -305,7 +293,19 @@ public function sucursales(Request $request){
       	INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
         INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = alquilers.id_vehiculo
         WHERE fecha_recogida  <= CURDATE() AND vehiculosucursales.sucursal = ?
-        AND fecha_recogida >= DATE_SUB(CURDATE(), INTERVAL ? WEEK) GROUP BY (fecha_recogida)',[$sucursal->idsucursal,$request['fecha_inicio']]);
+        AND fecha_recogida >= DATE_SUB(CURDATE(), INTERVAL ? WEEK) GROUP BY (fecha_recogida)',[$sucursal->idsucursal,1]);
+            return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
+    }
+    if($request['fecha_inicio']==null&&$request['fecha_fin']==null&&$request['sucursal']!=null){
+        $titulo   = 'CANTIDAD DE ALQUILERES POR AÑO (GENERAL)';
+        $x = 'anio';
+        $y = 'total';
+        $etiqueta = 'Sucursal';
+        $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
+        $datos = DB::SELECT('SELECT (YEAR(fecha_recogida)) AS anio, COUNT(*) AS total FROM alquilers
+        INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = alquilers.id_vehiculo
+        WHERE vehiculosucursales.sucursal = ? GROUP BY (YEAR(fecha_recogida)) ORDER BY (YEAR(fecha_recogida)) ASC LIMIT ?',[$sucursal->idsucursal,$request['limite']]);
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
 }
