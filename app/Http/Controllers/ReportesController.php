@@ -12,6 +12,7 @@ use PDF;
 use mpdf;
 use App;
 use DB;
+use DateTime;
 use App\VehiculoSucursales;
 
 use App\Http\Controllers\Controller;
@@ -81,7 +82,6 @@ public function fechaAlquiler(){
         //return response()->json($dias);
         return view('gerente.reportes.fechaAlquiler', compact('reservaciones_anio','reservaciones_mes','dias'));
 }
-
 
 public function fechaCobro(){
     //reservaciones por anio
@@ -229,10 +229,9 @@ public function clientes(Request $request){
         $y = 'totall';
         $etiqueta = 'Total gastado';
         $datos = DB::SELECT('SELECT correo, SUM(totall) AS totall  FROM
-        (SELECT id_reserva, SUM(total) as totall FROM pago_reservacions GROUP BY id_reserva) a
-        INNER JOIN alquilers ON alquilers.id_reservacion = a.id_reserva
-        INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
-        INNER JOIN reservacions ON reservacions.id =  alquilers.id_reservacion
+        (SELECT id_reserva, SUM(total) as totall FROM pago_reservacions 
+        GROUP BY id_reserva) a
+        INNER JOIN reservacions ON reservacions.id = a.id_reserva
         INNER JOIN clientes ON reservacions.id_cliente = clientes.idCliente
         GROUP BY id_cliente ORDER BY totall DESC');
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
@@ -243,24 +242,35 @@ public function clientes(Request $request){
         $y = 'totall';
         $etiqueta = 'Total gastado';
         $datos = DB::SELECT('SELECT correo, SUM(totall) AS totall  FROM
-        (SELECT id_reserva, SUM(total) as totall FROM pago_reservacions GROUP BY id_reserva) a
-        INNER JOIN alquilers ON alquilers.id_reservacion = a.id_reserva
-        INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
-        INNER JOIN reservacions ON reservacions.id =  alquilers.id_reservacion
+        (SELECT id_reserva, SUM(total) as totall FROM pago_reservacions 
+        WHERE pago_reservacions.fecha BETWEEN ? AND ?
+        GROUP BY id_reserva) a
+        INNER JOIN reservacions ON reservacions.id =  a.id_reserva
         INNER JOIN clientes ON reservacions.id_cliente = clientes.idCliente
-        WHERE alquilers.fecha_devolucion BETWEEN ? AND ?
         GROUP BY id_cliente ORDER BY totall DESC',[$request['fecha_inicio'],$request['fecha_fin']]);
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
 }
 public function sucursales(Request $request){
-   // return $request;
+    
     //consulta para sucursales ------------------CONSULTAS RELEVANTES SOBRE CADA SUCURSAL
-    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']!=null&&$request['aniomes']=='año'){
+    //CALCULAR LA DIFERENCIA DE LAS FECHAS SI CORRESPONDE A DIAS, SEMANAS, MESES, AÑOS
+    $inicio  = new DateTime($request['fecha_inicio']);
+    $fin     = new DateTime($request['fecha_fin']);
+    $diferencia = $inicio->diff($fin);
+    $dias = $diferencia->format('%a');
+    if($dias < 15 && $dias > 0)
+        $periodo = 'dia';
+    if($dias > 15 && $dias < 366)
+        $periodo = 'mes';
+    if($dias > 365)
+        $periodo = 'anio'; 
+    //OK YA ESTA
+    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']!=null&&$request['tipo'] =='Rentas'&&$periodo =='anio'){
         $titulo   = 'CANTIDAD DE ALQUILERES POR AÑO' . '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
         $x = 'anio';
         $y = 'total';
-        $etiqueta = 'Sucursal';
+        $etiqueta = 'RENTAS';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT (YEAR(fecha_recogida)) AS anio, COUNT(*) AS total FROM alquilers         
         INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
@@ -269,11 +279,12 @@ public function sucursales(Request $request){
         GROUP BY (YEAR(fecha_recogida)) ORDER BY (YEAR(fecha_recogida)) ASC LIMIT ?',[$request['fecha_inicio'],$request['fecha_fin'],$sucursal->idsucursal,$request['limite']]);
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
-    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']!=null&&$request['aniomes']=='mes'){
-        $titulo   = 'CANTIDAD DE ALQUILERES POR FECHA / POR AÑO' . '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
+    //OK LISTA
+    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']!=null&&$request['tipo'] =='Rentas'&&$periodo =='mes'){
+        $titulo   = 'CANTIDAD DE ALQUILERES POR FECHA / POR MES' . '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
         $x = 'mes';
         $y = 'cantidad';
-        $etiqueta = 'Sucursal';
+        $etiqueta = 'Rentas';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT   MONTHNAME(CONCAT("0000-",meses.mes,"-00")) mes,meses.CANTIDAD as cantidad
         FROM( SELECT MONTH(fecha_recogida) AS mes, COUNT(*) AS CANTIDAD FROM alquilers 
@@ -283,11 +294,12 @@ public function sucursales(Request $request){
         GROUP BY MONTH(fecha_recogida))meses',[$request['fecha_inicio'],$request['fecha_fin'],$sucursal->idsucursal]);
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
-    if($request['sucursal']!=null&&$request['aniomes']=='semana'){
-        $titulo   = 'cantidad de alquileres por dia GENERAL ULTIMA SEMANA';
+    //oK LISTA YA ESTA
+    if($request['sucursal']!='TODAS LAS SUCURSALES'&&$request['tipo'] =='Rentas'&&$request['general'] =='ok'){
+        $titulo   = 'CANTIDAD DE ALQUILERES POR DIA (ULTIMA SEMANA)';
         $x = 'dia';
         $y = 'cantidad';
-        $etiqueta = 'Sucursal';
+        $etiqueta = 'Rentas';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT fecha_recogida AS dia, COUNT(*) AS cantidad FROM alquilers
       	INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
@@ -296,11 +308,43 @@ public function sucursales(Request $request){
         AND fecha_recogida >= DATE_SUB(CURDATE(), INTERVAL ? WEEK) GROUP BY (fecha_recogida)',[$sucursal->idsucursal,1]);
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
-    if($request['fecha_inicio']==null&&$request['fecha_fin']==null&&$request['sucursal']!=null){
-        $titulo   = 'CANTIDAD DE ALQUILERES POR AÑO (GENERAL)';
+    // ok lista
+    //return $request;
+    if($request['sucursal']=='TODAS LAS SUCURSALES'&&$request['tipo'] =='Ingresos'&&$request['general'] =='ok'){
+        $titulo   = 'INGRESOS DE ALQUILERES POR AÑO (GENERAL)';
+        $x = 'sucursal';
+        $y = 'total';
+        $etiqueta = 'Ingreso';
+        $datos = DB::SELECT('SELECT sucursal, SUM(total) AS total FROM
+        (SELECT id_reserva, SUM(total) as total FROM pago_reservacions 
+        GROUP BY id_reserva) a
+        INNER JOIN alquilers ON alquilers.id_reservacion = a.id_reserva
+        INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = alquilers.id_vehiculo
+        GROUP BY sucursal ORDER BY total DESC');
+            return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
+    }
+    //OK YA ESTA
+    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']=='TODAS LAS SUCURSALES'&&$request['tipo'] =='Ingresos'){
+        $titulo = 'INGRESOS DE ALQUILERES POR SUCURSAL (GENERAL)'. '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
+        $x = 'sucursal';
+        $y = 'total';
+        $etiqueta = 'Ingresos';
+        $datos = DB::SELECT('SELECT sucursal, SUM(total) AS total FROM
+        (SELECT id_reserva, SUM(total) as total FROM pago_reservacions 
+        GROUP BY id_reserva) a
+        INNER JOIN alquilers ON alquilers.id_reservacion = a.id_reserva
+        INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = alquilers.id_vehiculo
+        WHERE alquilers.fecha_devolucion BETWEEN ? AND ?
+        GROUP BY sucursal ORDER BY total DESC',[$request['fecha_inicio'],$request['fecha_fin']]);
+            return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
+    }
+    if($request['sucursal']!='TODAS LAS SUCURSALES'&&$request['general'] =='ok'&&$request['tipo']=='Rentas'){
+        $titulo   = 'CANTIDAD DE ALQUILERES POR AÑO (GENERAL)  ' . $request['sucursal'];
         $x = 'anio';
         $y = 'total';
-        $etiqueta = 'Sucursal';
+        $etiqueta = 'Rentas';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT (YEAR(fecha_recogida)) AS anio, COUNT(*) AS total FROM alquilers
         INNER JOIN vehiculos ON vehiculos.idvehiculo = alquilers.id_vehiculo 

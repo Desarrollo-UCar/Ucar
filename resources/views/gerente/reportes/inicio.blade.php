@@ -171,14 +171,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>Desde</label>
-                                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"  value="">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Al</label>
-                                <input type="date" name="fecha_fin" id="fecha_fin" class="form-control"  value="">
-                            </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Desde</label>
+                                    <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"  value="">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Al</label>
+                                    <input type="date" name="fecha_fin" id="fecha_fin" class="form-control"  value="">
+                                </div>
                             <div class="col-md-12 form-group">
                                 <p><b>Se mostraran los vehículos coincidentes</b>&hellip;</p>
                             </div>
@@ -235,7 +235,7 @@
         </div>
     </div>
     </div>
-<!-- CLIENTES -->
+<!-- SUCURSALES -->
 <div class="modal fade in" id="sucursales">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -256,6 +256,7 @@
                         <div class="col-md-6 form-group">
                             <label>Filtrar por:</label>
                             <select name= "sucursal" id="servicio" class="form-control select2" style="width: 100%;" required>
+                                <option>TODAS LAS SUCURSALES</option>
                                 @foreach($sucursales as $sucursal)
                                     <option>{{$sucursal->nombre}}</option>
                                 @endforeach
@@ -270,20 +271,25 @@
                             </select>
                         </div>
                         <div class="col-md-4 form-group">
-                            <label>Año o mes:</label>
-                            <select name= "aniomes" id="aniomes" class="form-control select2" style="width: 100%;" required>
-                                <option>año</option>
-                                <option>mes</option>
-                                <option>semana</option>
+                            <label>Tipo:</label>
+                            <select name= "tipo" id="tipo" class="form-control select2" style="width: 100%;" required>
+                                <option>Ingresos</option>
+                                <option>Rentas</option>
                             </select>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label>Desde</label>
-                            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"  value="">
+                        <div class="col-md-12 form-group">
+                            <input type="checkbox" id="general" name="general" value="ok">
+                            <label class="form-check-label" for="general">CONSULTAR DESDE EL INICIO DE LOS TIEMPOS </label>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label>Al</label>
-                            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control"  value="">
+                        <div class="col-md-12 form-group"  id="fechas">
+                            <div class="col-md-6 form-group">
+                                <label>Desde</label>
+                                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"  value="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Al</label>
+                                <input type="date" name="fecha_fin" id="fecha_fin" class="form-control"  value="">
+                            </div>
                         </div>
                         <div class="col-md-12 form-group">
                             <p><b>Se mostraran los clientes coincidentes</b>&hellip;</p>
@@ -304,4 +310,18 @@
 @endsection
 
 @section('scripts')
+<script>
+    var checkbox = document.getElementById('general');
+    checkbox.addEventListener("change", validaCheckbox, true);
+    function validaCheckbox(){
+      var checked = checkbox.checked;
+      var fechas= document.getElementById("fechas");
+      if(checked){
+        fechas.style.display = 'none';
+      }
+      else{
+        fechas.style.display = 'block';
+      }
+    }
+    </script>
 @endsection

@@ -483,9 +483,6 @@ $('#fecha_salida').daterangepicker({
         })
       </script>
 <script>
-
-
-
 var checkbox = document.getElementById('viaje_redondo');
 checkbox.addEventListener("change", validaCheckbox, true);
 
