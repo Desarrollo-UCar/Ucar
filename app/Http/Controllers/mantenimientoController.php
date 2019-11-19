@@ -117,12 +117,6 @@ class mantenimientoController extends Controller
             $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])
                 ->first();
            if($request['fecha_ingresa'] == $hoy){
-                $vehiculosucursal->update(
-                   [
-                    'status'=> 'MANTENIMIENTO',
-                    'updated_at'=>$date
-                   ]
-               );
                $vehiculo->update(
                 [
                  'estatus'=> 'MANTENIMIENTO',
@@ -194,12 +188,6 @@ class mantenimientoController extends Controller
             $vehiculo = Vehiculo::where('idvehiculo',$request['vehiculo'])->first();
             $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])->first();
             $mantenimiento = mantenimientos::where('idmantenimiento',$request['mantenimiento']);
-                $vehiculosucursal->update(
-                   [
-                    'status'=> 'MANTENIMIENTO',
-                    'updated_at'=>$date
-                   ]
-               );
                $vehiculo->update(
                 [
                  'estatus'=> 'MANTENIMIENTO',
@@ -310,12 +298,6 @@ class mantenimientoController extends Controller
             'costo' =>'required',
         ]))){
             $vehiculosucursal = vehiculosucursales::where('vehiculo',$vehiculo['idvehiculo'])->first();
-            $vehiculosucursal->update(
-                   [
-                    'status'=> 'ACTIVO',
-                    'updated_at'=>$date
-                   ]
-               );
                $vehiculo->update(
                 [
                  'estatus'=> 'ACTIVO',

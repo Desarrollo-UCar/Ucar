@@ -163,4 +163,8 @@ Route::post('marcasmodelos','VehiculoController@Consultar')->name('marcasmodelos
 Route::get('indexAndroid','ReservacionController@indexAndroid')->name('indexAndroid');
 
 Route::get('printBitacora','ReservacionController@printBITACORA')->name('printBITACORA');
+
 Route::get('reporteMantenimientos','ReportesController@mantenimientos')->name('reporteMantenimientos');
+Route::get('reporteVehiculos','ReportesController@vehiculos')->name('reporteVehiculos');
+Route::get('reporteClientes','ReportesController@clientes')->name('reporteClientes');
+Route::get('reporteSucursales','ReportesController@sucursales')->name('reporteSucursales');
