@@ -227,7 +227,7 @@ public function clientes(Request $request){
         $titulo   = 'INGRESOS POR CLIENTE (GENERAL)';
         $x = 'correo';
         $y = 'totall';
-        $etiqueta = 'Clientes';
+        $etiqueta = 'Total gastado';
         $datos = DB::SELECT('SELECT correo, SUM(totall) AS totall  FROM
         (SELECT id_reserva, SUM(total) as totall FROM pago_reservacions GROUP BY id_reserva) a
         INNER JOIN alquilers ON alquilers.id_reservacion = a.id_reserva
@@ -241,7 +241,7 @@ public function clientes(Request $request){
         $titulo = 'INGRESOS POR CLIENTE '. '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
         $x = 'correo';
         $y = 'totall';
-        $etiqueta = 'Clientes';
+        $etiqueta = 'Total gastado';
         $datos = DB::SELECT('SELECT correo, SUM(totall) AS totall  FROM
         (SELECT id_reserva, SUM(total) as totall FROM pago_reservacions GROUP BY id_reserva) a
         INNER JOIN alquilers ON alquilers.id_reservacion = a.id_reserva
