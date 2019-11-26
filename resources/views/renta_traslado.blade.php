@@ -290,15 +290,13 @@
                     
                     </form>
                 </div>
-
-
                 </div>
             </div>       
         </div>
     </div>
     
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="primero" style="overflow-y: auto; display: block;margin-top: 3%;">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
                 <div class="modal-header" style="background: cornflowerblue;">
@@ -511,7 +509,7 @@
                     @csrf 
                       <input type="submit" name="sin_cuenta" id="sin_cuenta" class="btn btn-primary" value="Continuar sin cuenta">
                   </form>
-                      <a class="nav-link text-success" data-toggle="modal" data-target=".bd-example-modal-lg" style="cursor:pointer">No tengo una cuenta.</a> 
+                      <a class="nav-link text-success" data-toggle="modal" data-dismiss="modal" data-target="#primero" style="cursor:pointer">No tengo una cuenta.</a> 
               </div>
             </div> {{-- aqui termina el div row --}}        
           </div>
@@ -536,7 +534,7 @@
             <p style="color: white">No puede agregar un USUARIO menor de 18 años o mayor a 60 años&hellip;</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success pull-left" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
+            <a class="nav-link text-success" data-toggle="modal" data-dismiss="modal"  style="cursor:pointer">Aceptar</a> 
           
           </div>
         </div>
@@ -557,10 +555,10 @@
           <h4 class="modal-title"></b> </h4>
         </div>
         <div class="modal-body">
-          <p style="color: white">Ustede ya se encuentra registrado&hellip;</p>
+          <p style="color: white">Usted ya se encuentra registrado&hellip;</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal"  data-toggle="modal" data-target=".bd-example-modal-lg">Aceptar</button>
+          <a class="nav-link text-success" data-toggle="modal" data-dismiss="modal"  style="cursor:pointer">Aceptar</a> 
         
         </div>
       </div>
@@ -722,6 +720,12 @@ function validaCheckbox(){
 </script>
 <script>
   $(document).ready(function() {
+    var mostrar= document.getElementById("mostrar_modal").value;
+    if(mostrar  == "inicio")
+        $('#sele1').click(); 
+    // console.log(mostrar);
+    // console.log(log);
+
     var tiempo_espera= document.getElementById("tiempo_espera");
     if(document.getElementById('viaje_redondo').checked == true){
     tiempo_espera.style.display = 'block';
@@ -768,11 +772,7 @@ function validaCheckbox(){
 </script>
 <script>
   $(document).ready(function(){
-    var mostrar= document.getElementById("mostrar_modal").value;
-    if(mostrar  == "inicio")
-        $('#sele1').click(); 
-    console.log(mostrar);
-    console.log(log);
+ 
  
   $('#upload_form').on('submit', function(event){
           event.preventDefault();      
@@ -798,16 +798,16 @@ function validaCheckbox(){
           $( '#password' ).css('borderColor', 'red');         
                  jQuery('#validopassword').hide(); 
                  jQuery('#errorpassword').show(); 
-                 $( '#password-cofirm' ).css('borderColor', 'red');
+                 $( '#passwordconfirm' ).css('borderColor', 'red');
                  jQuery('#validopasswordconfirm').hide(); 
                  jQuery('#errorpasswordconfirm').show(); 
                  $('#errorpasswordconfirm').html('la contraseña no coincide');
                  $('#errorpassword').html('la contraseña no coincide');                 
          }else{
-          $( '#password' ).css('borderColor', 'red');         
+          $( '#password' ).css('borderColor', 'green');         
             jQuery('#validopassword').show(); 
             jQuery('#errorpassword').hide();
-          $('#password-cofirm' ).css('borderColor', 'green');
+          $('#passwordconfirm' ).css('borderColor', 'green');
           jQuery('#validopasswordconfirm').show(); 
                  jQuery('#errorpasswordconfirm').hide(); 
          }
