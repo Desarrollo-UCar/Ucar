@@ -199,7 +199,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Rentas e ingresos por vehículo'}} </b> </h4>
+            <h4 class="modal-title"> <span class="glyphicon glyphicon-warning"></span> <b> {{'Rentas e ingresos por cliente'}} </b> </h4>
         </div>
         <form method="GET" action="{{ route('reporteClientes') }}"  role="form">
         {{ csrf_field() }}
@@ -253,23 +253,23 @@
                             <label>Si lo requiere ingrese los siguientes campos.</label>
                             <label>Si necesita un periodo indíquelo a continuación.</label>
                         </div>
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-8 form-group">
                             <label>Filtrar por:</label>
-                            <select name= "sucursal" id="servicio" class="form-control select2" style="width: 100%;" required>
+                            <select name= "sucursal" id="sucursal" class="form-control select2" style="width: 100%;" onclick="mostraropciones();" required>
                                 <option>TODAS LAS SUCURSALES</option>
                                 @foreach($sucursales as $sucursal)
                                     <option>{{$sucursal->nombre}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-2 form-group">
-                            <label>Límite:</label>
-                            <select name= "limite" id="limite" class="form-control select2" style="width: 100%;" required>
-                                <option>5</option>
-                                <option>10</option>
-                                <option>15</option>
-                            </select>
-                        </div>
+<!-- <div class="col-md-2 form-group">
+    <label>Límite:</label>
+    <select name= "limite" id="limite" class="form-control select2" style="width: 100%;" required>
+        <option>5</option>
+        <option>10</option>
+        <option>15</option>
+    </select>
+</div> -->
                         <div class="col-md-4 form-group">
                             <label>Tipo:</label>
                             <select name= "tipo" id="tipo" class="form-control select2" style="width: 100%;" required>
@@ -277,11 +277,23 @@
                                 <option>Rentas</option>
                             </select>
                         </div>
-                        <div class="col-md-12 form-group">
-                            <input type="checkbox" id="general" name="general" value="ok">
-                            <label class="form-check-label" for="general">CONSULTAR DESDE EL INICIO DE LOS TIEMPOS </label>
+                        <div class="col-md-12 form-group" style="display: none;" id="sucursal_esfecifica">
+                            <label for="especifico">Tipo:</label>
+                            <select name= "especifico" id="especifico" class="form-control select2" style="width: 100%;" onclick="verificarperiodo();">
+                                    <option value="0">CONSULTAR DESDE EL INICIO DE LOS TIEMPOS </option>
+                                    <option value="1">ULTIMO AÑO</option>
+                                    <option value="2">ULTIMA SEMANA</option>
+                                    <option value="3">SELECCIONAR PERIÓDO</option>
+                            </select>
                         </div>
-                        <div class="col-md-12 form-group"  id="fechas">
+                        <div class="col-md-12 form-group" style="display: none;" id="todas_las_sucursales">
+                                <label for="general">Tipo:</label>
+                                <select name= "general" id="general" class="form-control select2" style="width: 100%;" onclick="verificarperiodo();">
+                                    <option value="0">CONSULTAR DESDE EL INICIO DE LOS TIEMPOS </option>
+                                    <option value="3">SELECCIONAR PERIÓDO</option>
+                                </select>
+                            </div>
+                        <div class="col-md-12 form-group" style="display: none;" id="fechas">
                             <div class="col-md-6 form-group">
                                 <label>Desde</label>
                                 <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"  value="">
@@ -311,17 +323,37 @@
 
 @section('scripts')
 <script>
-    var checkbox = document.getElementById('general');
-    checkbox.addEventListener("change", validaCheckbox, true);
-    function validaCheckbox(){
-      var checked = checkbox.checked;
-      var fechas= document.getElementById("fechas");
-      if(checked){
-        fechas.style.display = 'none';
-      }
-      else{
-        fechas.style.display = 'block';
-      }
+     function mostraropciones(){
+        var select = document.getElementById('sucursal').value;
+        var especifico = document.getElementById("sucursal_esfecifica");
+        var general = document.getElementById("todas_las_sucursales");
+        if(select == 'TODAS LAS SUCURSALES'){
+            general.style.display = 'block';
+            especifico.style.display = 'none';
+            fechas.style.display = 'none';
+            //document.getElementById("general").required = true;
+            document.getElementById("especifico").required = false;
+        }
+        else{
+            especifico.style.display = 'block';
+            general.style.display = 'none';
+            fechas.style.display = 'none';
+            document.getElementById("general").required = false;
+            //document.getElementById("especifico").required = true;
+        }
+        document.getElementById('general').value = '0';
+        document.getElementById('especifico').value = '0';
     }
-    </script>
+    function verificarperiodo(){
+        var select_general = document.getElementById('general').value;
+        var select_especifico = document.getElementById('especifico').value;
+        var fechas= document.getElementById("fechas");
+        if(select_general == '3' || select_especifico == '3'){
+            fechas.style.display = 'block';
+        }
+        else{
+            fechas.style.display = 'none';
+        }
+    }
+</script>
 @endsection
