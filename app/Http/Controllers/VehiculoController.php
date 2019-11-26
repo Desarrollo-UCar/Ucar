@@ -58,7 +58,8 @@ class VehiculoController extends Controller
             ->where('status','=','ACTIVO')->first();
             $sucursal=Sucursal::where('idsucursal','=',$sucursale->sucursal)->get();
             $marca= MarcaVehiculo::all();
-            return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca'));
+            $categoria= Categoria::all();
+            return view('gerente.vehiculo.alta_vehiculo',compact('sucursal','marca','categoria'));
         }
 
         $sucursal=Sucursal::all();
