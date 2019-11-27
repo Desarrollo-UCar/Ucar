@@ -85,7 +85,7 @@
                           
                         <div class="col-md-4 form-group">
                             <label>Modelo</label>
-                            <select class="form-control" name="modelo" id="modelo" onchange="consulta()">
+                            <select class="form-control" name="modelo" id="modelo">
                               <option value="">Ninguno</option>                           
                             </select>
 

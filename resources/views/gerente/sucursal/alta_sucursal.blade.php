@@ -20,7 +20,6 @@
     </section>
 
     <section class="content"> 
-    <div class="col-md-12" style="margin-top: 2%;">
         <div class="box box-primary">             
             <div class="box-header with-border">
               <h3 class="box-title">Nuevo Sucursal</h3>
@@ -184,7 +183,7 @@
               </div>
             </form>
           </div>    
-     </div>
+    
 
 </section> 
 
