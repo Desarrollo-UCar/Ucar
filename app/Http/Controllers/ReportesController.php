@@ -380,7 +380,7 @@ public function sucursales(Request $request){
         $titulo   = 'INGRESOS POR AÑO (GENERAL)  ' . $request['sucursal'];
         $x = 'anio';
         $y = 'total';
-        $etiqueta = 'Rentas';
+        $etiqueta = 'Ingresos';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT  (YEAR(fecha)) AS anio, SUM(total) AS total FROM
         (SELECT pago_reservacions.fecha, pago_reservacions.total FROM pago_reservacions 
@@ -395,7 +395,7 @@ public function sucursales(Request $request){
         $titulo   = 'INGRESOS DE LA SUCURSAL (ULTIMO AÑO) ' . $request['sucursal'];
         $x = 'mes';
         $y = 'total';
-        $etiqueta = 'Rentas';
+        $etiqueta = 'Ingresos';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT   MONTHNAME(CONCAT("0000-",B.mes,"-00")) AS mes,B.total FROM
         (SELECT  MONTH(fecha) AS mes, SUM(total) AS total FROM
@@ -410,18 +410,17 @@ public function sucursales(Request $request){
 // INGRESOS DE UNA **SUCURSAL ESPECÍFICA** , ULTIMA SEMANA ---------------------------------------------------------------------------------------FALTA
     if($request['sucursal']!='TODAS LAS SUCURSALES'&&$request['especifico'] =='2'&&$request['tipo']=='Ingresos'){
         $titulo   = 'INGRESOS DE LA SUCURSAL (ULTIMA SEMANA) ' . $request['sucursal'];
-        $x = 'mes';
-        $y = 'total';
-        $etiqueta = 'Rentas';
+        $x = 'DIA';
+        $y = 'CANTIDAD';
+        $etiqueta = 'Ingresos';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
-        $datos = DB::SELECT('SELECT   MONTHNAME(CONCAT("0000-",B.mes,"-00")) AS mes,B.total FROM
-        (SELECT  MONTH(fecha) AS mes, SUM(total) AS total FROM
-        (SELECT pago_reservacions.fecha, pago_reservacions.total FROM pago_reservacions 
-        INNER JOIN reservacions ON reservacions.id = pago_reservacions.id_reserva
-        INNER JOIN alquilers ON alquilers.id_reservacion = reservacions.id
-        INNER JOIN vehiculosucursales ON alquilers.id_vehiculo = vehiculosucursales.vehiculo
-        WHERE vehiculosucursales.sucursal = ?) A
-        GROUP BY MONTH(fecha) ORDER BY  MONTH(fecha) ASC) B',[$sucursal->idsucursal]);
+        $datos = DB::SELECT('SELECT DAY(DIA) AS DIA, CANTIDAD FROM (SELECT (date(fecha)) AS DIA, sum(total) AS CANTIDAD
+        FROM pago_reservacions
+        INNER JOIN alquilers ON alquilers.id_reservacion = pago_reservacions.id_reserva
+        INNER JOIN vehiculosucursales ON vehiculosucursales.vehiculo = alquilers.id_vehiculo
+        WHERE pago_reservacions.fecha  <= CURDATE() 
+        AND vehiculosucursales.sucursal = ?
+        AND fecha >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) GROUP BY date(fecha))tabla',[$sucursal->idsucursal]);
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
 // INGRESOS DE UNA **SUCURSAL ESPECÍFICA** , PERIÓDO SELECCIONADO
@@ -429,7 +428,7 @@ public function sucursales(Request $request){
         $titulo   = 'INGRESOS DE LA SUCURSAL (' . $request['sucursal'] . ') (' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
         $x = 'mes';
         $y = 'total';
-        $etiqueta = 'Rentas';
+        $etiqueta = 'Ingresos';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT   MONTHNAME(CONCAT("0000-",B.mes,"-00")) AS mes,B.total FROM
         (SELECT  MONTH(fecha) AS mes, SUM(total) AS total FROM

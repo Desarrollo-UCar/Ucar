@@ -62,7 +62,6 @@
                           <ul class="dropdown-menu sub-menu-level1">
                             <li><a href="{{ route('index') }}">Automovil</a></li>
                             <li><a href="{{ route('renta_traslado') }}">Traslado</a></li>
-                            <li><a href="{{ route('en_construccion') }}">Flotilla(Empresa)</a></li>
                           </ul>
                         </li>
                         <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
