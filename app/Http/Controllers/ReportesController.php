@@ -267,8 +267,8 @@ public function sucursales(Request $request){
         $periodo = 'anio'; 
     // A CONTINUACION HAY 6 CONSULTAS CORRESPONDIENTES A ****RENTAS****
 // TODAS LAS SUCURSALES , DESDE EL INICIO DE LOS TIEMPOS,
-    if($request['sucursal']=='TODAS LAS SUCURSALES'&&$request['tipo'] =='Rentas'){
-        $titulo   = 'TODAS LAS SUCURSALES , DESDE EL INICIO DE LOS TIEMPOS';
+    if($request['sucursal']=='TODAS LAS SUCURSALES'&&$request['tipo'] =='Rentas'&&$request['general'] =='0'){
+        $titulo   = 'TODAS LAS RENTAS DE LAS SUCURSALES , DESDE EL INICIO DE LOS TIEMPOS';
         $x = 'nombre';
         $y = 'cantidad';
         $etiqueta = 'Rentas';
@@ -279,10 +279,10 @@ public function sucursales(Request $request){
             return view('gerente.reportes.mantenimientos', compact('datos','titulo','x','y','etiqueta'));
     }
 // TODAS LAS RENTAS DE **TODAS** LAS SUCURSALES , PERIÓDO SELECCIONADO
-    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']!='TODAS LAS SUCURSALES'&&$request['tipo'] =='Rentas'&&$request['general'] =='0'){
+    if($request['fecha_inicio']!=null&&$request['fecha_fin']!=null&&$request['sucursal']=='TODAS LAS SUCURSALES'&&$request['tipo'] =='Rentas'&&$request['general'] =='3'){
         $titulo   = 'RENTAS DE **TODAS** LAS SUCURSALES , PERIÓDO SELECCIONADO ' . '(' . date("d-m-Y",strtotime($request['fecha_inicio'])) . ' al ' . date("d-m-Y",strtotime($request['fecha_fin'])) . ')';
-        $x = 'anio';
-        $y = 'total';
+        $x = 'nombre';
+        $y = 'cantidad';
         $etiqueta = 'RENTAS';
         $sucursal = Sucursal::where('nombre','=',$request['sucursal'])->first();
         $datos = DB::SELECT('SELECT  nombre, COUNT(*) AS cantidad FROM alquilers 
