@@ -6,7 +6,7 @@ use App\EmpleadoSucursal;
 use App\Vehiculo;
 use App\Sucursal;
 use App\Modelo;
-use App\VehiculoSucursales;
+use App\vehiculoSucursales;
 use App\MarcaVehiculo;
 use App\MarcaModelo;
 use App\Categoria;

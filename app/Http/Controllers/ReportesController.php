@@ -13,10 +13,10 @@ use mpdf;
 use App;
 use DB;
 use DateTime;
-use App\VehiculoSucursales;
+use App\vehiculoSucursales;
 
 use App\Http\Controllers\Controller;
-use App\tallerservicios;
+use App\Tallerservicios;
 
 class ReportesController extends Controller{
 
