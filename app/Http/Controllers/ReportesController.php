@@ -14,7 +14,6 @@ use App;
 use DB;
 use DateTime;
 use App\vehiculoSucursales;
-
 use App\Http\Controllers\Controller;
 use App\Tallerservicios;
 
