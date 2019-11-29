@@ -14,7 +14,7 @@ use mpdf;
 use App;
 use App\mantenimientos;
 use DB;
-use App\vehiculoSucursales;
+use App\vehiculosucursales;
 use App\traslado_temp;
 use DateTime;
 use App\Sucursal;

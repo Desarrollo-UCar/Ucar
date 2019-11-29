@@ -13,7 +13,8 @@ use mpdf;
 use App;
 use DB;
 use DateTime;
-use App\vehiculoSucursales;
+use App\vehiculosucursales;
+
 use App\Http\Controllers\Controller;
 use App\Tallerservicios;
 
