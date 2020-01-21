@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
     <!-- Theme skin -->
-    <link href="color/blue.css" rel="stylesheet" />
+    <link href="color/amarillo.css" rel="stylesheet" />
     <!-- iconos de materialice -->
   </head>
   <body>
@@ -32,7 +32,7 @@
         <div class="row nomargin">
         <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
             <div class="logo">
-                <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:45%"/></a>
+                <a href="{{ route('index') }}"><img src="img/UCAR LOGO-05.png" alt="" style="width:45%"/></a>
             </div>
         </div>
           <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">

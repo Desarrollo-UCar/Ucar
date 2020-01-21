@@ -27,7 +27,7 @@
   </head>
   <body>
     <div id="wrapper">
-    <!-- INICIA header -->
+    <!-- INICIA header yyyyy -->
      <header>
      <div class="bg-white">
       </div>
@@ -36,7 +36,7 @@
         <div class="row nomargin">
         <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                     <div class="logo">
-                                    <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:45%"/></a>
+                                    <a href="{{ route('index') }}"><img src="img/UCAR LOGO-05.png" alt="" style="width:45%"/></a>
                                     </div>
                                   </div>
         <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
