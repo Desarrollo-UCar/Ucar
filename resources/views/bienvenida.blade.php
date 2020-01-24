@@ -11,7 +11,6 @@
         <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans:300,400,600,700,800" rel="stylesheet">
         <link href="css/bootstrap.css" rel="stylesheet" />
   
-        <!-- <link href="css/overwrite.css" rel="stylesheet" />  checar por el asunto del calendario -->
         <!-- Theme skin -->
         <link href="color/blue.css" rel="stylesheet" />
         <!-- iconos de materialice -->

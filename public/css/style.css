@@ -12,7 +12,6 @@
 @import url('font-awesome.css');
 /* ==== overwrite bootstrap standard ==== */
 
-@import url('overwrite.css');
 @import url('animate.css');
 @import url('shortcodes.css');
 /* Table of content */
@@ -273,109 +272,6 @@ ul.social-network li a:hover {
 
 /* --- menu --- */
 
-header .navigation {
-  float: right;
-}
-
-header ul.nav li {
-  border: none;
-  margin: 0;
-}
-
-header ul.nav li a {
-  border: none;
-  font-weight: 400;
-}
-
-.navbar .nav>li>a {
-  font-size: 13px;
-  color: #444;
-  text-shadow: none;
-}
-
-header ul.nav li a i {
-  color: #656565;
-}
-
-header ul.nav li a:hover i {
-  color: #fff;
-}
-
-header ul.nav li.active a i {
-  color: #fff;
-}
-
-header ul.nav li ul.dropdown-menu li a i {
-  color: #fff;
-}
-
-.navbar .nav a:hover {
-  background: none;
-}
-
-.navbar .nav>.active>a, .navbar .nav>.active>a:hover {
-  font-weight: 600;
-}
-
-.navbar .nav>.active>a:active, .navbar .nav>.active>a:focus {
-  background: none;
-  outline: 0;
-  font-weight: 600;
-}
-
-.navbar .nav li .dropdown-menu {
-  z-index: 1000;
-}
-
-header ul.nav li ul {
-  z-index: 1000;
-  margin-top: 20px;
-}
-
-header ul.nav li ul li ul {
-  margin: 1px 0 0 1px;
-}
-
-.dropdown-menu .dropdown i {
-  position: absolute;
-  right: 0;
-  margin-top: 3px;
-  padding-left: 20px;
-}
-
-.navbar .nav>li>.dropdown-menu:before {
-  display: inline-block;
-  border-right: none;
-  border-bottom: none;
-  border-left: none;
-  border-bottom-color: none;
-  content: none;
-}
-
-.navbar .nav>li>.dropdown-menu:after {
-  display: inline-block;
-  border-right: none;
-  border-bottom: none;
-  border-left: none;
-  content: '';
-}
-
-ul.nav li.dropdown a {
-  z-index: 1000;
-  display: block;
-}
-
-ul.nav li.dropdown ul li ul.dropdown-menu {
-  margin-left: 0px;
-}
-
-ul.nav li.dropdown ul li i {
-  margin-right: 20px;
-}
-
-select.selectmenu {
-  display: none;
-}
 
 /* ===================================
 5. Section: Featured
@@ -2298,9 +2194,7 @@ ul.the-icons {
     margin-top: 0;
     float: none;
   }
-  nav ul li {
-    display: none;
-  }
+ 
   select.selectmenu {
     display: block;
     width: 100%;
@@ -2355,9 +2249,7 @@ ul.the-icons {
   ul.social-network {
     float: none;
   }
-  nav ul li {
-    display: none;
-  }
+  
   header .navigation {
     margin: 0 auto;
     text-align: center;
