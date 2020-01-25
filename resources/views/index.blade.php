@@ -91,6 +91,16 @@
                         </div>
                     </li>
                     @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled  fa fa-facebook-square fa-2x active icon-1x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled  fa fa-instagram fa-2x active icon-1x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://twitter.com/ucarmx"><i class="ico icon-circled  fa fa-twitter fa-2x active icon-1x"></i></a>
+
+                    </li>
                   </ul>
                 </div>
               </nav>
@@ -136,8 +146,8 @@
                                                 <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
                                             </div>
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
-                                            <label for="horaRecogida">HORA DE ENTREGA</label>
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="horaRecogida">HORA ENTREGA</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
@@ -160,8 +170,8 @@
                                                 </select>
                                             </div> 
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
-                                            <label for="horaDevolucion">HORA DE DEVOLUCIÓN</label>
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="horaDevolucion">HORA DEVOLUCIÓN</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
@@ -213,10 +223,12 @@
                             </div>
                         </div>       
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8" id = "padre">
+                            <img id="content_div_one_photo" class="img-fluid card-img" src="img/inicio/vela2.jpg">
+                        <div class="card-title">Gatmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm kkkkkkkkkkkkkkkkkkkkkkkkhbb ffffffo</div>
                     <div class="camera_wrap" id="camera-slide">
                             <!-- slide 1 here -->
-                            <div data-src="img/inicio/Puerto-Escondido.jpg">
+                            <div data-src="img/inicio/vela2.jpg">
                               <div class="camera_caption fadeFromLeft">
                               <div class="container">
                                   <div class="row">
@@ -232,8 +244,9 @@
                                 </div>
                               </div>
                             </div>
+                            
                             <!-- slide 2 here -->
-                            <div data-src="img/inicio/Puerto-Escondido2.jpg">
+                            <div data-src="img/inicio/Puerto-Escondido2-ancha.jpg">
                               <div class="camera_caption fadeFromLeft">
                                 <div class="container-fluid">
                                   <div class="row">
@@ -250,7 +263,7 @@
                               </div>
                             </div>
                             <!-- slide 3 here -->
-                            <div data-src="img/inicio/ixtepec.jpg">
+                            <div data-src="img/inicio/ixtepec2.jpg">
                               <div class="camera_caption fadeFromLeft">
                                 <div class="container-fluid">
                                   <div class="row">

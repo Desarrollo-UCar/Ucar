@@ -344,9 +344,6 @@
     zoom: 1; /* IE7 (hasLayout)*/
     *display: inline; /* IE */
 }
-.camera_wrap .camera_pag .camera_pag_ul li.cameracurrent > span {
-	
-}
 .camera_thumbs_cont {
 	-webkit-border-bottom-right-radius: 4px;
 	-webkit-border-bottom-left-radius: 4px;
@@ -454,9 +451,6 @@
 }
 .camera_pag_ul .thumb_arrow {
     border-top-color: #e6e6e6;
-}
-.camera_prevThumbs, .camera_nextThumbs, .camera_prev, .camera_next, .camera_commands, .camera_thumbs_cont {
-	
 }
 
 .camera_thumbs_cont ul li > img {
