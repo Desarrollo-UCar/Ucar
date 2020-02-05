@@ -31,7 +31,7 @@
             <nav class="navbar navbar-expand-lg">
                     <a class="navbar-brand" href="{{ route('index') }}">
                             <img src="img/UCAR LOGO-09.png"  width="120" height="60" class="d-inline-block align-top" alt="">
-                          </a>
+                          </a> 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span><i class="fa fa-bars"> Menu</i></span>
                 </button>
@@ -111,11 +111,11 @@
     <!-- end header -->
     <!-- section featured -->
     <section id="carrusel">
-            <div class="container">
+            <div class="container" style="position: relative;">
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="position: absolute; left: 10px; top: 5px; z-index: 2;">
                             <!-- inicio card reserva -->
-                            <div class="card bg-white text-black font-weight-bold">
+                            <div class="card bg-white text-black font-weight-bold border-1">
                             <!--Card content-->
                             <div class="card-body">
                                 <!-- inicio Formulario reserva-->
@@ -146,9 +146,9 @@
                                                 <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
                                             </div>
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <label for="horaRecogida">HORA ENTREGA</label>
-                                            <div class="input-group">
+                                            <div class="input-group input-group-sm mb-0">
                                                 <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                                 </div>
@@ -170,9 +170,9 @@
                                                 </select>
                                             </div> 
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <label for="horaDevolucion">HORA DEVOLUCIÓN</label>
-                                            <div class="input-group">
+                                            <div class="input-group input-group-sm mb-0">
                                                 <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
                                                 </div>
@@ -197,7 +197,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto">
-                                            <button class="btn btn-primary" type="submit" style="margin-top: 0%;">Consulta Vehiculos Disponibles</button>
+                                            <button class="btn btn-primary btn-sm" type="submit" style="margin-top: 0%;">Continuar</button>
                                         </div> 
                                         
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: none;" id="hora_extra">
@@ -223,22 +223,21 @@
                             </div>
                         </div>       
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8" id = "padre">
-                            <img id="content_div_one_photo" class="img-fluid card-img" src="img/inicio/vela2.jpg">
-                        <div class="card-title">Gatmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm kkkkkkkkkkkkkkkkkkkkkkkkhbb ffffffo</div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="camera_wrap" id="camera-slide">
                             <!-- slide 1 here -->
-                            <div data-src="img/inicio/vela2.jpg">
+                            <div data-src="img/inicio/Puerto-Escondido.jpg">
                               <div class="camera_caption fadeFromLeft">
-                              <div class="container">
+                              <div class="container-fluid">
                                   <div class="row">
                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                      <h2 class="animated fadeInDown text-white text-center"><strong>   VE LOS VEHICULOS <br> <span class="colored"> QUE TENEMOS PARA TI!!!</span></strong></h2>
-                                      <p class="animated fadeInUp text-white text-center">Reserva ahora mismo.</p>
-                                      <a href="{{ route('flota') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Ver Flota</a>
+                                      
                                     </div>
                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                      <img src="img/inicio/aveo.png" alt="" class="animated bounceInDown delay1" />
+                                            <h2 class="animated fadeInDown text-white text-center"><strong>VE LOS VEHICULOS <br> <span class="colored"> QUE TENEMOS PARA TI!!!</span></strong></h2>
+                                            <p class="animated fadeInUp text-white text-center">Reserva ahora mismo.</p>
+                                            <a href="{{ route('flota') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Ver Flota</a>
+                                            <img src="img/inicio/aveo.png" alt="" class="animated bounceInDown delay1" style="width:70%"/>
                                     </div>
                                   </div>
                                 </div>
@@ -246,7 +245,7 @@
                             </div>
                             
                             <!-- slide 2 here -->
-                            <div data-src="img/inicio/Puerto-Escondido2-ancha.jpg">
+                            <div data-src="img/inicio/XV-2020.jpg">
                               <div class="camera_caption fadeFromLeft">
                                 <div class="container-fluid">
                                   <div class="row">
@@ -263,7 +262,7 @@
                               </div>
                             </div>
                             <!-- slide 3 here -->
-                            <div data-src="img/inicio/ixtepec2.jpg">
+                            <div data-src="img/inicio/itsmo.jpg">
                               <div class="camera_caption fadeFromLeft">
                                 <div class="container-fluid">
                                   <div class="row">
@@ -273,7 +272,7 @@
                                         <p class="animated fadeInUp text-white">Somos una empresa dedicada al servicio de renta de autos, especializados en flotillas.</p>
                                     </div>
                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                      <img src="img/inicio/toyota-hilux.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
+                                  
                                     </div>
                                   </div>
                                 </div>
