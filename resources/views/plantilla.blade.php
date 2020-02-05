@@ -16,9 +16,8 @@
     <link href="css/jquery.bxslider.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/shortcodes.css" rel="stylesheet" />
-    <!-- <link href="css/overwrite.css" rel="stylesheet" />  checar por el asunto del calendario -->
     <!-- Theme skin -->
-    <link href="color/blue.css" rel="stylesheet" />
+    <link href="color/amarillo.css" rel="stylesheet" />
     <!-- iconos de materialice -->
    
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
@@ -28,16 +27,14 @@
   </head>
   <body>
     <div id="wrapper">
-    <!-- INICIA header -->
+    <!-- INICIA header yyyyy -->
      <header>
-     <div class="bg-white">
-      </div>
-      
+     <div class="container"><div class="row"></div></div>
     <div class="container">
         <div class="row nomargin">
         <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                     <div class="logo">
-                                    <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:45%"/></a>
+                                    <a href="{{ route('index') }}"><img src="img/UCAR LOGO-09.png" alt="" style="width:60%"/></a>
                                     </div>
                                   </div>
         <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
@@ -78,7 +75,7 @@
                     </li>
                     @if(!(Auth::user()))
                     <li class="dropdown">
-                      <a href="{{ route('login')}}">Iniciar Sesión </a>
+                      <a href="{{ route('login')}}">Iniciar Sesión</a>
                     </li>
                     @else
                     <li class="nav-item dropdown">
