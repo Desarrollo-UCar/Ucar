@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
     <!-- Theme skin -->
     <link href="color/blue.css" rel="stylesheet" />
+    <link rel="icon"  type="image/png" href="{{'/img/UCAR LOGO-02.png'}}">
     <!-- iconos de materialice -->
   </head>
   <body>

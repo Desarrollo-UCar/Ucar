@@ -220,7 +220,8 @@
                     start : '{{$reservacion->fecha_recogida}}T{{$reservacion->hora_recogida}}',
                     backgroundColor:  '#0073b7', //blue
                     borderColor    :  '#0073b7', //bluesw
-             url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+            //  url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+            url: 'http://transporteixtepec.com/detalle/{{$reservacion->id}}'
                 @endif
 
                 @if($reservacion->estatus_alquiler =='terminado')
@@ -228,7 +229,8 @@
                     start : '{{$reservacion->fecha_recogida}}T{{$reservacion->hora_recogida}}',
                     backgroundColor:  '#00a65a', //green
                     borderColor    :  '#00a65a', //red
-                    url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+                    // url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+                    url: 'http://transporteixtepec.com/detalle/{{$reservacion->id}}'
                 @endif
 
                 @if($reservacion->estatus_alquiler =='cancelado')
@@ -236,7 +238,8 @@
                     start : '{{$reservacion->fecha_recogida}}T{{$reservacion->hora_recogida}}',
                     backgroundColor:  '#f56954', //green
                     borderColor    :  '#f39c12', //red
-                    url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+                    // url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+                    url: 'http://transporteixtepec.com/detalle/{{$reservacion->id}}'
                 @endif
 
                 @if($reservacion->estatus_alquiler =='en curso')
@@ -244,7 +247,8 @@
                     start : '{{$reservacion->fecha_devolucion}}T{{$reservacion->hora_devolucion}}',
                     backgroundColor:  '#FFC100', //green
                     borderColor    :  '#f39c12', //red
-                    url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+                    // url: 'http://ucar.test/detalle/{{$reservacion->id}}'
+                    url: 'http://transporteixtepec.com/detalle/{{$reservacion->id}}'
                 @endif
                 },
         
