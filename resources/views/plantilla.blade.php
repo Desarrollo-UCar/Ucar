@@ -23,6 +23,7 @@
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
+    <link rel="icon"  type="image/png" href="{{'/img/UCAR LOGO-02.png'}}">
   </head>
   <body>
     <div id="wrapper">

@@ -26,6 +26,7 @@ class CreateSucursalTable extends Migration
             $table->string('numero')->requiere;
             $table->string('status');
             $table->string('telefono')->require;
+            
         });
     }
 

@@ -17,7 +17,14 @@
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
+<<<<<<< HEAD
+    <!-- Theme skin -->
+    <link href="color/blue.css" rel="stylesheet" />
+    <link rel="icon"  type="image/png" href="{{'/img/UCAR LOGO-02.png'}}">
+    <!-- iconos de materialice -->
+=======
     <link href="color/amarillo.css" rel="stylesheet" />
+>>>>>>> 42ec5cad6f633ad8fafcd3c7dc78530edcc677da
   </head>
   <body>
     <div id="wrapper">
