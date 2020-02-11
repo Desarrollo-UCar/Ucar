@@ -68,7 +68,7 @@
                             </h6>
             </div>
                 <figure>
-                        <div><img src={{'/images/'.$vehiculo->foto}} /></div>
+                        <div><img src={{'images/'.$vehiculo->foto}} /></div>
                 </figure>
             <div class="pricing-action">
                 <!-- Button trigger modal -->
@@ -105,16 +105,16 @@
                           <ul class="slides">
                             
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto_derecha}}  alt="" />
+                              <img src={{'images/'.$vehiculo->foto_derecha}}  alt="" />
                             </li>
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto_izquierda}}  alt="" />
+                              <img src={{'images/'.$vehiculo->foto_izquierda}}  alt="" />
                             </li>
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto}}  alt="" />
+                              <img src={{'images/'.$vehiculo->foto}}  alt="" />
                             </li>
                             <li>
-                              <img src={{'/images/'.$vehiculo->foto_trasera}}  alt="" />
+                              <img src={{'images/'.$vehiculo->foto_trasera}}  alt="" />
                             </li>
                           </ul>
                         </div>

@@ -5,7 +5,7 @@
       <!-- slideshow start here -->
       <div class="camera_wrap" id="camera-slide">
         <!-- slide 1 here -->
-        <div data-src="{{'/images/'.$sucursal->foto}}">
+        <div data-src="{{'images/'.$sucursal->foto}}">
           <div class="camera_caption fadeFromLeft">
             <div class="container-fluid">
               <div class="row">
@@ -20,7 +20,7 @@
         </div>
 
         <!-- slide 2 here -->
-        <div data-src="{{'/images/'.$sucursal->foto1}}">
+        <div data-src="{{'images/'.$sucursal->foto1}}">
           <div class="camera_caption fadeFromLeft">
             <div class="container-fluid">
               <div class="row">
@@ -33,7 +33,7 @@
         </div>
 
         <!-- slide 3 here -->
-        <div data-src="{{'/images/'.$sucursal->foto2}}">
+        <div data-src="{{'images/'.$sucursal->foto2}}">
           <div class="camera_caption fadeFromLeft">
             <div class="container-fluid">
               <div class="row">

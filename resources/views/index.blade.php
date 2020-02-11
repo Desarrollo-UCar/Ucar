@@ -17,20 +17,15 @@
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
-<<<<<<< HEAD
     <!-- Theme skin -->
-    <link href="color/blue.css" rel="stylesheet" />
+    <link href="color/amarillo.css" rel="stylesheet" />
     <link rel="icon"  type="image/png" href="{{'/img/UCAR LOGO-02.png'}}">
     <!-- iconos de materialice -->
-=======
-    <link href="color/amarillo.css" rel="stylesheet" />
->>>>>>> 42ec5cad6f633ad8fafcd3c7dc78530edcc677da
   </head>
   <body>
     <div id="wrapper">
     <!-- INICIA header -->
-     <header>
-            <!-- <div class="container"><div class="row"></div></div> -->
+<header>
     <div class="container">
         <div class="row nomargin">
         
@@ -120,7 +115,7 @@
     <section id="carrusel">
             <div class="container" style="position: relative;">
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="position: absolute; left: 10px; top: 5px; z-index: 2;">
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4" style="position: absolute; left: 10px; top: 5px; z-index: 2;">
                             <!-- inicio card reserva -->
                             <div class="card bg-white text-black font-weight-bold border-1">
                             <!--Card content-->
@@ -129,7 +124,7 @@
                                 <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <label for="inputLugar">SUCURSAL DE RENTA</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -142,7 +137,7 @@
                                             </select>
                                             </div>
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <label for="fecha">SELECCIONA TUS FECHAS</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -153,7 +148,7 @@
                                                 <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
                                             </div>
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
                                             <label for="horaRecogida">HORA ENTREGA</label>
                                             <div class="input-group input-group-sm mb-0">
                                                 <div class="input-group-prepend">
@@ -177,7 +172,7 @@
                                                 </select>
                                             </div> 
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
                                             <label for="horaDevolucion">HORA DEVOLUCIÓN</label>
                                             <div class="input-group input-group-sm mb-0">
                                                 <div class="input-group-prepend">
@@ -230,7 +225,7 @@
                             </div>
                         </div>       
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="col-sm-0 col-md-12 col-lg-12 col-xl-12">
                     <div class="camera_wrap" id="camera-slide">
                             <!-- slide 1 here -->
                             <div data-src="img/inicio/Puerto-Escondido.jpg">
@@ -273,14 +268,12 @@
                               <div class="camera_caption fadeFromLeft">
                                 <div class="container-fluid">
                                   <div class="row">
-                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
+                                    <div class="col-sm-4 col-md-6 col-lg-4 col-xl-4"></div>
+                                    <div class="col-sm-6 col-md-6 col-lg-8 col-xl-6 text-center">
                                         <h2 class="animated fadeInDown"><strong>ESTAMOS PARA ATENDERTE</strong></h2>
                                         <h2 class="animated fadeInDown"><strong><span class="colored">LOS 365 DIAS AL AÑO</span></strong></h2>
-                                        <p class="animated fadeInUp text-white">Somos una empresa dedicada al servicio de renta de autos, especializados en flotillas.</p>
                                     </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                  
-                                    </div>
+                                    <div class="col-sm-2 col-md-0 col-lg-0 col-xl-2"></div>
                                   </div>
                                 </div>
                               </div>
@@ -423,42 +416,6 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 aligncenter ">
-            <h3 class="title">Nuestros<strong> vehículos</strong></h3>
-            <ul class="bxslider">
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Chevrolet-Aveo-2018.jpg" alt="" style="width:32%"/>
-                  <h4>Compactos</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Toyota-Hilux-2014.jpg" alt="" style="width:50%"/>
-                  <h4>Camionetas</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Honda-Dio-2019.jpg" alt="" style="width:38%"/>
-                  <h4>Motoneta</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <li>
-                    <div class="testimonial-autor">
-                    <img src="img/flota/Chevrolet-Suburban-2018.jpg" alt="" style="width:38%"/>
-                      <h4>Suburban</h4>
-                      <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                    </div>
-                  </li>
-            </ul>
-          </div>
-        </div>
       </div>
 </section>
 
@@ -532,36 +489,25 @@
 <!-- Footer links -->
 <div class="row">
 <!-- Grid column -->
-<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-<a href="{{ route('index') }}"><img src="img/logo.png" alt="Logo ucar" style="width:90%"/></a>
+<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2">
+<a href="{{ route('index') }}"><img src="img/UCAR LOGO-05.png" alt="Logo ucar" style="width:90%"/></a>
 </div>  
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+<div class="col-sm-7 col-md-4 col-lg-3 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
     <p>Somos una empresa dedicada al servicio de renta de automóviles, traslados, especializados en flotillas</p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
     <p><a href="{{ route('index') }}">Iniciar una reservación</a></p>
     <p><a href="{{ route('dashboard_cliente') }}">Ver mis reservaciones</a></p>
-  
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
     <p><a href="{{ route('flota') }}">Toda la flota</a></p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Promociones</h6>
-    <p><a href="{{ route('en_construccion') }}">Promociones</a></p>
-    <p><a href="{{ route('en_construccion') }}">Acerca de las promociones</a></p>
-</div>
-<!-- Grid column -->
-
-<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-    <h6 class="text-uppercase font-weight-bold">Servicios al cliente</h6>
+<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+    <h6 class="text-uppercase font-weight-bold">Generalidades</h6>
     <p><a href="{{ route('en_construccion') }}">Aviso de privacidad  </a></p>
     <p><a href="{{ route('en_construccion') }}">Politicas de renta</a></p>
     <p><a href="{{ route('en_construccion') }}">Protecciones</a></p>
@@ -569,41 +515,14 @@
     <p><a href="{{ route('en_construccion') }}">Contacto</a></p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+<div class="col-sm-12 col-md-8 col-lg-12 col-xl-4">
     <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
     @foreach($sucursales as $sucursal)
     <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, <i class="fa fa-whatsapp text-success" aria-hidden="true" ></i>  {{$sucursal->telefono}} </a></p>
     @endforeach
 </div>
                 <!-- Grid column -->
-<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-    <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                    <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled icon-bgdark fa fa-instagram fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                    <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://twitter.com/ucarmx"><i class="ico icon-circled icon-bgdark fa fa-twitter fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div> 
-    </div>      
-</div>
+
 </div>
 <!-- Footer links -->
 <!-- Grid row -->
@@ -613,7 +532,7 @@
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
           <div class="copyright">
-            <p><span>&copy;2019 Ü-CAR. Todos los derechos reservados.</span></p>
+            <p><span>&copy;2020 Ü-CAR. Todos los derechos reservados.</span></p>
           </div>
         </div>
       </div>

@@ -28,62 +28,62 @@
   <body>
     <div id="wrapper">
     <!-- INICIA header yyyyy -->
-     <header>
-     <div class="container"><div class="row"></div></div>
+    <header>
     <div class="container">
         <div class="row nomargin">
-        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                    <div class="logo">
-                                    <a href="{{ route('index') }}"><img src="img/UCAR LOGO-09.png" alt="" style="width:60%"/></a>
-                                    </div>
-                                  </div>
-        <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
-            <div class="navbar">
-              <div class="navigation">
-                <nav>
-                  <ul class="nav ">
-                    <li class="dropdown active">
-                      <a href="{{ route('index') }}"> Inicio</a>
+        
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="{{ route('index') }}">
+                            <img src="img/UCAR LOGO-09.png"  width="120" height="60" class="d-inline-block align-top" alt="">
+                          </a> 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span><i class="fa fa-bars"> Menu</i></span>
+                </button>
+              
+                <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+                  <ul class="navbar-nav ml-auto h5">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{{ route('index') }}"> Inicio</a>
                     </li>
-
-                    <li class="dropdown">
-                      <a href="#">Reservación <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown"><a href="#">Reservar<i class="icon-angle-right"></i></a>
-                          <ul class="dropdown-menu sub-menu-level1">
-                            <li><a href="{{ route('index') }}">Automovil</a></li>
-                            <li><a href="{{ route('renta_traslado') }}">Traslado</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="{{ route('dashboard_cliente') }}">Ver tu Reservación</a></li>   
-                      </ul>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Reservación
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('index') }}">Automovil</a>
+                        <a class="dropdown-item" href="{{ route('renta_traslado') }}">Traslado</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('dashboard_cliente') }}">Ver tu Reservación</a>
+                      </div>
                     </li>
-
-                    <li class="dropdown">
-                      <a href="#">Sucursales <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                      @foreach($sucursales as $sucursal)
-                            <li><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal])}}">{{$sucursal->nombre}}</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Sucursales
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          @foreach($sucursales as $sucursal)
+                            <a class="dropdown-item" href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal])}}">{{$sucursal->nombre}}</a>
                         @endforeach
-                      </ul>
+                          </div>
                     </li>
-                    <li class="dropdown">
-                      <a href="{{ route('flota') }}">Flota</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('flota') }}">Flota</a>
                     </li>
-                    <li class="dropdown">
-                      <a href="{{ route('servicios') }}">Servicios</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('servicios') }}">Servicios</a>
                     </li>
                     @if(!(Auth::user()))
-                    <li class="dropdown">
-                      <a href="{{ route('login')}}">Iniciar Sesión</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login')}}">Iniciar Sesión</a>
                     </li>
                     @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();"style="color: white">
@@ -96,20 +96,19 @@
                         </div>
                     </li>
                     @endif
-<li  class="dropdown">
-    <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled  fa fa-facebook-square fa-2x active icon-1x"></i></a>
-</li>
-<li  class="dropdown">
-    <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled  fa fa-instagram fa-2x active icon-1x"></i></a>
-</li>
-<li  class="dropdown">
-    <a href="https://twitter.com/ucarmx"><i class="ico icon-circled  fa fa-twitter fa-2x active icon-1x"></i></a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled  fa fa-facebook-square fa-2x active icon-1x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled  fa fa-instagram fa-2x active icon-1x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://twitter.com/ucarmx"><i class="ico icon-circled  fa fa-twitter fa-2x active icon-1x"></i></a>
+
+                    </li>
                   </ul>
-                </nav>
-              </div>
-              <!-- end navigation -->
-            </div>
+                </div>
+              </nav>
           </div>
         </div>
       </div>
@@ -123,97 +122,86 @@
         </div>
   <!-- Footer -->
   <footer class=" font-small bg-dark text-white">
-  <!-- Footer Links -->
-  <div class="container">
-  <!-- Footer links -->
-  <div class="row">
-  <!-- Grid column -->
-    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-    <a href="{{ route('index') }}"><img src="img/logo.png" alt="Logo ucar" style="width:90%"/></a>
-    </div>  
-  <!-- Grid column -->
-    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
-      <p>Somos una empresa dedicada al servicio de renta de autos, traslados. Especializados en flotillas</p>
-    </div>
-    <!-- Grid column -->
-    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
-      <p>
-        <a href="{{ route('index') }}">Iniciar una reservación</a>
-      </p>
-      <p>
-        <a href="{{ route('en_construccion') }}">Ver / Modificar / Cancelar una reservación</a>
-      </p>
-      
-    </div>
-    <!-- Grid column -->
-    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
-      <p>
-        <a href="{{ route('flota') }}">Toda la flota</a>
-      </p>
-    </div>
-    <!-- Grid column -->
-    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-      <h6 class="text-uppercase font-weight-bold">Promociones</h6>
-      <p>
-        <a href="{{ route('en_construccion') }}">Promociones</a>
-      </p>
-      <p>
-        <a href="{{ route('en_construccion') }}">Acerca de las promociones</a>
-      </p>
-    </div>
-    <!-- Grid column -->
-    
-    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-            <h6 class="text-uppercase font-weight-bold">Servicios al cliente</h6>
-            <p>
-              <a href="{{ route('en_construccion') }}">Aviso de privacidad  </a></p>
-            <p>
-              <a href="{{ route('en_construccion') }}">Politicas de renta</a></p>
-            <p>
-              <a href="{{ route('en_construccion') }}">Protecciones</a></p>
-            <p>
-              <a href="{{ route('en_construccion') }}">Preguntas Frecuentes</a></p>
-            <p>
-              <a href="{{ route('en_construccion') }}">Contacto</a></p>
-          </div>
-          <!-- Grid column -->
-          <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-            <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
-            @foreach($sucursales as $sucursal)
-            <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, <i class="fa fa-whatsapp text-success" aria-hidden="true" ></i>  {{$sucursal->telefono}} </a></p>
-            @endforeach
-        </div>
-                        <!-- Grid column -->
-        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-            <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+<!-- Footer Links -->
+<div class="container">
+<!-- Footer links -->
+<div class="row">
+<!-- Grid column -->
+<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
+<a href="{{ route('index') }}"><img src="img/UCAR LOGO-05.png" alt="Logo ucar" style="width:100%"/></a>
+</div>  
+<!-- Grid column -->
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
+    <p>Somos una empresa dedicada al servicio de renta de automóviles, traslados, especializados en flotillas</p>
+</div>
+<!-- Grid column -->
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
+    <p><a href="{{ route('index') }}">Iniciar una reservación</a></p>
+    <p><a href="{{ route('dashboard_cliente') }}">Ver mis reservaciones</a></p>
+  
+</div>
+<!-- Grid column -->
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
+    <p><a href="{{ route('flota') }}">Toda la flota</a></p>
+</div>
+<!-- Grid column -->
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <h6 class="text-uppercase font-weight-bold">Promociones</h6>
+    <p><a href="{{ route('en_construccion') }}">Promociones</a></p>
+    <p><a href="{{ route('en_construccion') }}">Acerca de las promociones</a></p>
+</div>
+<!-- Grid column -->
+
+<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+    <h6 class="text-uppercase font-weight-bold">Servicios al cliente</h6>
+    <p><a href="{{ route('en_construccion') }}">Aviso de privacidad  </a></p>
+    <p><a href="{{ route('en_construccion') }}">Politicas de renta</a></p>
+    <p><a href="{{ route('en_construccion') }}">Protecciones</a></p>
+    <p><a href="{{ route('en_construccion') }}">Preguntas Frecuentes</a></p>
+    <p><a href="{{ route('en_construccion') }}">Contacto</a></p>
+</div>
+<!-- Grid column -->
+<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
+    @foreach($sucursales as $sucursal)
+    <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, <i class="fa fa-whatsapp text-success" aria-hidden="true" ></i>  {{$sucursal->telefono}} </a></p>
+    @endforeach
+</div>
+                <!-- Grid column -->
+<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
                 <div class="box flyRight">
                   <div class="icon">
-                    <i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-4x active icon-2x"></i><a href="https://www.facebook.com/UcarMx/"> Facebook</a>
+                    <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-3x active icon-2x"></i></a>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                <div class="box flyRight">
+              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                    <div class="box flyRight">
                   <div class="icon">
-                    <i class="ico icon-circled icon-bgdark fa fa-instagram fa-4x active icon-2x"></i><a href="https://www.instagram.com/ucar_mexico/"> Instagram</a>
+                    <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled icon-bgdark fa fa-instagram fa-3x active icon-2x"></i></a>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                <div class="box flyRight">
+              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                    <div class="box flyRight">
                   <div class="icon">
-                    <i class="ico icon-circled icon-bgdark fa fa-twitter fa-4x active icon-2x"></i><a href="https://twitter.com/ucarmx"> Twitter</a>
+                    <a href="https://twitter.com/ucarmx"><i class="ico icon-circled icon-bgdark fa fa-twitter fa-3x active icon-2x"></i></a>
                   </div>
                 </div>
-              </div>         
-        </div>
-  </div>
-  <!-- Footer links -->
-  <!-- Grid row -->
+              </div> 
+    </div>      
+</div>
+</div>
+<!-- Footer links -->
+<!-- Grid row -->
 </div>
   <div id="sub-footer">
     <div class="container">
@@ -241,6 +229,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <!-- javascript
     ================================================== -->
+    
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/jquery.js"></script>
   <script src="js/jquery.easing.1.3.js"></script>
