@@ -679,6 +679,7 @@
   }
 </script>
   
+
   <script>
 
         $(document).ready(function(){
@@ -700,7 +701,7 @@
         
          var mensaje=data.success;
         //  console.log(mensaje);
-         if(mensaje=='EXITO'){
+         if(mensaje=='EXITO'){           
       $('.btn-info').click();
        }
          if(mensaje=='ERRORCONTRA'){
