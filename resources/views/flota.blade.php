@@ -1,23 +1,9 @@
 @extends('plantilla')
 @section('seccion')
-<section id="inner-headline">
-    <div class="inner-heading">
-        <div class="container">
-            <div class="row nomargin">
-                <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10">
-                    <h2>Autos disponibles a precios accesibles</h2>
-                </div>
-                 <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
-                    {{ $flota->links() }}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
   <section id="content">
       <div class="container">
         <div class="row nomargin">
-          <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+          <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
               <ul class="portfolio-categ filter">
                 <li class="all active"><a href="#">Todos</a></li>
                 <li class="COMPACTO"><a href="#" title="">Compactos</a></li>
@@ -26,6 +12,9 @@
                 <li class="MOTONETA"><a href="#" title="">Motonetas</a></li>
               </ul>
           </div>
+          <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+            {{ $flota->links() }}
+        </div>
           <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
               <ul class="portfolio-categ filter">
                   <form name="formulario" id="formulario" method="POST">
@@ -61,7 +50,7 @@
     <div class="pricing-box-wrap special animated-fast flyIn">
             <div class="pricing-heading">
                 <h4 style="color: #fffffe;"><strong>{{$vehiculo->marca}}</strong> {{$vehiculo->modelo}}</h4>
-                <h5><strong>MXN {{number_format($vehiculo->precio,2)}} por dia</strong></h5>
+                <h5><strong style="color: #FBAE17;">MXN {{number_format($vehiculo->precio,2)}} por dia</strong></h5>
                 <h6><strong><i class="fa fa-car"  style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->cilindros}} Cilindros
                             <i class="fa fa-bolt" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->rendimiento}} Km/L
                             <i class="fa fa-male" style="color: #fffffe;" aria-hidden="true"></i> {{$vehiculo->pasajeros}} Pasajeros</strong>
@@ -72,7 +61,6 @@
                 </figure>
             <div class="pricing-action">
                 <!-- Button trigger modal -->
-                
                     <button type="button" class="btn btn-medium btn-theme" data-toggle="modal" data-target="#vehiculo{{$vehiculo->modelo}}"><i class="icon-chevron-down"></i>
                     Detalles
                     </button>

@@ -23,7 +23,7 @@
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
-    <link rel="icon"  type="image/png" href="{{'/img/UCAR LOGO-02.png'}}">
+    <link rel="icon"  type="image/png" href="img/UCAR LOGO-02.png">
   </head>
   <body>
     <div id="wrapper">
@@ -127,36 +127,25 @@
 <!-- Footer links -->
 <div class="row">
 <!-- Grid column -->
-<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-<a href="{{ route('index') }}"><img src="img/UCAR LOGO-05.png" alt="Logo ucar" style="width:100%"/></a>
+<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2">
+<a href="{{ route('index') }}"><img src="img/UCAR LOGO-05.png" alt="Logo ucar" style="width:90%"/></a>
 </div>  
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+<div class="col-sm-7 col-md-4 col-lg-3 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
     <p>Somos una empresa dedicada al servicio de renta de automóviles, traslados, especializados en flotillas</p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
     <p><a href="{{ route('index') }}">Iniciar una reservación</a></p>
     <p><a href="{{ route('dashboard_cliente') }}">Ver mis reservaciones</a></p>
-  
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
     <p><a href="{{ route('flota') }}">Toda la flota</a></p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Promociones</h6>
-    <p><a href="{{ route('en_construccion') }}">Promociones</a></p>
-    <p><a href="{{ route('en_construccion') }}">Acerca de las promociones</a></p>
-</div>
-<!-- Grid column -->
-
-<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-    <h6 class="text-uppercase font-weight-bold">Servicios al cliente</h6>
+<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+    <h6 class="text-uppercase font-weight-bold">Generalidades</h6>
     <p><a href="{{ route('en_construccion') }}">Aviso de privacidad  </a></p>
     <p><a href="{{ route('en_construccion') }}">Politicas de renta</a></p>
     <p><a href="{{ route('en_construccion') }}">Protecciones</a></p>
@@ -164,41 +153,14 @@
     <p><a href="{{ route('en_construccion') }}">Contacto</a></p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+<div class="col-sm-12 col-md-8 col-lg-12 col-xl-4">
     <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
     @foreach($sucursales as $sucursal)
     <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, <i class="fa fa-whatsapp text-success" aria-hidden="true" ></i>  {{$sucursal->telefono}} </a></p>
     @endforeach
 </div>
                 <!-- Grid column -->
-<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-    <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                    <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled icon-bgdark fa fa-instagram fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                    <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://twitter.com/ucarmx"><i class="ico icon-circled icon-bgdark fa fa-twitter fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div> 
-    </div>      
-</div>
+
 </div>
 <!-- Footer links -->
 <!-- Grid row -->
@@ -208,7 +170,7 @@
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
           <div class="copyright">
-            <p><span>&copy;2019 Ü-CAR. Todos los derechos reservados.</span></p>
+            <p><span>&copy;2020 Ü-CAR. Todos los derechos reservados.</span></p>
           </div>
         </div>
       </div>
