@@ -14,79 +14,76 @@
     <link href="css/jquery.bxslider.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/shortcodes.css" rel="stylesheet" />
-    
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker.css" />
     <!-- Theme skin -->
-    <link href="color/blue.css" rel="stylesheet" />
+    <link href="color/amarillo.css" rel="stylesheet" />
+    <link rel="icon"  type="image/png" href="img/UCAR LOGO-02.png">
     <!-- iconos de materialice -->
   </head>
   <body>
     <div id="wrapper">
     <!-- INICIA header -->
-     <header>
-     <div class="bg-white">
-      </div>
+<header>
     <div class="container">
         <div class="row nomargin">
-        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-            <div class="logo">
-                <a href="{{ route('index') }}"><img src="img/logo.png" alt="" style="width:45%"/></a>
-            </div>
-        </div>
-          <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
-            <div class="navbar">
-              <div class="navigation">
-                <nav>
-                  <ul class="nav ">
-                    <li class="dropdown active">
-                      <a href="{{ route('index') }}"> Inicio</a>
+        
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="{{ route('index') }}">
+                            <img src="img/UCAR LOGO-09.png"  width="120" height="60" class="d-inline-block align-top" alt="">
+                          </a> 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span><i class="fa fa-bars"> Menu</i></span>
+                </button>
+              
+                <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+                  <ul class="navbar-nav ml-auto h5">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{{ route('index') }}"> Inicio</a>
                     </li>
-
-                    <li class="dropdown">
-                      <a href="#">Reservación <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown"><a href="#">Reservar<i class="icon-angle-right"></i></a>
-                          <ul class="dropdown-menu sub-menu-level1">
-                            <li><a href="{{ route('index') }}">Automovil</a></li>
-                            <li><a href="{{ route('renta_traslado') }}">Traslado</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="{{ route('dashboard_cliente') }}">Ver Reservaciones</a></li>   
-                      </ul>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Reservación
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('index') }}">Automovil</a>
+                        <a class="dropdown-item" href="{{ route('renta_traslado') }}">Traslado</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('dashboard_cliente') }}">Ver tu Reservación</a>
+                      </div>
                     </li>
-
-                    <li class="dropdown">
-                      <a href="#">Sucursales <i class="icon-angle-down"></i></a>
-                      <ul class="dropdown-menu">
-                        @foreach($sucursales as $sucursal)
-                            <li><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Sucursales
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          @foreach($sucursales as $sucursal)
+                            <a class="dropdown-item" href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal])}}">{{$sucursal->nombre}}</a>
                         @endforeach
-                      </ul>
+                          </div>
                     </li>
-
-                    <li class="dropdown">
-                      <a href="{{ route('flota') }}">Flota</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('flota') }}">Flota</a>
                     </li>
-
-                    <li class="dropdown">
-                      <a href="{{ route('servicios') }}">Servicios</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('servicios') }}">Servicios</a>
                     </li>
                     @if(!(Auth::user()))
-                    <li class="dropdown">
-                      <a href="{{ route('login')}}">Iniciar Sesión </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login')}}">Iniciar Sesión</a>
                     </li>
                     @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();" style="color: white">
+                                             document.getElementById('logout-form').submit();"style="color: white">
                                 {{ __('Cerrar sesión') }}
                             </a>
 
@@ -96,81 +93,199 @@
                         </div>
                     </li>
                     @endif
-<li  class="dropdown">
-        <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled  fa fa-facebook-square fa-2x active icon-1x"></i></a>
-</li>
-<li  class="dropdown">
-        <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled  fa fa-instagram fa-2x active icon-1x"></i></a>
-</li>
-<li  class="dropdown">
-        <a href="https://twitter.com/ucarmx"><i class="ico icon-circled  fa fa-twitter fa-2x active icon-1x"></i></a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled  fa fa-facebook-square fa-2x active icon-1x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled  fa fa-instagram fa-2x active icon-1x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://twitter.com/ucarmx"><i class="ico icon-circled  fa fa-twitter fa-2x active icon-1x"></i></a>
+
+                    </li>
                   </ul>
-                </nav>
-              </div>
-              <!-- end navigation -->
-            </div>
+                </div>
+              </nav>
           </div>
         </div>
       </div>
     </header>
     <!-- end header -->
     <!-- section featured -->
-    <section id="featured">
+    <section id="carrusel">
+            <div class="container" style="position: relative;">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4" style="position: absolute; left: 10px; top: 5px; z-index: 2;">
+                            <!-- inicio card reserva -->
+                            <div class="card bg-white text-black font-weight-bold border-1">
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!-- inicio Formulario reserva-->
+                                <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <label for="inputLugar">SUCURSAL DE RENTA</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-flag"aria-hidden="true"></i></span>
+                                                </div>
+                                                <select id="lugarrecogida" name='lugarrecogida' class="form-control" value = "{{ old('lugarrecogida') }}" required>
+                                                @foreach($sucursales as $sucursal)
+                                                    <option>{{$sucursal->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <label for="fecha">SELECCIONA TUS FECHAS</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
+                                                </div>
+                                                <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" value="Selecciona tus fechas" required>
+                                                <input type="hidden" id='fechaRecogida' name="fechaRecogida" value="0">
+                                                <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
+                                            <label for="horaRecogida">HORA ENTREGA</label>
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
+                                                </div>
+                                                <select name = 'horaRecogida' id ='horaRecogida' class="form-control" required onchange="checar_horas();">
+                                                    <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
+                                                    <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
+                                                    <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
+                                                    <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
+                                                    <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
+                                                    <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
+                                                    <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
+                                                    <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
+                                                    <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
+                                                    <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
+                                                    <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
+                                                    <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
+                                                    <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
+                                                    <option value = "21:00">21:00</option>
+                                                </select>
+                                            </div> 
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-12 col-xl-12">
+                                            <label for="horaDevolucion">HORA DEVOLUCIÓN</label>
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
+                                                </div>
+                                                <select name = 'horaDevolucion' id = 'horaDevolucion' class="form-control" required onchange="checar_horas();">
+                                                  <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
+                                                  <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
+                                                  <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
+                                                  <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
+                                                  <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
+                                                  <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
+                                                  <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
+                                                  <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
+                                                  <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
+                                                  <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
+                                                  <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
+                                                  <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
+                                                  <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
+                                                  <option value = "21:00">21:00</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto">
+                                            <button class="btn btn-primary btn-sm" type="submit" style="margin-top: 0%;">Continuar</button>
+                                        </div> 
+                                        
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: none;" id="hora_extra">
+                                          <h6 class = "text-success"><strong>* NOTA:</strong></h6>
+                                          <h6><small>Si se pasa <strong>dos</strong> horas en la hora de <strong>devolución</strong> de la hora de <strong>recogida</strong> se cobrará el dia completo.</small></h6>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: none;" id="dias_iguales">
+                                          <h6 class = "text-danger"><strong>* Error:</strong></h6>
+                                          <h6><small>En días iguales, la fecha de devolución no puede ser menor a la de entrega.</small></h6>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: none;" id="hora_menor">
+                                          <h6 class = "text-danger"><strong>* Error:</strong></h6>
+                                          <h6><small>Para reservas del día de hoy, no puede seleccionar una hora menor a la actual.</small></h6>
+                                        </div>
+                                        @if(session('mensaje'))
+                                        <div class="alert aler-danger">
+                                            <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
+                                        </div>
+                                        @endif 
+                                    </div>
+                                </form>
+                                <!-- fin formulario reserva -->
+                            </div>
+                        </div>       
+                    </div>
+                    <div class="col-sm-0 col-md-12 col-lg-12 col-xl-12">
+                    <div class="camera_wrap" id="camera-slide">
+                            <!-- slide 1 here -->
+                            <div data-src="img/inicio/Puerto-Escondido.jpg">
+                              <div class="camera_caption fadeFromLeft">
+                              <div class="container-fluid">
+                                  <div class="row">
+                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
+                                      
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <h2 class="animated fadeInDown text-white text-center"><strong>VE LOS VEHICULOS <br> <span class="colored"> QUE TENEMOS PARA TI!!!</span></strong></h2>
+                                            <p class="animated fadeInUp text-white text-center">Reserva ahora mismo.</p>
+                                            <a href="{{ route('flota') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Ver Flota</a>
+                                            <img src="img/inicio/aveo.png" alt="" class="animated bounceInDown delay1" style="width:70%"/>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <!-- slide 2 here -->
+                            <div data-src="img/inicio/XV-2020.jpg">
+                              <div class="camera_caption fadeFromLeft">
+                                <div class="container-fluid">
+                                  <div class="row">
+                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                      <img src="img/inicio/Honda_Dio_2019_sf.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
+                                        <h2 class="animated fadeInDown text-white"><strong>CREA<span class="colored"> UNA CUENTA </span></strong></h2>
+                                        <p class="animated fadeInUp text-white">Se requiere tener una cuenta de cliente con nosotros para poder realizar una reservación .</p>
+                                        <a href="{{ route('register') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Registrarme</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- slide 3 here -->
+                            <div data-src="img/inicio/itsmo.jpg">
+                              <div class="camera_caption fadeFromLeft">
+                                <div class="container-fluid">
+                                  <div class="row">
+                                    <div class="col-sm-4 col-md-6 col-lg-4 col-xl-4"></div>
+                                    <div class="col-sm-6 col-md-6 col-lg-8 col-xl-6 text-center">
+                                        <h2 class="animated fadeInDown"><strong>ESTAMOS PARA ATENDERTE</strong></h2>
+                                        <h2 class="animated fadeInDown"><strong><span class="colored">LOS 365 DIAS AL AÑO</span></strong></h2>
+                                    </div>
+                                    <div class="col-sm-2 col-md-0 col-lg-0 col-xl-2"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+</div>
+
+
+                </div>
+              </div>
       <!-- slideshow start here -->
-      <div class="camera_wrap" id="camera-slide">
-        <!-- slide 1 here -->
-        <div data-src="img/inicio/Puerto-Escondido.jpg">
-          <div class="camera_caption fadeFromLeft">
-          <div class="container">
-              <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                  <h2 class="animated fadeInDown text-white text-center"><strong>   VE LOS VEHICULOS <br> <span class="colored"> QUE TENEMOS PARA TI!!!</span></strong></h2>
-                  <p class="animated fadeInUp text-white text-center">Reserva ahora mismo.</p>
-                  <a href="{{ route('flota') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Ver Flota</a>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <img src="img/inicio/aveo.png" alt="" class="animated bounceInDown delay1" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- slide 2 here -->
-        <div data-src="img/inicio/Puerto-Escondido2.jpg">
-          <div class="camera_caption fadeFromLeft">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <img src="img/inicio/Honda_Dio_2019_sf.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                    <h2 class="animated fadeInDown text-white"><strong>CREA<span class="colored"> UNA CUENTA </span></strong></h2>
-                    <p class="animated fadeInUp text-white">Se requiere tener una cuenta de cliente con nosotros para poder realizar una reservación .</p>
-                    <a href="{{ route('register') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Registrarme</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- slide 3 here -->
-        <div data-src="img/inicio/Puerto-Escondido.jpg">
-          <div class="camera_caption fadeFromLeft">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                    <h2 class="animated fadeInDown"><strong>ESTAMOS PARA ATENDERTE</strong></h2>
-                    <h2 class="animated fadeInDown"><strong><span class="colored">LOS 365 DIAS AL AÑO</span></strong></h2>
-                    <p class="animated fadeInUp text-white">Somos una empresa dedicada al servicio de renta de autos, especializados en flotillas.</p>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <img src="img/inicio/toyota-hilux.png" alt="" class="animated bounceInDown delay1" style="width:80%"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <!-- slideshow end here -->
     </section>
     <!-- /section featured -->
@@ -179,124 +294,7 @@
       <div class="bg-white" id='formulario_reserva_vehiculo'>
           <h5 class="text-center"><strong>Reserva </strong>tu vehículo en sencillos pasos</h5>
       </div>
-  <div class="container">
-      <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <!-- inicio card reserva -->
-              <div class="card bg-light text-white">
-              <!--Card content-->
-              <div class="card-body">
-                  <!-- inicio Formulario reserva-->
-                  
-                  <form action="{{ route('postFormularioindex')}}" method="POST" enctype="multipart/form-data">
-                      @csrf
-                      <div class="form-row">
-                          <div class="form-group col-sm-4 col-md-6 col-lg-4 col-xl-4">
-                              <label for="inputLugar">SUCURSAL DE RENTA</label>
-                              <div class="input-group">
-                                  <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-flag"aria-hidden="true"></i></span>
-                                  </div>
-                                  <select id="lugarrecogida" name='lugarrecogida' class="form-control" value = "{{ old('lugarrecogida') }}" required>
-                                  @foreach($sucursales as $sucursal)
-                                      <option>{{$sucursal->nombre}}</option>
-                                  @endforeach
-                              </select>
-                              </div>
-                          </div>
-                          <div class="form-group col-sm-4 col-md-6 col-lg-4 col-xl-4">
-                              <label for="fecha">SELECCIONA TUS FECHAS</label>
-                              <div class="input-group">
-                                  <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-calendar"aria-hidden="true"></i></span>
-                                  </div>
-                                  <input id = 'fechas' name = 'fechas' class="form-control" type="button"   placeholder="Seleccione sus fechas" autocomplete="off" value="Selecciona tus fechas" required>
-                                  <input type="hidden" id='fechaRecogida' name="fechaRecogida" value="0">
-                                  <input type="hidden" id='fechaDevolucion' name="fechaDevolucion" value="0">
-                              </div>
-                          </div>
-                          <div class="form-group col-sm-2 col-md-6 col-lg-2 col-xl-2">
-                              <label for="horaRecogida">HORA DE ENTREGA</label>
-                              <div class="input-group">
-                                  <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
-                                  </div>
-                                  <select name = 'horaRecogida' id ='horaRecogida' class="form-control" required onchange="checar_horas();">
-                                      <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
-                                      <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
-                                      <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
-                                      <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
-                                      <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
-                                      <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
-                                      <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
-                                      <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
-                                      <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
-                                      <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
-                                      <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
-                                      <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
-                                      <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
-                                      <option value = "21:00">21:00</option>
-                                  </select>
-                              </div> 
-                          </div>
-                          <div class="form-group col-sm-2 col-md-6 col-lg-2 col-xl-2">
-                              <label for="horaDevolucion">HORA DE DEVOLUCIÓN</label>
-                              <div class="input-group">
-                                  <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-clock-o"aria-hidden="true"></i></span>
-                                  </div>
-                                  <select name = 'horaDevolucion' id = 'horaDevolucion' class="form-control" required onchange="checar_horas();">
-                                    <option value = "08:00">08:00</option><option value = "08:30">08:30</option>
-                                    <option value = "09:00">09:00</option><option value = "09:30">09:30</option>
-                                    <option value = "10:00">10:00</option><option value = "10:30">10:30</option>
-                                    <option value = "11:00">11:00</option><option value = "11:30">11:30</option>
-                                    <option value = "12:00">12:00</option><option value = "12:30">12:30</option>
-                                    <option value = "13:00">13:00</option><option value = "13:30">13:30</option>
-                                    <option value = "14:00">14:00</option><option value = "14:30">14:30</option>
-                                    <option value = "15:00">15:00</option><option value = "15:30">15:30</option>
-                                    <option value = "16:00">16:00</option><option value = "16:30">16:30</option>
-                                    <option value = "17:00">17:00</option><option value = "17:30">17:30</option>
-                                    <option value = "18:00">18:00</option><option value = "18:30">18:30</option>
-                                    <option value = "19:00">19:00</option><option value = "19:30">19:30</option>
-                                    <option value = "20:00">20:00</option><option value = "20:30">20:30</option>
-                                    <option value = "21:00">21:00</option>
-                                  </select>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="form-row">
-                          <div class="form-group col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                              <button class="btn btn-primary" type="submit" style="margin-top: 0%;">Consulta Vehiculos Disponibles</button>
-                          </div> 
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                            <h6 class = "text-danger"><strong>* NOTA:</strong></h6>
-                            <h6><small>El vehículo debe ser entregado en la misma sucursal.</small></h6>
-                          </div>
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3" style="display: none;" id="hora_extra">
-                            <h6 class = "text-success"><strong>* NOTA:</strong></h6>
-                            <h6><small>Si se pasa <strong>dos</strong> horas en la hora de <strong>devolución</strong> de la hora de <strong>recogida</strong> se cobrará el dia completo.</small></h6>
-                          </div>
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3" style="display: none;" id="dias_iguales">
-                            <h6 class = "text-danger"><strong>* Error:</strong></h6>
-                            <h6><small>En días iguales, la fecha de devolución no puede ser menor a la de entrega.</small></h6>
-                          </div>
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3" style="display: none;" id="hora_menor">
-                            <h6 class = "text-danger"><strong>* Error:</strong></h6>
-                            <h6><small>Para reservas del día de hoy, no puede seleccionar una hora menor a la actual.</small></h6>
-                          </div>
-                          @if(session('mensaje'))
-                          <div class="alert aler-danger">
-                              <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
-                          </div>
-                          @endif 
-                      </div>
-                  </form>
-                  <!-- fin formulario reserva -->
-              </div>
-          </div>       
-      </div>
-  </div>
-</div>
+  
 <!-- fin del card reserva --> 
 </section>
 <section id="caracteristicas">
@@ -418,42 +416,6 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 aligncenter ">
-            <h3 class="title">Nuestros<strong> vehículos</strong></h3>
-            <ul class="bxslider">
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Chevrolet-Aveo-2018.jpg" alt="" style="width:32%"/>
-                  <h4>Compactos</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Toyota-Hilux-2014.jpg" alt="" style="width:50%"/>
-                  <h4>Camionetas</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <div class="testimonial-autor">
-                <img src="img/flota/Honda-Dio-2019.jpg" alt="" style="width:38%"/>
-                  <h4>Motoneta</h4>
-                  <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                </div>
-              </li>
-              <li>
-                <li>
-                    <div class="testimonial-autor">
-                    <img src="img/flota/Chevrolet-Suburban-2018.jpg" alt="" style="width:38%"/>
-                      <h4>Suburban</h4>
-                      <p>Elige entre una variada gama de autos en renta en esta categoría, que incluye vehículos económicos, grandes o de lujo.</p>
-                    </div>
-                  </li>
-            </ul>
-          </div>
-        </div>
       </div>
 </section>
 
@@ -527,36 +489,25 @@
 <!-- Footer links -->
 <div class="row">
 <!-- Grid column -->
-<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1">
-<a href="{{ route('index') }}"><img src="img/logo.png" alt="Logo ucar" style="width:90%"/></a>
+<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2">
+<a href="{{ route('index') }}"><img src="img/UCAR LOGO-05.png" alt="Logo ucar" style="width:90%"/></a>
 </div>  
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+<div class="col-sm-7 col-md-4 col-lg-3 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Nosotros</h6>
     <p>Somos una empresa dedicada al servicio de renta de automóviles, traslados, especializados en flotillas</p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Reservaciones</h6>
     <p><a href="{{ route('index') }}">Iniciar una reservación</a></p>
     <p><a href="{{ route('dashboard_cliente') }}">Ver mis reservaciones</a></p>
-  
-</div>
-<!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
     <h6 class="text-uppercase font-weight-bold">Vehículos</h6>
     <p><a href="{{ route('flota') }}">Toda la flota</a></p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-    <h6 class="text-uppercase font-weight-bold">Promociones</h6>
-    <p><a href="{{ route('en_construccion') }}">Promociones</a></p>
-    <p><a href="{{ route('en_construccion') }}">Acerca de las promociones</a></p>
-</div>
-<!-- Grid column -->
-
-<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-    <h6 class="text-uppercase font-weight-bold">Servicios al cliente</h6>
+<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+    <h6 class="text-uppercase font-weight-bold">Generalidades</h6>
     <p><a href="{{ route('en_construccion') }}">Aviso de privacidad  </a></p>
     <p><a href="{{ route('en_construccion') }}">Politicas de renta</a></p>
     <p><a href="{{ route('en_construccion') }}">Protecciones</a></p>
@@ -564,41 +515,14 @@
     <p><a href="{{ route('en_construccion') }}">Contacto</a></p>
 </div>
 <!-- Grid column -->
-<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+<div class="col-sm-12 col-md-8 col-lg-12 col-xl-4">
     <h6 class="text-uppercase font-weight-bold">Oficinas</h6>
     @foreach($sucursales as $sucursal)
     <p><a href="{{ route('sucursal_info',['idsucursal'=>$sucursal->idsucursal]) }}">{{$sucursal->nombre}}, {{$sucursal->colonia}}, <i class="fa fa-whatsapp text-success" aria-hidden="true" ></i>  {{$sucursal->telefono}} </a></p>
     @endforeach
 </div>
                 <!-- Grid column -->
-<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-    <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h6 class="text-uppercase font-weight-bold">Nuestras Redes sociales</h6>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://www.facebook.com/UcarMx/"><i class="ico icon-circled icon-bgdark fa fa-facebook-square fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                    <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://www.instagram.com/ucar_mexico/"><i class="ico icon-circled icon-bgdark fa fa-instagram fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                    <div class="box flyRight">
-                  <div class="icon">
-                    <a href="https://twitter.com/ucarmx"><i class="ico icon-circled icon-bgdark fa fa-twitter fa-3x active icon-2x"></i></a>
-                  </div>
-                </div>
-              </div> 
-    </div>      
-</div>
+
 </div>
 <!-- Footer links -->
 <!-- Grid row -->
@@ -608,7 +532,7 @@
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
           <div class="copyright">
-            <p><span>&copy;2019 Ü-CAR. Todos los derechos reservados.</span></p>
+            <p><span>&copy;2020 Ü-CAR. Todos los derechos reservados.</span></p>
           </div>
         </div>
       </div>
@@ -647,10 +571,8 @@
   <script src="js/portfolio/setting.js"></script>
 
   <script src="js/jquery.flexslider.js"></script>
-  <script src="js/animate.js"></script>
   <script src="js/inview.js"></script>
   <script src="js/daterangepicker.js"></script>
-  <script src="js/custom.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>

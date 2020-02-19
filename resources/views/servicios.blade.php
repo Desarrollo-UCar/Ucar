@@ -15,7 +15,7 @@
                       <ul class="popular">
                         <li>
                         @foreach($popular as $popu)
-                          <img src="{{'/images/'.$popu->foto}}" alt="" class="thumbnail pull-left" />
+                          <img src="{{'images/'.$popu->foto}}" alt="" class="thumbnail pull-left" />
                           <p>{{$popu->marca}} {{$popu->modelo}} {{$popu->anio}}</p>
                           <p>{{$mes}}, {{$anio}}</p>
                         @endforeach
