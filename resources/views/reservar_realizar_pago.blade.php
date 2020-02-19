@@ -153,7 +153,7 @@
                     
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div id="lista_itinerario">
-                            <h6><strong><span class="colored">*Documentos que deberá presentar obligatoriamente en mostrador al momento de la entrega del vehículo:</span></strong></h6>    
+                            <h6><strong><span class="colored" style="color:#FBAE17">*Documentos que deberá presentar obligatoriamente en mostrador al momento de la entrega del vehículo:</span></strong></h6>    
                             <dl>
                             <dt>- INE o pasaporte vigente de quien realizó la reserva</dt>
                             <dd>En el caso de nacionales se solicita INE y para extranjeros pasaporte.</dd>
@@ -210,10 +210,10 @@
                                             <img src="{{ '/images/'.$vehiculo->foto}}" />
                                             <div class="row">
                                                 <div class="form-group col-sm-5 col-md-5 col-lg-5 col-xl-5">
-                                                    <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+                                                    <button class="btn " style="background:#FBAE17" type="submit">Iniciar Sesión</button>
                                                 </div>    
                                                 <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
-                                                    <a class="nav-link text-success" data-toggle="modal" data-target=".bd-example-modal-lg" {{-- href="{{ route('register',['id_reserva'=>$datos_reserva->id]) }}"--}}style="cursor:pointer">No tengo una cuenta.</a> 
+                                                    <a class="nav-link text" style="color:#FBAE17; cursor: pointer" data-toggle="modal" data-target=".bd-example-modal-lg" {{-- href="{{ route('register',['id_reserva'=>$datos_reserva->id]) }}"--}}>No tengo una cuenta.</a> 
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -267,7 +267,7 @@
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="overflow-y: auto;margin-top: 3%;">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-                <div class="modal-header" style="background: cornflowerblue;">
+                <div class="modal-header" style="background: #FBAE17;">
                         <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true" style="color: red;">&times;</span>
