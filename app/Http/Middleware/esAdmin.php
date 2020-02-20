@@ -24,6 +24,7 @@ class esAdmin
     public function handle($request, Closure $next, $role)
     {
         if ($request->user()->hasRole($role)||$request->user()->hasRole('gerente')) {
+            if($request->user()->estatus()=='ACTIVO')
             return $next($request);
         }
         //return  response()->json($request->user()->hasAnyRole($roles));// 

@@ -135,12 +135,12 @@
        
               </li> 
               
-
+              @if(auth::user()->hasRole('gerente'))
       <li class="treeview">
           <li>  <a href="{{ route('InicioReportes','HOLA')}}"><i class="fa fa-bar-chart-o"></i> <span> Reportes </span>
 
           </a>    </li>     </li> 
-
+@endif
       </ul>
     </section>
     <!-- /.sidebar -->
