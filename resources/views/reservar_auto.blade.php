@@ -14,7 +14,7 @@
 <section id="content">
     <div class="container">
         <div class="row">
-          <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <aside class="left-sidebar">
               <div class="widget">
                     <div id="lista_itinerario">
@@ -31,7 +31,7 @@
               </div>
             </aside>
           </div>
-          <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
+          <div class="col-sm-6 col-md-6 col-lg-8 col-xl-9 mx-auto">
               @if(empty($vehiculos_disponibles)==false)
 @foreach($vehiculos_disponibles as $vehiculo)
         <div class="row">
@@ -83,7 +83,7 @@
         </div>
 @endforeach
 @else
-<div class='col-md-6'>
+<div class='col-sm-6 col-md-6 col-lg-8 col-xl-9 mx-auto'>
 <h1> <b>  LO SENTIMOS </b> <br> NINGUN VEHICULO DISPONIBLE.</h1>
 </div>
 @endif

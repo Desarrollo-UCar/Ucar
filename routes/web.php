@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(); 
   
 Auth::routes(['verify' => true]);
+Route::get('register2', function () {
+    $sucursales = App\Sucursal::all();
+    return view('/auth/register',compact('sucursales'));
+})->name('register2')->middleware('guest');
 Route::get('register', function () {return view('/auth/register');})->name('register')->middleware('guest');
 Route::get('login', function () {return view('/auth/login');})->name('login')->middleware('guest');
 //routes para PagesController

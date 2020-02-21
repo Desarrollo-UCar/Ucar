@@ -3,12 +3,12 @@
     <section id="content">
       <div class="container">
         <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
             <aside class="left-sidebar">
               <div class="widget">
                 <div class="tabs">
                   <ul class="nav nav-tabs">
-                    <li class="active"><a href="#one" data-toggle="tab"><i class="icon-star"></i> Popular</a></li>
+                    <li class="active"><a href="#one" data-toggle="tab"><i class="icon-star"></i> El vehículo más Popular</a></li>
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane active" id="one">
@@ -37,7 +37,7 @@
             </aside>
           </div>
 
-          <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+          <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 
           <article>
               <div class="row">
@@ -82,7 +82,10 @@
 
                 </div>
             </article>
-
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <article>
               <div class="row">
                 <div class="align-self-center col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -116,30 +119,31 @@
                     </div>
                 </div>
             </article>
-
+        </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <article>
               <div class="row">
                 <div class="align-self-center col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <div class="post-slider">
                     <div class="post-heading">
-                      <h3><a href="#">Traslado a Todas Partes de la República Mexicana</a></h3>
+                      <h3><a href="#">Traslado a Toda la República Mexicana</a></h3>
                     </div>
                     <div class="clear"></div>
                     <!-- start flexslider -->
                     <div class="flexslider">
                       <ul class="slides">
                         <li>
-                          <img src="img/servicios/traslado.jpg" alt="" />
+                          <img src="img/servicios/renta-mas-chofer-2.jpg" alt="" />
                         </li>
                         <li>
-                          <img src="img/servicios/traslado2.jpg" alt="" />
+                          <img src="img/servicios/renta-mas-chofer-3.jpg" alt="" />
                         </li>
                       </ul>
                     </div>
                     <!-- end flexslider -->
                   </div>
                   </div>
-                  <div class="align-self-center col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="align-self-center col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <ul>
                         <h5>Traslados:</h5>
                         <li>Identificacion/pasaporte</li>
@@ -150,7 +154,9 @@
 
                 </div>
             </article>
-          </div>
+        </div>
+        </div>
+        </div>
         </div>
       </div>
     </section>

@@ -20,7 +20,7 @@
                   <form name="formulario" id="formulario" method="POST">
                     <div class="grid item-thumbs graphic form-check-inline">
                       <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio" id="precio" value="precio">Precio de renta
+                        <input type="radio" class="form-check-input" name="optradio" id="precio" value="precio">$ Renta
                       </label>
                     </div>
                     <div class="grid item-thumbs graphic form-check-inline">
@@ -80,55 +80,50 @@
 <section id="modales">
 <!-- Modal -->
 @foreach($flota as $vehiculo)
-<div class="modal" data-backdrop=”static” data-keyboard=”false”  id="vehiculo{{$vehiculo->modelo}}" tabindex="-1" role="dialog" aria-labelledby="detalle_vehiculoTitle" aria-hidden="true">
+<div class="modal" data-backdrop="static" data-keyboard="false" id="vehiculo{{$vehiculo->modelo}}" tabindex="-1" role="dialog" aria-labelledby="detalle_vehiculoTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             
             <div class="row nomargin modal-body">
-                <div class="text-center col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                <div class="text-center col-sm-12 col-md-12 col-lg-12 col-xl-8">
                         <h4><strong> {{$vehiculo->marca}}</strong></h4>
                         <h5><strong> {{$vehiculo->modelo}}</strong></h5>
                         <!-- <img src=//$vehiculo->foto}} style="width:100%"/>    recuerda poner las llaves -->
                         <div class="flexslider">
                           <ul class="slides">
-                            
-                            <li>
-                              <img src={{'images/'.$vehiculo->foto_derecha}}  alt="" />
-                            </li>
-                            <li>
-                              <img src={{'images/'.$vehiculo->foto_izquierda}}  alt="" />
-                            </li>
-                            <li>
-                              <img src={{'images/'.$vehiculo->foto}}  alt="" />
-                            </li>
-                            <li>
-                              <img src={{'images/'.$vehiculo->foto_trasera}}  alt="" />
-                            </li>
+                            <li><img src={{'images/'.$vehiculo->foto_derecha}}  alt="" /></li>
+                            <li><img src={{'images/'.$vehiculo->foto_izquierda}}  alt="" /></li>
+                            <li><img src={{'images/'.$vehiculo->foto}}  alt="" /></li>
+                            <li><img src={{'images/'.$vehiculo->foto_trasera}}  alt="" /></li>
                           </ul>
                         </div>
                 </div>
-                <div class="align-self-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                    <ul>
-                        >>>{{$vehiculo->tipo}}
+                <div class="mx-auto col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                    <h4 class="text-center"><strong>{{$vehiculo->tipo}}</strong></h4>
+                    <div class="row">
                         @if($vehiculo->tipo != "motoneta")
-                          <li><i class="fa fa-male"       aria-hidden="true"></i>{{$vehiculo->pasajeros}} Pasajeros</li>
-                          <li><i class="fa fa-suitcase"   aria-hidden="true"></i>{{$vehiculo->maletero}}</li>
-                          <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->puertas}} Puertas</li>
-                          <li><i class="fa fa-exchange"   aria-hidden="true"></i>Transmisión:  {{$vehiculo->transmicion}} </li>
-                          <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</li>
-                          <li><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</li>
-                          <li><i class="fa fa-pencil-square"aria-hidden="true"></i>Color: {{ $vehiculo->color}}</li>
+                        <div class="mx-auto col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12">
+                          <p><i class="fa fa-male"       aria-hidden="true"></i> {{$vehiculo->pasajeros}} Pasajeros</p>
+                          <p><i class="fa fa-bolt"       aria-hidden="true"></i> {{$vehiculo->rendimiento}} Km/L</p>
+                          <p><i class="fa fa-car"        aria-hidden="true"></i> {{$vehiculo->puertas}} Puertas</p>
+                          <p><i class="fa fa-car"        aria-hidden="true"></i> {{$vehiculo->cilindros}} Cilindros</p>
+                        </div>
+                          <div class="mx-auto col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12">
+                          <p><i class="fa fa-exchange"   aria-hidden="true"></i> Trans:  {{$vehiculo->transmicion}} </p>
+                          <p><i class="fa fa-pencil-square"aria-hidden="true"></i> Color: {{$vehiculo->color}}</p>
+                          <p><i class="fa fa-suitcase"   aria-hidden="true"></i> {{$vehiculo->maletero}}</p>
+                        </div>
                         @else
-                          <li><i class="fa fa-car"        aria-hidden="true"></i>{{$vehiculo->cilindros}} Cilindros</li>
-                          <li><i class="fa fa-bolt"       aria-hidden="true"></i>{{$vehiculo->rendimiento}} Kilómetros por litro</li>
-                          <li><i class="fa fa-pencil-square"aria-hidden="true"></i>Color: {{ $vehiculo->color}}</li>
+                          <p><i class="fa fa-car"        aria-hidden="true"></i> {{$vehiculo->cilindros}} Cilindros</p>
+                          <p><i class="fa fa-bolt"       aria-hidden="true"></i> {{$vehiculo->rendimiento}} Km/L</p>
+                          <p><i class="fa fa-pencil-square"aria-hidden="true"></i> Color: {{$vehiculo->color}}</p>
                         @endif
-                        </ul>
-                        <p>{{$vehiculo->descripcion}}</p>
+                        <p> {{$vehiculo->descripcion}}</p>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

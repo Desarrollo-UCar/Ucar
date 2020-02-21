@@ -198,24 +198,15 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto">
+                                        <div class="form-group col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                             <button class="btn btn-primary btn-sm" type="submit" style="margin-top: 0%;">Continuar</button>
                                         </div> 
                                         
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: none;" id="hora_extra">
-                                          <h6 class = "text-success"><strong>* NOTA:</strong></h6>
-                                          <h6><small>Si se pasa <strong>dos</strong> horas en la hora de <strong>devolución</strong> de la hora de <strong>recogida</strong> se cobrará el dia completo.</small></h6>
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: none;" id="dias_iguales">
-                                          <h6 class = "text-danger"><strong>* Error:</strong></h6>
-                                          <h6><small>En días iguales, la fecha de devolución no puede ser menor a la de entrega.</small></h6>
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: none;" id="hora_menor">
-                                          <h6 class = "text-danger"><strong>* Error:</strong></h6>
-                                          <h6><small>Para reservas del día de hoy, no puede seleccionar una hora menor a la actual.</small></h6>
-                                        </div>
+                                        
+                                       
+                                        
                                         @if(session('mensaje'))
-                                        <div class="alert aler-danger">
+                                        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
                                             <h6><strong><span class="colored">{{session('mensaje')}}</span></strong></h6>
                                         </div>
                                         @endif 
@@ -257,7 +248,7 @@
                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                         <h2 class="animated fadeInDown text-white"><strong>CREA<span class="colored"> UNA CUENTA </span></strong></h2>
                                         <p class="animated fadeInUp text-white">Se requiere tener una cuenta de cliente con nosotros para poder realizar una reservación .</p>
-                                        <a href="{{ route('register') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Registrarme</a>
+                                        <a href="{{ route('register2') }}" class="btn btn-large btn-theme"><i class="icon-link"></i> Registrarme</a>
                                     </div>
                                   </div>
                                 </div>
@@ -554,7 +545,6 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- javascript================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/jquery.js"></script>
   <script src="js/jquery.easing.1.3.js"></script>
   <script src="js/bootstrap.js"></script>
@@ -594,20 +584,18 @@
 </script> 
 <script>
 function checar_horas(){
-  //accedemos a los valores de los elementos horarecogida y hora devolucion
     var horaRecogida    = document.getElementById("horaRecogida");
     var horaDevolucion  = document.getElementById("horaDevolucion");
     var diaRecogida     = document.getElementById("fechaRecogida").value;
     var diaDevolucion   = document.getElementById("fechaDevolucion").value;
     var hora_extra      = document.getElementById("hora_extra");
-    var dias_iguales    = document.getElementById("dias_iguales");
     var hora_menor      = document.getElementById("hora_menor");
+    if(horaRecogida.options[horaRecogida.selectedIndex] != null)
     recogida = horaRecogida.options[horaRecogida.selectedIndex].value;
+    if(horaDevolucion.options[horaDevolucion.selectedIndex] != null)
     devolucion = horaDevolucion.options[horaDevolucion.selectedIndex].value;
-   //hacemos los calculos para validar horas y checar si se pasa mas de dos horas
-   //validar que si selecciona el dia de hoy como salida, no se pueda seleccionar horas menores a la actual en un rango de una hora 
-   //si selecciona el mismo dia de salida y llegada, checar que la hora de devolucion no sea menor a la de recogida
-   //enviar mensaje de advertencia si selecciona dos horas mas de la hora de recogida en cualquier otro dia para decirle que si se pasa dos horas se le cobrara el dia completo
+
+   if(diaRecogida != 0){
     var expresionRegular = /\s*:\s*/;
     var recogidaD = recogida.split(expresionRegular);
     var devolucionD = devolucion.split(expresionRegular);
@@ -626,66 +614,39 @@ function checar_horas(){
     hora_actual   = ((hora < 10) ? '0'+hora : hora) +':'+  ((minutos < 10) ? '0'+minutos : minutos) ;
     hora_actual_1 = ((hora_1 < 10) ? '0'+hora_1 : hora_1) +':'+  ((minutos <= 30) ? '00': '30') ;
     hora_actual_2 = ((hora_2 < 10) ? '0'+hora_2 : hora_2) +':'+  ((minutos <= 30) ? '00': '30') ;
-
-    console.log(horaRecogida.value);
-    console.log(hora_actual_1);
-   
     //////////////////////
     if(diaRecogida == hoyy){
-      console.log("recogida hoy");
-      if(hora_actual >= horaRecogida.value){
-        console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
-         // hora_menor.style.display = 'block';
+      if(hora_actual >= horaRecogida.value)
           document.getElementById("horaRecogida").value = hora_actual_1;
-      }else{
-        //hora_menor.style.display = 'none';
-      }
     }
     //----
     if(diaDevolucion == hoyy){
-      console.log("Devolucion hoy");
-      if(hora_actual >= horaDevolucion.value){
-        console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
-          //hora_menor.style.display = 'block';
+      if(hora_actual >= horaDevolucion.value)
           document.getElementById("horaDevolucion").value = hora_actual_2;
-      }else{
-       // hora_menor.style.display = 'none';
-      }
     }
     ///
     if(diaRecogida == diaDevolucion){
       if(devo <= reco){
-          dias_iguales.style.display = 'block';
+        alert("En días iguales, la fecha de devolución no puede ser menor a la de entrega.");
           document.getElementById("horaRecogida").value = hora_actual;
           document.getElementById("horaDevolucion").value = hora_actual_2;
-        }else{
-            dias_iguales.style.display = 'none';
         }
       if(diaRecogida == hoyy){
-        console.log("iguales fechas de recogida");
         if(hora_actual >= horaRecogida.value){
-            console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
-            hora_menor.style.display = 'block';
+            alert("Para reservas del día de hoy, no puede seleccionar una hora menor a la actual.");
             document.getElementById("horaRecogida").value = hora_actual_1;
-        }else{
-            hora_menor.style.display = 'none';
         }
         if(hora_actual >= horaDevolucion.value){
-            console.log("recogida menor a la actual");//consultar la hora actual en el formato necesario-----IMPORTANTE PARA MAÑANA
-            hora_menor.style.display = 'block';
+            alert("Para reservas del día de hoy, no puede seleccionar una hora menor a la actual.");
             document.getElementById("horaDevolucion").value = hora_actual_2;
-        }else{
-            hora_menor.style.display = 'none';
         }
-    }
+        }
     }else{
       if(devo - reco >= 7200000){
-          hora_extra.style.display = 'block';
-      }else{
-        hora_extra.style.display = 'none';
+        alert("Si se pasa dos horas en la hora de devolución de la hora de recogida se cobrará el dia completo.");
       }
     }
-  
+}
   }
   </script>
 </body>
