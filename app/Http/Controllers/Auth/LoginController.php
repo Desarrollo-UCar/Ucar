@@ -44,8 +44,10 @@ class LoginController extends Controller
         // session(['success' => 'yes']);
 
 
-        if(\Auth::user()->hasRole('admin')||\Auth::user()->hasRole('gerente'))
+        if(\Auth::user()->hasRole('admin')||\Auth::user()->hasRole('gerente')){
             return '/gerente/inicio';
+        }
+           // return '/gerente/inicio';
         
         
         

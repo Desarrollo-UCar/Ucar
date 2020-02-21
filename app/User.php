@@ -85,6 +85,12 @@ public function nombre(){
 
 }
 
+public function estatus(){
+    $empleado = Empleado::where('correo','=',$this->email)->first();
+    return $empleado->status;
+ 
+ }
+
 public function rol(){
     $empleado = User::join('role_user','role_user.user_id','=','users.id')
     ->join('roles','role_user.role_id','=','roles.id')
